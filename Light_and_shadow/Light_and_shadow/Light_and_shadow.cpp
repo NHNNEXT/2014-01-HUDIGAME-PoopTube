@@ -1,10 +1,15 @@
 #include "stdafx.h"
 #include <d3d9.h>
 #include <strsafe.h>
+#include <string>
 
 LPDIRECT3D9         g_pD3D = NULL; // Used to create the D3DDevice
 LPDIRECT3DDEVICE9   g_pd3dDevice = NULL; // Our rendering device
 
+VOID MSGBOX(std::wstring str)
+{
+	MessageBox(NULL, str.c_str(), L"TEST", 0);
+}
 VOID ReleaseDevice()
 {
 	if (g_pd3dDevice != NULL)
@@ -63,22 +68,12 @@ HRESULT InitD3D(HWND hWnd)
 
 	return S_OK;
 }
-INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
+VOID InitWindow()
 {
-	UNREFERENCED_PARAMETER(hInst);
 
-	WNDCLASSEX wc =
-	{
-		sizeof(WNDCLASSEX), CS_CLASSDC, MsgLoop, 0L, 0L,
-		GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
-		L"PRACTICE", NULL
-	};
-	RegisterClassEx(&wc);
-
-	HWND hWnd = CreateWindow(L"PRACTICE", L"Light and Shadow",
-		WS_OVERLAPPEDWINDOW, 100, 100, 300, 300,
-		NULL, NULL, wc.hInstance, NULL);
-
+}
+VOID MainLoop(HWND hWnd)
+{
 	if (SUCCEEDED(InitD3D(hWnd)))
 	{
 		// Show the window
@@ -93,7 +88,32 @@ INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
 			DispatchMessage(&msg);
 		}
 	}
+}/*
+INT WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, INT)
+{
+	InitWindow();
+	MainLoop();
+
+	return 0;
+
+	UNREFERENCED_PARAMETER(hInst);
+
+	WNDCLASSEX wc =
+	{
+		sizeof(WNDCLASSEX), CS_CLASSDC, MsgLoop, 0L, 0L,
+		GetModuleHandle(NULL), NULL, NULL, NULL, NULL,
+		L"PRACTICE", NULL
+	};
+	RegisterClassEx(&wc);
+
+
+
+	HWND hWnd = CreateWindow(L"PRACTICE", L"Light and Shadow",
+		WS_OVERLAPPEDWINDOW, 100, 100, 300, 300,
+		NULL, NULL, wc.hInstance, NULL);
+
+	
 
 	UnregisterClass(L"PRACTICE", wc.hInstance);
 	return 0;
-}
+}*/
