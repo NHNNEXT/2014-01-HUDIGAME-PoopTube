@@ -5,6 +5,8 @@
 
 #pragma once
 
+#pragma once
+
 #include "targetver.h"
 
 #include "LibSet.h"
@@ -17,6 +19,8 @@
 #include <forward_list>
 #include <list>
 #include <algorithm>
+
+#include <fbxsdk.h>
 
 #include "ObjectManager.h"
 

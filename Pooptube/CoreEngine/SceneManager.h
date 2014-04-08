@@ -18,6 +18,8 @@ namespace pooptube {
 		void Render();
 		void Update( float dTime );
 
+		D3D9Renderer* GetRenderer() const { return mRenderer; }
+
 	private:
 		bool _CreateRenderer( HWND hwnd, int width, int height, bool isWindowed );
 
