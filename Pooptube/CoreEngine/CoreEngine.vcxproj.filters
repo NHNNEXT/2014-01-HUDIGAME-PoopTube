@@ -142,6 +142,9 @@
     <Filter Include="KeyEvent\KeyEventHandler">
       <UniqueIdentifier>{9ce76956-49d4-4094-b40f-a36a54dc361d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FBXManager">
+      <UniqueIdentifier>{16c48e51-d9d0-4383-a702-c3bea3c21833}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -259,6 +262,9 @@
     <ClInclude Include="MouseEventHandler.h">
       <Filter>MouseEvent\MouseEventHandler</Filter>
     </ClInclude>
+    <ClInclude Include="FBXManager.h">
+      <Filter>FBXManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -348,6 +354,9 @@
     </ClCompile>
     <ClCompile Include="MouseEventHandler.cpp">
       <Filter>MouseEvent\MouseEventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="FBXManager.cpp">
+      <Filter>FBXManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

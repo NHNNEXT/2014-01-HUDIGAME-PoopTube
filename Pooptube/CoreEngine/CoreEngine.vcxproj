@@ -90,6 +90,7 @@
     <ClInclude Include="EventDispatcher.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventProcess.h" />
+    <ClInclude Include="FBXManager.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyEvent.h" />
@@ -130,6 +131,7 @@
     <ClCompile Include="EventDispatcher.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
+    <ClCompile Include="FBXManager.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyEventDispatcher.cpp" />
