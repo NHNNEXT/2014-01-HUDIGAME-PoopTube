@@ -18,6 +18,8 @@ namespace pooptube {
 
 		bool InitSdkObjects();
 		void LoadFBXFile(const char* pFileName, Mesh* CoreMesh);
+
+		//임시로 기능뽑기 위해 만든 함수
 		void LoadFBXFile2(const char* pFileName, Mesh* CoreMesh);
 
 	protected:
