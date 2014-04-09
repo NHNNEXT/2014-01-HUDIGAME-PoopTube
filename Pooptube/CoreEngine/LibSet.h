@@ -5,6 +5,8 @@
 
 // d3d
 #pragma comment(lib, "d3d9.lib")
+//fbxsdk
+#pragma comment(lib, "libfbxsdk.lib")
 #ifdef _DEBUG
 #pragma comment(lib, "d3dx9d.lib")
 #else
