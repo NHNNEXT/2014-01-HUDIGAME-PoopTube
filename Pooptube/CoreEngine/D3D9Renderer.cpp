@@ -93,7 +93,9 @@ namespace pooptube {
 		if ( mD3DDevice == nullptr )
 			return false;
 
-		if( FAILED(mD3DDevice->Clear( 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB(255,0,0,255), 1.0f, 0 )) )
+		//z버퍼 추가
+		//if( FAILED(mD3DDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(255,0,0,255), 1.0f, 0 )) )
+		if( FAILED(mD3DDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB( 0, 0, 0 ), 1.0f, 0 )) )
 			return false;
 
 		return true;

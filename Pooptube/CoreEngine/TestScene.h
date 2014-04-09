@@ -1,21 +1,22 @@
 
 #pragma once
-
+#include "stdafx.h"
 #include "Scene.h"
+#include "Mesh.h"
+#include "FBXManager.h"
 
 namespace pooptube {
+
 	class TestScene : public Scene {
 	public:
 		TestScene() {}
 		virtual ~TestScene() {}
 
-		bool Init() {
-			EnableKeyEvent();
-			EnableMouseEvent();
-			return true; 
-		}
+		bool Init();
+
 
 		void Render() {
+			m_Mesh->Render();
 		}
 
 		void Update(float dTime) {
@@ -52,5 +53,13 @@ namespace pooptube {
 		}
 
 		CREATE_FUNC(TestScene);
+
+	protected:
+
+	private:
+		Mesh* m_Mesh;
+
+
+		
 	};
 }

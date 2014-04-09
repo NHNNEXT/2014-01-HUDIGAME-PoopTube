@@ -358,6 +358,7 @@
     <ClCompile Include="FBXManager.cpp">
       <Filter>FBXManager</Filter>
     </ClCompile>
+    <ClCompile Include="TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
