@@ -14,7 +14,7 @@
 // 		virtual bool Init();
 // 
 // 		virtual void Render();
-		virtual void Update(float dTime);
+//		virtual void Update(float dTime);
 // 
 // 		LPDIRECT3DVERTEXBUFFER9 GetMeshVertexBuffer() const { return m_MeshVertexBuffer; }
 // 
@@ -22,7 +22,7 @@
 // 
 // 	private:
 // 		//메쉬의 버텍스 값을 저장하는 버텍스 버퍼
-		LPDIRECT3DVERTEXBUFFER9 m_MeshVertexBuffer;
+//		LPDIRECT3DVERTEXBUFFER9 m_MeshVertexBuffer;
 // 
 // 	};
 // 
