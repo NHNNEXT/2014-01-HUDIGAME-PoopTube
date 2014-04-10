@@ -1,44 +1,44 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "TestScene.h"
 #include "Application.h"
 
 namespace pooptube {
 	bool pooptube::TestScene::Init()
 	{
-		//ÅÂ½ºÆ®ÇÏ±âÀ§ÇØ ¼³Á¤µéÀ» ²Ù°Ü³Ö¾úÀ½
-		//¾ÕÀ¸·Ð
-		//Ä«¸Þ¶óµµ ¸¸µé¾î¾ß ÇÏ°í
-		//³ëµå¿¡ Çà·Ä°ªµµ ³Ö¾î¾ßÇÑ´Ù.
-		//ºûµµ ¼³Á¤ÇÏ°í °ü¸®ÇÏ´Â °´Ã¼¸¦ ¸¸µé¾î¾ß ÇÑ´Ù.
-		//¶ËÆ©ºê ¸Ô°í½Í´Ù.
+		//íƒœìŠ¤íŠ¸í•˜ê¸°ìœ„í•´ ì„¤ì •ë“¤ì„ ê¾¸ê²¨ë„£ì—ˆìŒ
+		//ì•žìœ¼ë¡ 
+		//ì¹´ë©”ë¼ë„ ë§Œë“¤ì–´ì•¼ í•˜ê³ 
+		//ë…¸ë“œì— í–‰ë ¬ê°’ë„ ë„£ì–´ì•¼í•œë‹¤.
+		//ë¹›ë„ ì„¤ì •í•˜ê³  ê´€ë¦¬í•˜ëŠ” ê°ì²´ë¥¼ ë§Œë“¤ì–´ì•¼ í•œë‹¤.
+		//ë˜¥íŠœë¸Œ ë¨¹ê³ ì‹¶ë‹¤.
 		EnableKeyEvent();
 		EnableMouseEvent();
 
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
-		// ÄÃ¸µÀ» ¼³Á¤ÇÕ´Ï´Ù.
+		// ì»¬ë§ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 		pDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
-		// z¹öÆÛ¸¦ »ç¿ëÇÕ´Ï´Ù.
+		// zë²„í¼ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.
 		pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 
-		//ºä Çà·ÄÀ» Á¤ÀÇÇÏ±â À§ÇÑ 3°¡ÁöÀÇ °ª
-		//Ä«¸Þ¶óÀÇ À§Ä¡
+		//ë·° í–‰ë ¬ì„ ì •ì˜í•˜ê¸° ìœ„í•œ 3ê°€ì§€ì˜ ê°’
+		//ì¹´ë©”ë¼ì˜ ìœ„ì¹˜
 		D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-5.0f );
-		//Ä«¸Þ¶ó°¡ ¹Ù¶óº¸´Â À§Ä¡
+		//ì¹´ë©”ë¼ê°€ ë°”ë¼ë³´ëŠ” ìœ„ì¹˜
 		D3DXVECTOR3 vLookatPt( 0.0f, 0.0f, 0.0f );
-		//¾÷º¤ÅÍ ¼³Á¤(Ä«¸Þ¶óÀÇ À§)
+		//ì—…ë²¡í„° ì„¤ì •(ì¹´ë©”ë¼ì˜ ìœ„)
 		D3DXVECTOR3 vUpVec( 0.0f, 1.0f, 0.0f );
 		D3DXMATRIXA16 matView;
-		//ºäÇà·ÄÀ» »ý¼º
+		//ë·°í–‰ë ¬ì„ ìƒì„±
 		D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
-		//»ý¼ºµÈ Çà·ÄÀ» µð¹ÙÀÌ½º¿¡ ¼³Á¤
+		//ìƒì„±ëœ í–‰ë ¬ì„ ë””ë°”ì´ìŠ¤ì— ì„¤ì •
 		pDevice->SetTransform( D3DTS_VIEW, &matView );
 
-		//ÇÁ·ÎÁ§¼Ç ¼³Á¤
+		//í”„ë¡œì ì…˜ ì„¤ì •
 		D3DXMATRIXA16 matProj;
-		//perspectiveÇÁ·ÎÁ§¼Ç
+		//perspectiveí”„ë¡œì ì…˜
 		D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f );
-		//»ý¼ºÇÑ ÇÁ·ÎÁ§¼Ç Á¤º¸¸¦ µð¹ÙÀÌ½º¸¦ ÅëÇØ ¼³Á¤
+		//ìƒì„±í•œ í”„ë¡œì ì…˜ ì •ë³´ë¥¼ ë””ë°”ì´ìŠ¤ë¥¼ í†µí•´ ì„¤ì •
 		pDevice->SetTransform( D3DTS_PROJECTION, &matProj );
 
 		D3DMATERIAL9 mtrl;
@@ -52,7 +52,7 @@ namespace pooptube {
 		D3DXVECTOR3 vecDir;									
 		D3DLIGHT9 light;
 
-		//±¤¿øÀÇ À§Ä¡
+		//ê´‘ì›ì˜ ìœ„ì¹˜
 		vecDir = D3DXVECTOR3(	-100.f,	
 			-100.0f,
 			100.f);
@@ -66,7 +66,7 @@ namespace pooptube {
 		D3DXVec3Normalize( (D3DXVECTOR3*)&light.Direction, &vecDir );	
 		light.Range       = 1000.0f;	
 
-		//µð¹ÙÀÌ½º¿¡ ±¤¿øÀ» ¼³Á¤ÇÕ´Ï´Ù.
+		//ë””ë°”ì´ìŠ¤ì— ê´‘ì›ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 		pDevice->SetLight( 0, &light );
 
 		pDevice->SetRenderState( D3DRS_LIGHTING, TRUE );			
