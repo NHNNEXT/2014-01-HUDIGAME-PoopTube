@@ -93,6 +93,7 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventProcess.h" />
     <ClInclude Include="FBXManager.h" />
+    <ClInclude Include="FBXMesh.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyEvent.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
@@ -134,6 +136,7 @@
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
     <ClCompile Include="FBXManager.cpp" />
+    <ClCompile Include="FBXMesh.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyEventDispatcher.cpp" />

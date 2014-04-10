@@ -145,6 +145,9 @@
     <Filter Include="FBXManager">
       <UniqueIdentifier>{16c48e51-d9d0-4383-a702-c3bea3c21833}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util\DataStructure">
+      <UniqueIdentifier>{dac80cc4-ac0b-4245-a5c2-fad35c579594}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -265,6 +268,12 @@
     <ClInclude Include="FBXManager.h">
       <Filter>FBXManager</Filter>
     </ClInclude>
+    <ClInclude Include="FBXMesh.h">
+      <Filter>Nodes\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Util\DataStructure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -359,6 +368,9 @@
       <Filter>FBXManager</Filter>
     </ClCompile>
     <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="FBXMesh.cpp">
+      <Filter>Nodes\Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
