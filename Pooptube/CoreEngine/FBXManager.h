@@ -6,6 +6,7 @@ namespace pooptube {
 
 	class Mesh;
 
+	//fbx의 관련 설명자료는 곧 만들어서 위키에 올리도록 하겠습니다.
 	class FBXManager : public Object
 	{
 	public:
@@ -16,11 +17,10 @@ namespace pooptube {
 		//일단 싱클톤으로 제작 fbxmanager관리문제는 차차 생각해봐야 함
 		static FBXManager* GetInstance();
 
+		//FBXManager를 create하고 iosetting을 한다.
 		bool InitSdkObjects();
-		void LoadFBXFile(const char* pFileName, Mesh* CoreMesh);
-
-		//임시로 기능뽑기 위해 만든 함수
-		void LoadFBXFile2(const char* pFileName, Mesh* CoreMesh);
+		//FBX파일을 로드하는 함수 로드한 후 FBXScene을 반환한다.
+		FbxScene* LoadFBXFile(const char* pFileName);
 
 	protected:
 
@@ -33,11 +33,11 @@ namespace pooptube {
 
 
 	private:
-		static  FBXManager* m_Instance;
+		static  FBXManager* mInstance;
 
 		//이 클래스 아님 sdk에서 제공하는 FbxManager
-		FbxManager*	m_pManager;
-		FbxScene*	m_pScene;
+		FbxManager*	mManager;
+		//FbxScene*	mScene;
 
 
 	};

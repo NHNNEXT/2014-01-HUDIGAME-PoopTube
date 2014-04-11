@@ -2,7 +2,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Scene.h"
-#include "Mesh.h"
+#include "FBXMesh.h"
 #include "FBXManager.h"
 
 namespace pooptube {
@@ -57,7 +57,7 @@ namespace pooptube {
 	protected:
 
 	private:
-		Mesh* m_Mesh;
+		FBXMesh* m_Mesh;
 
 
 		
