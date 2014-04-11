@@ -50,6 +50,7 @@ namespace pooptube {
 		bool mIsMouseEventEnabled;
 
 		// TODO: 각종 행렬 계산 용 데이터들..
+		D3DXMATRIXA16 mMatWorld;
 
 		//std::forward_list<EventProcess> mEventProcessList;
 		friend class SceneManager;

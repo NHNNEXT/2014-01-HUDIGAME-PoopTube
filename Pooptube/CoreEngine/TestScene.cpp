@@ -72,7 +72,6 @@ namespace pooptube {
 		pDevice->SetRenderState( D3DRS_LIGHTING, TRUE );			
 		pDevice->SetRenderState( D3DRS_AMBIENT, 0x00202020 );	
 
-		FBXManager::GetInstance()->InitSdkObjects();
 		m_Mesh = FBXMesh::Create(FBXManager::GetInstance()->LoadFBXFile("cone.fbx"));
 
 		

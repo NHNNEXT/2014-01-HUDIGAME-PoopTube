@@ -30,11 +30,17 @@ namespace pooptube {
 	}
 
 	bool Node::Init() {
+		D3DXMatrixIdentity(&mMatWorld);
+
 		return true;
 	}
 
 	void Node::Render() {
 		// TODO: 행렬 계산
+		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+
+		pDevice->SetTransform(D3DTS_WORLD, &mMatWorld);
+
 
 		for (auto child : mChildList ) {
 			child->Render();

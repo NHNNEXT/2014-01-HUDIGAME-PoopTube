@@ -17,12 +17,14 @@ namespace pooptube {
 		//일단 싱클톤으로 제작 fbxmanager관리문제는 차차 생각해봐야 함
 		static FBXManager* GetInstance();
 
-		//FBXManager를 create하고 iosetting을 한다.
-		bool InitSdkObjects();
 		//FBX파일을 로드하는 함수 로드한 후 FBXScene을 반환한다.
 		FbxScene* LoadFBXFile(const char* pFileName);
 
 	protected:
+
+		//FBXManager를 create하고 iosetting을 한다.
+		//생성시 자동호출
+		bool _Init();
 
 		//fbx파일은 기본적으로 node의 트리구조를 이루고 있습니다.
 		//리커시브하게 돌면서 fbx파일의 모든 node를 읽습니다.

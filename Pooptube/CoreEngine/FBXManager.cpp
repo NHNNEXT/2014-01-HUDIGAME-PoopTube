@@ -10,7 +10,12 @@ namespace pooptube {
 	FBXManager* FBXManager::GetInstance() {
 		if ( mInstance == nullptr ) {
 			mInstance = new FBXManager();
-			ObjectManager::GetInstance()->AddObject( mInstance );
+			if (mInstance->_Init())
+				ObjectManager::GetInstance()->AddObject(mInstance);
+			else {
+				delete mInstance;
+				mInstance = nullptr;
+			}
 		}
 
 		return mInstance;
@@ -31,7 +36,7 @@ namespace pooptube {
 		}
 	}
 
-	bool FBXManager::InitSdkObjects()
+	bool FBXManager::_Init()
 	{
 		//sdk에서 제공하는 fbx메니져
 		mManager = FbxManager::Create();
@@ -65,8 +70,8 @@ namespace pooptube {
 		}
 
 		// Initialize the importer by providing a filename.
-		//if (!pImporter->Initialize(pFileName, lFileFormat))
-		if (!pImporter->Initialize(pFileName, -1, mManager->GetIOSettings()))
+		if (!pImporter->Initialize(pFileName, lFileFormat))
+		//if (!pImporter->Initialize(pFileName, -1, mManager->GetIOSettings()))
 			return false;
 		
 		//fbxscene을 만듭니다.

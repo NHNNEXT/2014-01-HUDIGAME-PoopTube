@@ -6,7 +6,7 @@
 #include "ObjectManager.h"
 
 namespace pooptube {
-	Mesh::Mesh() : mPolygonCount(0)
+	Mesh::Mesh()
 	{
 	}
 	Mesh::~Mesh() {
