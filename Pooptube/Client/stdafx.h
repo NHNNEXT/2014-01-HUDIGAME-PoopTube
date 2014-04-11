@@ -7,6 +7,9 @@
 
 #include "targetver.h"
 
+#include "LibSet.h"
+
+
 #include <stdio.h>
 #include <tchar.h>
 
