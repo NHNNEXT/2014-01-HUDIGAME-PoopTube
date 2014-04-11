@@ -2,8 +2,9 @@
 #pragma once
 #include "stdafx.h"
 #include "Scene.h"
-#include "FBXMesh.h"
 #include "FBXManager.h"
+#include "FBXMesh.h"
+#include "Camera.h"
 
 namespace pooptube {
 
@@ -16,7 +17,8 @@ namespace pooptube {
 
 
 		void Render() {
-			m_Mesh->Render();
+			mCamera->Render();
+			mMesh->Render();
 		}
 
 		void Update(float dTime) {
@@ -57,8 +59,8 @@ namespace pooptube {
 	protected:
 
 	private:
-		FBXMesh* m_Mesh;
-
+		FBXMesh* mMesh;
+		Camera* mCamera;
 
 		
 	};

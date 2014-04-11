@@ -16,31 +16,6 @@ namespace pooptube {
 
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
-		// 컬링을 설정합니다.
-		pDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE );
-		// z버퍼를 사용합니다.
-		pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
-
-		//뷰 행렬을 정의하기 위한 3가지의 값
-		//카메라의 위치
-		D3DXVECTOR3 vEyePt( 0.0f, 3.0f,-5.0f );
-		//카메라가 바라보는 위치
-		D3DXVECTOR3 vLookatPt( 0.0f, 0.0f, 0.0f );
-		//업벡터 설정(카메라의 위)
-		D3DXVECTOR3 vUpVec( 0.0f, 1.0f, 0.0f );
-		D3DXMATRIXA16 matView;
-		//뷰행렬을 생성
-		D3DXMatrixLookAtLH( &matView, &vEyePt, &vLookatPt, &vUpVec );
-		//생성된 행렬을 디바이스에 설정
-		pDevice->SetTransform( D3DTS_VIEW, &matView );
-
-		//프로젝션 설정
-		D3DXMATRIXA16 matProj;
-		//perspective프로젝션
-		D3DXMatrixPerspectiveFovLH( &matProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f );
-		//생성한 프로젝션 정보를 디바이스를 통해 설정
-		pDevice->SetTransform( D3DTS_PROJECTION, &matProj );
-
 		D3DMATERIAL9 mtrl;
 		ZeroMemory( &mtrl, sizeof(D3DMATERIAL9) );
 		mtrl.Diffuse.r = mtrl.Ambient.r = 1.0f;
@@ -72,9 +47,11 @@ namespace pooptube {
 		pDevice->SetRenderState( D3DRS_LIGHTING, TRUE );			
 		pDevice->SetRenderState( D3DRS_AMBIENT, 0x00202020 );	
 
-		m_Mesh = FBXMesh::Create(FBXManager::GetInstance()->LoadFBXFile("cone.fbx"));
+		mMesh = FBXMesh::Create(FBXManager::GetInstance()->LoadFBXFile("cone.fbx"));
 
-		
+		mCamera = Camera::Create();
+
+
 		return true; 
 	}
 
