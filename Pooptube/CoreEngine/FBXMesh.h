@@ -8,7 +8,7 @@ namespace pooptube {
 
 	//매쉬에서 사용되는 커스텀 버텍스입니다.
 	//이걸 여기둬두 되나? 누가 태클쩜
-	struct MESHCUSTOMVERTEX
+	struct MESH_CUSTOM_VERTEX
 	{
 		D3DXVECTOR3	position;
 		D3DXVECTOR3	normal;
