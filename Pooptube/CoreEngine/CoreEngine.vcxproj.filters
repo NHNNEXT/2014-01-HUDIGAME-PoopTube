@@ -151,6 +151,9 @@
     <Filter Include="CollisionManager">
       <UniqueIdentifier>{2633a112-8ba2-4d93-9424-30bd11ec88ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Json">
+      <UniqueIdentifier>{db9de6e6-625d-4f23-b75a-5f1ce0c377ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -283,6 +286,9 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>CollisionManager</Filter>
     </ClInclude>
+    <ClInclude Include="JsonParser.h">
+      <Filter>Json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -385,6 +391,9 @@
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>CollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonParser.cpp">
+      <Filter>Json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
