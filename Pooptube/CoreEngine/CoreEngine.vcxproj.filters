@@ -61,9 +61,6 @@
     <Filter Include="Nodes\Camera">
       <UniqueIdentifier>{b81412ae-ae2e-4fe3-a246-fcd3f49cd85e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Nodes\Mesh">
-      <UniqueIdentifier>{09442dfc-e403-44af-bbef-16fd323e1cb2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Nodes\Scene">
       <UniqueIdentifier>{88d4f64d-f833-41e8-beb2-95696c80c04a}</UniqueIdentifier>
     </Filter>
@@ -159,6 +156,9 @@
     </Filter>
     <Filter Include="Nodes\CollisionBox">
       <UniqueIdentifier>{0c19ec2f-46fc-4ade-9266-d452f00736e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nodes\MeshData">
+      <UniqueIdentifier>{09442dfc-e403-44af-bbef-16fd323e1cb2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -278,7 +278,7 @@
       <Filter>FBXManager</Filter>
     </ClInclude>
     <ClInclude Include="FBXMesh.h">
-      <Filter>Nodes\Mesh</Filter>
+      <Filter>Nodes\MeshData</Filter>
     </ClInclude>
     <ClInclude Include="ObjectPool.h">
       <Filter>Util\DataStructure</Filter>
@@ -293,7 +293,10 @@
       <Filter>Nodes\CollisionBox</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>Nodes\Mesh</Filter>
+      <Filter>Nodes\MeshData</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinnedMesh.h">
+      <Filter>Nodes\SkinnedMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -387,7 +390,7 @@
     </ClCompile>
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="FBXMesh.cpp">
-      <Filter>Nodes\Mesh</Filter>
+      <Filter>Nodes\MeshData</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>CollisionManager</Filter>
@@ -399,7 +402,10 @@
       <Filter>Nodes\CollisionBox</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Nodes\Mesh</Filter>
+      <Filter>Nodes\MeshData</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinnedMesh.cpp">
+      <Filter>Nodes\SkinnedMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
