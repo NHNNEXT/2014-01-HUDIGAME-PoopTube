@@ -148,6 +148,9 @@
     <Filter Include="Util\DataStructure">
       <UniqueIdentifier>{dac80cc4-ac0b-4245-a5c2-fad35c579594}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CollisionManager">
+      <UniqueIdentifier>{2633a112-8ba2-4d93-9424-30bd11ec88ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -274,6 +277,12 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>Util\DataStructure</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionMesh.h">
+      <Filter>Nodes\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>CollisionManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -370,6 +379,12 @@
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="FBXMesh.cpp">
       <Filter>Nodes\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMesh.cpp">
+      <Filter>Nodes\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>CollisionManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
