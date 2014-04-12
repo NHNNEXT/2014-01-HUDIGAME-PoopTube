@@ -154,6 +154,12 @@
     <Filter Include="Json">
       <UniqueIdentifier>{db9de6e6-625d-4f23-b75a-5f1ce0c377ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nodes\SkinnedMesh">
+      <UniqueIdentifier>{40a1effc-cd23-494c-bda7-bd2447e79645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nodes\CollisionBox">
+      <UniqueIdentifier>{0c19ec2f-46fc-4ade-9266-d452f00736e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -191,9 +197,6 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Nodes\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Nodes\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Nodes\Camera</Filter>
@@ -280,14 +283,17 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>Util\DataStructure</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionMesh.h">
-      <Filter>Nodes\Mesh</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>CollisionManager</Filter>
     </ClInclude>
     <ClInclude Include="JsonParser.h">
       <Filter>Json</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMesh.h">
+      <Filter>Nodes\CollisionBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Nodes\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -315,9 +321,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Nodes\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Nodes\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Nodes\Camera</Filter>
@@ -386,14 +389,17 @@
     <ClCompile Include="FBXMesh.cpp">
       <Filter>Nodes\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionMesh.cpp">
-      <Filter>Nodes\Mesh</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="JsonParser.cpp">
       <Filter>Json</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionMesh.cpp">
+      <Filter>Nodes\CollisionBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Nodes\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
