@@ -51,7 +51,7 @@ namespace pooptube {
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 		//디바이스에 버텍스버퍼를 전달
-		pDevice->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESHCUSTOMVERTEX));
+		pDevice->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
 
 		//기본적으로 삼각형 폴리곤만 그린다. 욕심이지만 삼각형 폴리곤말고도 지원하고싶다. fbx는 지원하고 있다.
 		//문제는 fbx에서는 list를 지원하는 듯 하다.
@@ -105,7 +105,7 @@ namespace pooptube {
 				LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 				//fbx 파일에서 받아온 버택스 정보를 담는 백터
-				std::vector<MESHCUSTOMVERTEX> pOutVertexVector;
+				std::vector<MESH_CUSTOM_VERTEX> pOutVertexVector;
 				int countVertex = 0;
 
 				for (int j = 0; j < pMesh->GetPolygonCount(); j++)
@@ -120,7 +120,7 @@ namespace pooptube {
 					{
 						int iControlPointIndex = pMesh->GetPolygonVertex(j, k);
 
-						MESHCUSTOMVERTEX vertex;
+						MESH_CUSTOM_VERTEX vertex;
 						vertex.position.x = (float)pVertices[iControlPointIndex].mData[0];
 						vertex.position.y = (float)pVertices[iControlPointIndex].mData[1];
 						vertex.position.z = (float)pVertices[iControlPointIndex].mData[2];
@@ -141,7 +141,7 @@ namespace pooptube {
 				}
 
 				//버택스 버퍼 생성
-				if (pDevice->CreateVertexBuffer(countVertex*sizeof(MESHCUSTOMVERTEX),
+				if (pDevice->CreateVertexBuffer(countVertex*sizeof(MESH_CUSTOM_VERTEX),
 					0, D3DFVF_CUSTOMVERTEX,
 					D3DPOOL_DEFAULT, &mMeshVertexBuffer, NULL) < 0)
 				{
@@ -149,7 +149,7 @@ namespace pooptube {
 				}
 
 				//락과 언락을 최대한 출일 수 있는 방법을 연구해야함
-				MESHCUSTOMVERTEX* pCustomVertices;
+				MESH_CUSTOM_VERTEX* pCustomVertices;
 				if (mMeshVertexBuffer->Lock(0, 0, (void**)&pCustomVertices, 0) < 0)
 					return false;
 

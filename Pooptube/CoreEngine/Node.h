@@ -18,6 +18,7 @@
 	}
 
 namespace pooptube {
+
 	class Node : public Object, public KeyEventDelegate, public MouseEventDelegate {
 	public:
 		Node();
