@@ -11,14 +11,15 @@ namespace pooptube {
 
 		~JsonParser();
 	public:
-
-
+		
 	private:
 		static JsonParser* GetInstance(char* path);
 		static JsonParser* GetInstance();
+		bool ReadFromFile(const char* filename, char* buffer, int len);
+		void JsonToCString();
 
 	private:
-		//Json::Value mRoot;
-		const char* mPath;
+		char* mJsonFilePath;
+		char mPath[1024];
 	};
 }
