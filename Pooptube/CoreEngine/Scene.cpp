@@ -10,7 +10,7 @@ namespace pooptube {
 	Scene::~Scene() {
 	}
 
-	Scene* Scene::Create() {
+	Scene* Scene::Create() {		
 		Scene* pScene = new Scene();
 		if ( pScene->Init() ) {
 			ObjectManager::GetInstance()->AddObject( pScene );

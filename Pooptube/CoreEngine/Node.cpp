@@ -36,13 +36,15 @@ namespace pooptube {
 	}
 
 	void Node::Render() {
-		// TODO: 행렬 계산
+		// TODO: 행렬 계산		
+		// agebreak : 이렇게 많은 클래스들과 연관되어서 디바이스를 가져오는 구조가 과연 올바른가?? 
+		// 의존 관계가 너무 복잡해지지 않나? App <-> Node 양쪽 의존이지 않을까?
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 		pDevice->SetTransform(D3DTS_WORLD, &mMatWorld);
 
 
-		for (auto child : mChildList ) {
+		for (auto child : mChildList ) {			
 			child->Render();
 		}
 	}

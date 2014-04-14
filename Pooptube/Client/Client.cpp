@@ -31,6 +31,9 @@ int main()
 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pooptube::TestScene::Create() );
 
+
+	// agebreak : Run 함수를 보면 무조건 True를 반환하는데, 아래 if 문이 필요한가?
+	// 2. 만약 Run이 실행되지 않으면, 메모리 릭이 발생할텐데??
 	//pooptube::TestScene::Create();
 	if (pooptube::Application::GetInstance()->Run()) {
 		pooptube::Application::GetInstance()->Release();
