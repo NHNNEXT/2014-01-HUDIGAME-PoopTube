@@ -36,7 +36,7 @@ namespace pooptube {
 
 		if (_FBXInit() == false)
 			return false;
-		
+
 		return true;
 	}
 
@@ -61,11 +61,12 @@ namespace pooptube {
 
 
 	FBXMesh* ResourceManager::LoadMeshFromFBX(std::string FilePath) {
-		
-		if (!mFBXMeshTable[FilePath]) {
+
+		//map을 사용할 때 조심해야 할 부분
+		if (mFBXMeshTable.find(FilePath) == mFBXMeshTable.end()) {
 			mFBXMeshTable[FilePath] = _LoadFBXFile(FilePath);
 		}
-		
+
 		return mFBXMeshTable[FilePath];
 	}
 
@@ -96,7 +97,7 @@ namespace pooptube {
 
 		//더이상 필요없으니 제거
 		pImporter->Destroy();
-		
+
 		return _ReadVerticesFromFBX(pScene);
 	}
 
@@ -163,7 +164,7 @@ namespace pooptube {
 						vertex.normal.z = (float)normal[2];
 
 						//일단 색은 임의로 지정
-						vertex.color = 0x0000ff00;
+						vertex.color = 0xff00ff00;
 
 						countVertex++;
 						pOutVertexVector.push_back(vertex);

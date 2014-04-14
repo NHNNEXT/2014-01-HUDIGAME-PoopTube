@@ -17,19 +17,38 @@ public:
 	static StageOne* Create();
 
 	void Render() {
+		mCamera->Render();
+
+		mSkinnedMesh->Translation(xTrans, 0.f, zTrans);
+
 		if (mSkinnedMesh)
 			mSkinnedMesh->Render();
-
-		mCamera->Render();
 	}
 
 	void Update(float dTime) {
+
 	}
 
 	void KeyDown(KeyEvent* pKeyEvent) {
 		printf("KeyDown\n");
 	}
 	void KeyPressed(KeyEvent* pKeyEvent) {
+		switch (pKeyEvent->GetKeyCode())
+		{
+		case VK_UP:
+			zTrans -= 0.1f;
+			break;
+		case VK_DOWN:
+			zTrans += 0.1f;
+			break;
+		case VK_RIGHT:
+			xTrans -= 0.1f;
+			break;
+		case VK_LEFT:
+			xTrans += 0.1f;
+			break;
+		}
+
 		printf("KeyPressed\n");
 	}
 	void KeyUp(KeyEvent* pKeyEvent) {
@@ -56,12 +75,14 @@ public:
 		printf("MouseWheel\n");
 	}
 
-	
+
 
 protected:
 
 private:
-	Camera* mCamera;
-	SkinnedMesh* mSkinnedMesh;
+	Camera*			mCamera;
+	SkinnedMesh*	mSkinnedMesh;
+	float			xTrans;
+	float			zTrans;
 };
 

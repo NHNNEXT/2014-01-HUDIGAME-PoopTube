@@ -7,7 +7,7 @@
 
 namespace pooptube {
 	Camera::Camera() 
-		: mEyePt(0.0f, -3.0f, 5.0f), mLookatPt(0.0f, 0.0f, 0.0f), mUpVec(0.0f, 1.0f, 0.0f)
+		: mEyePt(0.0f, 3.0f, 5.0f), mLookatPt(0.0f, 0.0f, 0.0f), mUpVec(0.0f, 1.0f, 0.0f)
 	{
 	}
 	Camera::~Camera() {

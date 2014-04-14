@@ -5,7 +5,7 @@
 
 using namespace pooptube;
 
-StageOne::StageOne()
+StageOne::StageOne() : xTrans(0.f), zTrans(0.f)
 {
 }
 
@@ -53,9 +53,9 @@ bool StageOne::Init()
 	D3DLIGHT9 light;
 
 	//±¤¿øÀÇ À§Ä¡
-	vecDir = D3DXVECTOR3(	100.f,
-							100.f,
-							-100.f);
+	vecDir = D3DXVECTOR3(100.f,
+		100.f,
+		-100.f);
 
 	ZeroMemory(&light, sizeof(D3DLIGHT9));
 	light.Type = D3DLIGHT_DIRECTIONAL;

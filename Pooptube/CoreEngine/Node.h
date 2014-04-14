@@ -40,6 +40,8 @@ namespace pooptube {
 		virtual void EnableKeyEvent();
 		virtual void EnableMouseEvent();
 
+		void Translation(float xTrans, float yTrans, float zTrans);
+
 	private:
 		void _RegistrationToKeyEventDispatcher();
 		void _RegistrationToMouseEventDispatcher();
@@ -52,7 +54,10 @@ namespace pooptube {
 
 		// TODO: 각종 행렬 계산 용 데이터들..
 		D3DXMATRIXA16 mMatWorld;
-
+		D3DXMATRIXA16 mMatRotate;
+		D3DXMATRIXA16 mMatTrans;
+		D3DXMATRIXA16 mMatScale;
+		
 		//std::forward_list<EventProcess> mEventProcessList;
 		friend class SceneManager;
 	};
