@@ -1,4 +1,3 @@
-
 #include "stdafx.h"
 #include "JsonParser.h"
 
@@ -11,7 +10,7 @@ namespace pooptube {
 	}
 	bool JsonParser::ReadFromFile(const char* filename, char* buffer, int len) 
 	{
-		FILE* r;
+		FILE* r = nullptr; // nullptr? NULL?
 		fopen_s(&r, filename, "r");
 
 		if (NULL == r)
