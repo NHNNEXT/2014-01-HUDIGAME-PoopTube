@@ -7,8 +7,7 @@ namespace pooptube {
 	class Mesh;
 
 	//fbx의 관련 설명자료는 곧 만들어서 위키에 올리도록 하겠습니다.
-	class FBXManager : public Object
-	{
+	class FBXManager : public Object {
 	public:
 
 		FBXManager(void);

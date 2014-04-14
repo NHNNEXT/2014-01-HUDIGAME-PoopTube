@@ -19,6 +19,7 @@
 #include <forward_list>
 #include <list>
 #include <algorithm>
+#include <map>
 
 #include <C:\Program Files\Autodesk\FBX\FBX SDK\2014.2.1\include\fbxsdk.h>
 

@@ -1,8 +1,22 @@
 #pragma once
-class SkinnedMesh
-{
-public:
-	SkinnedMesh();
-	virtual ~SkinnedMesh();
-};
+#include "Node.h"
 
+namespace pooptube {
+
+	class SkinnedMesh : public Node {
+	public:
+		SkinnedMesh();
+		virtual ~SkinnedMesh();
+
+		static SkinnedMesh* Create();
+		virtual bool Init();
+
+	protected:
+
+
+
+	private:
+
+	};
+
+}
