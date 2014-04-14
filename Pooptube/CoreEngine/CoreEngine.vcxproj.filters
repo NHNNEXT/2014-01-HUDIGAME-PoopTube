@@ -139,9 +139,6 @@
     <Filter Include="KeyEvent\KeyEventHandler">
       <UniqueIdentifier>{9ce76956-49d4-4094-b40f-a36a54dc361d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FBXManager">
-      <UniqueIdentifier>{16c48e51-d9d0-4383-a702-c3bea3c21833}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Util\DataStructure">
       <UniqueIdentifier>{dac80cc4-ac0b-4245-a5c2-fad35c579594}</UniqueIdentifier>
     </Filter>
@@ -274,9 +271,6 @@
     <ClInclude Include="MouseEventHandler.h">
       <Filter>MouseEvent\MouseEventHandler</Filter>
     </ClInclude>
-    <ClInclude Include="FBXManager.h">
-      <Filter>FBXManager</Filter>
-    </ClInclude>
     <ClInclude Include="FBXMesh.h">
       <Filter>Nodes\MeshData</Filter>
     </ClInclude>
@@ -384,9 +378,6 @@
     </ClCompile>
     <ClCompile Include="MouseEventHandler.cpp">
       <Filter>MouseEvent\MouseEventHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="FBXManager.cpp">
-      <Filter>FBXManager</Filter>
     </ClCompile>
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="FBXMesh.cpp">

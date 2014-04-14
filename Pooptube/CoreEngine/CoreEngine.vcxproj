@@ -94,7 +94,6 @@
     <ClInclude Include="EventDispatcher.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventProcess.h" />
-    <ClInclude Include="FBXManager.h" />
     <ClInclude Include="FBXMesh.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="JsonParser.h" />
@@ -141,7 +140,6 @@
     <ClCompile Include="EventDispatcher.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
-    <ClCompile Include="FBXManager.cpp" />
     <ClCompile Include="FBXMesh.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />

@@ -22,9 +22,9 @@ namespace pooptube {
 		virtual ~FBXMesh();
 
 		//팩토리 구조, 생성을 위해서는 FBXManager에서 생성한 FBXScene을 인자로 넘겨야 한다.
-		static FBXMesh* Create(FbxScene* pScene);
+		static FBXMesh* Create(int SizeOfVertexBuffer);
 
-		virtual bool Init(FbxScene* pScene);
+		virtual bool Init(int SizeOfVertexBuffer);
 
 		virtual void Render();
 		virtual void Update(float dTime);
@@ -32,6 +32,7 @@ namespace pooptube {
 
 		LPDIRECT3DVERTEXBUFFER9 GetMeshVertexBuffer() const { return mMeshVertexBuffer; }
 		int						GetPolygonCount() const { return mPolygonCount; }
+		void					SetPolygonCount(int val) { mPolygonCount = val; }
 
 	protected:
 
@@ -44,6 +45,7 @@ namespace pooptube {
 		//메쉬의 폴리곤 갯수
 		//매번 변할때마다 수정해줘야한다. 편하게 자동으로 변하는 방법을 생각해보자.
 		int						mPolygonCount;
+		
 	};
 
 }

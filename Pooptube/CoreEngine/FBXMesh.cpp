@@ -13,9 +13,9 @@ namespace pooptube {
 	{
 	}
 
-	FBXMesh* FBXMesh::Create(FbxScene* pScene) {
+	FBXMesh* FBXMesh::Create(int SizeOfVertexBuffer) {
 		FBXMesh* pMesh = new FBXMesh();
-		if (pMesh->Init(pScene)) {
+		if (pMesh->Init(SizeOfVertexBuffer)) {
 			ObjectManager::GetInstance()->AddObject(pMesh);
 		}
 		else {
@@ -26,7 +26,7 @@ namespace pooptube {
 	}
 
 
-	bool FBXMesh::Init(FbxScene* pScene)
+	bool FBXMesh::Init(int SizeOfVertexBuffer)
 	{
 		//이거 이렇게 쓰기 불편하다. 다른 방법을 생각해보자.
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
@@ -34,10 +34,15 @@ namespace pooptube {
 		if (!Node::Init())
 			return false;
 
-		if (!_LoadMeshFromFBXScene(pScene))
-			return false;
-		
 		pDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+
+		//버택스 버퍼 생성
+		if (pDevice->CreateVertexBuffer(SizeOfVertexBuffer*sizeof(MESH_CUSTOM_VERTEX),
+			0, D3DFVF_CUSTOMVERTEX,
+			D3DPOOL_DEFAULT, &mMeshVertexBuffer, NULL) < 0)
+		{
+			return false;
+		}
 
 		return true;
 	}
@@ -65,111 +70,5 @@ namespace pooptube {
 	{
 		Node::Update(dTime);
 	}
-
-	bool FBXMesh::_LoadMeshFromFBXScene(FbxScene* pScene)
-	{
-
-		FbxNode* pFbxRootNode = pScene->GetRootNode();
-
-		if (pFbxRootNode)
-		{
-			int ChildCount = pFbxRootNode->GetChildCount();
-
-			for (int i = 0; i < ChildCount; i++)
-			{
-				FbxNode* pFbxChildNode = pFbxRootNode->GetChild(i);
-
-				if (pFbxChildNode->GetNodeAttribute() == NULL)
-					continue;
-
-				FbxNodeAttribute::EType AttributeType = pFbxChildNode->GetNodeAttribute()->GetAttributeType();
-
-				if (AttributeType != FbxNodeAttribute::eMesh)
-					continue;
-
-				FbxMesh* pMesh = (FbxMesh*)pFbxChildNode->GetNodeAttribute();
-				FbxGeometryElementNormal* normalEl = pMesh->GetElementNormal();
-				FbxLayerElementArrayTemplate<FbxVector2>* uv = 0;
-				pMesh->GetTextureUV(&uv, FbxLayerElement::eTextureDiffuse);
-
-				FbxVector4* pVertices = pMesh->GetControlPoints();
-				const int lVertexCount = pMesh->GetControlPointsCount();
-
-				// 0이면 왜그려
-				if (lVertexCount == 0)
-					return false;
-
-				//폴리곤 카운트
-				mPolygonCount = pMesh->GetPolygonCount();
-
-				LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-
-				//fbx 파일에서 받아온 버택스 정보를 담는 백터
-				std::vector<MESH_CUSTOM_VERTEX> pOutVertexVector;
-				int countVertex = 0;
-
-				for (int j = 0; j < pMesh->GetPolygonCount(); j++)
-				{
-					int iNumVertices = pMesh->GetPolygonSize(j);
-
-					//대충처리
-					if (iNumVertices != 3)
-						return false;
-
-					for (int k = 0; k < iNumVertices; k++)
-					{
-						int iControlPointIndex = pMesh->GetPolygonVertex(j, k);
-
-						MESH_CUSTOM_VERTEX vertex;
-						vertex.position.x = (float)pVertices[iControlPointIndex].mData[0];
-						vertex.position.y = (float)pVertices[iControlPointIndex].mData[1];
-						vertex.position.z = (float)pVertices[iControlPointIndex].mData[2];
-
-						FbxVector4 normal;
-
-						pMesh->GetPolygonVertexNormal(j, k, normal);
-						vertex.normal.x = (float)normal[0];
-						vertex.normal.y = (float)normal[1];
-						vertex.normal.z = (float)normal[2];
-
-						//일단 색은 임의로 지정
-						vertex.color = 0xff00ff00;
-
-						countVertex++;
-						pOutVertexVector.push_back(vertex);
-					}
-				}
-
-				//버택스 버퍼 생성
-				if (pDevice->CreateVertexBuffer(countVertex*sizeof(MESH_CUSTOM_VERTEX),
-					0, D3DFVF_CUSTOMVERTEX,
-					D3DPOOL_DEFAULT, &mMeshVertexBuffer, NULL) < 0)
-				{
-					return false;
-				}
-
-				//락과 언락을 최대한 출일 수 있는 방법을 연구해야함
-				MESH_CUSTOM_VERTEX* pCustomVertices;
-				if (mMeshVertexBuffer->Lock(0, 0, (void**)&pCustomVertices, 0) < 0)
-					return false;
-
-				int index = 0;
-				for (auto iter : pOutVertexVector)
-				{
-					pCustomVertices[index].position = iter.position;
-					pCustomVertices[index].normal = iter.normal;
-					pCustomVertices[index].color = iter.color;
-
-					index++;
-				}
-
-				mMeshVertexBuffer->Unlock();
-
-			}
-		}
-		return true;
-	}
-
-
 	
 }
