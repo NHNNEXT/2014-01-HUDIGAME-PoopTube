@@ -60,34 +60,34 @@ namespace pooptube {
 	}
 
 
-	FBXMesh* ResourceManager::LoadMeshFromFBX(std::string sPath) {
+	FBXMesh* ResourceManager::LoadMeshFromFBX(std::string FilePath) {
 		
-		if (!mFBXMeshTable[sPath]) {
-			mFBXMeshTable[sPath] = _LoadFBXFile(sPath);
+		if (!mFBXMeshTable[FilePath]) {
+			mFBXMeshTable[FilePath] = _LoadFBXFile(FilePath);
 		}
 		
-		return mFBXMeshTable[sPath];
+		return mFBXMeshTable[FilePath];
 	}
 
-	FBXMesh* ResourceManager::_LoadFBXFile(std::string sPath) {
+	FBXMesh* ResourceManager::_LoadFBXFile(std::string FilePath) {
 		int lFileFormat = -1;
 		FbxImporter* pImporter = nullptr;
 
 		// importer를 생성합니다.
 		pImporter = FbxImporter::Create(mManager, "");
-		if (!mManager->GetIOPluginRegistry()->DetectReaderFileFormat(sPath.c_str(), lFileFormat))
+		if (!mManager->GetIOPluginRegistry()->DetectReaderFileFormat(FilePath.c_str(), lFileFormat))
 		{
 			// Unrecognizable file format. Try to fall back to FbxImporter::eFBX_BINARY
 			lFileFormat = mManager->GetIOPluginRegistry()->FindReaderIDByDescription("FBX binary (*.fbx)");
 		}
 
 		// Initialize the importer by providing a filename.
-		if (!pImporter->Initialize(sPath.c_str(), lFileFormat))
+		if (!pImporter->Initialize(FilePath.c_str(), lFileFormat))
 			//if (!pImporter->Initialize(pFileName, -1, mManager->GetIOSettings()))
 			return false;
 
 		//fbxscene을 만듭니다.
-		FbxScene* pScene = FbxScene::Create(mManager, sPath.c_str());
+		FbxScene* pScene = FbxScene::Create(mManager, FilePath.c_str());
 		if (!pScene)
 			return false;
 

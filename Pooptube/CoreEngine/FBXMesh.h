@@ -36,12 +36,10 @@ namespace pooptube {
 
 	protected:
 
-		bool _LoadMeshFromFBXScene(FbxScene* pScene);
 
 	private:
 		//메쉬의 버텍스 값을 저장하는 버텍스 버퍼
 		LPDIRECT3DVERTEXBUFFER9 mMeshVertexBuffer;
-		FbxScene*				mScene;
 		//메쉬의 폴리곤 갯수
 		//매번 변할때마다 수정해줘야한다. 편하게 자동으로 변하는 방법을 생각해보자.
 		int						mPolygonCount;

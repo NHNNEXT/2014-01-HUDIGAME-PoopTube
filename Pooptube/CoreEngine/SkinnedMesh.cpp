@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "SkinnedMesh.h"
 #include "ObjectManager.h"
+#include "resourcemanager.h"
+#include "FBXMesh.h"
+
 namespace pooptube {
 
 	SkinnedMesh::SkinnedMesh() {
@@ -9,9 +12,9 @@ namespace pooptube {
 	SkinnedMesh::~SkinnedMesh() {
 	}
 
-	SkinnedMesh* SkinnedMesh::Create() {
+	SkinnedMesh* SkinnedMesh::Create(std::string FilePath) {
 		SkinnedMesh* pMesh = new SkinnedMesh();
-		if (pMesh->Init()) {
+		if (pMesh->Init(FilePath)) {
 			ObjectManager::GetInstance()->AddObject(pMesh);
 		}
 		else {
@@ -21,8 +24,23 @@ namespace pooptube {
 		return pMesh;
 	}
 
-	bool SkinnedMesh::Init() {
+	bool SkinnedMesh::Init(std::string FilePath) {
+
+		mFBXMesh = ResourceManager::GetInstance()->LoadMeshFromFBX(FilePath);
+
 		return true;
 	}
+
+	void SkinnedMesh::Render()
+	{
+		mFBXMesh->Render();
+	}
+
+	void SkinnedMesh::Update(float dTime)
+	{
+
+	}
+
+
 
 }
