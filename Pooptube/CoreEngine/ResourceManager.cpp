@@ -101,7 +101,7 @@ namespace pooptube {
 	}
 
 	FBXMesh* ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {
-		FBXMesh* pNewMesh;
+		FBXMesh* pNewMesh = nullptr;
 		FbxNode* pFbxRootNode = pScene->GetRootNode();
 
 		if (pFbxRootNode)

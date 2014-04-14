@@ -246,7 +246,6 @@
     <ClInclude Include="ThirdPersonCamera.h">
       <Filter>Nodes\Camera\ThirdPersonCamera</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h" />
     <ClInclude Include="InputManager.h">
       <Filter>%2aInputManager</Filter>
     </ClInclude>
@@ -379,7 +378,6 @@
     <ClCompile Include="MouseEventHandler.cpp">
       <Filter>MouseEvent\MouseEventHandler</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="FBXMesh.cpp">
       <Filter>Nodes\MeshData</Filter>
     </ClCompile>
