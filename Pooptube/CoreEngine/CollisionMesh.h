@@ -4,7 +4,9 @@
 
 namespace pooptube {
 
-	enum COLLISION_TYPE // µû·Î »©´Â°Ô ³ªÀ»°Å °°±ä ÇÑµ¥...
+	// c++11ì˜ enum classë¥¼ ì‚¬ìš©í•˜ëŠ”ê±´ ì–´ë–¨ê¹Œìš”?
+	// í˜¹ì€ enum class COLLISION_TYP : unsigned shortì€ ì–´ë–¨ê¹Œìš”?
+	enum COLLISION_TYPE // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñµï¿½...
 	{
 		COLLISION_NONE		=	0x00000000,
 		COLLISION_BLOCK		=	0x00000001,
@@ -15,7 +17,7 @@ namespace pooptube {
 		COLLISION_ENEMY		=	0x00000020,
 	};
 
-	struct VECTOR3D // TODO: ÀÌ³à¼®µµ ³ªÁß¿¡ ¹Ù²ÙÀÚ...
+	struct VECTOR3D // TODO: ï¿½Ì³à¼®ï¿½ï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½...
 	{
 		float x = 0;
 		float y = 0;
@@ -52,9 +54,9 @@ namespace pooptube {
 		VECTOR3D GetSpeed() { return mSpeed; }
 
 	private:
-		COLLISION_TYPE mCollisionType;	// Ãæµ¹ Á¾·ù
-		float mBound;		// ¹İ¹ß°è¼ö
-		float mMass;		// Áú·®
-		VECTOR3D mSpeed;	// ¼Óµµ
+		COLLISION_TYPE mCollisionType;	// ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
+		float mBound;		// ï¿½İ¹ß°ï¿½ï¿½ï¿½
+		float mMass;		// ï¿½ï¿½ï¿½ï¿½
+		VECTOR3D mSpeed;	// ï¿½Óµï¿½
 	};
 }
