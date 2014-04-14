@@ -52,6 +52,10 @@ namespace pooptube {
 		d3dPresentParameters.hDeviceWindow = hwnd;
 		d3dPresentParameters.Windowed = isWindowed;
 		
+		//깊이 버퍼 설정 추가
+		d3dPresentParameters.EnableAutoDepthStencil = TRUE;
+		d3dPresentParameters.AutoDepthStencilFormat = D3DFMT_D16;
+
 		if( SUCCEEDED(mD3D->CheckDeviceMultiSampleType( D3DADAPTER_DEFAULT,
 		  D3DDEVTYPE_HAL, d3dPresentParameters.BackBufferFormat, isWindowed, mst, NULL )) ) { 
 			d3dPresentParameters.MultiSampleType = mst;
@@ -100,7 +104,7 @@ namespace pooptube {
 
 		//z버퍼 추가
 		//argb와 xrgb차이
-		if( FAILED(mD3DDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(255,0,0,255), 1.0f, 0 )) )
+		if( FAILED(mD3DDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(255,0,0,0), 1.0f, 0 )) )
 			return false;
 
 		return true;

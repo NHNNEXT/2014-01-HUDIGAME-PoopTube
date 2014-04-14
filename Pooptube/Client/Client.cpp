@@ -14,7 +14,7 @@ int main()
 	//_CrtSetBreakAlloc( );
 	//#endif
 
-	pooptube::Application::GetInstance()->Init(L"Test", 400, 300, true);
+	pooptube::Application::GetInstance()->Init(L"Test", 800, 600, true);
 
 	StageOne* pStageOne = StageOne::Create();
 

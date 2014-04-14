@@ -37,16 +37,16 @@ namespace pooptube {
 
 		Node::Render();
 
+		//뷰행렬을 생성
+		D3DXMatrixLookAtLH(&mMatView, &mEyePt, &mLookatPt, &mUpVec);
+		//생성된 뷰행렬을 적용
+		pDevice->SetTransform(D3DTS_VIEW, &mMatView);
+
 		//프로젝션 설정
 		//perspective프로젝션
 		D3DXMatrixPerspectiveFovLH(&mMatProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
 		//생성한 프로젝션 정보를 디바이스를 통해 설정
 		pDevice->SetTransform(D3DTS_PROJECTION, &mMatProj);
-
-		//뷰행렬을 생성
-		D3DXMatrixLookAtLH(&mMatView, &mEyePt, &mLookatPt, &mUpVec);
-		//생성된 뷰행렬을 적용
-		pDevice->SetTransform(D3DTS_VIEW, &mMatView);
 	}
 
 	void Camera::Update(float dTime)

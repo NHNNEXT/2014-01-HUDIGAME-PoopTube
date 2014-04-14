@@ -75,7 +75,7 @@ bool StageOne::Init()
 
 
 	mCamera = Camera::Create();
-	mSkinnedMesh = SkinnedMesh::Create("cone.fbx");
+	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx");
 
 	return true;
 }

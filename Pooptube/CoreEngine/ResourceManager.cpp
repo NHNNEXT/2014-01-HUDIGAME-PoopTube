@@ -163,7 +163,7 @@ namespace pooptube {
 						vertex.normal.z = (float)normal[2];
 
 						//일단 색은 임의로 지정
-						vertex.color = 0xff00ff00;
+						vertex.color = 0x0000ff00;
 
 						countVertex++;
 						pOutVertexVector.push_back(vertex);

@@ -17,10 +17,10 @@ public:
 	static StageOne* Create();
 
 	void Render() {
-		mCamera->Render();
-
 		if (mSkinnedMesh)
 			mSkinnedMesh->Render();
+
+		mCamera->Render();
 	}
 
 	void Update(float dTime) {
