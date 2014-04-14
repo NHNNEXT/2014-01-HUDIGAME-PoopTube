@@ -84,15 +84,15 @@ namespace pooptube {
 		// Initialize the importer by providing a filename.
 		if (!pImporter->Initialize(FilePath.c_str(), lFileFormat))
 			//if (!pImporter->Initialize(pFileName, -1, mManager->GetIOSettings()))
-			return false;
+			return nullptr;
 
 		//fbxscene을 만듭니다.
 		FbxScene* pScene = FbxScene::Create(mManager, FilePath.c_str());
 		if (!pScene)
-			return false;
+			return nullptr;
 
 		if (!pImporter->Import(pScene))
-			return false;
+			return nullptr;
 
 		//더이상 필요없으니 제거
 		pImporter->Destroy();
@@ -130,7 +130,7 @@ namespace pooptube {
 
 				// 0이면 왜그려
 				if (lVertexCount == 0)
-					return false;
+					return nullptr;
 
 				LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
@@ -144,7 +144,7 @@ namespace pooptube {
 
 					//대충처리
 					if (iNumVertices != 3)
-						return false;
+						return nullptr;
 
 					for (int k = 0; k < iNumVertices; k++)
 					{
@@ -177,7 +177,7 @@ namespace pooptube {
 				//락과 언락을 최대한 출일 수 있는 방법을 연구해야함
 				MESH_CUSTOM_VERTEX* pCustomVertices;
 				if (pNewMesh->GetMeshVertexBuffer()->Lock(0, 0, (void**)&pCustomVertices, 0) < 0)
-					return false;
+					return nullptr;
 
 				int index = 0;
 				for (auto iter : pOutVertexVector)

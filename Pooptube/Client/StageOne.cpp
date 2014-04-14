@@ -53,9 +53,9 @@ bool StageOne::Init()
 	D3DLIGHT9 light;
 
 	//광원의 위치
-	vecDir = D3DXVECTOR3(-100.f,
-		-100.0f,
-		100.f);
+	vecDir = D3DXVECTOR3(	100.f,
+							100.f,
+							-100.f);
 
 	ZeroMemory(&light, sizeof(D3DLIGHT9));
 	light.Type = D3DLIGHT_DIRECTIONAL;
@@ -68,12 +68,14 @@ bool StageOne::Init()
 
 	//디바이스에 광원을 설정합니다.
 	pDevice->SetLight(0, &light);
+	pDevice->LightEnable(0, TRUE);
 
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	pDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 
 
 	mCamera = Camera::Create();
+	mSkinnedMesh = SkinnedMesh::Create("cone.fbx");
 
 	return true;
 }

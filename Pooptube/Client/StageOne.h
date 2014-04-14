@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Camera.h"
+#include "SkinnedMesh.h"
 
 using namespace pooptube;
 
@@ -17,6 +18,9 @@ public:
 
 	void Render() {
 		mCamera->Render();
+
+		if (mSkinnedMesh)
+			mSkinnedMesh->Render();
 	}
 
 	void Update(float dTime) {
@@ -58,5 +62,6 @@ protected:
 
 private:
 	Camera* mCamera;
+	SkinnedMesh* mSkinnedMesh;
 };
 

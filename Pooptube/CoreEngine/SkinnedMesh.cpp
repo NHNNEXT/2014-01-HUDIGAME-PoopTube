@@ -6,7 +6,7 @@
 
 namespace pooptube {
 
-	SkinnedMesh::SkinnedMesh() {
+	SkinnedMesh::SkinnedMesh() : mFBXMesh(nullptr) {
 	}
 
 	SkinnedMesh::~SkinnedMesh() {
@@ -27,6 +27,9 @@ namespace pooptube {
 	bool SkinnedMesh::Init(std::string FilePath) {
 
 		mFBXMesh = ResourceManager::GetInstance()->LoadMeshFromFBX(FilePath);
+
+		if (mFBXMesh == nullptr)
+			return false;
 
 		return true;
 	}
