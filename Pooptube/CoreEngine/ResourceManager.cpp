@@ -135,9 +135,9 @@ namespace pooptube {
 
 				LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
-				//fbx 파일에서 받아온 버택스 정보를 담는 백터
-				std::vector<MESH_CUSTOM_VERTEX> pOutVertexVector;
 				int countVertex = 0;
+				//fbx매쉬 생성
+				pNewMesh = FBXMesh::Create(lVertexCount, pMesh->GetPolygonCount());
 
 				for (int j = 0; j < pMesh->GetPolygonCount(); j++)
 				{
@@ -151,47 +151,45 @@ namespace pooptube {
 					{
 						int iControlPointIndex = pMesh->GetPolygonVertex(j, k);
 
-						MESH_CUSTOM_VERTEX vertex;
-						vertex.position.x = (float)pVertices[iControlPointIndex].mData[0];
-						vertex.position.y = (float)pVertices[iControlPointIndex].mData[1];
-						vertex.position.z = (float)pVertices[iControlPointIndex].mData[2];
+						MESH_CUSTOM_VERTEX* vertex = pNewMesh->GetVertices();
+
+						vertex[iControlPointIndex].position.x = (float)pVertices[iControlPointIndex].mData[0];
+						vertex[iControlPointIndex].position.y = (float)pVertices[iControlPointIndex].mData[1];
+						vertex[iControlPointIndex].position.z = (float)pVertices[iControlPointIndex].mData[2];
 
 						FbxVector4 normal;
 
 						pMesh->GetPolygonVertexNormal(j, k, normal);
-						vertex.normal.x = (float)normal[0];
-						vertex.normal.y = (float)normal[1];
-						vertex.normal.z = (float)normal[2];
+						vertex[iControlPointIndex].normal.x = (float)normal[0];
+						vertex[iControlPointIndex].normal.y = (float)normal[1];
+						vertex[iControlPointIndex].normal.z = (float)normal[2];
 
 						//일단 색은 임의로 지정
-						vertex.color = 0xff00ff00;
+						vertex[iControlPointIndex].color = 0xff00ff00;
 
 						countVertex++;
-						pOutVertexVector.push_back(vertex);
+
+						MESH_CUSTOM_INDEX* Index = pNewMesh->GetIndices();
+
+						switch (k)
+						{
+						case 0:
+							Index[j].w0 = iControlPointIndex;
+							break;
+						case 1:
+							Index[j].w1 = iControlPointIndex;
+							break;
+						case 2:
+							Index[j].w2 = iControlPointIndex;
+							break;
+						default:
+							break;
+						}
+
 					}
 				}
-
-				//fbx매쉬 생성
-				pNewMesh = FBXMesh::Create(countVertex);
-				pNewMesh->SetPolygonCount(pMesh->GetPolygonCount());
-
-				//락과 언락을 최대한 출일 수 있는 방법을 연구해야함
-				MESH_CUSTOM_VERTEX* pCustomVertices;
-				if (pNewMesh->GetMeshVertexBuffer()->Lock(0, 0, (void**)&pCustomVertices, 0) < 0)
-					return nullptr;
-
-				int index = 0;
-				for (auto iter : pOutVertexVector)
-				{
-					pCustomVertices[index].position = iter.position;
-					pCustomVertices[index].normal = iter.normal;
-					pCustomVertices[index].color = iter.color;
-
-					index++;
-				}
-
-				pNewMesh->GetMeshVertexBuffer()->Unlock();
 			}
+				
 		}
 
 		return pNewMesh;
