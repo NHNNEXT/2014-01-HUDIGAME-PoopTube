@@ -3,6 +3,7 @@
 #include "ThirdPersonCamera.h"
 #include "SkinnedMesh.h"
 #include "Ground.h"
+#include "CollisionBox.h"
 
 using namespace pooptube;
 
@@ -22,7 +23,7 @@ public:
 		mSkinnedMesh->Translation(xTrans, 0.f, zTrans);
 		mSkinnedMesh->RotationY(yAngle);
 
-		if (mSkinnedMesh)
+		if( mSkinnedMesh )
 			mSkinnedMesh->Render();
 
 		if (mGround)
@@ -31,10 +32,17 @@ public:
 //			mSkinnedMesh_2->Render();
 
 		mCamera->Render();
+
+		if( testDummy )
+			testDummy->Render();
 	}
 
 	void Update(float dTime) {
-
+		if( mSkinnedMesh ){
+			mSkinnedMesh->Translation( xTrans, 0.f, zTrans );
+			mSkinnedMesh->mCollisionBox->Translation( xTrans, 0.f, zTrans );
+			mSkinnedMesh->Update( dTime );
+		}
 	}
 
 	void KeyDown(KeyEvent* pKeyEvent) {
@@ -45,28 +53,28 @@ public:
 		{
 		case 'W':
 			zTrans -= 0.1f;
-			mCamera->MoveForward(-0.1f);
+			//mCamera->MoveForward(-0.1f);
 			break;
 		case 'S':
 			zTrans += 0.1f;
-			mCamera->MoveForward(0.1f);
+			//mCamera->MoveForward(0.1f);
 			break;
 		case 'A':
 			xTrans += 0.1f;
-			mCamera->MoveSide(0.1f);
+			//mCamera->MoveSide(0.1f);
 			break;
 		case 'D':
 			xTrans -= 0.1f;
-			mCamera->MoveSide(-0.1f);
+			//mCamera->MoveSide(-0.1f);
 			break;
 
 		case VK_LEFT:
 			yAngle += 0.1f;
-			mCamera->Rotate(D3DXVECTOR3(3.f, 0, 0));
+			//mCamera->Rotate(D3DXVECTOR3(3.f, 0, 0));
 			break;
 		case VK_RIGHT:
 			yAngle -= 0.1f;
-			mCamera->Rotate(D3DXVECTOR3(-3.f, 0, 0));
+			//mCamera->Rotate(D3DXVECTOR3(-3.f, 0, 0));
 			break;
 		}
 
@@ -108,5 +116,7 @@ private:
 	float				xTrans;
 	float				zTrans;
 	float				yAngle;
+
+	CollisionBox*	testDummy;
 };
 

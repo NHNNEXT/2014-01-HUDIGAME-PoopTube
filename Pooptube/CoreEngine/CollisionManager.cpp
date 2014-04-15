@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CollisionManager.h"
-#include "CollisionMesh.h"
+#include "CollisionBox.h"
 
 namespace pooptube {
 	CollisionManager* CollisionManager::mInstance = nullptr;
@@ -21,29 +21,31 @@ namespace pooptube {
 		}
 	}
 
-	void CollisionManager::AddCollisionMesh( CollisionMesh* pCollisionMesh )
+	void CollisionManager::AddCollisionBox( CollisionBox* pCollisionMesh )
 	{
-		mCollisionMeshList.push_front( std::shared_ptr<CollisionMesh>( pCollisionMesh ) );
+		mCollisionBoxList.push_front( std::shared_ptr<CollisionBox>( pCollisionMesh ) );
 	}
 
-	void CollisionManager::RemoveCollisionMesh( CollisionMesh* pCollisionMesh )
+	void CollisionManager::RemoveCollisionBox( CollisionBox* pCollisionMesh )
 	{
-		for( auto iter = mCollisionMeshList.begin( ); iter != mCollisionMeshList.end( ); iter++ ) {
+		for( auto iter = mCollisionBoxList.begin( ); iter != mCollisionBoxList.end( ); iter++ ) {
 			if( (*iter).get( ) == pCollisionMesh ) {
-				mCollisionMeshList.erase_after( iter );
+				mCollisionBoxList.erase_after( iter );
 				break;
 			}
 		}
 	}
 
-	const CollisionMesh* CollisionManager::CollisionCheck( const CollisionMesh* pTarget )
+	const CollisionBox* CollisionManager::CollisionCheck( const CollisionBox* pTarget ) const
 	{
 		if( pTarget == nullptr )
 			return nullptr;
 
-		for( auto iter = mCollisionMeshList.begin(); iter != mCollisionMeshList.end(); iter++ ) {
-			if( (*iter).get( )->CollisionCheck( pTarget ) ) {
-				return (*iter).get();
+		CollisionBox * temp = nullptr;
+		for( auto iter = mCollisionBoxList.begin( ); iter != mCollisionBoxList.end( ); iter++ ) {
+			temp = (*iter).get();
+			if( temp != pTarget && temp->CollisionCheck( pTarget ) ) {
+				return temp;
 			}
 		}
 
@@ -56,7 +58,7 @@ namespace pooptube {
 
 	CollisionManager::~CollisionManager()
 	{
-		mCollisionMeshList.clear();
+		mCollisionBoxList.clear( );
 	}
 
 }

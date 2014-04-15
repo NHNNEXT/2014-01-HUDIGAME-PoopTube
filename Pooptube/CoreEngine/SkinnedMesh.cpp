@@ -5,6 +5,8 @@
 #include "FBXMesh.h"
 #include "Application.h"
 
+#include "CollisionManager.h" // 임시
+
 namespace pooptube {
 
 	SkinnedMesh::SkinnedMesh() : mFBXMesh(nullptr) {
@@ -55,11 +57,18 @@ namespace pooptube {
 		pDevice->SetStreamSource(mFBXMeshHandle, mFBXMesh->GetMeshVertexBuffer(), 0, sizeof(MESH_CUSTOM_VERTEX));
 
 		pDevice->DrawPrimitive(D3DPT_TRIANGLELIST, 0, mFBXMesh->GetPolygonCount());
+		mCollisionBox->Render();
+		Node::Render( );
 	}
 
 	void SkinnedMesh::Update(float dTime)
 	{
-
+		// 테스트용
+		const CollisionBox* temp( CollisionManager::GetInstance()->CollisionCheck( mCollisionBox ) );
+		if( temp != nullptr )
+			printf_s( "Collision. Type: %04X\n", temp->GetCollisionType() );
+		else
+			printf( "Not Collision.\n" );
 	}
 
 

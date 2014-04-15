@@ -104,6 +104,10 @@ namespace pooptube {
 		D3DXMATRIXA16 MatTrans;
 		D3DXMatrixTranslation(&MatTrans, xTrans, yTrans, zTrans);
 		D3DXMatrixMultiply(&mMatWorld, &MatTrans, &mMatWorld);
+
+		for( auto child : mChildList ) {
+			child->Translation( xTrans, yTrans, zTrans );
+		}
 	}
 
 	void Node::RotationX(float Angle) {

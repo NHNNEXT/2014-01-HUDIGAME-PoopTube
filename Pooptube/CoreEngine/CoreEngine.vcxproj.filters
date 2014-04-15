@@ -285,9 +285,6 @@
     <ClInclude Include="JsonParser.h">
       <Filter>Json</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionMesh.h">
-      <Filter>Nodes\CollisionBox</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Nodes\MeshData</Filter>
     </ClInclude>
@@ -296,6 +293,12 @@
     </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>Nodes\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionBox.h">
+      <Filter>Nodes\CollisionBox</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionType.h">
+      <Filter>Util\DataStructure</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -393,9 +396,6 @@
     <ClCompile Include="JsonParser.cpp">
       <Filter>Json</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionMesh.cpp">
-      <Filter>Nodes\CollisionBox</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Nodes\MeshData</Filter>
     </ClCompile>
@@ -404,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Nodes\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionBox.cpp">
+      <Filter>Nodes\CollisionBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

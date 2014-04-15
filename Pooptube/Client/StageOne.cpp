@@ -2,6 +2,8 @@
 #include "StageOne.h"
 #include "Application.h"
 #include "ObjectManager.h"
+#include "CollisionManager.h"
+#include "CollisionBox.h"
 
 using namespace pooptube;
 
@@ -78,6 +80,12 @@ bool StageOne::Init()
 	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx");
 	mGround = Ground::Create();
 	mGround->CreateGround("test.bmp");
+
+	mSkinnedMesh->mCollisionBox = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
+	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
+	testDummy->SetCenterPos( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
+	testDummy->SetAxisLen( 0.5f, 0.5, 1.0f );
+	testDummy->SetAxisDir( D3DXVECTOR3( 0.5, 0.5, 0.0 ), D3DXVECTOR3( -0.5, 0.5, 0.0 ) );
 
 	mCamera->SetEye(D3DXVECTOR3(0, 3, -2));
 	mCamera->SetLook(D3DXVECTOR3(0, 2, 1));

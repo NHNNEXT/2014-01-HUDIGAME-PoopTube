@@ -1,27 +1,19 @@
 #pragma once
-//#include "CollisionMesh.h"
 
 namespace pooptube {
-	class CollisionMesh;
 
-	/*
-	enum CollisionType{
-		COLLISION_NONE		=	0x00000000,
-		COLLISION_BLOCK		=	0x00000001,
-		COLLISION_DAMAGE	=	0x00000002,
-	};
-	*/
+	class CollisionBox;
+
 	class CollisionManager
 	{
 	public:
 		static CollisionManager* GetInstance();
 		static void ReleaseInstance( );
 
-		void AddCollisionMesh( CollisionMesh* pCollisionMesh );
-		void RemoveCollisionMesh( CollisionMesh* pCollisionMesh );
+		void AddCollisionBox( CollisionBox* pCollisionMesh );
+		void RemoveCollisionBox( CollisionBox* pCollisionMesh );
 
-		const CollisionMesh* CollisionCheck( const CollisionMesh* pTarget );
-		//CollisionType CollisionCheck( const CollisionMesh& target );
+		const CollisionBox* CollisionCheck( const CollisionBox* pTarget ) const;
 
 	private:
 		CollisionManager();
@@ -29,6 +21,6 @@ namespace pooptube {
 
 		static CollisionManager* mInstance;
 
-		std::forward_list<std::shared_ptr<CollisionMesh>> mCollisionMeshList;
+		std::forward_list<std::shared_ptr<CollisionBox>> mCollisionBoxList;
 	};
 }

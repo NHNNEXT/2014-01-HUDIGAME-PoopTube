@@ -1,5 +1,6 @@
 #pragma once
 #include "Node.h"
+#include "CollisionBox.h" // 임시
 
 namespace pooptube {
 
@@ -17,6 +18,7 @@ namespace pooptube {
 		virtual void Render();
 		virtual void Update(float dTime);
 
+		CollisionBox* mCollisionBox; // 임시
 	protected:
 
 
@@ -24,7 +26,6 @@ namespace pooptube {
 	private:
 		FBXMesh*	mFBXMesh;
 		UINT		mFBXMeshHandle;
-
 	};
 
 }

@@ -46,7 +46,7 @@ namespace pooptube {
 	}
 	void SceneManager::Update( float dTime ) {
 		if ( mScene != nullptr ) {
-			//mScene->Update( dTime );
+			mScene->Update( dTime );
 		}
 	}
 
