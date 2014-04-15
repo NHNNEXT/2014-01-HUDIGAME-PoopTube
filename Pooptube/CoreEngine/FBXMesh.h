@@ -32,8 +32,10 @@ namespace pooptube {
 
 		LPDIRECT3DVERTEXBUFFER9 GetMeshVertexBuffer() const { return mMeshVertexBuffer; }
 		int						GetPolygonCount() const { return mPolygonCount; }
-		void					SetPolygonCount(int val) { mPolygonCount = val; }
+		UINT					GetCountHandle() { return ++mCountHandle; }
 
+		void					SetPolygonCount(int val) { mPolygonCount = val; }
+		
 	protected:
 
 
@@ -43,7 +45,10 @@ namespace pooptube {
 		//메쉬의 폴리곤 갯수
 		//매번 변할때마다 수정해줘야한다. 편하게 자동으로 변하는 방법을 생각해보자.
 		int						mPolygonCount;
+		//몇게의 skinnedMesh가 자신을 참조하고 있는지
+		UINT					mCountHandle;
 		
+
 	};
 
 }

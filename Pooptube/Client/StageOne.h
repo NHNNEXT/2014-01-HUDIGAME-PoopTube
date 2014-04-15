@@ -17,12 +17,17 @@ public:
 	static StageOne* Create();
 
 	void Render() {
-		mCamera->Render();
 
 		mSkinnedMesh->Translation(xTrans, 0.f, zTrans);
+		mSkinnedMesh->RotationY(yAngle);
 
 		if (mSkinnedMesh)
 			mSkinnedMesh->Render();
+
+//		if (mSkinnedMesh_2)
+//			mSkinnedMesh_2->Render();
+
+		mCamera->Render();
 	}
 
 	void Update(float dTime) {
@@ -46,6 +51,12 @@ public:
 			break;
 		case VK_LEFT:
 			xTrans += 0.1f;
+			break;
+		case 'A':
+			yAngle += 0.1f;
+			break;
+		case 'D':
+			yAngle -= 0.1f;
 			break;
 		}
 
@@ -82,7 +93,9 @@ protected:
 private:
 	Camera*			mCamera;
 	SkinnedMesh*	mSkinnedMesh;
+	SkinnedMesh*	mSkinnedMesh_2;
 	float			xTrans;
 	float			zTrans;
+	float			yAngle;
 };
 

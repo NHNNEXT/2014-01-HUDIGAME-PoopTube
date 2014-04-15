@@ -22,7 +22,8 @@ namespace pooptube {
 
 
 	private:
-		FBXMesh* mFBXMesh;
+		FBXMesh*	mFBXMesh;
+		UINT		mFBXMeshHandle;
 
 	};
 

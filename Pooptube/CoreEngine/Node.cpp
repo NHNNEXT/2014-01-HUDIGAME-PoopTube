@@ -32,9 +32,6 @@ namespace pooptube {
 
 	bool Node::Init() {
 		D3DXMatrixIdentity(&mMatWorld);
-		D3DXMatrixIdentity(&mMatRotate);
-		D3DXMatrixIdentity(&mMatScale);
-		D3DXMatrixIdentity(&mMatTrans);
 
 		return true;
 	}
@@ -42,7 +39,8 @@ namespace pooptube {
 	void Node::Render() {
 		// TODO: 행렬 계산
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-		//pDevice->SetTransform(D3DTS_WORLD, &mMatWorld);
+		pDevice->SetTransform(D3DTS_WORLD, &mMatWorld);
+		D3DXMatrixIdentity(&mMatWorld);
 
 		for (auto child : mChildList) {
 			child->Render();
@@ -103,13 +101,31 @@ namespace pooptube {
 	}
 
 	void Node::Translation(float xTrans, float yTrans, float zTrans) {
-
-		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-
-		D3DXMatrixTranslation(&mMatTrans, xTrans, yTrans, zTrans);
-		pDevice->SetTransform(D3DTS_WORLD, &mMatTrans);
-		D3DXMatrixIdentity(&mMatTrans);
+		D3DXMATRIXA16 MatTrans;
+		D3DXMatrixTranslation(&MatTrans, xTrans, yTrans, zTrans);
+		D3DXMatrixMultiply(&mMatWorld, &MatTrans, &mMatWorld);
 	}
+
+	void Node::RotationX(float Angle) {
+		D3DXMATRIXA16 MatRotate;
+		D3DXMatrixRotationX(&MatRotate, Angle);
+		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
+	}
+
+	void Node::RotationY(float Angle) {
+		D3DXMATRIXA16 MatRotate;
+		D3DXMatrixRotationY(&MatRotate, Angle);
+		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
+	}
+
+	void Node::RotationZ(float Angle) {
+		D3DXMATRIXA16 MatRotate;
+		D3DXMatrixRotationZ(&MatRotate, Angle);
+		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
+	}
+
+
+
 
 
 
