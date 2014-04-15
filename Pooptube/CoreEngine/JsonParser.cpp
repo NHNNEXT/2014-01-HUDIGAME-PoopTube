@@ -22,9 +22,9 @@ namespace pooptube {
 		return true;
 	}
 
-	/*void JsonParser::JsonToCString()
+	void JsonParser::JsonToCString()
 	{
-		FILE* jsonfp;
+		FILE* jsonfp = nullptr;
 
 		fopen_s(&jsonfp, mJsonFilePath, "r");
 
@@ -50,7 +50,7 @@ namespace pooptube {
 			strcat_s(mPath, " ");
 		}
 		fclose(jsonfp);
-	}*/
+	}
 	
 	JsonParser* JsonParser::GetInstance()
 	{
