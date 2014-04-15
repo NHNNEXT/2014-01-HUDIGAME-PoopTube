@@ -20,11 +20,12 @@ public:
 
 	void Render() {
 
-		mSkinnedMesh->Translation(xTrans, 0.f, zTrans);
-		mSkinnedMesh->RotationY(yAngle);
-
-		if( mSkinnedMesh )
+		if( mSkinnedMesh ){
+			mSkinnedMesh->RotationY( yAngle );
+			
 			mSkinnedMesh->Render();
+			mSkinnedMesh->mCollisionBox->Render( );
+		}
 
 		if (mGround)
 			mGround->Render();
@@ -39,9 +40,8 @@ public:
 
 	void Update(float dTime) {
 		if( mSkinnedMesh ){
-			mSkinnedMesh->Translation( xTrans, 0.f, zTrans );
-			mSkinnedMesh->mCollisionBox->Translation( xTrans, 0.f, zTrans );
 			mSkinnedMesh->Update( dTime );
+			mSkinnedMesh->mCollisionBox->Update( dTime );
 		}
 	}
 
@@ -52,28 +52,34 @@ public:
 		switch (pKeyEvent->GetKeyCode())
 		{
 		case 'W':
-			zTrans -= 0.1f;
+			mSkinnedMesh->Translation( 0, 0, 0.1 );
+			mSkinnedMesh->mCollisionBox->Translation( 0, 0, 0.1 );
 			//mCamera->MoveForward(-0.1f);
 			break;
 		case 'S':
-			zTrans += 0.1f;
+			mSkinnedMesh->Translation( 0, 0, -0.1 );
+			mSkinnedMesh->mCollisionBox->Translation( 0, 0, -0.1 );
 			//mCamera->MoveForward(0.1f);
 			break;
 		case 'A':
-			xTrans += 0.1f;
+			mSkinnedMesh->Translation( -0.1, 0, 0 );
+			mSkinnedMesh->mCollisionBox->Translation( -0.1, 0, 0 );
 			//mCamera->MoveSide(0.1f);
 			break;
 		case 'D':
-			xTrans -= 0.1f;
+			mSkinnedMesh->Translation( 0.1, 0, 0 );
+			mSkinnedMesh->mCollisionBox->Translation( 0.1, 0, 0 );
 			//mCamera->MoveSide(-0.1f);
 			break;
 
 		case VK_LEFT:
-			yAngle += 0.1f;
+			mSkinnedMesh->RotationY( 0.1 );
+			mSkinnedMesh->mCollisionBox->RotationY( 0.1 );
 			//mCamera->Rotate(D3DXVECTOR3(3.f, 0, 0));
 			break;
 		case VK_RIGHT:
-			yAngle -= 0.1f;
+			mSkinnedMesh->RotationY( -0.1 );
+			mSkinnedMesh->mCollisionBox->RotationY( -0.1 );
 			//mCamera->Rotate(D3DXVECTOR3(-3.f, 0, 0));
 			break;
 		}
