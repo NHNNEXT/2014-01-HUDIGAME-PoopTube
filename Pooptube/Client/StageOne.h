@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-#include "Camera.h"
+#include "ThirdPersonCamera.h"
 #include "SkinnedMesh.h"
 #include "Ground.h"
 
@@ -43,23 +43,30 @@ public:
 	void KeyPressed(KeyEvent* pKeyEvent) {
 		switch (pKeyEvent->GetKeyCode())
 		{
-		case VK_UP:
+		case 'W':
 			zTrans -= 0.1f;
+			mCamera->MoveForward(-0.1f);
 			break;
-		case VK_DOWN:
+		case 'S':
 			zTrans += 0.1f;
-			break;
-		case VK_RIGHT:
-			xTrans -= 0.1f;
-			break;
-		case VK_LEFT:
-			xTrans += 0.1f;
+			mCamera->MoveForward(0.1f);
 			break;
 		case 'A':
-			yAngle += 0.1f;
+			xTrans += 0.1f;
+			mCamera->MoveSide(0.1f);
 			break;
 		case 'D':
+			xTrans -= 0.1f;
+			mCamera->MoveSide(-0.1f);
+			break;
+
+		case VK_LEFT:
+			yAngle += 0.1f;
+			mCamera->Rotate(D3DXVECTOR3(3.f, 0, 0));
+			break;
+		case VK_RIGHT:
 			yAngle -= 0.1f;
+			mCamera->Rotate(D3DXVECTOR3(-3.f, 0, 0));
 			break;
 		}
 
@@ -94,12 +101,12 @@ public:
 protected:
 
 private:
-	Ground			*mGround;
-	Camera			*mCamera;
-	SkinnedMesh		*mSkinnedMesh;
-	SkinnedMesh		*mSkinnedMesh_2;
-	float			xTrans;
-	float			zTrans;
-	float			yAngle;
+	Ground				*mGround;
+	ThirdPersonCamera	*mCamera;
+	SkinnedMesh			*mSkinnedMesh;
+	SkinnedMesh			*mSkinnedMesh_2;
+	float				xTrans;
+	float				zTrans;
+	float				yAngle;
 };
 

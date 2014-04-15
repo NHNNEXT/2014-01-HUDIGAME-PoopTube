@@ -74,10 +74,13 @@ bool StageOne::Init()
 	pDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 
 
-	mCamera = Camera::Create();
+	mCamera = ThirdPersonCamera::Create();
 	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx");
 	mGround = Ground::Create();
 	mGround->CreateGround("test.bmp");
+
+	mCamera->SetEye(D3DXVECTOR3(0, 3, -2));
+	mCamera->SetLook(D3DXVECTOR3(0, 2, 1));
 	//mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx");
 
 	return true;
