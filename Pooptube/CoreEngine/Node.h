@@ -45,9 +45,11 @@ namespace pooptube {
 		void RotationX(float Angle);
 		void RotationY(float Angle);
 		void RotationZ(float Angle);
+		void RotateFrontVector(float x, float y, float z);
 
-		const D3DXMATRIXA16 GetMatrix( ) const { return mMatWorld; }
-
+		void SetFrontVector(D3DXVECTOR3 vec) { mFrontVec = vec; }
+		const D3DXVECTOR3 GetFrontVector() const { return mFrontVec; }
+		const D3DXMATRIXA16 GetMatrix() const { return mMatWorld; }
 	private:
 		void _RegistrationToKeyEventDispatcher();
 		void _RegistrationToMouseEventDispatcher();
@@ -59,7 +61,8 @@ namespace pooptube {
 		bool mIsMouseEventEnabled;
 
 		// TODO: 각종 행렬 계산 용 데이터들..
-		D3DXMATRIXA16 mMatWorld;
+		D3DXMATRIXA16	mMatWorld;
+		D3DXVECTOR3		mFrontVec;
 		
 		//std::forward_list<EventProcess> mEventProcessList;
 		friend class SceneManager;

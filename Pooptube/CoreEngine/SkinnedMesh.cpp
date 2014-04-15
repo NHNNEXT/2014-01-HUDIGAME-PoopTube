@@ -104,8 +104,8 @@ namespace pooptube {
 		const CollisionBox* temp( CollisionManager::GetInstance()->CollisionCheck( mCollisionBox ) );
 		if( temp != nullptr )
 			printf_s( "Collision. Type: %04X\n", temp->GetCollisionType() );
-		else
-			printf( "Not Collision.\n" );
+// 		else
+// 			printf( "Not Collision.\n" );
 	}
 
 

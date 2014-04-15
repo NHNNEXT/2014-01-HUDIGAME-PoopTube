@@ -41,6 +41,8 @@ public:
 			mSkinnedMesh->Update( dTime );
 			mSkinnedMesh->mCollisionBox->Update( dTime );
 		}
+		if (mCamera)
+			mCamera->Update(dTime);
 	}
 
 	void KeyDown( KeyEvent* pKeyEvent ) {

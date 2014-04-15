@@ -104,25 +104,49 @@ namespace pooptube {
 		D3DXMATRIXA16 MatTrans;
 		D3DXMatrixTranslation(&MatTrans, xTrans, yTrans, zTrans);
 		D3DXMatrixMultiply(&mMatWorld, &MatTrans, &mMatWorld);
+
+// 		mFrontVec += D3DXVECTOR3(xTrans, yTrans, zTrans);
+// 		//mFrontVec = D3DXVECTOR3(mMatWorld._41, mMatWorld._42, mMatWorld._43);;
+// 		D3DXVec3Normalize(&mFrontVec, &mFrontVec);
+// 
+// 		printf("######### %f %f %f\n", mFrontVec.x, mFrontVec.y, mFrontVec.z);
 	}
 
 	void Node::RotationX(float Angle) {
 		D3DXMATRIXA16 MatRotate;
 		D3DXMatrixRotationX(&MatRotate, Angle);
 		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
+
+		RotateFrontVector(Angle, 0, 0);
 	}
 
 	void Node::RotationY(float Angle) {
 		D3DXMATRIXA16 MatRotate;
 		D3DXMatrixRotationY(&MatRotate, Angle);
 		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
+
+		RotateFrontVector(Angle, 0, 0);
 	}
 
 	void Node::RotationZ(float Angle) {
 		D3DXMATRIXA16 MatRotate;
 		D3DXMatrixRotationZ(&MatRotate, Angle);
 		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
+
+		RotateFrontVector(0, 0, Angle);
 	}
+
+	void Node::RotateFrontVector(float x, float y, float z)
+	{
+		float vx = mFrontVec.x*cosf(x) + mFrontVec.z*sinf(x);
+		float vz = -mFrontVec.x*sinf(x) + mFrontVec.z*cosf(x);
+		mFrontVec.x = vx;
+		mFrontVec.z = vz;
+		D3DXVec3Normalize(&mFrontVec, &mFrontVec);
+
+		printf("@@@@@@@ %f %f %f\n", mFrontVec.x, mFrontVec.y, mFrontVec.z);
+	}
+
 
 
 
