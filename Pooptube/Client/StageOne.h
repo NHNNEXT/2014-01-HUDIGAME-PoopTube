@@ -21,16 +21,14 @@ public:
 	void Render() {
 
 		if( mSkinnedMesh ){
-			mSkinnedMesh->RotationY( yAngle );
-			
 			mSkinnedMesh->Render();
-			mSkinnedMesh->mCollisionBox->Render( );
+			mSkinnedMesh->mCollisionBox->Render();
 		}
 
-		if (mGround)
+		if( mGround )
 			mGround->Render();
-//		if (mSkinnedMesh_2)
-//			mSkinnedMesh_2->Render();
+		//		if (mSkinnedMesh_2)
+		//			mSkinnedMesh_2->Render();
 
 		mCamera->Render();
 
@@ -38,18 +36,18 @@ public:
 			testDummy->Render();
 	}
 
-	void Update(float dTime) {
+	void Update( float dTime ) {
 		if( mSkinnedMesh ){
 			mSkinnedMesh->Update( dTime );
 			mSkinnedMesh->mCollisionBox->Update( dTime );
 		}
 	}
 
-	void KeyDown(KeyEvent* pKeyEvent) {
-		printf("KeyDown\n");
+	void KeyDown( KeyEvent* pKeyEvent ) {
+		printf( "KeyDown\n" );
 	}
-	void KeyPressed(KeyEvent* pKeyEvent) {
-		switch (pKeyEvent->GetKeyCode())
+	void KeyPressed( KeyEvent* pKeyEvent ) {
+		switch( pKeyEvent->GetKeyCode() )
 		{
 		case 'W':
 			mSkinnedMesh->Translation( 0, 0, 0.1 );
@@ -84,7 +82,7 @@ public:
 			break;
 		}
 
-		printf("KeyPressed\n");
+		printf( "KeyPressed\n" );
 	}
 	void KeyUp(KeyEvent* pKeyEvent) {
 		printf("KeyUp\n");
@@ -123,6 +121,6 @@ private:
 	float				zTrans;
 	float				yAngle;
 
-	CollisionBox*	testDummy;
+	CollisionBox*		testDummy;
 };
 

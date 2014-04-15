@@ -40,7 +40,7 @@ namespace pooptube {
 		// TODO: 행렬 계산
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 		pDevice->SetTransform(D3DTS_WORLD, &mMatWorld);
-		D3DXMatrixIdentity(&mMatWorld);
+		//D3DXMatrixIdentity(&mMatWorld);
 
 		for (auto child : mChildList) {
 			child->Render();
@@ -104,10 +104,6 @@ namespace pooptube {
 		D3DXMATRIXA16 MatTrans;
 		D3DXMatrixTranslation(&MatTrans, xTrans, yTrans, zTrans);
 		D3DXMatrixMultiply(&mMatWorld, &MatTrans, &mMatWorld);
-
-		for( auto child : mChildList ) {
-			child->Translation( xTrans, yTrans, zTrans );
-		}
 	}
 
 	void Node::RotationX(float Angle) {

@@ -46,7 +46,7 @@ namespace pooptube {
 		void RotationY(float Angle);
 		void RotationZ(float Angle);
 
-		D3DXMATRIXA16 GetMatrix() { return mMatWorld; }
+		const D3DXMATRIXA16 GetMatrix( ) const { return mMatWorld; }
 
 	private:
 		void _RegistrationToKeyEventDispatcher();

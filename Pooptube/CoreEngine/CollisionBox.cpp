@@ -4,11 +4,10 @@
 #include "CollisionManager.h"
 
 namespace pooptube {
-	CollisionBox::CollisionBox( )
+	CollisionBox::CollisionBox()
 		: mCollisionType( COLLISION_TYPE::COLLISION_NONE )
 		, mBound( 0.0f )
 		, mMass( 1.0f )
-		, mCenterPos( 0.0f, 0.0f, 0.0f )
 	{
 		// 다른 방법 없나...
 		mAxisDir[0] = D3DXVECTOR3( 1.0f, 0.0f, 0.0f );
@@ -32,37 +31,32 @@ namespace pooptube {
 		mAxisLen[2] = 0.5f;
 	}
 
-	CollisionBox::~CollisionBox( )
+	CollisionBox::~CollisionBox()
 	{
 	}
 
-	CollisionBox* CollisionBox::Create( )
+	CollisionBox* CollisionBox::Create()
 	{
 		return Create( COLLISION_TYPE::COLLISION_NONE, 0.0f, 1.0f );
 	}
 	CollisionBox* CollisionBox::Create( COLLISION_TYPE collisionType, float bound, float mass )
 	{
-		CollisionBox* pCollisionMesh = new CollisionBox( collisionType, bound, mass );
-		if( pCollisionMesh->Init( ) ) {
-			ObjectManager::GetInstance( )->AddObject( pCollisionMesh );
-			CollisionManager::GetInstance()->AddCollisionBox( pCollisionMesh );
+		CollisionBox* pCollisionBox = new CollisionBox( collisionType, bound, mass );
+		if( pCollisionBox->Init() ) {
+			ObjectManager::GetInstance()->AddObject( pCollisionBox );
+			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
 		}
 		else {
-			delete pCollisionMesh;
-			pCollisionMesh = nullptr;
+			delete pCollisionBox;
+			pCollisionBox = nullptr;
 		}
-		return pCollisionMesh;
-	}
-
-	bool CollisionBox::Init( )
-	{
-		return true;
+		return pCollisionBox;
 	}
 
 	void CollisionBox::Render()
 	{
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-		
+
 		D3DXMATRIX projMat, viewMat;
 		pDevice->GetTransform( D3DTS_PROJECTION, &projMat );
 		pDevice->GetTransform( D3DTS_VIEW, &viewMat );
@@ -114,6 +108,22 @@ namespace pooptube {
 	void CollisionBox::Update( float dTime )
 	{
 		Node::Update( dTime );
+
+		D3DXMATRIXA16 mMatrix = GetMatrix();
+		mCenterPos = D3DXVECTOR3( mMatrix._41, mMatrix._42, mMatrix._43 );
+		mMatrix._41 = 0;
+		mMatrix._42 = 0;
+		mMatrix._43 = 0;
+
+		D3DXMATRIXA16 temp;
+		D3DXMatrixIdentity( &temp );
+		temp._41 = 1;
+		D3DXMatrixMultiply( &temp, &temp, &mMatrix );
+		mAxisDir[0] = D3DXVECTOR3( temp._41, temp._42, temp._43 );
+		D3DXMatrixIdentity( &temp );
+		temp._42 = 1;
+		D3DXMatrixMultiply( &temp, &temp, &mMatrix );
+		SetAxisDir( mAxisDir[0], D3DXVECTOR3( temp._41, temp._42, temp._43 ) );
 	}
 
 	bool CollisionBox::CollisionCheck( const CollisionBox* target )
@@ -146,7 +156,7 @@ namespace pooptube {
 			R01 = R0 + mAxisLen[j];
 			if( R > R01 ) return false;
 		}
-		
+
 		//A0xB0
 		R = abs( AD[2] * C[1][0] - AD[1] * C[2][0] );
 		R0 = target->mAxisLen[1] * absC[2][0] + target->mAxisLen[2] * absC[1][0];
@@ -211,9 +221,5 @@ namespace pooptube {
 		if( R > R01 ) return false;
 
 		return true;
-	}
-
-	void CollisionBox::Translation( float xTrans, float yTrans, float zTrans ) {
-		mCenterPos = D3DXVECTOR3( xTrans, yTrans, zTrans );
 	}
 }
