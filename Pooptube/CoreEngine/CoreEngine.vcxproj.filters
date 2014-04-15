@@ -157,6 +157,9 @@
     <Filter Include="Nodes\MeshData">
       <UniqueIdentifier>{09442dfc-e403-44af-bbef-16fd323e1cb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nodes\Ground">
+      <UniqueIdentifier>{d2285b5d-7d3e-4c27-8542-4cc061260edf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -291,6 +294,9 @@
     <ClInclude Include="SkinnedMesh.h">
       <Filter>Nodes\SkinnedMesh</Filter>
     </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Nodes\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -395,6 +401,9 @@
     </ClCompile>
     <ClCompile Include="SkinnedMesh.cpp">
       <Filter>Nodes\SkinnedMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Nodes\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

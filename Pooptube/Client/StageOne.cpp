@@ -76,6 +76,8 @@ bool StageOne::Init()
 
 	mCamera = Camera::Create();
 	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx");
+	mGround = Ground::Create();
+	mGround->CreateGround("test.bmp");
 	//mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx");
 
 	return true;

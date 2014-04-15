@@ -84,6 +84,7 @@ namespace pooptube {
 		if( FAILED(mD3DDevice->BeginScene()) )
 			return false;
 
+		mD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		return true;
 	}
 	bool D3D9Renderer::DrawEnd() {

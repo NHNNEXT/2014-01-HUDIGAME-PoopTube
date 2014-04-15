@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "SkinnedMesh.h"
+#include "Ground.h"
 
 using namespace pooptube;
 
@@ -24,6 +25,8 @@ public:
 		if (mSkinnedMesh)
 			mSkinnedMesh->Render();
 
+		if (mGround)
+			mGround->Render();
 //		if (mSkinnedMesh_2)
 //			mSkinnedMesh_2->Render();
 
@@ -91,9 +94,10 @@ public:
 protected:
 
 private:
-	Camera*			mCamera;
-	SkinnedMesh*	mSkinnedMesh;
-	SkinnedMesh*	mSkinnedMesh_2;
+	Ground			*mGround;
+	Camera			*mCamera;
+	SkinnedMesh		*mSkinnedMesh;
+	SkinnedMesh		*mSkinnedMesh_2;
 	float			xTrans;
 	float			zTrans;
 	float			yAngle;
