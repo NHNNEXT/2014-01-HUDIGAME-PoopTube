@@ -84,6 +84,8 @@ namespace pooptube {
 		//이거 이렇게 쓰기 불편하다. 다른 방법을 생각해보자.
 		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
+		pDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+
 		//디바이스에 버텍스버퍼를 전달
 		pDevice->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
 
@@ -95,7 +97,7 @@ namespace pooptube {
 		//pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mFBXMesh->GetPolygonCount());
 		
 		mCollisionBox->Render();
-		Node::Render( );
+		//Node::Render( );
 	}
 
 	void SkinnedMesh::Update(float dTime)

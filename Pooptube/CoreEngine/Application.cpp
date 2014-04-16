@@ -74,8 +74,8 @@ namespace pooptube {
 				mKeyEventDispatcher->Dispatch( mKeyEventList );
 				mMouseEventDispatcher->Dispatch( mMouseEventList );
 
-				mSceneManager->Render();
 				mSceneManager->Update( mDeltaTime );
+				mSceneManager->Render();
 			}
 		}
 

@@ -20,17 +20,17 @@ public:
 
 	void Render() {
 
+		mCamera->Render();
+
 		if( mSkinnedMesh ){
 			mSkinnedMesh->Render();
-			mSkinnedMesh->mCollisionBox->Render();
+			//mSkinnedMesh->mCollisionBox->Render();
 		}
 
 		if( mGround )
 			mGround->Render();
 		//		if (mSkinnedMesh_2)
 		//			mSkinnedMesh_2->Render();
-
-		mCamera->Render();
 
 		if( testDummy )
 			testDummy->Render();
@@ -41,8 +41,8 @@ public:
 			mSkinnedMesh->Update( dTime );
 			mSkinnedMesh->mCollisionBox->Update( dTime );
 		}
-		if (mCamera)
-			mCamera->Update(dTime);
+// 		if (mCamera)
+// 			mCamera->Update(dTime);
 	}
 
 	void KeyDown( KeyEvent* pKeyEvent ) {
