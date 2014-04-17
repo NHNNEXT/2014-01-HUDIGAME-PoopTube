@@ -52,6 +52,13 @@ public:
 		case VK_RIGHT:
 			mSkinnedMesh->RotationY( 0.1 );
 			break;
+
+		case 'Q':
+			mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+			break;
+		case 'E':
+			mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			break;
 		}
 
 		printf( "KeyPressed\n" );
@@ -85,16 +92,18 @@ public:
 protected:
 
 private:
-	ThirdPersonCamera	*mCamera;
-	SkinnedMesh			*mSkinnedMesh;
-	SkinnedMesh			*mSkinnedMesh_2;
+	ThirdPersonCamera	*mCamera = nullptr;
+	SkinnedMesh			*mSkinnedMesh = nullptr;
+	SkinnedMesh			*mSkinnedMesh_2 = nullptr;
 
-	SkinnedMesh			*mGround_2;
+	SkinnedMesh			*mGround_2 = nullptr;
 
-	float				xTrans;
-	float				zTrans;
-	float				yAngle;
+	float				xTrans = 0.f;
+	float				zTrans = 0.f;
+	float				yAngle = 0.f;
 
-	CollisionBox*		testDummy;
+	CollisionBox*		testDummy = nullptr;
+
+	LPDIRECT3DDEVICE9	mDevice = nullptr;
 };
 
