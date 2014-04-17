@@ -273,9 +273,6 @@
     <ClInclude Include="MouseEventHandler.h">
       <Filter>MouseEvent\MouseEventHandler</Filter>
     </ClInclude>
-    <ClInclude Include="FBXMesh.h">
-      <Filter>Nodes\MeshData</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectPool.h">
       <Filter>Util\DataStructure</Filter>
     </ClInclude>
@@ -284,9 +281,6 @@
     </ClInclude>
     <ClInclude Include="JsonParser.h">
       <Filter>Json</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Nodes\MeshData</Filter>
     </ClInclude>
     <ClInclude Include="SkinnedMesh.h">
       <Filter>Nodes\SkinnedMesh</Filter>
@@ -299,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="CollisionType.h">
       <Filter>Util\DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Nodes\MeshData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -387,17 +384,11 @@
     <ClCompile Include="MouseEventHandler.cpp">
       <Filter>MouseEvent\MouseEventHandler</Filter>
     </ClCompile>
-    <ClCompile Include="FBXMesh.cpp">
-      <Filter>Nodes\MeshData</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="JsonParser.cpp">
       <Filter>Json</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Nodes\MeshData</Filter>
     </ClCompile>
     <ClCompile Include="SkinnedMesh.cpp">
       <Filter>Nodes\SkinnedMesh</Filter>
@@ -407,6 +398,9 @@
     </ClCompile>
     <ClCompile Include="CollisionBox.cpp">
       <Filter>Nodes\CollisionBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Nodes\MeshData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

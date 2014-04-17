@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 #include "ResourceManager.h"
-#include "FBXMesh.h"
+#include "Mesh.h"
 #include "Application.h"
 
 namespace pooptube {
@@ -60,7 +60,7 @@ namespace pooptube {
 	}
 
 
-	FBXMesh* ResourceManager::LoadMeshFromFBX(std::string FilePath) {
+	Mesh* ResourceManager::LoadMeshFromFBX(std::string FilePath) {
 
 		//map을 사용할 때 조심해야 할 부분
 		if (mFBXMeshTable.find(FilePath) == mFBXMeshTable.end()) {
@@ -70,7 +70,7 @@ namespace pooptube {
 		return mFBXMeshTable[FilePath];
 	}
 
-	FBXMesh* ResourceManager::_LoadFBXFile(std::string FilePath) {
+	Mesh* ResourceManager::_LoadFBXFile(std::string FilePath) {
 		int lFileFormat = -1;
 		FbxImporter* pImporter = nullptr;
 
@@ -101,8 +101,8 @@ namespace pooptube {
 		return _ReadVerticesFromFBX(pScene);
 	}
 
-	FBXMesh* ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {
-		FBXMesh* pNewMesh = nullptr;
+	Mesh* ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {
+		Mesh* pNewMesh = nullptr;
 		FbxNode* pFbxRootNode = pScene->GetRootNode();
 
 		if (pFbxRootNode)
@@ -137,7 +137,7 @@ namespace pooptube {
 
 				int countVertex = 0;
 				//fbx매쉬 생성
-				pNewMesh = FBXMesh::Create(lVertexCount, pMesh->GetPolygonCount());
+				pNewMesh = Mesh::Create(lVertexCount, pMesh->GetPolygonCount());
 
 				for (int j = 0; j < pMesh->GetPolygonCount(); j++)
 				{

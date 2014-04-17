@@ -5,7 +5,7 @@
 namespace pooptube {
 
 	//전방선언
-	class FBXMesh;
+	class Mesh;
 
 	class SkinnedMesh : public Node {
 	public:
@@ -30,7 +30,7 @@ namespace pooptube {
 		LPDIRECT3DVERTEXBUFFER9 mMeshVertexBuffer;
 		LPDIRECT3DINDEXBUFFER9	mMeshIndexBuffer;
 
-		FBXMesh*	mFBXMesh;
+		Mesh*		mMesh;
 		UINT		mFBXMeshHandle;
 	};
 
