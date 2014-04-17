@@ -77,9 +77,9 @@ bool StageOne::Init()
 
 
 	mCamera = ThirdPersonCamera::Create();
-	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx");
-	mGround = Ground::Create();
-	mGround->CreateGround("test.bmp");
+	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
+
+	mGround_2 = SkinnedMesh::Create("test.bmp", RESOURCE_HEIGHTMAP);
 
 	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0, 0, 1));
 	mCamera->SetTarget(mSkinnedMesh);
@@ -93,9 +93,30 @@ bool StageOne::Init()
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, -2));
 	//mCamera->SetLook(D3DXVECTOR3(0, 2, -10));
 
-	mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx");
+	mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
 
 	return true;
+}
+
+void StageOne::Render()
+{
+	LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+	pDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+	mCamera->Render();
+
+	if (mSkinnedMesh){
+		mSkinnedMesh->Render();
+	}
+
+	if (mSkinnedMesh_2)
+		mSkinnedMesh_2->Render();
+
+	if (mGround_2)
+		mGround_2->Render();
+
+	if (testDummy)
+		testDummy->Render();
 }
 
 

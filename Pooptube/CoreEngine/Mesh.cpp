@@ -3,10 +3,8 @@
 #include "Application.h"
 
 namespace pooptube {
-	Mesh::Mesh()
-		: mPolygonCount(0), mVertices(nullptr), mIndices(nullptr) {
+	Mesh::Mesh() {
 	}
-
 
 	Mesh::~Mesh() {
 		delete[] mVertices;
@@ -27,8 +25,7 @@ namespace pooptube {
 
 
 	bool Mesh::Init(int VertexCount, int PolygonCount) {
-		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-		pDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 		if (!Node::Init())
 			return false;

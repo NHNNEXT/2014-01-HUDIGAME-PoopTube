@@ -60,7 +60,7 @@ namespace pooptube {
 	}
 
 
-	Mesh* ResourceManager::LoadMeshFromFBX(std::string FilePath) {
+	Mesh* ResourceManager::LoadMeshFromFBX(const std::string& FilePath) {
 
 		//map을 사용할 때 조심해야 할 부분
 		if (mFBXMeshTable.find(FilePath) == mFBXMeshTable.end()) {
@@ -70,7 +70,7 @@ namespace pooptube {
 		return mFBXMeshTable[FilePath];
 	}
 
-	Mesh* ResourceManager::_LoadFBXFile(std::string FilePath) {
+	Mesh* ResourceManager::_LoadFBXFile(const std::string& FilePath) {
 		int lFileFormat = -1;
 		FbxImporter* pImporter = nullptr;
 
@@ -194,6 +194,129 @@ namespace pooptube {
 
 		return pNewMesh;
 	}
+
+	Mesh* ResourceManager::LoadMeshFromHeightMap(const std::string& FilePath)
+	{
+		//map을 사용할 때 조심해야 할 부분
+		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
+			mHeightMapTable[FilePath] = _LoadHeightMap(FilePath);
+		}
+
+		return mHeightMapTable[FilePath];
+	}
+
+// 	Mesh* ResourceManager::_LoadHeightMap(const std::string& FilePath)
+// 	{
+// 		return nullptr;
+// 	}
+
+	Mesh* ResourceManager::_LoadHeightMap(const std::string& FilePath)
+	{
+		FILE* filePtr;
+		int error;
+		unsigned int count;
+		BITMAPFILEHEADER bitmapFileHeader;
+		BITMAPINFOHEADER bitmapInfoHeader;
+		int imageSize;
+		unsigned char* bitmapImage;
+
+		// Open the height map file in binary.
+		error = fopen_s(&filePtr, FilePath.c_str(), "rb");
+		if (error != 0)
+			return nullptr;
+
+		// Read in the file header.
+		count = fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER), 1, filePtr);
+		if (count != 1)
+			return nullptr;
+
+		// Read in the bitmap info header.
+		count = fread(&bitmapInfoHeader, sizeof(BITMAPINFOHEADER), 1, filePtr);
+		if (count != 1)
+			return nullptr;
+
+		int col, row;
+
+		// Save the dimensions of the terrain.
+		col = bitmapInfoHeader.biWidth - 1;
+		row = bitmapInfoHeader.biHeight - 1;
+
+		// Calculate the size of the bitmap image data.
+		imageSize = (col + 1) * (row + 1) * 3;
+
+		// Allocate memory for the bitmap image data.
+		bitmapImage = new unsigned char[imageSize];
+		if (!bitmapImage)
+			return nullptr;
+
+		// Move to the beginning of the bitmap data.
+		fseek(filePtr, bitmapFileHeader.bfOffBits, SEEK_SET);
+
+		// Read in the bitmap image data.
+		count = fread(bitmapImage, 1, imageSize, filePtr);
+		if (count != imageSize)
+			return nullptr;
+
+		// Close the file.
+		error = fclose(filePtr);
+		if (error != 0)
+			return false;
+
+		int numVertices = (col + 1) * (row + 1);
+		int numIndices = col * row * 2;
+
+		Mesh* pNewMesh = Mesh::Create(numVertices, numIndices);
+
+		float mSize = 0.5f;
+
+		bool IsHeightMap = bitmapImage == nullptr ? false : true;
+		MESH_CUSTOM_VERTEX* vertex = pNewMesh->GetVertices();
+
+		int nIndex = 0;
+		//int imageSize = (col + 1) * (row + 1) * 3 - 3;
+		for (int z = 0; z < row + 1; z++)
+		{
+			for (int x = 0; x < col + 1; x++)
+			{
+				// Z축 반전 구현해야함.
+
+				nIndex = (z * (col + 1)) + x;
+				vertex[nIndex].position.x = mSize * x;
+				vertex[nIndex].position.y = IsHeightMap == true ? (float)bitmapImage[nIndex * 3] / 200.f : 0.f;
+				vertex[nIndex].position.z = -1.0f*(mSize * z);
+				
+				//높이에 따른 노멀값 계산이 필요
+				vertex[nIndex].normal.x = 0.f;
+				vertex[nIndex].normal.y = -1.f;
+				vertex[nIndex].normal.z = 0.f;
+
+				vertex[nIndex].color = D3DCOLOR_RGBA(255, 50, 255, 255);
+				//nIndex++;
+			}
+		}
+
+		MESH_CUSTOM_INDEX* Index = pNewMesh->GetIndices();
+		nIndex = 0;
+		for (int z = 0; z < row; z++)
+		{
+			for (int x = 0; x < col; x++)
+			{
+				Index[nIndex].w0 = WORD(z * (col + 1) + x);
+				Index[nIndex].w1 = WORD((z + 1)*(col + 1) + x + 1);
+				Index[nIndex++].w2 = WORD((z + 1)*(col + 1) + x);
+
+				Index[nIndex].w0= WORD(z * (col + 1) + x);
+				Index[nIndex].w1 = WORD(z * (col + 1) + x + 1);
+				Index[nIndex++].w2 = WORD((z + 1)*(col + 1) + x + 1);
+			}
+		}
+
+		delete[] bitmapImage;
+
+		return pNewMesh;
+	}
+
+
 
 
 

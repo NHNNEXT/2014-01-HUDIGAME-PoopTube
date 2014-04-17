@@ -1,6 +1,8 @@
 /**
 * @author 양현찬
 * @brief 메쉬의 데이터를 물고있는 객체
+* 팩토리 구조. Mesh를 생성한후 objmanager에서 관리
+* 사용자가 직접 접근할 일은 없음
 * @date 2014/04/17
 * @file Mesh.h
 */
@@ -26,9 +28,6 @@ namespace pooptube {
 		WORD w0, w1, w2;
 	};
 
-	//@brief 
-	//팩토리 구조. Mesh를 생성한후 objmanager에서 관리
-	//사용자가 직접 접근할 일은 없음
 	class Mesh : public Node
 	{
 	public:
@@ -38,6 +37,7 @@ namespace pooptube {
 		//@param VertexCount 
 		//@param PolygonCount
 		//@return 생성한 Mesh를 반환
+		//@exception 초기화에 실패하면 nullptr반환
 		static Mesh* Create(int VertexCount, int PolygonCount);
 
 		virtual bool Init(int VertexCount, int PolygonCount);
@@ -54,15 +54,16 @@ namespace pooptube {
 
 
 	private:
-		//메쉬의 폴리곤 갯수
-		int								mPolygonCount;
-		int								mVertexCount;
 
+		int								mPolygonCount = 0;
+		int								mVertexCount = 0;
 
-		MESH_CUSTOM_VERTEX*				mVertices;
-		MESH_CUSTOM_INDEX*				mIndices;
+		MESH_CUSTOM_VERTEX*				mVertices = nullptr;
+		MESH_CUSTOM_INDEX*				mIndices = nullptr;
 		
+		LPDIRECT3DDEVICE9				mDevice = nullptr;
 
+		float							mHeightMapSize = 0.5f;
 	};
 
 }
