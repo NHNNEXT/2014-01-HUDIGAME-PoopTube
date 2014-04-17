@@ -84,7 +84,6 @@ bool StageOne::Init()
 	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0, 0, 1));
 	mCamera->SetTarget(mSkinnedMesh);
 
-	mSkinnedMesh->mCollisionBox = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
 	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
 	testDummy->SetCenterPos( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
 	testDummy->SetAxisLen( 0.5f, 0.5, 1.0f );
@@ -93,7 +92,8 @@ bool StageOne::Init()
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, 1));
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, -2));
 	//mCamera->SetLook(D3DXVECTOR3(0, 2, -10));
-	//mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx");
+
+	mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx");
 
 	return true;
 }

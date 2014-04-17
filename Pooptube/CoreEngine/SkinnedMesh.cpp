@@ -70,9 +70,6 @@ namespace pooptube {
 		memcpy(pIndices, mMesh->GetIndices(), mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX));
 		mMeshIndexBuffer->Unlock();
 
-		//헨들 넘버는 참조 갯수의 -1 을한다.
-		mFBXMeshHandle = mMesh->GetCountHandle() - 1;
-
 		return true;
 	}
 
@@ -93,21 +90,14 @@ namespace pooptube {
 		pDevice->SetIndices(mMeshIndexBuffer);
 
 		pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());
-
 		//pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mFBXMesh->GetPolygonCount());
 		
-		mCollisionBox->Render();
 		//Node::Render( );
 	}
 
 	void SkinnedMesh::Update(float dTime)
 	{
-		// 테스트용
-		const CollisionBox* temp( CollisionManager::GetInstance()->CollisionCheck( mCollisionBox ) );
-		if( temp != nullptr )
-			printf_s( "Collision. Type: %04X\n", temp->GetCollisionType() );
-// 		else
-// 			printf( "Not Collision.\n" );
+		
 	}
 
 

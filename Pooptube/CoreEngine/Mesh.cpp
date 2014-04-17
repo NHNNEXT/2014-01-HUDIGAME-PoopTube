@@ -4,7 +4,7 @@
 
 namespace pooptube {
 	Mesh::Mesh()
-		: mPolygonCount(0), mCountHandle(0), mVertices(nullptr), mIndices(nullptr) {
+		: mPolygonCount(0), mVertices(nullptr), mIndices(nullptr) {
 	}
 
 
