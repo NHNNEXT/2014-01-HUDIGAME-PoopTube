@@ -101,9 +101,8 @@
     <ClInclude Include="EventDispatcher.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventProcess.h" />
-    <ClInclude Include="FBXMesh.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="FirstPersonCamera.h" />
-    <ClInclude Include="Ground.h" />
     <ClInclude Include="JsonParser.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyEvent.h" />
@@ -119,7 +118,6 @@
     <ClInclude Include="MouseEventHandler.h" />
     <ClInclude Include="NetworkSystem.h" />
     <ClInclude Include="ObjectManager.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Object.h" />
@@ -151,9 +149,8 @@
     <ClCompile Include="EventDispatcher.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
-    <ClCompile Include="FBXMesh.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
-    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JsonParser.cpp" />
     <ClCompile Include="KeyEventDispatcher.cpp" />
@@ -164,7 +161,6 @@
     <ClCompile Include="MouseEventHandler.cpp" />
     <ClCompile Include="NetworkSystem.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
-    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Resource.cpp" />

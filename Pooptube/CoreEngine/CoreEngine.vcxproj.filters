@@ -157,9 +157,6 @@
     <Filter Include="Nodes\MeshData">
       <UniqueIdentifier>{09442dfc-e403-44af-bbef-16fd323e1cb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Nodes\Ground">
-      <UniqueIdentifier>{d2285b5d-7d3e-4c27-8542-4cc061260edf}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -273,9 +270,6 @@
     <ClInclude Include="MouseEventHandler.h">
       <Filter>MouseEvent\MouseEventHandler</Filter>
     </ClInclude>
-    <ClInclude Include="FBXMesh.h">
-      <Filter>Nodes\MeshData</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectPool.h">
       <Filter>Util\DataStructure</Filter>
     </ClInclude>
@@ -285,20 +279,17 @@
     <ClInclude Include="JsonParser.h">
       <Filter>Json</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Nodes\MeshData</Filter>
-    </ClInclude>
     <ClInclude Include="SkinnedMesh.h">
       <Filter>Nodes\SkinnedMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>Nodes\Ground</Filter>
     </ClInclude>
     <ClInclude Include="CollisionBox.h">
       <Filter>Nodes\CollisionBox</Filter>
     </ClInclude>
     <ClInclude Include="CollisionType.h">
       <Filter>Util\DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Nodes\MeshData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -387,26 +378,20 @@
     <ClCompile Include="MouseEventHandler.cpp">
       <Filter>MouseEvent\MouseEventHandler</Filter>
     </ClCompile>
-    <ClCompile Include="FBXMesh.cpp">
-      <Filter>Nodes\MeshData</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="JsonParser.cpp">
       <Filter>Json</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Nodes\MeshData</Filter>
-    </ClCompile>
     <ClCompile Include="SkinnedMesh.cpp">
       <Filter>Nodes\SkinnedMesh</Filter>
     </ClCompile>
-    <ClCompile Include="Ground.cpp">
-      <Filter>Nodes\Ground</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionBox.cpp">
       <Filter>Nodes\CollisionBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Nodes\MeshData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

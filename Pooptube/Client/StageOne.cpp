@@ -7,17 +7,14 @@
 
 using namespace pooptube;
 
-StageOne::StageOne() : xTrans(0.f), zTrans(0.f)
-{
+StageOne::StageOne() {
 }
 
 
-StageOne::~StageOne()
-{
+StageOne::~StageOne() {
 }
 
-StageOne* StageOne::Create()
-{
+StageOne* StageOne::Create() {
 	StageOne* pScene = new StageOne();
 	if (pScene->Init()) {
 		ObjectManager::GetInstance()->AddObject(pScene);
@@ -30,8 +27,7 @@ StageOne* StageOne::Create()
 	return pScene;
 }
 
-bool StageOne::Init()
-{
+bool StageOne::Init() {
 	//태스트하기위해 설정들을 꾸겨넣었음
 	//앞으론
 	//카메라도 만들어야 하고
@@ -41,7 +37,7 @@ bool StageOne::Init()
 	EnableKeyEvent();
 	EnableMouseEvent();
 
-	LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+	mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 	D3DMATERIAL9 mtrl;
 	ZeroMemory(&mtrl, sizeof(D3DMATERIAL9));
@@ -49,7 +45,7 @@ bool StageOne::Init()
 	mtrl.Diffuse.g = mtrl.Ambient.g = 1.0f;
 	mtrl.Diffuse.b = mtrl.Ambient.b = 1.0f;
 	mtrl.Diffuse.a = mtrl.Ambient.a = 1.0f;
-	pDevice->SetMaterial(&mtrl);
+	mDevice->SetMaterial(&mtrl);
 
 	D3DXVECTOR3 vecDir;
 	D3DLIGHT9 light;
@@ -69,22 +65,21 @@ bool StageOne::Init()
 	light.Range = 1000.0f;
 
 	//디바이스에 광원을 설정합니다.
-	pDevice->SetLight(0, &light);
-	pDevice->LightEnable(0, TRUE);
+	mDevice->SetLight(0, &light);
+	mDevice->LightEnable(0, TRUE);
 
-	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-	pDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
+	mDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	mDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 
 
 	mCamera = ThirdPersonCamera::Create();
-	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx");
-	mGround = Ground::Create();
-	mGround->CreateGround("test.bmp");
+	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
+
+	mGround_2 = SkinnedMesh::Create("test.bmp", RESOURCE_HEIGHTMAP);
 
 	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0, 0, 1));
 	mCamera->SetTarget(mSkinnedMesh);
 
-	mSkinnedMesh->mCollisionBox = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
 	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
 	testDummy->SetCenterPos( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
 	testDummy->SetAxisLen( 0.5f, 0.5, 1.0f );
@@ -93,9 +88,28 @@ bool StageOne::Init()
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, 1));
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, -2));
 	//mCamera->SetLook(D3DXVECTOR3(0, 2, -10));
-	//mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx");
+
+	mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
 
 	return true;
+}
+
+void StageOne::Render() {
+
+	mCamera->Render();
+
+	if (mSkinnedMesh){
+		mSkinnedMesh->Render();
+	}
+
+	if (mSkinnedMesh_2)
+		mSkinnedMesh_2->Render();
+
+	if (mGround_2)
+		mGround_2->Render();
+
+	if (testDummy)
+		testDummy->Render();
 }
 
 
