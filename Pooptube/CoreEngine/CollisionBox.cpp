@@ -43,7 +43,8 @@ namespace pooptube {
 	{
 		CollisionBox* pCollisionBox = new CollisionBox( collisionType, bound, mass );
 		if( pCollisionBox->Init() ) {
-			ObjectManager::GetInstance()->AddObject( pCollisionBox );
+			//여기서 두곳 다 넣으니 뻑이나네요
+			//ObjectManager::GetInstance()->AddObject( pCollisionBox );
 			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
 		}
 		else {

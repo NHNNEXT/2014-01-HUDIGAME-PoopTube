@@ -4,21 +4,14 @@
 
 namespace pooptube {
 	CollisionManager* CollisionManager::mInstance = nullptr;
-	CollisionManager* CollisionManager::GetInstance()
-	{
-		if( mInstance == nullptr ) {
-			mInstance = new CollisionManager( );
+
+	CollisionManager* CollisionManager::GetInstance() {
+		if (mInstance == nullptr) {
+			mInstance = new CollisionManager();
+			ObjectManager::GetInstance()->AddObject(mInstance);
 		}
 
 		return mInstance;
-	}
-
-	void CollisionManager::ReleaseInstance()
-	{
-		if( mInstance != nullptr ) {
-			delete mInstance;
-			mInstance = nullptr;
-		}
 	}
 
 	void CollisionManager::AddCollisionBox( CollisionBox* pCollisionMesh )
@@ -58,7 +51,8 @@ namespace pooptube {
 
 	CollisionManager::~CollisionManager()
 	{
-		mCollisionBoxList.clear( );
+		//이것도 수상함
+		//mCollisionBoxList.clear( );
 	}
 
 }

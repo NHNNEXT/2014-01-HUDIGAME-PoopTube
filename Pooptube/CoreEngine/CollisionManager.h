@@ -1,14 +1,14 @@
 #pragma once
+#include "Object.h"
 
 namespace pooptube {
 
 	class CollisionBox;
 
-	class CollisionManager
+	class CollisionManager : public Object
 	{
 	public:
 		static CollisionManager* GetInstance();
-		static void ReleaseInstance( );
 
 		void AddCollisionBox( CollisionBox* pCollisionMesh );
 		void RemoveCollisionBox( CollisionBox* pCollisionMesh );
