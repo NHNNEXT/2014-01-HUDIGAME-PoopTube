@@ -26,6 +26,8 @@ namespace pooptube {
 		Mesh* LoadMeshFromFBX(const std::string& FilePath);
 		Mesh* LoadMeshFromHeightMap(const std::string& FilePath);
 
+		void CalculateNormal(D3DXVECTOR3* pOut, D3DXVECTOR3* v0, D3DXVECTOR3* v1, D3DXVECTOR3* v2);
+
 	protected:
 		bool _Init();
 		bool _FBXInit();
@@ -46,6 +48,7 @@ namespace pooptube {
 	private:
 
 		static ResourceManager*			mInstance;
+		LPDIRECT3DDEVICE9				mDevice;
 
 		//@brief
 		//sdk에서 제공하는 FbxManager

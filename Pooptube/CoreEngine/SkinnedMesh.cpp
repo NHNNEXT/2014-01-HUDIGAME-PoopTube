@@ -95,7 +95,7 @@ namespace pooptube {
 		mDevice->SetIndices(mMeshIndexBuffer);
 
 		mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());
-		//mDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mFBXMesh->GetPolygonCount());
+		//mDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mMesh->GetPolygonCount());
 	}
 
 	void SkinnedMesh::Update(float dTime)
