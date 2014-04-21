@@ -32,15 +32,17 @@ namespace pooptube {
 		bool Run();
 
 	public:
-		inline HWND GetHWND() const { return mHwnd; }
-		inline HINSTANCE GetHandleInstance() const { return mHInstance; }
+		inline HWND			GetHWND() const { return mHwnd; }
+		inline HINSTANCE	GetHandleInstance() const { return mHInstance; }
 
 		// TODO: Getter, Setter
 		// TODO: Pause - Issue: Network?
 
-		SceneManager* GetSceneManager() { return mSceneManager; }
-		KeyEventDispatcher* GetKeyEventDispatcher() { return mKeyEventDispatcher; }
-		MouseEventDispatcher* GetMouseEventDispatcher() { return mMouseEventDispatcher; }
+		SceneManager*			GetSceneManager() { return mSceneManager; }
+		KeyEventDispatcher*		GetKeyEventDispatcher() { return mKeyEventDispatcher; }
+		MouseEventDispatcher*	GetMouseEventDispatcher() { return mMouseEventDispatcher; }
+
+		float					GetFps() const { return mFps; }
 
 	private:
 		Application() : mTitle(nullptr), mScreenWidth(0), mScreenHeight(0),

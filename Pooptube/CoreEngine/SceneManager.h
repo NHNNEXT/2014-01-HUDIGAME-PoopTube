@@ -26,9 +26,9 @@ namespace pooptube {
 		D3D9Renderer* _CreateRenderer(HWND hwnd, int width, int height, bool isWindowed);
 
 	private:
-		Scene* mScene;
+		Scene* mScene = nullptr;
 
-		D3D9Renderer* mRenderer;
+		D3D9Renderer* mRenderer = nullptr;
 
 		friend class Application;
 	};

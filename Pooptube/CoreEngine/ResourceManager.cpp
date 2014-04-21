@@ -93,11 +93,12 @@ namespace pooptube {
 
 		if (!pImporter->Import(pScene))
 			return nullptr;
-
-		//더이상 필요없으니 제거
 		pImporter->Destroy();
 
-		return _ReadVerticesFromFBX(pScene);
+		Mesh* temp = _ReadVerticesFromFBX(pScene);
+		pScene->Destroy();
+
+		return temp;
 	}
 
 	Mesh* ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {

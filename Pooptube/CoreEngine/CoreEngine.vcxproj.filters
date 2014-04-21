@@ -4,9 +4,6 @@
     <Filter Include="PreCompile">
       <UniqueIdentifier>{15caa42c-7365-47f6-a295-236014110eb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SceneManager">
-      <UniqueIdentifier>{a792e6f6-340b-4384-a369-7515ad0d451b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{999618ca-60e1-40e4-9955-1f4131d1672e}</UniqueIdentifier>
     </Filter>
@@ -15,9 +12,6 @@
     </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{fb5d549b-82eb-4e04-aec0-2a05414e579b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ResourceManager">
-      <UniqueIdentifier>{876b0372-cd86-4c8b-8a3e-cc8f1a738109}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{52adef2a-c716-4b30-9717-39dee0973c58}</UniqueIdentifier>
@@ -142,12 +136,6 @@
     <Filter Include="Util\DataStructure">
       <UniqueIdentifier>{dac80cc4-ac0b-4245-a5c2-fad35c579594}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionManager">
-      <UniqueIdentifier>{2633a112-8ba2-4d93-9424-30bd11ec88ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Json">
-      <UniqueIdentifier>{db9de6e6-625d-4f23-b75a-5f1ce0c377ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Nodes\SkinnedMesh">
       <UniqueIdentifier>{40a1effc-cd23-494c-bda7-bd2447e79645}</UniqueIdentifier>
     </Filter>
@@ -156,6 +144,21 @@
     </Filter>
     <Filter Include="Nodes\MeshData">
       <UniqueIdentifier>{09442dfc-e403-44af-bbef-16fd323e1cb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Json">
+      <UniqueIdentifier>{db9de6e6-625d-4f23-b75a-5f1ce0c377ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nodes\CollisionBox\CollisionManager">
+      <UniqueIdentifier>{2633a112-8ba2-4d93-9424-30bd11ec88ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nodes\Scene\SceneManager">
+      <UniqueIdentifier>{a792e6f6-340b-4384-a369-7515ad0d451b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\ConsoleManager">
+      <UniqueIdentifier>{81793986-cda7-4f11-8948-b2fbbf48362c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ResourceManager">
+      <UniqueIdentifier>{876b0372-cd86-4c8b-8a3e-cc8f1a738109}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -166,7 +169,7 @@
       <Filter>PreCompile</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>SceneManager</Filter>
+      <Filter>Nodes\Scene\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Application</Filter>
@@ -274,10 +277,10 @@
       <Filter>Util\DataStructure</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
-      <Filter>CollisionManager</Filter>
+      <Filter>Nodes\CollisionBox\CollisionManager</Filter>
     </ClInclude>
     <ClInclude Include="JsonParser.h">
-      <Filter>Json</Filter>
+      <Filter>Resource\Json</Filter>
     </ClInclude>
     <ClInclude Include="SkinnedMesh.h">
       <Filter>Nodes\SkinnedMesh</Filter>
@@ -291,6 +294,9 @@
     <ClInclude Include="Mesh.h">
       <Filter>Nodes\MeshData</Filter>
     </ClInclude>
+    <ClInclude Include="ConsoleManager.h">
+      <Filter>Util\ConsoleManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -298,7 +304,7 @@
     </ClCompile>
     <ClCompile Include="CoreEngine.cpp" />
     <ClCompile Include="SceneManager.cpp">
-      <Filter>SceneManager</Filter>
+      <Filter>Nodes\Scene\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
       <Filter>Application</Filter>
@@ -379,10 +385,10 @@
       <Filter>MouseEvent\MouseEventHandler</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
-      <Filter>CollisionManager</Filter>
+      <Filter>Nodes\CollisionBox\CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="JsonParser.cpp">
-      <Filter>Json</Filter>
+      <Filter>Resource\Json</Filter>
     </ClCompile>
     <ClCompile Include="SkinnedMesh.cpp">
       <Filter>Nodes\SkinnedMesh</Filter>
@@ -392,6 +398,9 @@
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Nodes\MeshData</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleManager.cpp">
+      <Filter>Util\ConsoleManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
