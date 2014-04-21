@@ -18,7 +18,9 @@ namespace pooptube {
 	}
 
 	Node* Node::Create() {
-		Node* pNode = new Node();
+		Node* pNode = (Node*)_aligned_malloc(sizeof(Node), POOPTUBE_ALIGNMENT_SIZE);
+		new(pNode) Node();
+
 		if (pNode->Init()) {
 			ObjectManager::GetInstance()->AddObject(pNode);
 		}
@@ -31,6 +33,8 @@ namespace pooptube {
 	}
 
 	bool Node::Init() {
+		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+
 		D3DXMatrixIdentity(&mMatWorld);
 
 		return true;
@@ -38,8 +42,7 @@ namespace pooptube {
 
 	void Node::Render() {
 		// TODO: 행렬 계산
-		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-		pDevice->SetTransform(D3DTS_WORLD, &mMatWorld);
+		mDevice->SetTransform(D3DTS_WORLD, &mMatWorld);
 		//D3DXMatrixIdentity(&mMatWorld);
 
 		for (auto child : mChildList) {
@@ -136,8 +139,7 @@ namespace pooptube {
 		RotateFrontVector(0, 0, Angle);
 	}
 
-	void Node::RotateFrontVector(float x, float y, float z)
-	{
+	void Node::RotateFrontVector(float x, float y, float z) {
 		float vx = mFrontVec.x*cosf(x) + mFrontVec.z*sinf(x);
 		float vz = -mFrontVec.x*sinf(x) + mFrontVec.z*cosf(x);
 		mFrontVec.x = vx;
@@ -146,12 +148,5 @@ namespace pooptube {
 
 		printf("@@@@@@@ %f %f %f\n", mFrontVec.x, mFrontVec.y, mFrontVec.z);
 	}
-
-
-
-
-
-
-
 
 }

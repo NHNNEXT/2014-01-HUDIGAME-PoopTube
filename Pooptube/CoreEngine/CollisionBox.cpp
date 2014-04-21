@@ -41,7 +41,9 @@ namespace pooptube {
 	}
 	CollisionBox* CollisionBox::Create( COLLISION_TYPE collisionType, float bound, float mass )
 	{
-		CollisionBox* pCollisionBox = new CollisionBox( collisionType, bound, mass );
+		CollisionBox* pCollisionBox = (CollisionBox*)_aligned_malloc(sizeof(CollisionBox), POOPTUBE_ALIGNMENT_SIZE);
+		new(pCollisionBox) CollisionBox();
+
 		if( pCollisionBox->Init() ) {
 			//여기서 두곳 다 넣으니 뻑이나네요
 			//ObjectManager::GetInstance()->AddObject( pCollisionBox );

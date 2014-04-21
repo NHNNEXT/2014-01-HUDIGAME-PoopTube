@@ -14,8 +14,10 @@ StageOne::StageOne() {
 StageOne::~StageOne() {
 }
 
+//지금은 aligned_malloc을 사용했지만 client에서는 core의 형태를 가져오지 않고 모르는 상태에서 사용할 방법이 필요하다.
 StageOne* StageOne::Create() {
-	StageOne* pScene = new StageOne();
+	StageOne* pScene = (StageOne*)_aligned_malloc(sizeof(StageOne), POOPTUBE_ALIGNMENT_SIZE);
+	new(pScene)StageOne();
 	if (pScene->Init()) {
 		ObjectManager::GetInstance()->AddObject(pScene);
 	}

@@ -14,7 +14,9 @@ namespace pooptube {
 	}
 
 	ThirdPersonCamera* ThirdPersonCamera::Create() {
-		ThirdPersonCamera* pThirdPersonCamera = new ThirdPersonCamera();
+		ThirdPersonCamera* pThirdPersonCamera = (ThirdPersonCamera*)_aligned_malloc(sizeof(ThirdPersonCamera), POOPTUBE_ALIGNMENT_SIZE);
+		new( pThirdPersonCamera ) ThirdPersonCamera();
+
 		if (pThirdPersonCamera->Init()) {
 			ObjectManager::GetInstance()->AddObject(pThirdPersonCamera);
 		}
@@ -27,15 +29,13 @@ namespace pooptube {
 	}
 
 	bool ThirdPersonCamera::Init() {
-		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+		Node::Init();
 
 		return true;
 	}
 
 	void ThirdPersonCamera::Render()
 	{
-		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-
 		Node::Render();
 
 //		D3DXMATRIXA16 temp = mTarget->GetMatrix();
@@ -44,13 +44,13 @@ namespace pooptube {
 		//뷰행렬을 생성
 		D3DXMatrixLookAtLH(&mMatView, &mEyePt, &mLookatPt, &mUpVec);
 		//생성된 뷰행렬을 적용
-		pDevice->SetTransform(D3DTS_VIEW, &mMatView);
+		Node::GetDevice()->SetTransform(D3DTS_VIEW, &mMatView);
 
 		//프로젝션 설정
 		//perspective프로젝션
 		D3DXMatrixPerspectiveFovLH(&mMatProj, D3DX_PI / 4, 1.0f, 1.0f, 100.0f);
 		//생성한 프로젝션 정보를 디바이스를 통해 설정
-		pDevice->SetTransform(D3DTS_PROJECTION, &mMatProj);
+		Node::GetDevice()->SetTransform(D3DTS_PROJECTION, &mMatProj);
 	}
 
 	void ThirdPersonCamera::Update(float dTime)
