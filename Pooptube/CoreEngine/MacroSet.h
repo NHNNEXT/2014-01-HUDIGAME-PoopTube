@@ -1,6 +1,15 @@
+/**
+* MacroSet.h
+* 작성자: 장문익
+* 작성일: 2014. 4. 22
+* 마지막으로 수정한 사람: 장문익
+* 수정일: 2014. 4. 22
+* 여기 나둬도 되나 모르겠네...?
+*/
 
 #pragma once
 
+#define WM_SOCKET 104
 #define ALIGNMENT_SIZE 16
 
 template <class T>
@@ -32,5 +41,24 @@ public:
 private:
 	static T*	m_Instance;
 };
+
 template <typename T>
-T* Singleton<T>::m_Instance = nullptr;
+inline void SafeDelete(T* &p)
+{
+	if (p != nullptr)
+	{
+		delete p;
+		p = nullptr;
+	}
+}
+
+template <typename T>
+inline void SafeRelease(T* &p)
+{
+	if (p != nullptr)
+	{
+		p->Release();
+		p = nullptr;
+	}
+}
+
