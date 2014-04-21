@@ -1,18 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="SourceCode">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="PacketDefine">
-      <UniqueIdentifier>{3cfbe6f1-5834-4652-a3f4-358ccb895128}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{002996bc-5f49-4034-9846-d804baed220a}</UniqueIdentifier>
     </Filter>
     <Filter Include="PTServer">
       <UniqueIdentifier>{037a302a-ac01-486c-9557-cd82093d1879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet">
+      <UniqueIdentifier>{3cfbe6f1-5834-4652-a3f4-358ccb895128}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -20,10 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\PacketType.h">
-      <Filter>PacketDefine</Filter>
-    </ClInclude>
-    <ClInclude Include="DatabaseJobManager.h">
-      <Filter>SourceCode</Filter>
+      <Filter>Packet</Filter>
     </ClInclude>
     <ClInclude Include="SPSCQueue.h">
       <Filter>Utils</Filter>
@@ -43,14 +36,8 @@
     <ClInclude Include="DbHelper.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="SQLStatement.h">
-      <Filter>SourceCode</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectPool.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="DatabaseJobContext.h">
-      <Filter>SourceCode</Filter>
     </ClInclude>
     <ClInclude Include="ProducerConsumerQueue.h">
       <Filter>Utils</Filter>
@@ -73,11 +60,17 @@
     <ClInclude Include="targetver.h">
       <Filter>PTServer</Filter>
     </ClInclude>
+    <ClInclude Include="DatabaseJobContext.h">
+      <Filter>PTServer</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseJobManager.h">
+      <Filter>PTServer</Filter>
+    </ClInclude>
+    <ClInclude Include="SQLStatement.h">
+      <Filter>PTServer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DatabaseJobManager.cpp">
-      <Filter>SourceCode</Filter>
-    </ClCompile>
     <ClCompile Include="CircularBuffer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -90,9 +83,6 @@
     <ClCompile Include="DbHelper.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="DatabaseJobContext.cpp">
-      <Filter>SourceCode</Filter>
-    </ClCompile>
     <ClCompile Include="ClientManager.cpp">
       <Filter>PTServer</Filter>
     </ClCompile>
@@ -103,6 +93,12 @@
       <Filter>PTServer</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
+      <Filter>PTServer</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseJobContext.cpp">
+      <Filter>PTServer</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseJobManager.cpp">
       <Filter>PTServer</Filter>
     </ClCompile>
   </ItemGroup>
