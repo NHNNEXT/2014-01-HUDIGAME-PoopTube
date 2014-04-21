@@ -3,7 +3,6 @@
 #include "Node.h"
 
 #include "ObjectManager.h"
-#include "Application.h"
 
 namespace pooptube {
 	Node::Node() :
@@ -18,9 +17,7 @@ namespace pooptube {
 	}
 
 	Node* Node::Create() {
-		Node* pNode = (Node*)_aligned_malloc(sizeof(Node), POOPTUBE_ALIGNMENT_SIZE);
-		new(pNode) Node();
-
+		Node* pNode = new Node;
 		if (pNode->Init()) {
 			ObjectManager::GetInstance()->AddObject(pNode);
 		}

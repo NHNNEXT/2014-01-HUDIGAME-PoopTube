@@ -11,7 +11,7 @@ namespace pooptube {
 	}
 
 	Scene* Scene::Create() {		
-		Scene* pScene = (Scene*)_aligned_malloc(sizeof(Scene), POOPTUBE_ALIGNMENT_SIZE);
+		Scene* pScene = new Scene;
 		if ( pScene->Init() ) {
 			ObjectManager::GetInstance()->AddObject( pScene );
 		} else {

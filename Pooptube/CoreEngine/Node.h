@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Object.h"
+#include "Application.h"
 #include "KeyEventDelegate.h"
 #include "MouseEventDelegate.h"
 
@@ -31,14 +32,22 @@ namespace pooptube {
 		Node();
 		virtual ~Node();
 
+		//@brief 위치지정 new를 사용. 
 		static void* operator new (std::size_t size, void* ptr) throw(){
 			return ::operator new(size, ptr);
 		}
+
 		//@brief 위치지정 new를 사용했으니 해당 delete도 만들어준다. 
-		//위치지정 new는 컴파일러에서 자동 생성
 		static void operator delete (void *p, void *ptr) throw() {
 			if (p == nullptr) return;
 			return ::operator delete(p, ptr);
+		}
+
+		//@brief 무조건 16바이트 alignment로 생성되도록 함
+		static void* operator new (std::size_t size) throw(){
+			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
+
+			return ::operator new(size, ptr);
 		}
 
 		//@brief 일반 delete도 위치지정 delete와 같이 해제되도록 설정
@@ -91,9 +100,6 @@ namespace pooptube {
 		D3DXVECTOR3		mFrontVec;
 
 		LPDIRECT3DDEVICE9 mDevice;
-
-		//@brief private으로 선언(사용불가)
-		static void* operator new (std::size_t size) throw();
 		
 		//std::forward_list<EventProcess> mEventProcessList;
 		friend class SceneManager;

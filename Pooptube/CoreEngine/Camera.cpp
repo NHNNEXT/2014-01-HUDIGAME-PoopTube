@@ -14,8 +14,7 @@ namespace pooptube {
 	}
 
 	Camera* Camera::Create() {
-		Camera* pCamera = (Camera*)_aligned_malloc(sizeof(Camera), POOPTUBE_ALIGNMENT_SIZE);
-		new(pCamera)Camera();
+		Camera* pCamera = new Camera;
 
 		if ( pCamera->Init() ) {
 			ObjectManager::GetInstance()->AddObject( pCamera );

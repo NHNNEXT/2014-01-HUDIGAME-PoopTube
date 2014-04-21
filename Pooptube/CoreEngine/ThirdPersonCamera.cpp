@@ -14,8 +14,7 @@ namespace pooptube {
 	}
 
 	ThirdPersonCamera* ThirdPersonCamera::Create() {
-		ThirdPersonCamera* pThirdPersonCamera = (ThirdPersonCamera*)_aligned_malloc(sizeof(ThirdPersonCamera), POOPTUBE_ALIGNMENT_SIZE);
-		new( pThirdPersonCamera ) ThirdPersonCamera();
+		ThirdPersonCamera* pThirdPersonCamera = new ThirdPersonCamera;
 
 		if (pThirdPersonCamera->Init()) {
 			ObjectManager::GetInstance()->AddObject(pThirdPersonCamera);

@@ -1,10 +1,12 @@
 
 #pragma once
 
-#include "Scene.h"
 #include "D3D9Renderer.h"
 
 namespace pooptube {
+
+	class Scene;
+
 	class SceneManager : public Object {
 	private:
 		SceneManager();

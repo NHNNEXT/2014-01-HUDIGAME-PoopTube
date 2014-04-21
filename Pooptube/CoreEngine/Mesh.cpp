@@ -12,8 +12,7 @@ namespace pooptube {
 	}
 
 	Mesh* Mesh::Create(int VertexCount, int PolygonCount) {
-		Mesh* pMesh = (Mesh*)_aligned_malloc(sizeof(Mesh), POOPTUBE_ALIGNMENT_SIZE);
-		new(pMesh) Mesh();
+		Mesh* pMesh = new Mesh;
 
 		if (pMesh->Init(VertexCount, PolygonCount)) {
 			ObjectManager::GetInstance()->AddObject(pMesh);

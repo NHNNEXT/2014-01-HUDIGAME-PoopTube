@@ -18,8 +18,8 @@ namespace pooptube {
 	SkinnedMesh* SkinnedMesh::Create(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType) {
 		if (!ResourceType)
 			return nullptr;
-		SkinnedMesh* pMesh = (SkinnedMesh*)_aligned_malloc(sizeof(SkinnedMesh), POOPTUBE_ALIGNMENT_SIZE);
-		new(pMesh) SkinnedMesh();
+
+		SkinnedMesh* pMesh = new SkinnedMesh;
 
 		if (pMesh->Init(MeshFilePath, ResourceType)) {
 			ObjectManager::GetInstance()->AddObject(pMesh);
