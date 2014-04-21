@@ -11,12 +11,16 @@ namespace pooptube {
 	}
 
 	SkinnedMesh::~SkinnedMesh() {
+		mMeshVertexBuffer->Release();
+		mMeshIndexBuffer->Release();
 	}
 
 	SkinnedMesh* SkinnedMesh::Create(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType) {
 		if (!ResourceType)
 			return nullptr;
-		SkinnedMesh* pMesh = new SkinnedMesh();
+
+		SkinnedMesh* pMesh = new SkinnedMesh;
+
 		if (pMesh->Init(MeshFilePath, ResourceType)) {
 			ObjectManager::GetInstance()->AddObject(pMesh);
 		}
@@ -79,8 +83,7 @@ namespace pooptube {
 		return true;
 	}
 
-	void SkinnedMesh::Render()
-	{
+	void SkinnedMesh::Render() {
 		if (mResourceType & RESOURCE_FBX) {
 			mDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
 		}
@@ -95,11 +98,10 @@ namespace pooptube {
 		mDevice->SetIndices(mMeshIndexBuffer);
 
 		mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());
-		//mDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mFBXMesh->GetPolygonCount());
+		//mDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mMesh->GetPolygonCount());
 	}
 
-	void SkinnedMesh::Update(float dTime)
-	{
+	void SkinnedMesh::Update(float dTime) {
 		
 	}
 

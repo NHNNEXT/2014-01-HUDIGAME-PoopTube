@@ -14,9 +14,11 @@ namespace pooptube {
 	}
 
 	Camera* Camera::Create() {
-		Camera* pCamera = new Camera();
+		Camera* pCamera = new Camera;
+
 		if ( pCamera->Init() ) {
 			ObjectManager::GetInstance()->AddObject( pCamera );
+
 		} else {
 			delete pCamera;
 			pCamera = nullptr;

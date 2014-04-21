@@ -30,9 +30,9 @@ namespace pooptube {
 
 	}
 
-
-
 	bool ResourceManager::_Init() {
+
+		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 		if (_FBXInit() == false)
 			return false;
@@ -76,8 +76,7 @@ namespace pooptube {
 
 		// importer를 생성합니다.
 		pImporter = FbxImporter::Create(mManager, "");
-		if (!mManager->GetIOPluginRegistry()->DetectReaderFileFormat(FilePath.c_str(), lFileFormat))
-		{
+		if (!mManager->GetIOPluginRegistry()->DetectReaderFileFormat(FilePath.c_str(), lFileFormat)) {
 			// Unrecognizable file format. Try to fall back to FbxImporter::eFBX_BINARY
 			lFileFormat = mManager->GetIOPluginRegistry()->FindReaderIDByDescription("FBX binary (*.fbx)");
 		}
@@ -94,23 +93,22 @@ namespace pooptube {
 
 		if (!pImporter->Import(pScene))
 			return nullptr;
-
-		//더이상 필요없으니 제거
 		pImporter->Destroy();
 
-		return _ReadVerticesFromFBX(pScene);
+		Mesh* temp = _ReadVerticesFromFBX(pScene);
+		pScene->Destroy();
+
+		return temp;
 	}
 
 	Mesh* ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {
 		Mesh* pNewMesh = nullptr;
 		FbxNode* pFbxRootNode = pScene->GetRootNode();
 
-		if (pFbxRootNode)
-		{
+		if (pFbxRootNode) {
 			int ChildCount = pFbxRootNode->GetChildCount();
 
-			for (int i = 0; i < ChildCount; i++)
-			{
+			for (int i = 0; i < ChildCount; i++) {
 				FbxNode* pFbxChildNode = pFbxRootNode->GetChild(i);
 
 				if (pFbxChildNode->GetNodeAttribute() == NULL)
@@ -133,22 +131,18 @@ namespace pooptube {
 				if (lVertexCount == 0)
 					return nullptr;
 
-				LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-
 				int countVertex = 0;
 				//fbx매쉬 생성
 				pNewMesh = Mesh::Create(lVertexCount, pMesh->GetPolygonCount());
 
-				for (int j = 0; j < pMesh->GetPolygonCount(); j++)
-				{
+				for (int j = 0; j < pMesh->GetPolygonCount(); j++) {
 					int iNumVertices = pMesh->GetPolygonSize(j);
 
 					//대충처리
 					if (iNumVertices != 3)
 						return nullptr;
 
-					for (int k = 0; k < iNumVertices; k++)
-					{
+					for (int k = 0; k < iNumVertices; k++) {
 						int iControlPointIndex = pMesh->GetPolygonVertex(j, k);
 
 						MESH_CUSTOM_VERTEX* vertex = pNewMesh->GetVertices();
@@ -171,8 +165,7 @@ namespace pooptube {
 
 						MESH_CUSTOM_INDEX* Index = pNewMesh->GetIndices();
 
-						switch (k)
-						{
+						switch (k) {
 						case 0:
 							Index[j].w0 = iControlPointIndex;
 							break;
@@ -185,7 +178,6 @@ namespace pooptube {
 						default:
 							break;
 						}
-
 					}
 				}
 			}
@@ -195,8 +187,7 @@ namespace pooptube {
 		return pNewMesh;
 	}
 
-	Mesh* ResourceManager::LoadMeshFromHeightMap(const std::string& FilePath)
-	{
+	Mesh* ResourceManager::LoadMeshFromHeightMap(const std::string& FilePath) {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 			mHeightMapTable[FilePath] = _LoadHeightMap(FilePath);
@@ -205,13 +196,7 @@ namespace pooptube {
 		return mHeightMapTable[FilePath];
 	}
 
-// 	Mesh* ResourceManager::_LoadHeightMap(const std::string& FilePath)
-// 	{
-// 		return nullptr;
-// 	}
-
-	Mesh* ResourceManager::_LoadHeightMap(const std::string& FilePath)
-	{
+	Mesh* ResourceManager::_LoadHeightMap(const std::string& FilePath) {
 		FILE* filePtr;
 		int error;
 		unsigned int count;
@@ -260,7 +245,7 @@ namespace pooptube {
 		// Close the file.
 		error = fclose(filePtr);
 		if (error != 0)
-			return false;
+			return nullptr;
 
 		int numVertices = (col + 1) * (row + 1);
 		int numIndices = col * row * 2;
@@ -269,38 +254,67 @@ namespace pooptube {
 
 		float mSize = 0.5f;
 
-		bool IsHeightMap = bitmapImage == nullptr ? false : true;
+		if (bitmapImage == nullptr)
+			return nullptr;
+
 		MESH_CUSTOM_VERTEX* vertex = pNewMesh->GetVertices();
 
 		int nIndex = 0;
 		//int imageSize = (col + 1) * (row + 1) * 3 - 3;
-		for (int z = 0; z < row + 1; z++)
-		{
-			for (int x = 0; x < col + 1; x++)
-			{
+		for (int z = 0; z < row + 1; ++z) {
+			for (int x = 0; x < col + 1; ++x) {
 				// Z축 반전 구현해야함.
-
 				nIndex = (z * (col + 1)) + x;
+				//int nIndex2 = (row - z) * (col + 1) + x;
+				 
 				vertex[nIndex].position.x = mSize * x;
-				vertex[nIndex].position.y = IsHeightMap == true ? (float)bitmapImage[nIndex * 3] / 200.f : 0.f;
-				vertex[nIndex].position.z = -1.0f*(mSize * z);
+				vertex[nIndex].position.z = mSize * z;
+				vertex[nIndex].position.y = (float)bitmapImage[nIndex * 3] * 0.005f;
 				
-				//높이에 따른 노멀값 계산이 필요
-				vertex[nIndex].normal.x = 0.f;
-				vertex[nIndex].normal.y = -1.f;
-				vertex[nIndex].normal.z = 0.f;
-
 				vertex[nIndex].color = D3DCOLOR_RGBA(255, 50, 255, 255);
-				//nIndex++;
 			}
 		}
 
+		nIndex = 0;
+		for (int z = 1; z < row; ++z) {
+			for (int x = 1; x < col; ++x) {
+
+				int nVtxT = col + 1;
+
+				nIndex = z * nVtxT + x;
+
+				D3DXVECTOR3 normal = D3DXVECTOR3(0, 0, 0);
+
+				int nearVertices[6][3] = {
+					{ nIndex, nIndex - 1,			nIndex - nVtxT		},
+					{ nIndex, nIndex - nVtxT,		nIndex - nVtxT + 1	},
+					{ nIndex, nIndex - nVtxT + 1,	nIndex + 1			},
+					{ nIndex, nIndex + 1,			nIndex + nVtxT		},
+					{ nIndex, nIndex + nVtxT,		nIndex + nVtxT - 1	},
+					{ nIndex, nIndex + nVtxT - 1,	nIndex - 1			}
+				};
+
+				for (int k = 0; k < 6; ++k) {
+					D3DXVECTOR3 v0 = vertex[nearVertices[k][0]].position;
+					D3DXVECTOR3 v1 = vertex[nearVertices[k][1]].position;
+					D3DXVECTOR3 v2 = vertex[nearVertices[k][2]].position;
+
+					D3DXVECTOR3 temp = D3DXVECTOR3(0, 0, 0);
+					CalculateNormal(&temp, &v0, &v1, &v2);
+					normal += temp;
+				}
+				
+				D3DXVec3Normalize(&normal, &normal);
+
+				vertex[nIndex].normal = normal;
+				vertex[nIndex].normal.y *= -1.f;
+			}
+		}
+		
 		MESH_CUSTOM_INDEX* Index = pNewMesh->GetIndices();
 		nIndex = 0;
-		for (int z = 0; z < row; z++)
-		{
-			for (int x = 0; x < col; x++)
-			{
+		for (int z = 0; z < row; z++) {
+			for (int x = 0; x < col; x++) {
 				Index[nIndex].w0 = WORD(z * (col + 1) + x);
 				Index[nIndex].w1 = WORD((z + 1)*(col + 1) + x + 1);
 				Index[nIndex++].w2 = WORD((z + 1)*(col + 1) + x);
@@ -315,6 +329,18 @@ namespace pooptube {
 
 		return pNewMesh;
 	}
+
+	void ResourceManager::CalculateNormal(D3DXVECTOR3* pOut, D3DXVECTOR3* v0, D3DXVECTOR3* v1, D3DXVECTOR3* v2) {
+		D3DXVECTOR3 n;
+		D3DXVECTOR3 A = *v2 - *v0;
+		D3DXVECTOR3 B = *v1 - *v0;
+
+		D3DXVec3Cross(&n, &A, &B);
+		D3DXVec3Normalize(&n, &n);
+
+		*pOut = n;
+	}
+
 
 
 

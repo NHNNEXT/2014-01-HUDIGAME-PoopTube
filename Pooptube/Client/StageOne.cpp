@@ -14,8 +14,9 @@ StageOne::StageOne() {
 StageOne::~StageOne() {
 }
 
+//지금은 aligned_malloc을 사용했지만 client에서는 core의 형태를 가져오지 않고 모르는 상태에서 사용할 방법이 필요하다.
 StageOne* StageOne::Create() {
-	StageOne* pScene = new StageOne();
+	StageOne* pScene = new StageOne;
 	if (pScene->Init()) {
 		ObjectManager::GetInstance()->AddObject(pScene);
 	}
@@ -29,10 +30,6 @@ StageOne* StageOne::Create() {
 
 bool StageOne::Init() {
 	//태스트하기위해 설정들을 꾸겨넣었음
-	//앞으론
-	//카메라도 만들어야 하고
-	//노드에 행렬값도 넣어야한다.
-	//빛도 설정하고 관리하는 객체를 만들어야 한다.
 	//똥튜브 먹고싶다.
 	EnableKeyEvent();
 	EnableMouseEvent();

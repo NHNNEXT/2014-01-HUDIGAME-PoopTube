@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 #include "Scene.h"
-
+#include "Application.h"
 #include "ObjectManager.h"
 
 namespace pooptube {
@@ -11,7 +11,7 @@ namespace pooptube {
 	}
 
 	Scene* Scene::Create() {		
-		Scene* pScene = new Scene();
+		Scene* pScene = new Scene;
 		if ( pScene->Init() ) {
 			ObjectManager::GetInstance()->AddObject( pScene );
 		} else {

@@ -95,6 +95,7 @@
     <ClInclude Include="CollisionType.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="ConsoleManager.h" />
     <ClInclude Include="D3D9Renderer.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventDelegate.h" />
@@ -144,6 +145,7 @@
     <ClCompile Include="CollisionBox.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="ConsoleManager.cpp" />
     <ClCompile Include="CoreEngine.cpp" />
     <ClCompile Include="D3D9Renderer.cpp" />
     <ClCompile Include="EventDispatcher.cpp" />

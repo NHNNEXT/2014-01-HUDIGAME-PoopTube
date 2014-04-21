@@ -1,12 +1,11 @@
 
 #include "stdafx.h"
 #include "SceneManager.h"
-
+#include "Scene.h"
 #include "ObjectManager.h"
 
 namespace pooptube {
-	// agebreak : mRenderer의 초기화는 어디갔남??
-	SceneManager::SceneManager() : mScene(nullptr) {
+	SceneManager::SceneManager(){
 	}
 	SceneManager::~SceneManager() {
 		//mScene.reset();

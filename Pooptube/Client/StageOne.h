@@ -25,6 +25,13 @@ public:
 		}
  		if (mCamera)
 			mCamera->Update(dTime);
+
+		if (mTimeForFPS > 2.f) {
+			printf("FPS : %f\n", Application::GetInstance()->GetFps());
+			mTimeForFPS = 0.f;
+		}
+		
+		mTimeForFPS += dTime;
 	}
 
 	void KeyDown( KeyEvent* pKeyEvent ) {
@@ -101,6 +108,8 @@ private:
 	float				xTrans = 0.f;
 	float				zTrans = 0.f;
 	float				yAngle = 0.f;
+
+	float				mTimeForFPS = 0.f;
 
 	CollisionBox*		testDummy = nullptr;
 

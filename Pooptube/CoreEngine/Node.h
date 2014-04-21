@@ -1,7 +1,15 @@
-
+/**
+* @author 양현찬
+* @brief
+* 화면에 뿌리는 모든 객체의 뿌리가 되는 객체
+* 행렬의 연산 등이 여기서 구현된다.
+* @date 2014/04/17
+* @file SkinnedMesh.h
+*/
 #pragma once
 
 #include "Object.h"
+#include "Application.h"
 #include "KeyEventDelegate.h"
 #include "MouseEventDelegate.h"
 
@@ -23,6 +31,31 @@ namespace pooptube {
 	public:
 		Node();
 		virtual ~Node();
+
+		//@brief 위치지정 new를 사용. 
+		static void* operator new (std::size_t size, void* ptr) throw(){
+			return ::operator new(size, ptr);
+		}
+
+		//@brief 위치지정 new를 사용했으니 해당 delete도 만들어준다. 
+		static void operator delete (void *p, void *ptr) throw() {
+			if (p == nullptr) return;
+			return ::operator delete(p, ptr);
+		}
+
+		//@brief 무조건 16바이트 alignment로 생성되도록 함
+		static void* operator new (std::size_t size) throw(){
+			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
+
+			return ptr;
+		}
+
+		//@brief 일반 delete도 위치지정 delete와 같이 해제되도록 설정
+		static void operator delete (void *p) throw() {
+			if (p == nullptr) return;
+
+			return _aligned_free(p);
+		}
 
 		static Node* Create();
 
@@ -47,9 +80,12 @@ namespace pooptube {
 		void RotationZ(float Angle);
 		void RotateFrontVector(float x, float y, float z);
 
-		void SetFrontVector(D3DXVECTOR3 vec) { mFrontVec = vec; }
-		const D3DXVECTOR3 GetFrontVector() const { return mFrontVec; }
+		void				SetFrontVector(D3DXVECTOR3 vec) { mFrontVec = vec; }
+		
+		const D3DXVECTOR3	GetFrontVector() const { return mFrontVec; }
 		const D3DXMATRIXA16 GetMatrix() const { return mMatWorld; }
+		LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
+
 	private:
 		void _RegistrationToKeyEventDispatcher();
 		void _RegistrationToMouseEventDispatcher();
@@ -63,6 +99,8 @@ namespace pooptube {
 		// TODO: 각종 행렬 계산 용 데이터들..
 		D3DXMATRIXA16	mMatWorld;
 		D3DXVECTOR3		mFrontVec;
+
+		LPDIRECT3DDEVICE9 mDevice;
 		
 		//std::forward_list<EventProcess> mEventProcessList;
 		friend class SceneManager;
