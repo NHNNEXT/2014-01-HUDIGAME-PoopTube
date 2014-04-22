@@ -14,15 +14,15 @@ namespace pooptube {
 		return mInstance;
 	}
 
-	void CollisionManager::AddCollisionBox( CollisionBox* pCollisionMesh )
+	void CollisionManager::AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
 	{
-		mCollisionBoxList.push_front( std::shared_ptr<CollisionBox>( pCollisionMesh ) );
+		mCollisionBoxList.push_front( pCollisionBox );
 	}
 
-	void CollisionManager::RemoveCollisionBox( CollisionBox* pCollisionMesh )
+	void CollisionManager::RemoveCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
 	{
 		for( auto iter = mCollisionBoxList.begin( ); iter != mCollisionBoxList.end( ); iter++ ) {
-			if( (*iter).get( ) == pCollisionMesh ) {
+			if( (*iter) == pCollisionBox ) {
 				mCollisionBoxList.erase_after( iter );
 				break;
 			}

@@ -78,6 +78,7 @@ namespace pooptube {
 
 		void				SetFrontVector(const D3DXVECTOR3& vec) { mFrontPoint = vec; }
 		D3DXVECTOR3			GetFrontVector() const { return mFrontPoint; }
+		D3DXVECTOR3			GetUpVector( ) const { return mUpVec; }
 
 		D3DXVECTOR3			GetPosition() const { return mPosition; }
 		void				SetPosition(const D3DXVECTOR3& newPos);

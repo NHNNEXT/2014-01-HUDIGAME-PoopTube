@@ -10,10 +10,10 @@ namespace pooptube {
 	public:
 		static CollisionManager* GetInstance();
 
-		void AddCollisionBox( CollisionBox* pCollisionMesh );
-		void RemoveCollisionBox( CollisionBox* pCollisionMesh );
+		void AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox );
+		void RemoveCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox );
 
-		const CollisionBox* CollisionCheck( const CollisionBox* pTarget ) const;
+		const CollisionBox* CollisionCheck( const CollisionBox* pTarget ) const; // TODO :
 
 	private:
 		CollisionManager();
