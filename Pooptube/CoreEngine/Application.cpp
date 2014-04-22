@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 #include "Application.h"
-
+#include "NetworkSystem.h"
 #include "ObjectManager.h"
 
 namespace pooptube {
@@ -184,6 +184,47 @@ namespace pooptube {
 				PostQuitMessage(0);
 				break;
 			}
+
+		case WM_SOCKET:
+		{
+			if (WSAGETSELECTERROR(lParam))
+			{
+				MessageBox(hWnd, L"WSAGETSELECTERROR", L"Error", MB_OK | MB_ICONERROR);
+				SendMessage(hWnd, WM_DESTROY, NULL, NULL);
+				break;
+			}
+
+			switch (WSAGETSELECTEVENT(lParam))
+			{
+			case FD_CONNECT:
+			{
+				NetworkSystem::GetInstance();
+				break;
+			}
+
+			case FD_READ:
+			{
+				NetworkSystem::GetInstance()->Read();
+				break;
+			}
+
+			case FD_WRITE:
+			{
+				/// 실제로 버퍼에 있는것들 꺼내서 보내기
+				NetworkSystem::GetInstance()->Send();
+			}
+				break;
+
+			case FD_CLOSE:
+			{
+				MessageBox(hWnd, L"Server closed connection", L"Connection closed!", MB_ICONINFORMATION | MB_OK);
+				NetworkSystem::GetInstance()->Disconnect();
+				SendMessage(hWnd, WM_DESTROY, NULL, NULL);
+				break;
+			}
+			}
+			break; // WM_SOCKET end;
+		}
 		case WM_PAINT: {
 				PAINTSTRUCT ps;
 				HDC hdc = BeginPaint( hWnd, &ps );
