@@ -56,7 +56,7 @@ namespace pooptube {
 		// 생성시에 자동으로 오브젝트 매니저에 들어가는데, 그럼 중간에 제거할때는 어떻게 해야 하는가?
 		// 중간에 제거할때는 꼭 delete 하기전에 RemoveObject()를 호출해야만 되는 문제가 생기지 않나?
 		if (newRenderer->Init(hwnd, width, height, isWindowed) == true) {
-			ObjectManager::GetInstance()->AddObject( mRenderer );
+			ObjectManager::GetInstance()->AddObject( newRenderer );
 		} else {
 			delete newRenderer;
 			newRenderer = nullptr;

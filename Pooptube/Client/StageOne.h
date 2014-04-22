@@ -35,7 +35,7 @@ public:
 	}
 
 	void KeyDown( KeyEvent* pKeyEvent ) {
-		printf( "KeyDown\n" );
+		//printf( "KeyDown\n" );
 	}
 	void KeyPressed( KeyEvent* pKeyEvent ) {
 		switch( pKeyEvent->GetKeyCode() )
@@ -68,30 +68,30 @@ public:
 			break;
 		}
 
-		printf( "KeyPressed\n" );
+		//printf( "KeyPressed\n" );
 	}
 	void KeyUp(KeyEvent* pKeyEvent) {
-		printf("KeyUp\n");
+		//printf("KeyUp\n");
 	}
 
 	void MouseDown(MouseEvent* pMouseEvent) {
-		printf("MouseDown\n");
+		//printf("MouseDown\n");
 	}
 
 	void MouseMove(MouseEvent* pMouseEvent) {
-		printf("MouseMove %d %d\n", pMouseEvent->GetX(), pMouseEvent->GetY());
+		//printf("MouseMove %d %d\n", pMouseEvent->GetX(), pMouseEvent->GetY());
 	}
 
 	void MouseUp(MouseEvent* pMouseEvent) {
-		printf("MouseUp\n");
+		//printf("MouseUp\n");
 	}
 
 	void MousePressed(MouseEvent* pMouseEvent) {
-		printf("MousePressed\n");
+		//printf("MousePressed\n");
 	}
 
 	void MouseWheel(MouseEvent* pMouseEvent) {
-		printf("MouseWheel\n");
+		//printf("MouseWheel\n");
 	}
 
 

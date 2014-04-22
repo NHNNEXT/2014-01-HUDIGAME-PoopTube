@@ -46,14 +46,12 @@ namespace pooptube {
 		//@brief 무조건 16바이트 alignment로 생성되도록 함
 		static void* operator new (std::size_t size) throw(){
 			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
-
 			return ptr;
 		}
 
 		//@brief 일반 delete도 위치지정 delete와 같이 해제되도록 설정
 		static void operator delete (void *p) throw() {
 			if (p == nullptr) return;
-
 			return _aligned_free(p);
 		}
 

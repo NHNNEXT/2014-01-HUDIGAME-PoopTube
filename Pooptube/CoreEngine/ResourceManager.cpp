@@ -116,13 +116,13 @@ namespace pooptube {
 
 				FbxNodeAttribute::EType AttributeType = pFbxChildNode->GetNodeAttribute()->GetAttributeType();
 
-				if (AttributeType != FbxNodeAttribute::eMesh)
+				if (AttributeType != FbxNodeAttribute::eMesh/* && AttributeType != FbxNodeAttribute::eNull*/)
 					continue;
 
 				FbxMesh* pMesh = (FbxMesh*)pFbxChildNode->GetNodeAttribute();
-				FbxGeometryElementNormal* normalEl = pMesh->GetElementNormal();
-				FbxLayerElementArrayTemplate<FbxVector2>* uv = 0;
-				pMesh->GetTextureUV(&uv, FbxLayerElement::eTextureDiffuse);
+				//FbxGeometryElementNormal* normalEl = pMesh->GetElementNormal();
+				//FbxLayerElementArrayTemplate<FbxVector2>* uv = 0;
+				//pMesh->GetTextureUV(&uv, FbxLayerElement::eTextureDiffuse);
 
 				FbxVector4* pVertices = pMesh->GetControlPoints();
 				const int lVertexCount = pMesh->GetControlPointsCount();
