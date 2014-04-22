@@ -135,9 +135,13 @@ namespace pooptube {
 		mFrontPoint = mPosition + view;
 	}
 
-	void Node::Translation(float x, float y, float z) {
-		mPosition.x += x; mPosition.y += y; mPosition.z += z;
-		mFrontPoint.x += x; mFrontPoint.y += y; mFrontPoint.z += z;
+	void Node::Translation( const D3DXVECTOR3& moveVec )
+	{
+		mPosition += moveVec;
+		mFrontPoint += moveVec;
+	}
+	void Node::Translation( float x, float y, float z ) {
+		Translation( D3DXVECTOR3( x, y, z ) );
 	}
 
 	void Node::SetPosition(const D3DXVECTOR3& newPos) {

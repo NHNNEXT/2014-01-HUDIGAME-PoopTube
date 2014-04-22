@@ -82,8 +82,9 @@ namespace pooptube {
 
 		D3DXVECTOR3			GetPosition() const { return mPosition; }
 		void				SetPosition(const D3DXVECTOR3& newPos);
-		void				Translation(float x, float y, float z);
-
+		void				Translation( const D3DXVECTOR3& moveVec );
+		void				Translation( float x, float y, float z );
+		
 		LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
 
 	private:
