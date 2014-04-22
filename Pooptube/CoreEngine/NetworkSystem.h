@@ -1,14 +1,18 @@
 
 #pragma once
 
-#include "Config.h"
+#include "stdafx.h"
 #include "PacketHeader.h"
 #include "CircularBuffer.h"
 #include "BaseHandler.h"
-#include <map>
+//#include <map>
 
 namespace pooptube {
-	class NetworkSystem : public Singleton<NetworkSystem> {
+	class NetworkSystem {
+	public:
+		static NetworkSystem* GetInstance();
+		static void Release(void);
+
 	public:
 		NetworkSystem();
 		~NetworkSystem();
@@ -22,6 +26,7 @@ namespace pooptube {
 		void SetPacketHandler(short packetType, BaseHandler* handler);
 
 		void Write(const char* data, size_t size);
+		void Send();
 		void Read();
 
 	private:
@@ -38,5 +43,8 @@ namespace pooptube {
 
 		CircularBuffer	mRecvBuffer;
 		CircularBuffer	mSendBuffer;
+
+	private:
+		static NetworkSystem* m_Instance;
 	};
 }
