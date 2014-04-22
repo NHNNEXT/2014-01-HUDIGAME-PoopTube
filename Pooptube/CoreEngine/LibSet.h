@@ -3,6 +3,8 @@
 
 #pragma comment(lib, "winmm.lib") // timeGetTime 지우면 필요없을걸 아마 chrono로 바꾸면 삭제합시다
 
+#pragma comment(lib, "ws2_32.lib") // 윈속 라이브러리
+
 // d3d
 #pragma comment(lib, "C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86\\d3d9.lib")
 
