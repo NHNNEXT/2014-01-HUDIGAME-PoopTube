@@ -30,7 +30,7 @@ namespace pooptube {
 		//카메라의 위치
 		D3DXVECTOR3 mEyePt = {0.f, 3.f, 10.f};
 		//카메라가 바라보는 방향
-		D3DXVECTOR3 mLookatPt = {1.f, 0.f, 0.f};
+		D3DXVECTOR3 mLookatPt = {0.f, 0.f, 0.f};
 		//업벡터
 		D3DXVECTOR3 mUpVec = {0.f, 1.f, 0.f};
 

@@ -76,10 +76,10 @@ namespace pooptube {
 		void				RotationY(float Angle);
 		void				RotateFrontVectorY(float angle);
 
-		void				SetFrontVector(const D3DXVECTOR3& vec) { mFrontVec = vec; }
-		D3DXVECTOR3			GetFrontVector() const { return mFrontVec; }
+		void				SetFrontVector(const D3DXVECTOR3& vec) { mFrontPoint = vec; }
+		D3DXVECTOR3			GetFrontVector() const { return mFrontPoint; }
 
-		D3DXVECTOR3			GetPosition() const { return mTransVec; }
+		D3DXVECTOR3			GetPosition() const { return mPosition; }
 		void				SetPosition(const D3DXVECTOR3& newPos);
 		void				Translation(float x, float y, float z);
 
@@ -96,12 +96,12 @@ namespace pooptube {
 		bool mIsMouseEventEnabled = false;
 
 		// TODO: 각종 행렬 계산 용 데이터들..
-		//@brief mTransVec는 포지션정보를 담고있다.
-		D3DXVECTOR3		mTransVec = {0.f, 0.f, 0.f};
+		//@brief mPosition는 포지션정보를 담고있다.
+		D3DXVECTOR3		mPosition = {0.f, 0.f, 0.f};
 		D3DXVECTOR3		mScaleVec = { 1.f, 1.f, 1.f };
 
-		//@brief mFrontVec는 로테이트정보를 담고있다.
-		D3DXVECTOR3		mFrontVec = {0.f, 0.f, 1.f};
+		//@brief mFrontPoint는 로테이트정보를 담고있다.
+		D3DXVECTOR3		mFrontPoint = {0.f, 0.f, 1.f};
 		D3DXVECTOR3		mUpVec = {0.f, 1.f, 0.f};
 
 		LPDIRECT3DDEVICE9 mDevice;

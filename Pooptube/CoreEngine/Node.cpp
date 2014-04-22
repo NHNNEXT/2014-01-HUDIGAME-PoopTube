@@ -41,19 +41,16 @@ namespace pooptube {
 		
 		D3DXMatrixIdentity(&MatWorld);
 
-		printf_s("%f %f %f \n", mFrontVec.x, mFrontVec.y, mFrontVec.z);
-		printf_s("%f %f %f \n", mTransVec.x, mTransVec.y, mTransVec.z);
-
 		//오른손 좌표계
 		//프론트 백터의 값에 따라 회전
-		D3DXMatrixLookAtLH(&MatRotate, &mTransVec, &mFrontVec, &mUpVec);
+		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &mFrontPoint, &mUpVec);
 		//뷰행렬의 연선을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
 		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
 		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
 		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
 		D3DXMatrixTranspose(&MatRotate, &MatRotate);
 
-		D3DXMatrixTranslation(&MatTrans, mTransVec.x, mTransVec.y, mTransVec.z);
+		D3DXMatrixTranslation(&MatTrans, mPosition.x, mPosition.y, mPosition.z);
 		D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
 
 		MatWorld = MatScale*MatRotate*MatTrans;
@@ -129,24 +126,24 @@ namespace pooptube {
 // 		mFrontVec.z = vz;
 // 		D3DXVec3Normalize(&mFrontVec, &mFrontVec);
 		
-		D3DXVECTOR3 view = mFrontVec - mTransVec;
+		D3DXVECTOR3 view = mFrontPoint - mPosition;
 		D3DXMATRIXA16 matrix;
 
 		D3DXMatrixRotationY(&matrix, angle);
 		D3DXVec3TransformCoord(&view, &view, &matrix);
 
-		mFrontVec = mTransVec + view;
+		mFrontPoint = mPosition + view;
 	}
 
 	void Node::Translation(float x, float y, float z) {
-		mTransVec.x += x; mTransVec.y += y; mTransVec.z += z;
-		mFrontVec.x += x; mFrontVec.y += y; mFrontVec.z += z;
+		mPosition.x += x; mPosition.y += y; mPosition.z += z;
+		mFrontPoint.x += x; mFrontPoint.y += y; mFrontPoint.z += z;
 	}
 
 	void Node::SetPosition(const D3DXVECTOR3& newPos) {
-		mFrontVec -= mTransVec;
-		mTransVec = newPos; 
-		mFrontVec += mTransVec;
+		mFrontPoint -= mPosition;
+		mPosition = newPos;
+		mFrontPoint += mPosition;
 	}
 
 
