@@ -12,11 +12,12 @@
 #include "Object.h"
 #include "D3D9Renderer.h"
 #include "SceneManager.h"
-#include "KeyEventDispatcher.h"
+#include "KeyEventDispatcher.h"	// agebreak : 이런 헤더파일들이 필요한가? 클래스 전방 선언으로 줄일 수 없는가?
 #include "MouseEventDispatcher.h"
 
 namespace pooptube {
 
+	// agebreka : 이런건 여기 둘게 아니라, 공통 Define 헤더 같은 곳에 넣는편이 좋음
 	//@brief 
 	//D3DXMATRIXA16사용에 대해서 최적화된 메모리 할당을 위한 설정
 	//자세한 사항은 위키확인
@@ -45,6 +46,7 @@ namespace pooptube {
 		float					GetFps() const { return mFps; }
 
 	private:
+		// agebreak : 이런 초기화 말고, C++11에서 지원하는 멤버 변수 초기화를 사용하는게 깔끔함. 
 		Application() : mTitle(nullptr), mScreenWidth(0), mScreenHeight(0),
 			mFps(0.f), mElapsedTime(0.f), mDeltaTime(0), mIsWindowed(false) {}
 		~Application() {}
@@ -76,7 +78,11 @@ namespace pooptube {
 		KeyEventDispatcher* mKeyEventDispatcher;
 		MouseEventDispatcher* mMouseEventDispatcher;
 
+		// agebreak : 스마트 포인터를 사용할때는 typedef을 활용하면 유용하다. 
+		// 아래와 같이 수정. 각 헤더파일의 추가된 내용을 참조
 		std::forward_list<std::shared_ptr<KeyEvent>> mKeyEventList;
 		std::forward_list<std::shared_ptr<MouseEvent>> mMouseEventList;
+// 		std::forward_list<KeyEventTypePtr> mKeyEventList;
+// 		std::forward_list<MouseEventPtr> mMouseEventList;
 	};
 }

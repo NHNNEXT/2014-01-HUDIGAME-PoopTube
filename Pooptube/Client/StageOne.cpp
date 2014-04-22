@@ -47,8 +47,8 @@ bool StageOne::Init() {
 	D3DXVECTOR3 vecDir;
 	D3DLIGHT9 light;
 
-	//광원의 위치
-	vecDir = D3DXVECTOR3(100.f,
+	//광원의 위치 // agebreak : 응??
+	vecDir = D3DXVECTOR3(100.f,	
 		100.f,
 		-100.f);
 
@@ -72,15 +72,15 @@ bool StageOne::Init() {
 	mCamera = ThirdPersonCamera::Create();
 	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
 
-	mGround_2 = SkinnedMesh::Create("test.bmp", RESOURCE_HEIGHTMAP);
+	mGround_2 = SkinnedMesh::Create("test.bmp", RESOURCE_HEIGHTMAP);	// agebreak : HeightMap이 SkinnedMesh인가?? 뭐지 이건.. ㅡ.ㅡ;;
 
 	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0, 0, 1));
 	mCamera->SetTarget(mSkinnedMesh);
 
 	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
 	testDummy->SetCenterPos( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
-	testDummy->SetAxisLen( 0.5f, 0.5, 1.0f );
-	testDummy->SetAxisDir( D3DXVECTOR3( 0.5, 0.5, 0.0 ), D3DXVECTOR3( -0.5, 0.5, 0.0 ) );
+	testDummy->SetAxisLen( 0.5f, 0.5, 1.0f );		// agebreak : 인터페이스 이름이 명확하지 않음. SetScale, SetAxis가 더 명확할듯. 
+	testDummy->SetAxisDir( D3DXVECTOR3( 0.5, 0.5, 0.0 ), D3DXVECTOR3( -0.5, 0.5, 0.0 ) );	// agebreak : 만약에 입력받은 두개의 축이 수직이 아니면 어떻게 되는가??
 
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, 1));
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, -2));

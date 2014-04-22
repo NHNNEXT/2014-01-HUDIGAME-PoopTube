@@ -58,4 +58,7 @@ namespace pooptube {
 		MouseEventType mMouseEventType;
 		MouseButton mMouseButton;
 	};
+
+	// agebreak : typdef È°¿ë
+	typedef std::shared_ptr<MouseButton> MouseEventPtr;
 };

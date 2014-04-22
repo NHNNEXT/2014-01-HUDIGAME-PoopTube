@@ -26,6 +26,7 @@ namespace pooptube {
 		Mesh* LoadMeshFromFBX(const std::string& FilePath);
 		Mesh* LoadMeshFromHeightMap(const std::string& FilePath);
 
+		// agebreak : Input 값에는 const를 달것. 수정되는지 헷갈림
 		void CalculateNormal(D3DXVECTOR3* pOut, D3DXVECTOR3* v0, D3DXVECTOR3* v1, D3DXVECTOR3* v2);
 
 	protected:

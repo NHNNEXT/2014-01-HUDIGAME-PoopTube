@@ -102,7 +102,7 @@ namespace pooptube {
 
 		RegisterClassEx( &wcex );
 
-		DWORD style = WS_OVERLAPPEDWINDOW; // Fullscreen일때는 WS_POPUP으로 하던데 그 이유는?
+		DWORD style = WS_OVERLAPPEDWINDOW; // Fullscreen일때는 WS_POPUP으로 하던데 그 이유는? // agebreak : 찾아보셈!!
 
 		RECT wr = {0, 0, width, height};
 		AdjustWindowRect( &wr, style, FALSE );
@@ -160,7 +160,7 @@ namespace pooptube {
 		if ( prevTime == 0.f )
 			prevTime = nowTime;
 
-		mDeltaTime = (static_cast<float>(nowTime - prevTime)) / 1000.f;
+		mDeltaTime = (static_cast<float>(nowTime - prevTime)) / 1000.f;	// agebreak : / 연산보다는 * 연산이 훨씬 효율이 좋다. * 연산을 사용하는 습관을 들일것
 		mElapsedTime += mDeltaTime;
 		fpsTimer += mDeltaTime;
 		if( fpsTimer > 0.1f ) {
@@ -173,6 +173,7 @@ namespace pooptube {
 		return true;
 	}
 
+	// agebreak : 아래 case문의 내용중에 내용이 긴것은 함수로 빼는것이 좋다. 한 함수의 내용이 길면 좋은 디자인이 아님
 	// winproc
 	LRESULT CALLBACK Application::_WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 	{

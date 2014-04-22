@@ -24,4 +24,9 @@ namespace pooptube {
 		KeyEventType mKeyEventType;
 		int mKeyCode;
 	};
+
+	// agebreak : typedef을 활용한다. 
+
+	typedef std::shared_ptr<KeyEventType> KeyEventTypePtr;
 }
+

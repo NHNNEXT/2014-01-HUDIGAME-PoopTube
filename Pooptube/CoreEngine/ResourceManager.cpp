@@ -285,6 +285,7 @@ namespace pooptube {
 
 				D3DXVECTOR3 normal = D3DXVECTOR3(0, 0, 0);
 
+				// agebreak : 이 삼각형 6개는 어떤 삼각형인가? 주석으로 설명을 달아 놓으셈
 				int nearVertices[6][3] = {
 					{ nIndex, nIndex - 1,			nIndex - nVtxT		},
 					{ nIndex, nIndex - nVtxT,		nIndex - nVtxT + 1	},
@@ -311,6 +312,8 @@ namespace pooptube {
 			}
 		}
 		
+		// agebreak : 각각의 코드에 대해서 주석을 다셈
+		// agebreak : 아래처럼 for문을 또 돌아야 할까? 위에 합칠수는 없는가?
 		MESH_CUSTOM_INDEX* Index = pNewMesh->GetIndices();
 		nIndex = 0;
 		for (int z = 0; z < row; z++) {
