@@ -17,6 +17,9 @@
     <Filter Include="PreCompile\ProjectSet">
       <UniqueIdentifier>{453a3a53-41e4-44ad-b3c3-015448ef427a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NetworkManager">
+      <UniqueIdentifier>{fa56346a-c843-478b-ab9b-744c2e856535}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -40,6 +43,12 @@
     <ClInclude Include="Creature.h">
       <Filter>Character</Filter>
     </ClInclude>
+    <ClInclude Include="NetworkManager.h">
+      <Filter>NetworkManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketType.h">
+      <Filter>NetworkManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -54,6 +63,9 @@
     </ClCompile>
     <ClCompile Include="Creature.cpp">
       <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>NetworkManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

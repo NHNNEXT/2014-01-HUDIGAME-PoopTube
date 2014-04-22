@@ -18,13 +18,13 @@ int main()
 	pooptube::Application::GetInstance()->Init(L"Test", 800, 600, true);
 
 	// test
-	NetworkManager a;
+	pooptube::NetworkManager a;
 	a.Init();
 	a.Connect();
 
 	LoginRequest lr;
 	lr.mPlayerId = 1000;
-	NetworkSystem::GetInstance()->Write((char*)&lr, lr.mSize);
+	pooptube::NetworkSystem::GetInstance()->Write((char*)&lr, lr.mSize);
 
 	StageOne* pStageOne = StageOne::Create();
 
