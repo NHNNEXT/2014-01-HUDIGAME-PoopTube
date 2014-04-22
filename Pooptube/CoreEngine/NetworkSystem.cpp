@@ -3,7 +3,31 @@
 #include "NetworkSystem.h"
 #include "Application.h"
 
-namespace pooptube {
+// Socket
+//#include <WinSock2.h>
+
+namespace pooptube
+{
+	NetworkSystem* NetworkSystem::m_Instance = nullptr;
+	NetworkSystem* NetworkSystem::GetInstance()
+	{
+		if (!m_Instance)
+		{
+			m_Instance = (NetworkSystem*)_aligned_malloc(sizeof(NetworkSystem), ALIGNMENT_SIZE);
+			new (m_Instance)NetworkSystem();
+		}
+		return m_Instance;
+	}
+
+	void NetworkSystem::Release(void)
+	{
+		if (m_Instance)
+		{
+			m_Instance->~NetworkSystem();
+			_aligned_free(m_Instance);
+		}
+	}
+
 	NetworkSystem::NetworkSystem()
 		: mServerIP(nullptr), mPort(9001),
 		mRecvBuffer(CircularBuffer(1024 * 10)),
@@ -87,6 +111,26 @@ namespace pooptube {
 		if (mSendBuffer.Write(data, size))
 		{
 			PostMessage(Application::GetInstance()->GetHWND(), WM_SOCKET, NULL, FD_WRITE);
+		}
+	}
+
+	void NetworkSystem::Send()
+	{
+		int size = mSendBuffer.GetCurrentSize();
+		if (size > 0)
+		{
+			char* data = new char[size];
+			mSendBuffer.Peek(data);
+
+			int sent = send(mSocket, data, size, 0);
+
+			/// 다를수 있다
+			if (sent != size)
+				OutputDebugStringA("sent != request\n");
+
+			mSendBuffer.Consume(sent);
+
+			delete[] data;
 		}
 	}
 
