@@ -298,8 +298,10 @@
       <Filter>Util\ConsoleManager</Filter>
     </ClInclude>
     <ClInclude Include="BaseHandler.h" />
-    <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="PacketHeader.h" />
+    <ClInclude Include="CircularBuffer.h">
+      <Filter>Util\DataStructure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -405,7 +407,9 @@
     <ClCompile Include="ConsoleManager.cpp">
       <Filter>Util\ConsoleManager</Filter>
     </ClCompile>
-    <ClCompile Include="CircularBuffer.cpp" />
+    <ClCompile Include="CircularBuffer.cpp">
+      <Filter>Util\DataStructure</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

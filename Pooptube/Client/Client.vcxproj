@@ -79,7 +79,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="Debug\Client.log" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -100,18 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="batman70.fbx" />
-    <None Include="Debug\Client.pch" />
-    <None Include="Debug\vc120.idb" />
-    <None Include="Debug\vc120.pdb" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="test.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="Debug\Client.obj" />
-    <Object Include="Debug\MainCharacter.obj" />
-    <Object Include="Debug\StageOne.obj" />
-    <Object Include="Debug\stdafx.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

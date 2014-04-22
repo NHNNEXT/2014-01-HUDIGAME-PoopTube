@@ -11,8 +11,8 @@ namespace pooptube {
 	}
 
 	SkinnedMesh::~SkinnedMesh() {
-		//mMeshVertexBuffer->Release();
-		//mMeshIndexBuffer->Release();
+		mMeshVertexBuffer->Release();
+		mMeshIndexBuffer->Release();
 	}
 
 	SkinnedMesh* SkinnedMesh::Create(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType) {

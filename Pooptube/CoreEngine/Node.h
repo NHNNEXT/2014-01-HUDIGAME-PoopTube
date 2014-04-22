@@ -45,6 +45,7 @@ namespace pooptube {
 
 		//@brief 무조건 16바이트 alignment로 생성되도록 함
 		static void* operator new (std::size_t size) throw(){
+			//생성자와 소멸자확인
 			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
 			return ptr;
 		}
@@ -71,17 +72,17 @@ namespace pooptube {
 		virtual void EnableKeyEvent();
 		virtual void EnableMouseEvent();
 
-		void Translation(float xTrans, float yTrans, float zTrans);
+		//@brief 아래 두개 하는일 같음
+		void				RotationY(float Angle);
+		void				RotateFrontVectorY(float angle);
 
-		void RotationX(float Angle);
-		void RotationY(float Angle);
-		void RotationZ(float Angle);
-		void RotateFrontVector(float x, float y, float z);
+		void				SetFrontVector(const D3DXVECTOR3& vec) { mFrontVec = vec; }
+		D3DXVECTOR3			GetFrontVector() const { return mFrontVec; }
 
-		void				SetFrontVector(D3DXVECTOR3 vec) { mFrontVec = vec; }
-		
-		const D3DXVECTOR3	GetFrontVector() const { return mFrontVec; }
-		const D3DXMATRIXA16 GetMatrix() const { return mMatWorld; }
+		D3DXVECTOR3			GetPosition() const { return mTransVec; }
+		void				SetPosition(const D3DXVECTOR3& newPos);
+		void				Translation(float x, float y, float z);
+
 		LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
 
 	private:
@@ -91,12 +92,17 @@ namespace pooptube {
 	private:
 		std::vector<Node*> mChildList;
 
-		bool mIsKeyEventEnabled;
-		bool mIsMouseEventEnabled;
+		bool mIsKeyEventEnabled = false;
+		bool mIsMouseEventEnabled = false;
 
 		// TODO: 각종 행렬 계산 용 데이터들..
-		D3DXMATRIXA16	mMatWorld;
-		D3DXVECTOR3		mFrontVec;
+		//@brief mTransVec는 포지션정보를 담고있다.
+		D3DXVECTOR3		mTransVec = {0.f, 0.f, 0.f};
+		D3DXVECTOR3		mScaleVec = { 1.f, 1.f, 1.f };
+
+		//@brief mFrontVec는 로테이트정보를 담고있다.
+		D3DXVECTOR3		mFrontVec = {0.f, 0.f, 1.f};
+		D3DXVECTOR3		mUpVec = {0.f, 1.f, 0.f};
 
 		LPDIRECT3DDEVICE9 mDevice;
 		

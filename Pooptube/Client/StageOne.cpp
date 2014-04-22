@@ -14,7 +14,6 @@ StageOne::StageOne() {
 StageOne::~StageOne() {
 }
 
-//지금은 aligned_malloc을 사용했지만 client에서는 core의 형태를 가져오지 않고 모르는 상태에서 사용할 방법이 필요하다.
 StageOne* StageOne::Create() {
 	StageOne* pScene = new StageOne;
 	if (pScene->Init()) {
@@ -69,13 +68,13 @@ bool StageOne::Init() {
 	mDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 
 
-	mCamera = ThirdPersonCamera::Create();
+	//mCamera = ThirdPersonCamera::Create();
+	mCamera = Camera::Create();
 	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
 
 	mGround_2 = SkinnedMesh::Create("test.bmp", RESOURCE_HEIGHTMAP);
 
-	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0, 0, 1));
-	mCamera->SetTarget(mSkinnedMesh);
+	//mCamera->SetTarget(mSkinnedMesh);
 
 	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
 	testDummy->SetCenterPos( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );

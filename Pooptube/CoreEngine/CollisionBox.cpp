@@ -111,21 +111,21 @@ namespace pooptube {
 	{
 		Node::Update( dTime );
 
-		D3DXMATRIXA16 mMatrix = GetMatrix();
-		mCenterPos = D3DXVECTOR3( mMatrix._41, mMatrix._42, mMatrix._43 );
-		mMatrix._41 = 0;
-		mMatrix._42 = 0;
-		mMatrix._43 = 0;
-
-		D3DXMATRIXA16 temp;
-		D3DXMatrixIdentity( &temp );
-		temp._41 = 1;
-		D3DXMatrixMultiply( &temp, &temp, &mMatrix );
-		mAxisDir[0] = D3DXVECTOR3( temp._41, temp._42, temp._43 );
-		D3DXMatrixIdentity( &temp );
-		temp._42 = 1;
-		D3DXMatrixMultiply( &temp, &temp, &mMatrix );
-		SetAxisDir( mAxisDir[0], D3DXVECTOR3( temp._41, temp._42, temp._43 ) );
+// 		D3DXMATRIXA16 mMatrix = GetMatrix();
+// 		mCenterPos = D3DXVECTOR3( mMatrix._41, mMatrix._42, mMatrix._43 );
+// 		mMatrix._41 = 0;
+// 		mMatrix._42 = 0;
+// 		mMatrix._43 = 0;
+// 
+// 		D3DXMATRIXA16 temp;
+// 		D3DXMatrixIdentity( &temp );
+// 		temp._41 = 1;
+// 		D3DXMatrixMultiply( &temp, &temp, &mMatrix );
+// 		mAxisDir[0] = D3DXVECTOR3( temp._41, temp._42, temp._43 );
+// 		D3DXMatrixIdentity( &temp );
+// 		temp._42 = 1;
+// 		D3DXMatrixMultiply( &temp, &temp, &mMatrix );
+// 		SetAxisDir( mAxisDir[0], D3DXVECTOR3( temp._41, temp._42, temp._43 ) );
 	}
 
 	bool CollisionBox::CollisionCheck( const CollisionBox* target )

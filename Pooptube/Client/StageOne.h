@@ -3,6 +3,7 @@
 #include "ThirdPersonCamera.h"
 #include "SkinnedMesh.h"
 #include "CollisionBox.h"
+#include "Camera.h"
 
 using namespace pooptube;
 
@@ -23,8 +24,8 @@ public:
 		if( mSkinnedMesh ){
 			mSkinnedMesh->Update( dTime );
 		}
-		if (mCamera)
-			mCamera->Update(dTime);
+// 		if (mCamera)
+// 			mCamera->Update(dTime);
 
 		if (mTimeForFPS > 2.f) {
 			printf("FPS : %f\n", Application::GetInstance()->GetFps());
@@ -41,23 +42,23 @@ public:
 		switch( pKeyEvent->GetKeyCode() )
 		{
 		case 'W':
-			mSkinnedMesh->Translation( 0, 0, 0.1f );
-			break;
-		case 'S':
 			mSkinnedMesh->Translation( 0, 0, -0.1f );
 			break;
+		case 'S':
+			mSkinnedMesh->Translation( 0, 0, 0.1f );
+			break;
 		case 'A':
-			mSkinnedMesh->Translation( -0.1f, 0, 0 );
+			mSkinnedMesh->Translation( 0.1f, 0, 0 );
 			break;
 		case 'D':
-			mSkinnedMesh->Translation( 0.1f, 0, 0 );
+			mSkinnedMesh->Translation( -0.1f, 0, 0 );
 			break;
 
 		case VK_LEFT:
-			mSkinnedMesh->RotationY( -0.1f );
+			mSkinnedMesh->RotationY( 0.1f );
 			break;
 		case VK_RIGHT:
-			mSkinnedMesh->RotationY( 0.1f );
+			mSkinnedMesh->RotationY( -0.1f );
 			break;
 
 		case 'Q':
@@ -99,7 +100,10 @@ public:
 protected:
 
 private:
-	ThirdPersonCamera	*mCamera = nullptr;
+	//ThirdPersonCamera	*mCamera = nullptr;
+	Camera				*mCamera = nullptr;
+
+
 	SkinnedMesh			*mSkinnedMesh = nullptr;
 	SkinnedMesh			*mSkinnedMesh_2 = nullptr;
 

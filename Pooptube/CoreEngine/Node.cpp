@@ -5,9 +5,7 @@
 #include "ObjectManager.h"
 
 namespace pooptube {
-	Node::Node() :
-		mIsKeyEventEnabled(false),
-		mIsMouseEventEnabled(false) {
+	Node::Node() {
 	}
 	Node::~Node() {
 		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
@@ -31,16 +29,36 @@ namespace pooptube {
 
 	bool Node::Init() {
 		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-
-		D3DXMatrixIdentity(&mMatWorld);
-
 		return true;
 	}
 
 	void Node::Render() {
 		// TODO: 행렬 계산
-		mDevice->SetTransform(D3DTS_WORLD, &mMatWorld);
-		//D3DXMatrixIdentity(&mMatWorld);
+		D3DXMATRIXA16	MatWorld;
+		D3DXMATRIXA16	MatTrans;
+		D3DXMATRIXA16	MatScale;
+		D3DXMATRIXA16	MatRotate;
+		
+		D3DXMatrixIdentity(&MatWorld);
+
+		printf_s("%f %f %f \n", mFrontVec.x, mFrontVec.y, mFrontVec.z);
+		printf_s("%f %f %f \n", mTransVec.x, mTransVec.y, mTransVec.z);
+
+		//오른손 좌표계
+		//프론트 백터의 값에 따라 회전
+		D3DXMatrixLookAtLH(&MatRotate, &mTransVec, &mFrontVec, &mUpVec);
+		//뷰행렬의 연선을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
+		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
+		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
+		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
+		D3DXMatrixTranspose(&MatRotate, &MatRotate);
+
+		D3DXMatrixTranslation(&MatTrans, mTransVec.x, mTransVec.y, mTransVec.z);
+		D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
+
+		MatWorld = MatScale*MatRotate*MatTrans;
+
+		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 
 		for (auto child : mChildList) {
 			child->Render();
@@ -100,50 +118,36 @@ namespace pooptube {
 		Application::GetInstance()->GetMouseEventDispatcher()->AddEventDelegate(this);
 	}
 
-	void Node::Translation(float xTrans, float yTrans, float zTrans) {
-		D3DXMATRIXA16 MatTrans;
-		D3DXMatrixTranslation(&MatTrans, xTrans, yTrans, zTrans);
-		D3DXMatrixMultiply(&mMatWorld, &MatTrans, &mMatWorld);
-
-// 		mFrontVec += D3DXVECTOR3(xTrans, yTrans, zTrans);
-// 		//mFrontVec = D3DXVECTOR3(mMatWorld._41, mMatWorld._42, mMatWorld._43);;
-// 		D3DXVec3Normalize(&mFrontVec, &mFrontVec);
-// 
-// 		printf("######### %f %f %f\n", mFrontVec.x, mFrontVec.y, mFrontVec.z);
-	}
-
-	void Node::RotationX(float Angle) {
-		D3DXMATRIXA16 MatRotate;
-		D3DXMatrixRotationX(&MatRotate, Angle);
-		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
-
-		RotateFrontVector(Angle, 0, 0);
-	}
-
 	void Node::RotationY(float Angle) {
-		D3DXMATRIXA16 MatRotate;
-		D3DXMatrixRotationY(&MatRotate, Angle);
-		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
-
-		RotateFrontVector(Angle, 0, 0);
+		RotateFrontVectorY(Angle);
 	}
 
-	void Node::RotationZ(float Angle) {
-		D3DXMATRIXA16 MatRotate;
-		D3DXMatrixRotationZ(&MatRotate, Angle);
-		D3DXMatrixMultiply(&mMatWorld, &MatRotate, &mMatWorld);
+	void Node::RotateFrontVectorY(float angle) {
+// 		float vx = mFrontVec.x*cosf(angle) + mFrontVec.z*sinf(angle);
+// 		float vz = -mFrontVec.x*sinf(angle) + mFrontVec.z*cosf(angle);
+// 		mFrontVec.x = vx;
+// 		mFrontVec.z = vz;
+// 		D3DXVec3Normalize(&mFrontVec, &mFrontVec);
+		
+		D3DXVECTOR3 view = mFrontVec - mTransVec;
+		D3DXMATRIXA16 matrix;
 
-		RotateFrontVector(0, 0, Angle);
+		D3DXMatrixRotationY(&matrix, angle);
+		D3DXVec3TransformCoord(&view, &view, &matrix);
+
+		mFrontVec = mTransVec + view;
 	}
 
-	void Node::RotateFrontVector(float x, float y, float z) {
-		float vx = mFrontVec.x*cosf(x) + mFrontVec.z*sinf(x);
-		float vz = -mFrontVec.x*sinf(x) + mFrontVec.z*cosf(x);
-		mFrontVec.x = vx;
-		mFrontVec.z = vz;
-		D3DXVec3Normalize(&mFrontVec, &mFrontVec);
-
-		printf("@@@@@@@ %f %f %f\n", mFrontVec.x, mFrontVec.y, mFrontVec.z);
+	void Node::Translation(float x, float y, float z) {
+		mTransVec.x += x; mTransVec.y += y; mTransVec.z += z;
+		mFrontVec.x += x; mFrontVec.y += y; mFrontVec.z += z;
 	}
+
+	void Node::SetPosition(const D3DXVECTOR3& newPos) {
+		mFrontVec -= mTransVec;
+		mTransVec = newPos; 
+		mFrontVec += mTransVec;
+	}
+
 
 }

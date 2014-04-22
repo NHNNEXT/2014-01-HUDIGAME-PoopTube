@@ -39,7 +39,6 @@ namespace pooptube {
 
 //		D3DXMATRIXA16 temp = mTarget->GetMatrix();
 
-
 		//轰青纺阑 积己
 		D3DXMatrixLookAtLH(&mMatView, &mEyePt, &mLookatPt, &mUpVec);
 		//积己等 轰青纺阑 利侩
@@ -56,12 +55,17 @@ namespace pooptube {
 	{
 		Node::Update(dTime);
 
-		//return;
+		mEyePt = mTarget->GetPosition();
+		mEyePt.x -= mTarget->GetFrontVector().x;
+		mEyePt.y += 3.f;
+		mEyePt.z -= mTarget->GetFrontVector().z;
 
-		D3DXMATRIXA16 pos = mTarget->GetMatrix();
-		mEyePt = D3DXVECTOR3(pos._41 - mTarget->GetFrontVector().x, pos._42 + 3.f, pos._43 - mTarget->GetFrontVector().z);
+		mLookatPt = mTarget->GetPosition();
+
+		//D3DXMATRIXA16 pos = mTarget->GetMatrix();
+		//mEyePt = D3DXVECTOR3(pos._41 - mTarget->GetFrontVector().x, pos._42 + 3.f, pos._43 - mTarget->GetFrontVector().z);
 		//mLookatPt = D3DXVECTOR3(0, 1.f, -4.f);
-		mLookatPt = D3DXVECTOR3(pos._41, pos._42 + 2.5f, pos._43);
+		//mLookatPt = D3DXVECTOR3(pos._41, pos._42 + 2.5f, pos._43);
 		//mLookatPt = mEyePt - mTarget->GetFrontVector();
 
 // 		mEyePt.z -= 1;
