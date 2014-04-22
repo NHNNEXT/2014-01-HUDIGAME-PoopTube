@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <map>
 
+///# 이렇게 하지 말라고 했자네... 버럭.
 #include <C:\Program Files\Autodesk\FBX\FBX SDK\2014.2.1\include\fbxsdk.h>
 
 #include "ObjectManager.h"
