@@ -23,7 +23,7 @@ public:
 		if( mSkinnedMesh ){
 			mSkinnedMesh->Update( dTime );
 		}
- 		if (mCamera)
+		if (mCamera)
 			mCamera->Update(dTime);
 
 		if (mTimeForFPS > 2.f) {
