@@ -4,8 +4,9 @@
 #include "ObjectManager.h"
 #include "CollisionManager.h"
 #include "CollisionBox.h"
-
-using namespace pooptube;
+#include "SkinnedMesh.h"
+#include "ThirdPersonCamera.h"
+#include "MainCharacter.h"
 
 StageOne::StageOne() {
 }
@@ -17,7 +18,7 @@ StageOne::~StageOne() {
 StageOne* StageOne::Create() {
 	StageOne* pScene = new StageOne;
 	if (pScene->Init()) {
-		ObjectManager::GetInstance()->AddObject(pScene);
+		pooptube::ObjectManager::GetInstance()->AddObject(pScene);
 	}
 	else {
 		delete pScene;
@@ -33,7 +34,7 @@ bool StageOne::Init() {
 	EnableKeyEvent();
 	EnableMouseEvent();
 
-	mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+	mDevice = pooptube::Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 	D3DMATERIAL9 mtrl;
 	ZeroMemory(&mtrl, sizeof(D3DMATERIAL9));
@@ -67,43 +68,98 @@ bool StageOne::Init() {
 	mDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	mDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 
+	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
 
-	//mCamera = ThirdPersonCamera::Create();
-	mCamera = Camera::Create();
-	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
+	mCharacter = MainCharacter::Create();
 
-	mGround_2 = SkinnedMesh::Create("test.bmp", RESOURCE_HEIGHTMAP);
+	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
+	mCamera_2 = pooptube::Camera::Create();
 
-	//mCamera->SetTarget(mSkinnedMesh);
 
-	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
+	mGround = pooptube::SkinnedMesh::Create("test.bmp", pooptube::RESOURCE_HEIGHTMAP);
+
+	testDummy = pooptube::CollisionBox::Create(pooptube::COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f);
 	testDummy->SetAxisLen( 0.5, 0.5, 0.5 );
-
-	//mCamera->SetEye(D3DXVECTOR3(0, 3, 1));
-	//mCamera->SetEye(D3DXVECTOR3(0, 3, -2));
-	//mCamera->SetLook(D3DXVECTOR3(0, 2, -10));
-
-	mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
-
+	
 	return true;
 }
 
 void StageOne::Render() {
 
+	mCharacter->Render();
+
+	mSkinnedMesh->Render();
+
+	mGround->Render();
+
+	testDummy->Render();
+
 	mCamera->Render();
-
-	if (mSkinnedMesh){
-		mSkinnedMesh->Render();
-	}
-
-	if (mSkinnedMesh_2)
-		mSkinnedMesh_2->Render();
-
-	if (mGround_2)
-		mGround_2->Render();
-
-	if (testDummy)
-		testDummy->Render();
+	//mCamera_2->Render();
 }
 
+void StageOne::Update(float dTime)
+{
+		mSkinnedMesh->Update(dTime);
+		mCharacter->Update(dTime);
 
+		if (mTimeForFPS > 2.f) {
+			printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
+			mTimeForFPS = 0.f;
+		}
+
+		mCamera->Update(dTime);
+
+		mTimeForFPS += dTime;
+}
+
+void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
+}
+
+void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
+	switch (pKeyEvent->GetKeyCode())
+	{
+	case 'W':
+		//mCamera_2->Translation(0, 0, -0.1f);
+		break;
+	case 'S':
+		//mCamera_2->Translation(0, 0, 0.1f);
+		break;
+	case 'A':
+		//mCamera_2->Translation(0.1f, 0, 0);
+		break;
+	case 'D':
+		//mCamera_2->Translation(-0.1f, 0, 0);
+		break;
+	case VK_LEFT:
+		break;
+	case VK_RIGHT:
+		break;
+
+	case 'Q':
+		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		break;
+	case 'E':
+		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		break;
+	}
+}
+void StageOne::KeyUp(pooptube::KeyEvent* pKeyEvent) {
+
+}
+
+void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
+
+}
+
+void StageOne::MouseMove(pooptube::MouseEvent* pMouseEvent) {
+}
+
+void StageOne::MouseUp(pooptube::MouseEvent* pMouseEvent) {
+}
+
+void StageOne::MousePressed(pooptube::MouseEvent* pMouseEvent) {
+}
+
+void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
+}

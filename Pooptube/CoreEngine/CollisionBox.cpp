@@ -34,6 +34,10 @@ namespace pooptube {
 		if( pCollisionBox->Init() ) {
 			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
 		}
+		//혹시 몰라서 에러처리 추가
+		else 
+			return nullptr;
+
 		return pCollisionBox;
 	}
 
@@ -55,8 +59,8 @@ namespace pooptube {
 		Line->SetAntialias( true );
 
 		D3DXVECTOR3 mXDirVec, tXDirVec;
-		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontVector() );
-		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontVector() };
+		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontPoint() );
+		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontPoint() };
 		D3DXVECTOR3 vF[3];
 		for( int i = 0; i < 3; ++i ){
 			vF[i] = mAxisDir[i] * mAxisLen[i];
@@ -121,10 +125,10 @@ namespace pooptube {
 		float R0, R1, R;    //interval radii and distance between centers
 		float R01;        //=R0+R1
 		D3DXVECTOR3 mXDirVec, tXDirVec;
-		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontVector() );
-		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontVector() };
-		D3DXVec3Cross( &tXDirVec, &GetUpVector(), &GetFrontVector() );
-		D3DXVECTOR3 tAxisDir[3] = { tXDirVec, GetUpVector(), GetFrontVector() };
+		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontPoint() );
+		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontPoint() };
+		D3DXVec3Cross(&tXDirVec, &GetUpVector(), &GetFrontPoint());
+		D3DXVECTOR3 tAxisDir[3] = { tXDirVec, GetUpVector(), GetFrontPoint() };
 
 		//A0~2
 		for( int j = 0; j < 3; ++j ){

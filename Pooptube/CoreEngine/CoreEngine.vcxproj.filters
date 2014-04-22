@@ -288,9 +288,6 @@
     <ClInclude Include="CollisionBox.h">
       <Filter>Nodes\CollisionBox</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionType.h">
-      <Filter>Util\DataStructure</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Nodes\MeshData</Filter>
     </ClInclude>

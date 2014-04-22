@@ -28,15 +28,18 @@ namespace pooptube {
 	bool Camera::Init() {
 		Node::Init();
 
+		//아래 두함수의 적용순서가 고정된다. 해결방법을 찾아보자
+		SetPosition(D3DXVECTOR3(0.f, 3.f, 10.f));
+		SetFrontPoint(D3DXVECTOR3(0.f, 0.f, 0.f));
+
 		return true;
 	}
 
-	void Camera::Render()
-	{
+	void Camera::Render() {
 		Node::Render();
 
 		//뷰행렬을 생성
-		D3DXMatrixLookAtLH(&mMatView, &mEyePt, &mLookatPt, &mUpVec);
+		D3DXMatrixLookAtLH(&mMatView, &Node::GetPosition(), &Node::GetFrontPoint(), &Node::GetUpVec());
 		//생성된 뷰행렬을 적용
 		GetDevice()->SetTransform(D3DTS_VIEW, &mMatView);
 
@@ -47,54 +50,7 @@ namespace pooptube {
 		GetDevice()->SetTransform(D3DTS_PROJECTION, &mMatProj);
 	}
 
-	void Camera::Update(float dTime)
-	{
+	void Camera::Update(float dTime) {
 		Node::Update(dTime);
 	}
-
-// 	void Camera::Rotate(D3DXVECTOR3 dAngle)
-// 	{
-// 		float m_fYaw = D3DXToRadian(dAngle.x * 0.1f);
-// 		float m_fPitch = D3DXToRadian(dAngle.y * 0.1f);
-// 
-// 		D3DXMATRIX rot;
-// 		D3DXVECTOR3 vcZ = mLookatPt - mEyePt;
-// 		D3DXVECTOR3 vcX;
-// 		D3DXMatrixRotationY(&rot, m_fYaw);
-// 		D3DXVec3TransformCoord(&vcZ, &vcZ, &rot);
-// 		D3DXVec3TransformCoord(&mUpVec, &mUpVec, &rot);
-// 
-// 		mLookatPt = vcZ + mEyePt;
-// 		D3DXMatrixLookAtLH(&mMatView, &mEyePt, &mLookatPt, &mUpVec);
-// 
-// 
-// 		vcZ = mLookatPt - mEyePt;
-// 		vcX = D3DXVECTOR3(mMatView._11, mMatView._21, mMatView._31);
-// 
-// 		D3DXMatrixRotationAxis(&rot, &vcX, m_fPitch);
-// 		D3DXVec3TransformCoord(&vcZ, &vcZ, &rot);
-// 		D3DXVec3TransformCoord(&mUpVec, &mUpVec, &rot);
-// 
-// 		mLookatPt = vcZ + mEyePt;
-// 	}
-
-	void Camera::MoveSide(FLOAT fSpeed)
-	{
-		D3DXVECTOR3 tmp(mMatView._11, 0, mMatView._31);
-		D3DXVec3Normalize(&tmp, &tmp);
-
-		mEyePt += tmp * fSpeed;
-		mLookatPt += tmp * fSpeed;
-	}
-
-	void Camera::MoveForward(FLOAT fSpeed, FLOAT fY /*= 0*/)
-	{
-		D3DXVECTOR3 tmp(mMatView._13, mMatView._23*fY, mMatView._33);
-		D3DXVec3Normalize(&tmp, &tmp);
-
-		mEyePt += tmp * fSpeed;
-		mLookatPt += tmp * fSpeed;
-	}
-
-
 }
