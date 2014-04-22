@@ -51,7 +51,7 @@ namespace pooptube
 		if (mSocket == INVALID_SOCKET)
 			return false;
 
-		nResult = WSAAsyncSelect(mSocket, Application::GetInstance()->GetHWND(), WM_SOCKET, (FD_CLOSE | FD_CONNECT));
+		nResult = WSAAsyncSelect(mSocket, Application::GetInstance()->GetHWND(), WM_SOCKET, (FD_CLOSE | FD_CONNECT | FD_READ | FD_WRITE));
 		if (nResult)
 		{
 			MessageBox(Application::GetInstance()->GetHWND(), L"WSAAsyncSelect failed", L"Critical Error", MB_ICONERROR);
@@ -140,18 +140,29 @@ namespace pooptube
 
 		int recvLen = recv(mSocket, inBuf, 4096, 0);
 
-		if (!mRecvBuffer.Write(inBuf, recvLen))
+		if (recvLen < 4) return;
+
+		short size;
+		short type;
+		memcpy(&size, inBuf, sizeof(size));
+		memcpy(&type, inBuf + sizeof(size), sizeof(type));
+
+		if (1 <= type && type <= 2)
 		{
-			/// 버퍼 꽉찼다. 
-			//assert(false) ;
-		}
-		else
-		{
-			ProcessPacket();
+			// 패킷 사이즈 체크하고 안맞으면 write 안하도록 하는 부분 추가해야함.
+			if (!mRecvBuffer.Write(inBuf, recvLen))
+			{
+				/// 버퍼 꽉찼다. 
+				//assert(false) ;
+			}
+			else
+			{
+				ProcessPacket(recvLen);
+			}
 		}
 	}
 
-	void NetworkSystem::ProcessPacket()
+	void NetworkSystem::ProcessPacket(int recvLen)
 	{
 		while (true)
 		{
@@ -167,7 +178,7 @@ namespace pooptube
 				break;
 			}
 
-			mPacketHandler[header.mType]->HandlingPacket(header.mType, &mRecvBuffer, &header);
+			mPacketHandler[header.mType]->HandlingPacket(header.mType, &mRecvBuffer, &header, recvLen);
 		}
 	}
 }

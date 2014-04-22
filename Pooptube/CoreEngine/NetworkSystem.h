@@ -8,7 +8,8 @@
 //#include <map>
 
 namespace pooptube {
-	class NetworkSystem {
+	class NetworkSystem
+	{
 	public:
 		static NetworkSystem* GetInstance();
 		static void Release(void);
@@ -28,9 +29,10 @@ namespace pooptube {
 		void Write(const char* data, size_t size);
 		void Send();
 		void Read();
+		void GetPacketData(char* data, size_t bytes) { mRecvBuffer.Read(data, bytes); }
 
 	private:
-		void ProcessPacket();
+		void ProcessPacket(int recvLen);
 
 	private:
 		SOCKET		mSocket;

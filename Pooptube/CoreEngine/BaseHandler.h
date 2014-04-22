@@ -10,6 +10,6 @@ namespace pooptube {
 		BaseHandler() {}
 		virtual ~BaseHandler() {}
 
-		virtual void HandlingPacket(short packetType, CircularBuffer* circularBuffer, PacketHeader* header) = 0;
+		virtual void HandlingPacket(short packetType, CircularBuffer* circularBuffer, PacketHeader* header, int recvLen) = 0;
 	};
 }

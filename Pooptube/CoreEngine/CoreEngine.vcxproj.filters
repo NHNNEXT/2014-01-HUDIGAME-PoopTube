@@ -298,9 +298,11 @@
       <Filter>Util\ConsoleManager</Filter>
     </ClInclude>
     <ClInclude Include="BaseHandler.h" />
-    <ClInclude Include="PacketHeader.h" />
     <ClInclude Include="CircularBuffer.h">
       <Filter>Util\DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHeader.h">
+      <Filter>NetworkSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

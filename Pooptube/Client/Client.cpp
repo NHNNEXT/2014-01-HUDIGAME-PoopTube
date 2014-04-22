@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "Application.h"
+#include "NetworkManager.h"
 #include "Object.h"
 #include "ObjectManager.h"
 #include "StageOne.h"
@@ -15,6 +16,15 @@ int main()
 	//#endif
 
 	pooptube::Application::GetInstance()->Init(L"Test", 800, 600, true);
+
+	// test
+	NetworkManager a;
+	a.Init();
+	a.Connect();
+
+	LoginRequest lr;
+	lr.mPlayerId = 1000;
+	NetworkSystem::GetInstance()->Write((char*)&lr, lr.mSize);
 
 	StageOne* pStageOne = StageOne::Create();
 

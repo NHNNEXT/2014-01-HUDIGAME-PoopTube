@@ -17,6 +17,9 @@
     <Filter Include="PreCompile\ProjectSet">
       <UniqueIdentifier>{453a3a53-41e4-44ad-b3c3-015448ef427a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{f082522f-3a4b-4dfe-b36f-2065b3862944}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -37,6 +40,12 @@
     <ClInclude Include="LibSet.h">
       <Filter>PreCompile\ProjectSet</Filter>
     </ClInclude>
+    <ClInclude Include="NetworkManager.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketType.h">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +57,9 @@
     </ClCompile>
     <ClCompile Include="StageOne.cpp">
       <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
