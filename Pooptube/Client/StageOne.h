@@ -115,7 +115,7 @@ private:
 
 	float				mTimeForFPS = 0.f;
 
-	CollisionBox*		testDummy = nullptr;
+	std::shared_ptr<CollisionBox>	testDummy;
 
 	LPDIRECT3DDEVICE9	mDevice = nullptr;
 };

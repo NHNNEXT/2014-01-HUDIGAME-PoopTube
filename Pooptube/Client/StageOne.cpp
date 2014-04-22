@@ -77,9 +77,7 @@ bool StageOne::Init() {
 	//mCamera->SetTarget(mSkinnedMesh);
 
 	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
-	testDummy->SetCenterPos( D3DXVECTOR3( 0.0f, 0.0f, 0.0f ) );
-	testDummy->SetAxisLen( 0.5f, 0.5, 1.0f );
-	testDummy->SetAxisDir( D3DXVECTOR3( 0.5, 0.5, 0.0 ), D3DXVECTOR3( -0.5, 0.5, 0.0 ) );
+	testDummy->SetAxisLen( 0.5, 0.5, 0.5 );
 
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, 1));
 	//mCamera->SetEye(D3DXVECTOR3(0, 3, -2));
