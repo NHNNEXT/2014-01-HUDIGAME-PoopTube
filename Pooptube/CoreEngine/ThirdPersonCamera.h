@@ -8,14 +8,11 @@ namespace pooptube {
 		ThirdPersonCamera();
 		virtual ~ThirdPersonCamera();
 
-		static ThirdPersonCamera* Create();
+		static ThirdPersonCamera* Create(Node* Target);
 
-		void SetTarget(Node *T) { mTarget = T; }
-		virtual bool Init();
+		virtual bool Init(Node* Target);
 		virtual void Render();
 		virtual void Update(float dTime);
-
-
 
 	protected:
 

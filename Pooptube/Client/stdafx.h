@@ -11,7 +11,9 @@
 
 
 #include <windows.h>
-#include <C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3dx9.h>
+//#include <C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3dx9.h>
+
+#include <d3dx9.h>
 #include <memory>
 #include <vector>
 #include <forward_list>

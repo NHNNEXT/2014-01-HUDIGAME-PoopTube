@@ -73,19 +73,23 @@ namespace pooptube {
 		virtual void EnableMouseEvent();
 
 		//@brief 아래 두개 하는일 같음
-		void				RotationY(float Angle);
-		void				RotateFrontVectorY(float angle);
+		virtual void		RotationY(float Angle);
+		virtual void		RotateFrontVectorY(float angle);
 
-		void				SetFrontVector(const D3DXVECTOR3& vec) { mFrontPoint = vec; }
-		D3DXVECTOR3			GetFrontVector() const { return mFrontPoint; }
+		virtual void		SetFrontPoint(const D3DXVECTOR3& vec) { mFrontPoint = vec; }
+		virtual D3DXVECTOR3	GetFrontPoint() const { return mFrontPoint; }
 		D3DXVECTOR3			GetUpVector( ) const { return mUpVec; }
 
-		D3DXVECTOR3			GetPosition() const { return mPosition; }
-		void				SetPosition(const D3DXVECTOR3& newPos);
-		void				Translation( const D3DXVECTOR3& moveVec );
-		void				Translation( float x, float y, float z );
-		
-		LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
+
+		virtual D3DXVECTOR3	GetPosition() const { return mPosition; }
+		virtual void		SetPosition(const D3DXVECTOR3& newPos);
+		virtual void		Translation(float x, float y, float z);
+		virtual void		Translation( const D3DXVECTOR3& moveVec );		
+
+		virtual D3DXVECTOR3	GetUpVec() const { return mUpVec; }
+		virtual void		SetUpVec(const D3DXVECTOR3& val) { mUpVec = val; }
+
+		virtual LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
 
 	private:
 		void _RegistrationToKeyEventDispatcher();

@@ -67,21 +67,18 @@ bool StageOne::Init() {
 	mDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	mDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 
-
-	//mCamera = ThirdPersonCamera::Create();
 	mCamera = Camera::Create();
+	//아래 두함수의 적용순서가 고정된다. 해결방법을 찾아보자
+	mCamera->SetPosition(D3DXVECTOR3(0.f, 3.f, 10.f));
+	mCamera->SetFrontPoint(D3DXVECTOR3(0.f, 0.f, 0.f));
+	
+
 	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
 
 	mGround_2 = SkinnedMesh::Create("test.bmp", RESOURCE_HEIGHTMAP);
 
-	//mCamera->SetTarget(mSkinnedMesh);
-
 	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
 	testDummy->SetAxisLen( 0.5, 0.5, 0.5 );
-
-	//mCamera->SetEye(D3DXVECTOR3(0, 3, 1));
-	//mCamera->SetEye(D3DXVECTOR3(0, 3, -2));
-	//mCamera->SetLook(D3DXVECTOR3(0, 2, -10));
 
 	mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
 

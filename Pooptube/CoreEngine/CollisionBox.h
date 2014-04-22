@@ -1,8 +1,17 @@
 #pragma once
 #include "Node.h"
-#include "CollisionType.h"
 
 namespace pooptube {
+
+	enum class COLLISION_TYPE : unsigned short {
+		COLLISION_NONE = 0x0000,
+		COLLISION_BLOCK = 0x0001,
+		COLLISION_PUSH = 0x0002,
+		COLLISION_BOUND = 0x0004,
+		COLLISION_DAMAGE = 0x0008,
+		COLLISION_ALLY = 0x0010,
+		COLLISION_ENEMY = 0x0020,
+	};
 
 	class CollisionBox :
 		public Node
