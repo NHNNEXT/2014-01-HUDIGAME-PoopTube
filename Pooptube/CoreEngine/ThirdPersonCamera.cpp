@@ -11,7 +11,7 @@ namespace pooptube {
 	ThirdPersonCamera::~ThirdPersonCamera() {
 	}
 
-	ThirdPersonCamera* ThirdPersonCamera::Create(Node* Target) {
+	ThirdPersonCamera* ThirdPersonCamera::Create(std::shared_ptr<Node> Target) {
 		ThirdPersonCamera* pThirdPersonCamera = new ThirdPersonCamera;
 
 		if (pThirdPersonCamera->Init(Target)) {
@@ -25,7 +25,7 @@ namespace pooptube {
 		return pThirdPersonCamera;
 	}
 
-	bool ThirdPersonCamera::Init(Node* Target) {
+	bool ThirdPersonCamera::Init(std::shared_ptr<Node> Target) {
 		Camera::Init();
 		mTarget = Target;
 

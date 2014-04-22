@@ -70,10 +70,11 @@ bool StageOne::Init() {
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
 
-	mCamera = pooptube::ThirdPersonCamera::Create(mSkinnedMesh);
+	mCharacter = MainCharacter::Create();
+
+	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 	mCamera_2 = pooptube::Camera::Create();
 
-	mCharacter = MainCharacter::Create();
 
 	mGround = pooptube::SkinnedMesh::Create("test.bmp", pooptube::RESOURCE_HEIGHTMAP);
 
@@ -93,8 +94,8 @@ void StageOne::Render() {
 
 	testDummy->Render();
 
-	//mCamera->Render();
-	mCamera_2->Render();
+	mCamera->Render();
+	//mCamera_2->Render();
 }
 
 void StageOne::Update(float dTime)

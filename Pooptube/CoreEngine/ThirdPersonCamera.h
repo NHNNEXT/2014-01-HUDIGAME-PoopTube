@@ -17,15 +17,15 @@ namespace pooptube {
 		//@param Target 
 		//@brief node에서 상속된 모든 객체에 사용가능
 		//@return 생성한 3인칭 카메라 반환
-		static ThirdPersonCamera* Create(Node* Target);
+		static ThirdPersonCamera* Create(std::shared_ptr<Node> Target);
 
-		virtual bool Init(Node* Target);
+		virtual bool Init(std::shared_ptr<Node> Target);
 		virtual void Render();
 		virtual void Update(float dTime);
 
 	protected:
 
 	private:
-		Node *mTarget = nullptr;
+		std::shared_ptr<Node> mTarget = nullptr;
 	};
 }
