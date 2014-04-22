@@ -73,12 +73,16 @@ namespace pooptube {
 		virtual void EnableMouseEvent();
 
 		//@brief 아래 두개 하는일 같음
+		//좌표축은 항상 물체의 중앙에 고정
+		//회전변환에도 좌표축은 고정
+		//@todo 현재 업벡터의 영향을 주지않는 변환만 구현
+		//x,z축 변환도 추가해야함
 		virtual void		RotationY(float Angle);
 		virtual void		RotateFrontVectorY(float angle);
 
 		virtual void		SetFrontPoint(const D3DXVECTOR3& vec) { mFrontPoint = vec; }
 		virtual D3DXVECTOR3	GetFrontPoint() const { return mFrontPoint; }
-		D3DXVECTOR3			GetUpVector( ) const { return mUpVec; }
+		virtual D3DXVECTOR3	GetUpVector() const { return mUpVec; }
 
 
 		virtual D3DXVECTOR3	GetPosition() const { return mPosition; }
@@ -89,7 +93,11 @@ namespace pooptube {
 		virtual D3DXVECTOR3	GetUpVec() const { return mUpVec; }
 		virtual void		SetUpVec(const D3DXVECTOR3& val) { mUpVec = val; }
 
-		virtual LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
+		LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
+
+		D3DXVECTOR3			GetFrontVector();
+		D3DXVECTOR3			GetRightVector();
+		D3DXVECTOR3			GetLeftVector();
 
 	private:
 		void _RegistrationToKeyEventDispatcher();
@@ -103,12 +111,13 @@ namespace pooptube {
 
 		// TODO: 각종 행렬 계산 용 데이터들..
 		//@brief mPosition는 포지션정보를 담고있다.
-		D3DXVECTOR3		mPosition = {0.f, 0.f, 0.f};
-		D3DXVECTOR3		mScaleVec = { 1.f, 1.f, 1.f };
+		D3DXVECTOR3		mPosition = { 0.f, 0.f, 0.f};
+		D3DXVECTOR3		mScaleVec = { 1.f, 1.f, 1.f};
 
 		//@brief mFrontPoint는 로테이트정보를 담고있다.
-		D3DXVECTOR3		mFrontPoint = {0.f, 0.f, 1.f};
-		D3DXVECTOR3		mUpVec = {0.f, 1.f, 0.f};
+		//프론트 벡터로 바꿔야함
+		D3DXVECTOR3		mFrontPoint = { 0.f, 0.f, 1.f};
+		D3DXVECTOR3		mUpVec = { 0.f, 1.f, 0.f};
 
 		LPDIRECT3DDEVICE9 mDevice;
 		

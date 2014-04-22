@@ -28,6 +28,10 @@ namespace pooptube {
 	bool Camera::Init() {
 		Node::Init();
 
+		//아래 두함수의 적용순서가 고정된다. 해결방법을 찾아보자
+		SetPosition(D3DXVECTOR3(0.f, 3.f, 10.f));
+		SetFrontPoint(D3DXVECTOR3(0.f, 0.f, 0.f));
+
 		return true;
 	}
 

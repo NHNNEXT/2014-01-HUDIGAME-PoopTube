@@ -44,8 +44,9 @@ namespace pooptube {
 		//오른손 좌표계
 		//프론트 백터의 값에 따라 회전
 		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &mFrontPoint, &mUpVec);
-		//뷰행렬의 연선을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
+		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
 		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
+		//(카메라의 좌표계에 맞춰져있다)
 		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
 		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
 		D3DXMatrixTranspose(&MatRotate, &MatRotate);
@@ -135,11 +136,11 @@ namespace pooptube {
 		mFrontPoint = mPosition + view;
 	}
 
-	void Node::Translation( const D3DXVECTOR3& moveVec )
-	{
+	void Node::Translation( const D3DXVECTOR3& moveVec ) {
 		mPosition += moveVec;
 		mFrontPoint += moveVec;
 	}
+
 	void Node::Translation( float x, float y, float z ) {
 		Translation( D3DXVECTOR3( x, y, z ) );
 	}
@@ -149,6 +150,28 @@ namespace pooptube {
 		mPosition = newPos;
 		mFrontPoint += mPosition;
 	}
+
+	D3DXVECTOR3 Node::GetFrontVector() {
+		D3DXVECTOR3 FrontVec = mFrontPoint - mPosition;
+		D3DXVec3Normalize(&FrontVec, &FrontVec);
+		//y축을 죽여버림
+		FrontVec.y = 0.f;
+		return FrontVec;
+	}
+
+	D3DXVECTOR3 Node::GetRightVector() {
+		D3DXVECTOR3 Vec = GetFrontVector();
+		D3DXVec3Cross(&Vec, &mUpVec, &Vec);
+		return Vec;
+	}
+
+	D3DXVECTOR3 Node::GetLeftVector() {
+		D3DXVECTOR3 Vec = GetFrontVector();
+		D3DXVec3Cross(&Vec, &Vec, &mUpVec);
+		return Vec;
+	}
+
+
 
 
 }

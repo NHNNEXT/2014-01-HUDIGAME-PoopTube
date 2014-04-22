@@ -82,6 +82,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Creature.h" />
     <ClInclude Include="LibSet.h" />
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="StageOne.h" />
@@ -90,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Creature.cpp" />
     <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="StageOne.cpp" />
     <ClCompile Include="stdafx.cpp">

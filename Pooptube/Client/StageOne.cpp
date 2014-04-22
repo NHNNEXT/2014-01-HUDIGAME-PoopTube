@@ -4,8 +4,9 @@
 #include "ObjectManager.h"
 #include "CollisionManager.h"
 #include "CollisionBox.h"
-
-using namespace pooptube;
+#include "SkinnedMesh.h"
+#include "ThirdPersonCamera.h"
+#include "MainCharacter.h"
 
 StageOne::StageOne() {
 }
@@ -17,7 +18,7 @@ StageOne::~StageOne() {
 StageOne* StageOne::Create() {
 	StageOne* pScene = new StageOne;
 	if (pScene->Init()) {
-		ObjectManager::GetInstance()->AddObject(pScene);
+		pooptube::ObjectManager::GetInstance()->AddObject(pScene);
 	}
 	else {
 		delete pScene;
@@ -33,7 +34,7 @@ bool StageOne::Init() {
 	EnableKeyEvent();
 	EnableMouseEvent();
 
-	mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+	mDevice = pooptube::Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 	D3DMATERIAL9 mtrl;
 	ZeroMemory(&mtrl, sizeof(D3DMATERIAL9));
@@ -67,40 +68,97 @@ bool StageOne::Init() {
 	mDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 	mDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
 
-	mCamera = Camera::Create();
-	//아래 두함수의 적용순서가 고정된다. 해결방법을 찾아보자
-	mCamera->SetPosition(D3DXVECTOR3(0.f, 3.f, 10.f));
-	mCamera->SetFrontPoint(D3DXVECTOR3(0.f, 0.f, 0.f));
-	
+	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
 
-	mSkinnedMesh = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
+	mCamera = pooptube::ThirdPersonCamera::Create(mSkinnedMesh);
+	mCamera_2 = pooptube::Camera::Create();
 
-	mGround_2 = SkinnedMesh::Create("test.bmp", RESOURCE_HEIGHTMAP);
+	mCharacter = MainCharacter::Create();
 
-	testDummy = CollisionBox::Create( COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f );
+	mGround = pooptube::SkinnedMesh::Create("test.bmp", pooptube::RESOURCE_HEIGHTMAP);
+
+	testDummy = pooptube::CollisionBox::Create(pooptube::COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f);
 	testDummy->SetAxisLen( 0.5, 0.5, 0.5 );
-
-	mSkinnedMesh_2 = SkinnedMesh::Create("batman70.fbx", RESOURCE_FBX);
-
+	
 	return true;
 }
 
 void StageOne::Render() {
 
-	mCamera->Render();
+	mCharacter->Render();
 
-	if (mSkinnedMesh){
-		mSkinnedMesh->Render();
-	}
+	mSkinnedMesh->Render();
 
-	if (mSkinnedMesh_2)
-		mSkinnedMesh_2->Render();
+	mGround->Render();
 
-	if (mGround_2)
-		mGround_2->Render();
+	testDummy->Render();
 
-	if (testDummy)
-		testDummy->Render();
+	//mCamera->Render();
+	mCamera_2->Render();
 }
 
+void StageOne::Update(float dTime)
+{
+		mSkinnedMesh->Update(dTime);
+		mCharacter->Update(dTime);
 
+		if (mTimeForFPS > 2.f) {
+			printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
+			mTimeForFPS = 0.f;
+		}
+
+		mCamera->Update(dTime);
+
+		mTimeForFPS += dTime;
+}
+
+void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
+}
+
+void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
+	switch (pKeyEvent->GetKeyCode())
+	{
+	case 'W':
+		//mCamera_2->Translation(0, 0, -0.1f);
+		break;
+	case 'S':
+		//mCamera_2->Translation(0, 0, 0.1f);
+		break;
+	case 'A':
+		//mCamera_2->Translation(0.1f, 0, 0);
+		break;
+	case 'D':
+		//mCamera_2->Translation(-0.1f, 0, 0);
+		break;
+	case VK_LEFT:
+		break;
+	case VK_RIGHT:
+		break;
+
+	case 'Q':
+		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		break;
+	case 'E':
+		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		break;
+	}
+}
+void StageOne::KeyUp(pooptube::KeyEvent* pKeyEvent) {
+
+}
+
+void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
+
+}
+
+void StageOne::MouseMove(pooptube::MouseEvent* pMouseEvent) {
+}
+
+void StageOne::MouseUp(pooptube::MouseEvent* pMouseEvent) {
+}
+
+void StageOne::MousePressed(pooptube::MouseEvent* pMouseEvent) {
+}
+
+void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
+}

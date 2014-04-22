@@ -3,8 +3,8 @@
 * @brief
 * 프로젝션을 담당하는 카메라.
 * 디폴트로 perspective projection을 한다.
-* @date 2014/04/17
-* @file SkinnedMesh.h
+* @date 2014/04/22
+* @file Camera.h
 */
 #pragma once
 

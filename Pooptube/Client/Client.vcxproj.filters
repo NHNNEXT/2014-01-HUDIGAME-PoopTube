@@ -37,6 +37,9 @@
     <ClInclude Include="LibSet.h">
       <Filter>PreCompile\ProjectSet</Filter>
     </ClInclude>
+    <ClInclude Include="Creature.h">
+      <Filter>Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +51,9 @@
     </ClCompile>
     <ClCompile Include="StageOne.cpp">
       <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

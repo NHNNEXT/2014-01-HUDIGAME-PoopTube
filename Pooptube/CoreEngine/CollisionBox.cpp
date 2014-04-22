@@ -34,6 +34,10 @@ namespace pooptube {
 		if( pCollisionBox->Init() ) {
 			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
 		}
+		//혹시 몰라서 에러처리 추가
+		else 
+			return nullptr;
+
 		return pCollisionBox;
 	}
 

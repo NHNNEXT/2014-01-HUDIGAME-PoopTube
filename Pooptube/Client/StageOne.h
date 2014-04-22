@@ -1,14 +1,18 @@
 #pragma once
+#include "stdafx.h"
 #include "Scene.h"
-#include "ThirdPersonCamera.h"
-#include "SkinnedMesh.h"
-#include "CollisionBox.h"
-#include "Camera.h"
 
-using namespace pooptube;
+namespace pooptube {
+	class ThirdPersonCamera;
+	class Camera;
+	class SkinnedMesh;
+	class CollisionBox;
+}
+
+class MainCharacter;
 
 class StageOne
-	: public Scene
+	: public pooptube::Scene
 {
 public:
 	StageOne();
@@ -20,92 +24,32 @@ public:
 
 	void Render();
 
-	void Update( float dTime ) {
-		if( mSkinnedMesh ){
-			mSkinnedMesh->Update( dTime );
-		}
+	void Update(float dTime);
 
-		if (mTimeForFPS > 2.f) {
-			printf("FPS : %f\n", Application::GetInstance()->GetFps());
-			mTimeForFPS = 0.f;
-		}
-		
-		mTimeForFPS += dTime;
-	}
-
-	void KeyDown( KeyEvent* pKeyEvent ) {
-	}
-	void KeyPressed( KeyEvent* pKeyEvent ) {
-		switch( pKeyEvent->GetKeyCode() )
-		{
-		case 'W':
-			mSkinnedMesh->Translation( 0, 0, -0.1f );
-			break;
-		case 'S':
-			mSkinnedMesh->Translation( 0, 0, 0.1f );
-			break;
-		case 'A':
-			mSkinnedMesh->Translation( 0.1f, 0, 0 );
-			break;
-		case 'D':
-			mSkinnedMesh->Translation( -0.1f, 0, 0 );
-			break;
-
-		case VK_LEFT:
-			mSkinnedMesh->RotationY( 0.1f );
-			break;
-		case VK_RIGHT:
-			mSkinnedMesh->RotationY( -0.1f );
-			break;
-
-		case 'Q':
-			mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-			break;
-		case 'E':
-			mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-			break;
-		}
-	}
-	void KeyUp(KeyEvent* pKeyEvent) {
-		
-	}
-
-	void MouseDown(MouseEvent* pMouseEvent) {
-		
-	}
-
-	void MouseMove(MouseEvent* pMouseEvent) {
-	}
-
-	void MouseUp(MouseEvent* pMouseEvent) {
-	}
-
-	void MousePressed(MouseEvent* pMouseEvent) {
-	}
-
-	void MouseWheel(MouseEvent* pMouseEvent) {
-	}
-
-
+	void KeyDown(pooptube::KeyEvent* pKeyEvent);
+	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
+	void KeyUp(pooptube::KeyEvent* pKeyEvent);
+	void MouseDown(pooptube::MouseEvent* pMouseEvent);
+	void MouseMove(pooptube::MouseEvent* pMouseEvent);
+	void MouseUp(pooptube::MouseEvent* pMouseEvent);
+	void MousePressed(pooptube::MouseEvent* pMouseEvent);
+	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
 
 protected:
 
 private:
-	Camera				*mCamera = nullptr;
+	pooptube::ThirdPersonCamera*	mCamera = nullptr;
+	pooptube::Camera*				mCamera_2 = nullptr;
 
+	std::shared_ptr<MainCharacter>	mCharacter = nullptr;
 
-	SkinnedMesh			*mSkinnedMesh = nullptr;
-	SkinnedMesh			*mSkinnedMesh_2 = nullptr;
+	pooptube::SkinnedMesh*		mSkinnedMesh = nullptr;
 
-	SkinnedMesh			*mGround_2 = nullptr;
-
-	float				xTrans = 0.f;
-	float				zTrans = 0.f;
-	float				yAngle = 0.f;
+	pooptube::SkinnedMesh*		mGround = nullptr;
 
 	float				mTimeForFPS = 0.f;
 
-	std::shared_ptr<CollisionBox>	testDummy;
+	std::shared_ptr<pooptube::CollisionBox>	testDummy;
 
 	LPDIRECT3DDEVICE9	mDevice = nullptr;
 };
