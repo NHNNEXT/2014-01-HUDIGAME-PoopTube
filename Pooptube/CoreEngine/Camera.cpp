@@ -11,19 +11,12 @@ namespace pooptube {
 	Camera::~Camera() {
 	}
 
-	Camera* Camera::Create() {
-		Camera* pCamera = new Camera;
-
-		if (pCamera->Init()) {
-			ObjectManager::GetInstance()->AddObject(pCamera);
-
-		}
-		else {
-			delete pCamera;
-			pCamera = nullptr;
-		}
-
-		return pCamera;
+	std::shared_ptr<Camera> Camera::Create() {
+		std::shared_ptr<Camera> pCamera(new Camera);
+		if (pCamera->Init())
+			return pCamera;
+		else 
+			return nullptr;
 	}
 
 	bool Camera::Init() {

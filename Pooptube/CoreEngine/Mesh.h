@@ -38,7 +38,7 @@ namespace pooptube {
 		//@param PolygonCount
 		//@return 생성한 Mesh를 반환
 		//@exception 초기화에 실패하면 nullptr반환
-		static Mesh* Create(int VertexCount, int PolygonCount);
+		static std::shared_ptr<Mesh> Create(int VertexCount, int PolygonCount);
 
 		virtual bool Init(int VertexCount, int PolygonCount);
 
@@ -49,6 +49,8 @@ namespace pooptube {
 		int						GetVertexCount() const { return mVertexCount; }
 		MESH_CUSTOM_VERTEX*		GetVertices() const { return mVertices; }
 		MESH_CUSTOM_INDEX*		GetIndices() const { return mIndices; }
+
+		float					GetHeight(float x, float z) const;
 
 	protected:
 

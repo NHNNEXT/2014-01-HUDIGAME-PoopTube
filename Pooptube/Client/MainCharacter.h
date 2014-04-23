@@ -41,7 +41,7 @@ private:
 
 	float					mSpeed = 0.1f;
 
-	pooptube::SkinnedMesh*	mSkinnedMesh = nullptr;
+	std::shared_ptr<pooptube::SkinnedMesh>	mSkinnedMesh = nullptr;
 
 };
 

@@ -31,7 +31,7 @@ namespace pooptube {
 		//@param ResourceType
 		//@return 생성한 Mesh를 반환
 		//@exception 초기화에 실패하거나 리소스 타입이 null일 경우 nullptr반환
-		static SkinnedMesh* Create(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType);
+		static std::shared_ptr<SkinnedMesh> Create(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType);
 		virtual bool Init(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType);
 
 		virtual void Render();
@@ -46,7 +46,7 @@ namespace pooptube {
 		LPDIRECT3DVERTEXBUFFER9 mMeshVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9	mMeshIndexBuffer = nullptr;
 
-		Mesh*					mMesh = nullptr;
+		std::shared_ptr<Mesh>	mMesh = nullptr;
 
 		RESOURCE_TYPE			mResourceType = RESOURCE_NULL;
 	};

@@ -39,15 +39,11 @@ public:
 protected:
 
 private:
-	pooptube::ThirdPersonCamera*	mCamera = nullptr;
-	pooptube::Camera*				mCamera_2 = nullptr;
-
-	std::shared_ptr<MainCharacter>	mCharacter = nullptr;
-
-	pooptube::SkinnedMesh*			mSkinnedMesh = nullptr;
-
-	pooptube::SkinnedMesh*			mGround = nullptr;
-
+	std::shared_ptr<pooptube::ThirdPersonCamera>	mCamera = nullptr;
+	std::shared_ptr<pooptube::Camera>				mCamera_2 = nullptr;
+	std::shared_ptr<MainCharacter>					mCharacter = nullptr;
+	std::shared_ptr<pooptube::SkinnedMesh>			mSkinnedMesh = nullptr;
+	std::shared_ptr<pooptube::SkinnedMesh>			mGround = nullptr;
 	std::shared_ptr<pooptube::SkyBox>	mSkyBox = nullptr;
 
 	float				mTimeForFPS = 0.f;

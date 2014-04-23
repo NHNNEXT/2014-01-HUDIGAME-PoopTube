@@ -56,7 +56,7 @@ namespace pooptube {
 			return _aligned_free(p);
 		}
 
-		static Node* Create();
+		static std::shared_ptr<Node> Create();
 
 		virtual bool Init();
 

@@ -60,7 +60,7 @@ namespace pooptube {
 	}
 
 
-	Mesh* ResourceManager::LoadMeshFromFBX(const std::string& FilePath) {
+	std::shared_ptr<Mesh> ResourceManager::LoadMeshFromFBX(const std::string& FilePath) {
 
 		//map을 사용할 때 조심해야 할 부분
 		if (mFBXMeshTable.find(FilePath) == mFBXMeshTable.end()) {
@@ -70,7 +70,7 @@ namespace pooptube {
 		return mFBXMeshTable[FilePath];
 	}
 
-	Mesh* ResourceManager::_LoadFBXFile(const std::string& FilePath) {
+	std::shared_ptr<Mesh> ResourceManager::_LoadFBXFile(const std::string& FilePath) {
 		int lFileFormat = -1;
 		FbxImporter* pImporter = nullptr;
 
@@ -95,14 +95,14 @@ namespace pooptube {
 			return nullptr;
 		pImporter->Destroy();
 
-		Mesh* temp = _ReadVerticesFromFBX(pScene);
+		std::shared_ptr<Mesh> temp = _ReadVerticesFromFBX(pScene);
 		pScene->Destroy();
 
 		return temp;
 	}
 
-	Mesh* ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {
-		Mesh* pNewMesh = nullptr;
+	std::shared_ptr<Mesh> ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {
+		std::shared_ptr<Mesh> pNewMesh = nullptr;
 		FbxNode* pFbxRootNode = pScene->GetRootNode();
 
 		if (pFbxRootNode) {
@@ -187,7 +187,7 @@ namespace pooptube {
 		return pNewMesh;
 	}
 
-	Mesh* ResourceManager::LoadMeshFromHeightMap(const std::string& FilePath) {
+	std::shared_ptr<Mesh> ResourceManager::LoadMeshFromHeightMap(const std::string& FilePath) {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 			mHeightMapTable[FilePath] = _LoadHeightMap(FilePath);
@@ -196,7 +196,7 @@ namespace pooptube {
 		return mHeightMapTable[FilePath];
 	}
 
-	Mesh* ResourceManager::_LoadHeightMap(const std::string& FilePath) {
+	std::shared_ptr<Mesh> ResourceManager::_LoadHeightMap(const std::string& FilePath) {
 		FILE* filePtr;
 		int error;
 		unsigned int count;
@@ -250,7 +250,7 @@ namespace pooptube {
 		int numVertices = (col + 1) * (row + 1);
 		int numIndices = col * row * 2;
 
-		Mesh* pNewMesh = Mesh::Create(numVertices, numIndices);
+		std::shared_ptr<Mesh> pNewMesh = Mesh::Create(numVertices, numIndices);
 
 		float mSize = 0.5f;
 

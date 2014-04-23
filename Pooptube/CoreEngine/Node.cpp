@@ -14,17 +14,12 @@ namespace pooptube {
 		mChildList.clear();
 	}
 
-	Node* Node::Create() {
-		Node* pNode = new Node;
-		if (pNode->Init()) {
-			ObjectManager::GetInstance()->AddObject(pNode);
-		}
-		else {
-			delete pNode;
-			pNode = nullptr;
-		}
-
-		return pNode;
+	std::shared_ptr<Node> Node::Create() {
+		std::shared_ptr<Node> pNode(new Node);
+		if (pNode->Init()) 
+			return pNode;
+		else 
+			return nullptr;
 	}
 
 	bool Node::Init() {

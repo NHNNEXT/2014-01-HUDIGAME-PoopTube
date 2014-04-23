@@ -23,8 +23,8 @@ namespace pooptube {
 
 		static ResourceManager* GetInstance();
 
-		Mesh* LoadMeshFromFBX(const std::string& FilePath);
-		Mesh* LoadMeshFromHeightMap(const std::string& FilePath);
+		std::shared_ptr<Mesh> LoadMeshFromFBX(const std::string& FilePath);
+		std::shared_ptr<Mesh> LoadMeshFromHeightMap(const std::string& FilePath);
 
 		LPDIRECT3DTEXTURE9 LoadTexture(const std::wstring& FilePath);
 
@@ -34,8 +34,8 @@ namespace pooptube {
 		bool _Init();
 		bool _FBXInit();
 
-		Mesh* _LoadFBXFile(const std::string& FilePath);
-		Mesh* _LoadHeightMap(const std::string& FilePath);
+		std::shared_ptr<Mesh> _LoadFBXFile(const std::string& FilePath);
+		std::shared_ptr<Mesh> _LoadHeightMap(const std::string& FilePath);
 
 		//@brief 
 		//임시로 매쉬만 뽑아내도록 만든 함수
@@ -43,7 +43,7 @@ namespace pooptube {
 		//@todo
 		//fbx파일의 노드를 순회하면서 메쉬, 에니메이션 캐쉬, 텍스쳐 등의 정보를 뽑아
 		//만든 자료형에 보관하는 기능을 구현해야 한다.
-		Mesh* _ReadVerticesFromFBX(FbxScene* pScene);
+		std::shared_ptr<Mesh> _ReadVerticesFromFBX(FbxScene* pScene);
 
 
 
@@ -58,9 +58,9 @@ namespace pooptube {
 
 		//@brief
 		//로드된 fbxmesh정보를 쥐고있는 meshtable
-		std::map<std::string, Mesh*>				mFBXMeshTable;
-		std::map<std::string, Mesh*>				mHeightMapTable;
-		std::map<std::wstring, LPDIRECT3DTEXTURE9>	mTextureTable;
+		std::map<std::string, std::shared_ptr<Mesh>>	mFBXMeshTable;
+		std::map<std::string, std::shared_ptr<Mesh>>	mHeightMapTable;
+		std::map<std::wstring, LPDIRECT3DTEXTURE9>		mTextureTable;
 
 
 	};

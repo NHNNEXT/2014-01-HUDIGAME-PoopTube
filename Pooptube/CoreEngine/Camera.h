@@ -16,7 +16,7 @@ namespace pooptube {
 		Camera();
 		virtual ~Camera();
 
-		static Camera* Create();
+		static std::shared_ptr<Camera> Create();
 
 		virtual bool Init();
 

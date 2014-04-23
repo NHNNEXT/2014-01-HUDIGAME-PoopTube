@@ -11,18 +11,14 @@ namespace pooptube {
 	ThirdPersonCamera::~ThirdPersonCamera() {
 	}
 
-	ThirdPersonCamera* ThirdPersonCamera::Create(std::shared_ptr<Node> Target) {
-		ThirdPersonCamera* pThirdPersonCamera = new ThirdPersonCamera;
+	std::shared_ptr<ThirdPersonCamera> ThirdPersonCamera::Create(std::shared_ptr<Node> Target) {
+		std::shared_ptr<ThirdPersonCamera> pThirdPersonCamera(new ThirdPersonCamera);
 
 		if (pThirdPersonCamera->Init(Target)) {
-			ObjectManager::GetInstance()->AddObject(pThirdPersonCamera);
+			return pThirdPersonCamera;
 		}
-		else {
-			delete pThirdPersonCamera;
-			pThirdPersonCamera = nullptr;
-		}
-
-		return pThirdPersonCamera;
+		else 
+			return nullptr;
 	}
 
 	bool ThirdPersonCamera::Init(std::shared_ptr<Node> Target) {
