@@ -7,6 +7,7 @@
 #include "SkinnedMesh.h"
 #include "ThirdPersonCamera.h"
 #include "MainCharacter.h"
+#include "SkyBox.h"
 
 StageOne::StageOne() {
 }
@@ -48,9 +49,9 @@ bool StageOne::Init() {
 	D3DLIGHT9 light;
 
 	//±¤¿øÀÇ À§Ä¡
-	vecDir = D3DXVECTOR3(100.f,
-		100.f,
-		-100.f);
+	vecDir = D3DXVECTOR3(10.f,
+		10.f,
+		-10.f);
 
 	ZeroMemory(&light, sizeof(D3DLIGHT9));
 	light.Type = D3DLIGHT_DIRECTIONAL;
@@ -79,8 +80,15 @@ bool StageOne::Init() {
 	mGround = pooptube::SkinnedMesh::Create("test.bmp", pooptube::RESOURCE_HEIGHTMAP);
 
 	testDummy = pooptube::CollisionBox::Create(pooptube::COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f);
-	testDummy->SetAxisLen( 0.5, 0.5, 0.5 );
-	
+	testDummy->SetAxisLen(0.5, 0.5, 0.5);
+
+	mSkyBox = pooptube::SkyBox::Create(L"Top.bmp",
+		L"Bottom.bmp",
+		L"Front.bmp",
+		L"Back.bmp",
+		L"Left.bmp",
+		L"Right.bmp");
+
 	return true;
 }
 
@@ -96,21 +104,23 @@ void StageOne::Render() {
 
 	mCamera->Render();
 	//mCamera_2->Render();
+
+	mSkyBox->Render();
 }
 
 void StageOne::Update(float dTime)
 {
-		mSkinnedMesh->Update(dTime);
-		mCharacter->Update(dTime);
+	mSkinnedMesh->Update(dTime);
+	mCharacter->Update(dTime);
 
-		if (mTimeForFPS > 2.f) {
-			printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
-			mTimeForFPS = 0.f;
-		}
+	if (mTimeForFPS > 2.f) {
+		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
+		mTimeForFPS = 0.f;
+	}
 
-		mCamera->Update(dTime);
+	mCamera->Update(dTime);
 
-		mTimeForFPS += dTime;
+	mTimeForFPS += dTime;
 }
 
 void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
@@ -120,20 +130,22 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'W':
-		//mCamera_2->Translation(0, 0, -0.1f);
+		mCamera_2->Translation(0, 0, -0.1f);
 		break;
 	case 'S':
-		//mCamera_2->Translation(0, 0, 0.1f);
+		mCamera_2->Translation(0, 0, 0.1f);
 		break;
 	case 'A':
-		//mCamera_2->Translation(0.1f, 0, 0);
+		mCamera_2->Translation(0.1f, 0, 0);
 		break;
 	case 'D':
-		//mCamera_2->Translation(-0.1f, 0, 0);
+		mCamera_2->Translation(-0.1f, 0, 0);
 		break;
 	case VK_LEFT:
+		mCamera_2->RotateFrontVectorY(-0.1f);
 		break;
 	case VK_RIGHT:
+		mCamera_2->RotateFrontVectorY(0.1f);
 		break;
 
 	case 'Q':

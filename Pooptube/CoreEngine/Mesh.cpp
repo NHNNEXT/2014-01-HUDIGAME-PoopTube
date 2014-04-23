@@ -39,7 +39,7 @@ namespace pooptube {
 
 		if (!(mVertices && mIndices))
 			return false;
-		
+
 		memset(mVertices, 0, VertexCount);
 		memset(mIndices, 0, PolygonCount);
 
@@ -64,10 +64,11 @@ namespace pooptube {
 	}
 
 	void Mesh::Render() {
+		Node::Render();
 	}
 
 	void Mesh::Update(float dTime) {
 		Node::Update(dTime);
 	}
-	
+
 }

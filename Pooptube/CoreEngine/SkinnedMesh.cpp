@@ -35,8 +35,6 @@ namespace pooptube {
 
 		mResourceType = ResourceType;
 
-		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-
 		if (!Node::Init())
 			return false;
 
@@ -51,7 +49,7 @@ namespace pooptube {
 			return false;
 
 		//버택스 버퍼 생성
-		if (mDevice->CreateVertexBuffer(mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX),
+		if (GetDevice()->CreateVertexBuffer(mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX),
 			0, D3DFVF_CUSTOMVERTEX,
 			D3DPOOL_DEFAULT, &mMeshVertexBuffer, NULL) < 0)
 		{
@@ -64,10 +62,10 @@ namespace pooptube {
 			return nullptr;
 		memcpy(pVertices, mMesh->GetVertices(), mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX));
 		mMeshVertexBuffer->Unlock();
-	
+
 		//인덱스 버퍼 생성
-		if (mDevice->CreateIndexBuffer(mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX16,
-										D3DPOOL_DEFAULT, &mMeshIndexBuffer, NULL) < 0)
+		if (GetDevice()->CreateIndexBuffer(mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX16,
+			D3DPOOL_DEFAULT, &mMeshIndexBuffer, NULL) < 0)
 		{
 			return false;
 		}
@@ -85,24 +83,23 @@ namespace pooptube {
 
 	void SkinnedMesh::Render() {
 		if (mResourceType & RESOURCE_FBX) {
-			mDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+			GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
 		}
 
 		//행렬의 연산은 node에서 상속받는다.
 		Node::Render();
 
 		//디바이스에 버텍스버퍼를 전달
-		mDevice->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
+		GetDevice()->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
 
 		//인덱스 설정
-		mDevice->SetIndices(mMeshIndexBuffer);
+		GetDevice()->SetIndices(mMeshIndexBuffer);
 
-		mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());
+		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());
 		//mDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mMesh->GetPolygonCount());
 	}
 
 	void SkinnedMesh::Update(float dTime) {
-		
 	}
 
 

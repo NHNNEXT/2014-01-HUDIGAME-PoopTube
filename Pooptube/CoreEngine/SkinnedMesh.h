@@ -1,6 +1,6 @@
 /**
 * @author 양현찬
-* @brief 
+* @brief
 * 버텍스, 에니메이션, 텍스쳐 등의 정보를 읽어와 렌더하는 객체
 * 팩토리 구조. Mesh를 생성한후 objmanager에서 관리
 * 사용자가 직접 접근하는 함수
@@ -16,9 +16,9 @@ namespace pooptube {
 
 	//@brief 메쉬의 리소스 타입정보를 가짐
 	enum RESOURCE_TYPE {
-		RESOURCE_NULL			= 0,
-		RESOURCE_FBX			= 1,
-		RESOURCE_HEIGHTMAP		= 2,
+		RESOURCE_NULL = 0,
+		RESOURCE_FBX = 1,
+		RESOURCE_HEIGHTMAP = 2,
 	};
 
 	class SkinnedMesh : public Node {
@@ -49,10 +49,6 @@ namespace pooptube {
 		Mesh*					mMesh = nullptr;
 
 		RESOURCE_TYPE			mResourceType = RESOURCE_NULL;
-
-		//@brief 
-		//각 객체에서도 디바이스를 물고 있도록 함
-		LPDIRECT3DDEVICE9		mDevice = nullptr;
 	};
 
 }

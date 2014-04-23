@@ -1,6 +1,6 @@
 /**
 * @author 양현찬
-* @brief 
+* @brief
 * 리소스를 로드하고 로드된 리소스는 헤쉬에 보관하는 객체
 * fbxsdk관련 객체들 관리
 * 싱글톤구조, 오브젝트 메니져에서 관리
@@ -25,6 +25,8 @@ namespace pooptube {
 
 		Mesh* LoadMeshFromFBX(const std::string& FilePath);
 		Mesh* LoadMeshFromHeightMap(const std::string& FilePath);
+
+		LPDIRECT3DTEXTURE9 LoadTexture(const std::wstring& FilePath);
 
 		void CalculateNormal(D3DXVECTOR3* pOut, D3DXVECTOR3* v0, D3DXVECTOR3* v1, D3DXVECTOR3* v2);
 
@@ -56,8 +58,9 @@ namespace pooptube {
 
 		//@brief
 		//로드된 fbxmesh정보를 쥐고있는 meshtable
-		std::map<std::string, Mesh*>	mFBXMeshTable;
-		std::map<std::string, Mesh*>	mHeightMapTable;
+		std::map<std::string, Mesh*>				mFBXMeshTable;
+		std::map<std::string, Mesh*>				mHeightMapTable;
+		std::map<std::wstring, LPDIRECT3DTEXTURE9>	mTextureTable;
 
 
 	};

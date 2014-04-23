@@ -160,6 +160,9 @@
     <Filter Include="ResourceManager">
       <UniqueIdentifier>{876b0372-cd86-4c8b-8a3e-cc8f1a738109}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nodes\SkyBox">
+      <UniqueIdentifier>{baf6d52c-1df6-452a-b849-c0d316509e55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -301,6 +304,9 @@
     <ClInclude Include="PacketHeader.h">
       <Filter>NetworkSystem</Filter>
     </ClInclude>
+    <ClInclude Include="SkyBox.h">
+      <Filter>Nodes\SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -408,6 +414,9 @@
     </ClCompile>
     <ClCompile Include="CircularBuffer.cpp">
       <Filter>Util\DataStructure</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyBox.cpp">
+      <Filter>Nodes\SkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ namespace pooptube {
 	class Camera;
 	class SkinnedMesh;
 	class CollisionBox;
+	class SkyBox;
 }
 
 class MainCharacter;
@@ -43,9 +44,11 @@ private:
 
 	std::shared_ptr<MainCharacter>	mCharacter = nullptr;
 
-	pooptube::SkinnedMesh*		mSkinnedMesh = nullptr;
+	pooptube::SkinnedMesh*			mSkinnedMesh = nullptr;
 
-	pooptube::SkinnedMesh*		mGround = nullptr;
+	pooptube::SkinnedMesh*			mGround = nullptr;
+
+	std::shared_ptr<pooptube::SkyBox>	mSkyBox = nullptr;
 
 	float				mTimeForFPS = 0.f;
 

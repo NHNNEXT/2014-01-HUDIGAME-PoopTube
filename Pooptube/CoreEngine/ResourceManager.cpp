@@ -181,7 +181,7 @@ namespace pooptube {
 					}
 				}
 			}
-				
+
 		}
 
 		return pNewMesh;
@@ -266,11 +266,11 @@ namespace pooptube {
 				// Z축 반전 구현해야함.
 				nIndex = (z * (col + 1)) + x;
 				//int nIndex2 = (row - z) * (col + 1) + x;
-				 
+
 				vertex[nIndex].position.x = mSize * x;
 				vertex[nIndex].position.z = mSize * z;
 				vertex[nIndex].position.y = (float)bitmapImage[nIndex * 3] * 0.005f;
-				
+
 				vertex[nIndex].color = D3DCOLOR_RGBA(255, 50, 255, 255);
 			}
 		}
@@ -286,12 +286,12 @@ namespace pooptube {
 				D3DXVECTOR3 normal = D3DXVECTOR3(0, 0, 0);
 
 				int nearVertices[6][3] = {
-					{ nIndex, nIndex - 1,			nIndex - nVtxT		},
-					{ nIndex, nIndex - nVtxT,		nIndex - nVtxT + 1	},
-					{ nIndex, nIndex - nVtxT + 1,	nIndex + 1			},
-					{ nIndex, nIndex + 1,			nIndex + nVtxT		},
-					{ nIndex, nIndex + nVtxT,		nIndex + nVtxT - 1	},
-					{ nIndex, nIndex + nVtxT - 1,	nIndex - 1			}
+					{ nIndex, nIndex - 1, nIndex - nVtxT },
+					{ nIndex, nIndex - nVtxT, nIndex - nVtxT + 1 },
+					{ nIndex, nIndex - nVtxT + 1, nIndex + 1 },
+					{ nIndex, nIndex + 1, nIndex + nVtxT },
+					{ nIndex, nIndex + nVtxT, nIndex + nVtxT - 1 },
+					{ nIndex, nIndex + nVtxT - 1, nIndex - 1 }
 				};
 
 				for (int k = 0; k < 6; ++k) {
@@ -303,14 +303,14 @@ namespace pooptube {
 					CalculateNormal(&temp, &v0, &v1, &v2);
 					normal += temp;
 				}
-				
+
 				D3DXVec3Normalize(&normal, &normal);
 
 				vertex[nIndex].normal = normal;
 				vertex[nIndex].normal.y *= -1.f;
 			}
 		}
-		
+
 		MESH_CUSTOM_INDEX* Index = pNewMesh->GetIndices();
 		nIndex = 0;
 		for (int z = 0; z < row; z++) {
@@ -319,7 +319,7 @@ namespace pooptube {
 				Index[nIndex].w1 = WORD((z + 1)*(col + 1) + x + 1);
 				Index[nIndex++].w2 = WORD((z + 1)*(col + 1) + x);
 
-				Index[nIndex].w0= WORD(z * (col + 1) + x);
+				Index[nIndex].w0 = WORD(z * (col + 1) + x);
 				Index[nIndex].w1 = WORD(z * (col + 1) + x + 1);
 				Index[nIndex++].w2 = WORD((z + 1)*(col + 1) + x + 1);
 			}
@@ -341,9 +341,19 @@ namespace pooptube {
 		*pOut = n;
 	}
 
+	LPDIRECT3DTEXTURE9 ResourceManager::LoadTexture(const std::wstring& FilePath) {
 
+		//map을 사용할 때 조심해야 할 부분
+		if (mTextureTable.find(FilePath) == mTextureTable.end()) {
+			LPDIRECT3DTEXTURE9 D3DTexture;
 
+			if (FAILED(D3DXCreateTextureFromFile(mDevice, FilePath.c_str(), &D3DTexture)))
+				return nullptr;
 
+			mTextureTable[FilePath] = D3DTexture;
+		}
 
+		return mTextureTable[FilePath];
+	}
 
 }
