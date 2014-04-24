@@ -148,8 +148,8 @@ namespace pooptube {
 
 	float HeightMap::GetHeight(float x, float z) const{
 		//폴리곤 사이즈에 맞게 변경
-		x /= 0.5f;
-		z /= 0.5f;
+		x /= mPolygonSize;
+		z /= mPolygonSize;
 
 		UINT mCol = mHeightMapData->GetColSize();
 		UINT mRow = mHeightMapData->GetRowSize();

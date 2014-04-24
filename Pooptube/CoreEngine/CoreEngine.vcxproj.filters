@@ -313,6 +313,9 @@
     <ClInclude Include="HeightMapData.h">
       <Filter>Nodes\HeightMap</Filter>
     </ClInclude>
+    <ClInclude Include="PooMath.h">
+      <Filter>Util\Ease</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -429,9 +432,6 @@
     </ClCompile>
     <ClCompile Include="HeightMapData.cpp">
       <Filter>Nodes\HeightMap</Filter>
-    </ClCompile>
-    <ClCompile Include="PooMath.h">
-      <Filter>Util\Ease</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
