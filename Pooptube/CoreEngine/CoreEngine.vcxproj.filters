@@ -142,9 +142,6 @@
     <Filter Include="Nodes\CollisionBox">
       <UniqueIdentifier>{0c19ec2f-46fc-4ade-9266-d452f00736e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Nodes\MeshData">
-      <UniqueIdentifier>{09442dfc-e403-44af-bbef-16fd323e1cb2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource\Json">
       <UniqueIdentifier>{db9de6e6-625d-4f23-b75a-5f1ce0c377ad}</UniqueIdentifier>
     </Filter>
@@ -294,9 +291,6 @@
     <ClInclude Include="CollisionBox.h">
       <Filter>Nodes\CollisionBox</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Nodes\MeshData</Filter>
-    </ClInclude>
     <ClInclude Include="ConsoleManager.h">
       <Filter>Util\ConsoleManager</Filter>
     </ClInclude>
@@ -311,6 +305,12 @@
       <Filter>Nodes\SkyBox</Filter>
     </ClInclude>
     <ClInclude Include="HeightMap.h">
+      <Filter>Nodes\HeightMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Nodes\SkinnedMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="HeightMapData.h">
       <Filter>Nodes\HeightMap</Filter>
     </ClInclude>
   </ItemGroup>
@@ -412,9 +412,6 @@
     <ClCompile Include="CollisionBox.cpp">
       <Filter>Nodes\CollisionBox</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Nodes\MeshData</Filter>
-    </ClCompile>
     <ClCompile Include="ConsoleManager.cpp">
       <Filter>Util\ConsoleManager</Filter>
     </ClCompile>
@@ -426,6 +423,15 @@
     </ClCompile>
     <ClCompile Include="HeightMap.cpp">
       <Filter>Nodes\HeightMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Nodes\SkinnedMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="HeightMapData.cpp">
+      <Filter>Nodes\HeightMap</Filter>
+    </ClCompile>
+    <ClCompile Include="PooMath.h">
+      <Filter>Util\Ease</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -75,10 +75,10 @@ namespace pooptube {
 // 			return 0.0f;
 // 
 // 		D3DXVECTOR3 v[3];
-// 		v[1].x = std::floor(x) + 1;
+// 		v[1].x = std::floor(x);
 // 		v[1].z = std::floor(z);
 // 		v[1].y = (float)GetHeightData(UINT(v[1].x), UINT(v[1].z));
-// 		v[2].x = std::floor(x);
+// 		v[2].x = std::floor(x) + 1;
 // 		v[2].z = std::floor(z) + 1;
 // 		v[2].y = (float)GetHeightData(UINT(v[2].x), UINT(v[2].z));
 // 
@@ -86,14 +86,15 @@ namespace pooptube {
 // 		D3DXVECTOR3 cVec;
 // 		if (x - std::floor(x) < z - std::floor(z)){
 // 			v[0].x = std::floor(x);
-// 			v[0].z = std::floor(z);
+// 			v[0].z = std::floor(z) + 1;
 // 			v[0].y = (float)GetHeightData(UINT(v[0].x), UINT(v[0].z));
 // 		}
 // 		else{
 // 			v[0].x = std::floor(x) + 1;
-// 			v[0].z = std::floor(z) + 1;
+// 			v[0].z = std::floor(z);
 // 			v[0].y = (float)GetHeightData(UINT(v[0].x), UINT(v[0].z));
 // 		}
+// 
 // 		D3DXVec3Cross(&cVec, &(v[1] - v[0]), &(v[2] - v[0]));
 // 		y = (((v[0].x - x) * cVec.x + (v[0].z - z) * cVec.z) / cVec.y) + v[0].y;
 // 

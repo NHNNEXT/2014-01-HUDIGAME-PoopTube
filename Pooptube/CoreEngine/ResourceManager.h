@@ -15,6 +15,7 @@
 namespace pooptube {
 
 	class Mesh;
+	class HeightMapData;
 
 	class ResourceManager : public Object {
 	public:
@@ -23,19 +24,16 @@ namespace pooptube {
 
 		static ResourceManager* GetInstance();
 
-		std::shared_ptr<Mesh> LoadMeshFromFBX(const std::string& FilePath);
-		std::shared_ptr<Mesh> LoadMeshFromHeightMap(const std::string& FilePath);
+		std::shared_ptr<Mesh>			LoadMeshFromFBX(const std::string& FilePath);
+		std::shared_ptr<HeightMapData>	LoadHeightMap(const std::string& FilePath);
 
 		LPDIRECT3DTEXTURE9 LoadTexture(const std::wstring& FilePath);
-
-		void CalculateNormal(D3DXVECTOR3* pOut, D3DXVECTOR3* v0, D3DXVECTOR3* v1, D3DXVECTOR3* v2);
 
 	protected:
 		bool _Init();
 		bool _FBXInit();
 
 		std::shared_ptr<Mesh> _LoadFBXFile(const std::string& FilePath);
-		std::shared_ptr<Mesh> _LoadHeightMap(const std::string& FilePath);
 
 		//@brief 
 		//임시로 매쉬만 뽑아내도록 만든 함수
@@ -58,9 +56,9 @@ namespace pooptube {
 
 		//@brief
 		//로드된 fbxmesh정보를 쥐고있는 meshtable
-		std::map<std::string, std::shared_ptr<Mesh>>	mFBXMeshTable;
-		std::map<std::string, std::shared_ptr<Mesh>>	mHeightMapTable;
-		std::map<std::wstring, LPDIRECT3DTEXTURE9>		mTextureTable;
+		std::map<std::string, std::shared_ptr<Mesh>>			mFBXMeshTable;
+		std::map<std::string, std::shared_ptr<HeightMapData>>	mHeightMapTable;
+		std::map<std::wstring, LPDIRECT3DTEXTURE9>				mTextureTable;
 
 
 	};

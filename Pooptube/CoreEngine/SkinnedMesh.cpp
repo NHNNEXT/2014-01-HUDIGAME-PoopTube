@@ -36,9 +36,6 @@ namespace pooptube {
 		if (ResourceType & RESOURCE_FBX) {
 			mMesh = ResourceManager::GetInstance()->LoadMeshFromFBX(MeshFilePath);
 		}
-		else if (ResourceType & RESOURCE_HEIGHTMAP) {
-			mMesh = ResourceManager::GetInstance()->LoadMeshFromHeightMap(MeshFilePath);
-		}
 
 		if (mMesh == nullptr)
 			return false;
@@ -77,9 +74,7 @@ namespace pooptube {
 	}
 
 	void SkinnedMesh::Render() {
-		if (mResourceType & RESOURCE_FBX) {
-			GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
-		}
+		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
 
 		//행렬의 연산은 node에서 상속받는다.
 		Node::Render();

@@ -8,6 +8,7 @@
 #include "ThirdPersonCamera.h"
 #include "MainCharacter.h"
 #include "SkyBox.h"
+#include "HeightMap.h"
 
 StageOne::StageOne() {
 }
@@ -77,7 +78,7 @@ bool StageOne::Init() {
 	mCamera_2 = pooptube::Camera::Create();
 
 
-	mGround = pooptube::SkinnedMesh::Create("test.bmp", pooptube::RESOURCE_HEIGHTMAP);
+	mGround = pooptube::HeightMap::Create("test.bmp");
 
 	testDummy = pooptube::CollisionBox::Create(pooptube::COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f);
 	testDummy->SetAxisLen(0.5, 0.5, 0.5);
