@@ -163,6 +163,9 @@
     <Filter Include="Nodes\SkyBox">
       <UniqueIdentifier>{baf6d52c-1df6-452a-b849-c0d316509e55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nodes\HeightMap">
+      <UniqueIdentifier>{c194e3a0-99fa-47c5-a248-1d7870d6997e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -307,6 +310,9 @@
     <ClInclude Include="SkyBox.h">
       <Filter>Nodes\SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="HeightMap.h">
+      <Filter>Nodes\HeightMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -417,6 +423,9 @@
     </ClCompile>
     <ClCompile Include="SkyBox.cpp">
       <Filter>Nodes\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="HeightMap.cpp">
+      <Filter>Nodes\HeightMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
