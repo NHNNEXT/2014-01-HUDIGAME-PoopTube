@@ -32,8 +32,8 @@ namespace pooptube {
 
 	//매번 리셋가능하도록 수정해야함
 	bool HeightMap::SetBuffer() {
-		int col = mHeightMapData->GetColSize();
-		int row = mHeightMapData->GetRowSize();
+		int col = mHeightMapData->GetColSize()-1;
+		int row = mHeightMapData->GetRowSize()-1;
 
 		mVertexCount = (col + 1) * (row + 1);
 		mIndexCount = col * row * 2;

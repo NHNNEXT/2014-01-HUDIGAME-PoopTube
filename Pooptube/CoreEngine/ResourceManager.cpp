@@ -248,7 +248,7 @@ namespace pooptube {
 			}
 				
 
-			std::shared_ptr<HeightMapData> pHeightMapData(HeightMapData::Create(row, col));
+			std::shared_ptr<HeightMapData> pHeightMapData(HeightMapData::Create(row+1, col+1));
 			pHeightMapData->SetHeightMapData(bitmapImage);
 
 			mHeightMapTable[FilePath] = pHeightMapData;
