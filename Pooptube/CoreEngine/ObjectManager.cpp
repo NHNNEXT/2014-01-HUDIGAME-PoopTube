@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "ObjectManager.h"
 
@@ -45,6 +45,6 @@ namespace pooptube {
 			object.reset();
 		}*/
 		mSharedObjectList.clear();
-		// clear¸¸ ÇØµµ ´Ù Áö¿öÁö´Â °Å °°Àºµ¥.. (shared_ptrÀÌ Áö¿ªº¯¼ö¶ó ÀÚµ¿À¸·Î ¼Ò¸êÀÚ È£Ãâ..)
+		// clearë§Œ í•´ë„ ë‹¤ ì§€ì›Œì§€ëŠ” ê±° ê°™ì€ë°.. (shared_ptrì´ ì§€ì—­ë³€ìˆ˜ë¼ ìë™ìœ¼ë¡œ ì†Œë©¸ì í˜¸ì¶œ..)
 	}
 }

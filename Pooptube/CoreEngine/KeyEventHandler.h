@@ -1,10 +1,10 @@
-
+ï»¿
 #pragma once
 
-#include "KeyEventDelegate.h"	// agebreak : Àü¹æ ¼±¾ğÀ¸·Î ´ëÄ¡ÇÒ ¼ö ÀÖÀ½. 
+#include "KeyEventDelegate.h"	// agebreak : ì „ë°© ì„ ì–¸ìœ¼ë¡œ ëŒ€ì¹˜í•  ìˆ˜ ìˆìŒ. 
 
 namespace pooptube {
-	class KeyEventHandler : public Object {		// agebreak : ÀÌ Object Å¬·¡½º´Â ¹¹±æ·¡ »ó¼ÓÀ» ¹Ş´Â°¡..?
+	class KeyEventHandler : public Object {		// agebreak : ì´ Object í´ë˜ìŠ¤ëŠ” ë­ê¸¸ë˜ ìƒì†ì„ ë°›ëŠ”ê°€..?
 	public:
 		KeyEventHandler();
 		virtual ~KeyEventHandler();

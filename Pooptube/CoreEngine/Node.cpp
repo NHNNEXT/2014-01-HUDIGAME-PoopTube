@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "Node.h"
 
@@ -28,7 +28,7 @@ namespace pooptube {
 	}
 
 	void Node::Render() {
-		// TODO: Çà·Ä °è»ê
+		// TODO: í–‰ë ¬ ê³„ì‚°
 		D3DXMATRIXA16	MatWorld;
 		D3DXMATRIXA16	MatTrans;
 		D3DXMATRIXA16	MatScale;
@@ -36,13 +36,13 @@ namespace pooptube {
 		
 		D3DXMatrixIdentity(&MatWorld);
 
-		//¿À¸¥¼Õ ÁÂÇ¥°è
-		//ÇÁ·ĞÆ® ¹éÅÍÀÇ °ª¿¡ µû¶ó È¸Àü
+		//ì˜¤ë¥¸ì† ì¢Œí‘œê³„
+		//í”„ë¡ íŠ¸ ë°±í„°ì˜ ê°’ì— ë”°ë¼ íšŒì „
 		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &mFrontPoint, &mUpVec);
-		//ºäÇà·ÄÀ» °¡Á®¿Ô±â ¶§¹®¿¡ ·ÎÅ×ÀÌ¼ÇÇÑ °ÍÃ³·³ Çà·ÄÀ» º¯È¯ÇÒ ÇÊ¿ä°¡ ÀÖ´Ù.
-		//ºäÇà·ÄÀº ÀÚ½ÅÀÌ ¿òÁ÷ÀÌ´Â °ÍÀÌ ¾Æ´Ñ ÀÚ½ÅÀ» Á¦¿ÜÇÑ ¸ğµç ÁÂÇ¥µéÀÌ ¿òÁ÷ÀÌµµ·Ï µÇ¾îÀÖ´Â Çà·ÄÀÌ´Ù.
-		//(Ä«¸Ş¶óÀÇ ÁÂÇ¥°è¿¡ ¸ÂÃçÁ®ÀÖ´Ù)
-		//ºäÇà·ÄÀÇ ¿ªÇà·ÄÀº transposeÇØÁØ ÇüÅÂ¿Í µ¿ÀÏÇÏ´Ù.
+		//ë·°í–‰ë ¬ì„ ê°€ì ¸ì™”ê¸° ë•Œë¬¸ì— ë¡œí…Œì´ì…˜í•œ ê²ƒì²˜ëŸ¼ í–‰ë ¬ì„ ë³€í™˜í•  í•„ìš”ê°€ ìˆë‹¤.
+		//ë·°í–‰ë ¬ì€ ìì‹ ì´ ì›€ì§ì´ëŠ” ê²ƒì´ ì•„ë‹Œ ìì‹ ì„ ì œì™¸í•œ ëª¨ë“  ì¢Œí‘œë“¤ì´ ì›€ì§ì´ë„ë¡ ë˜ì–´ìˆëŠ” í–‰ë ¬ì´ë‹¤.
+		//(ì¹´ë©”ë¼ì˜ ì¢Œí‘œê³„ì— ë§ì¶°ì ¸ìˆë‹¤)
+		//ë·°í–‰ë ¬ì˜ ì—­í–‰ë ¬ì€ transposeí•´ì¤€ í˜•íƒœì™€ ë™ì¼í•˜ë‹¤.
 		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
 		D3DXMatrixTranspose(&MatRotate, &MatRotate);
 
@@ -149,7 +149,7 @@ namespace pooptube {
 	D3DXVECTOR3 Node::GetFrontVector() {
 		D3DXVECTOR3 FrontVec = mFrontPoint - mPosition;
 		D3DXVec3Normalize(&FrontVec, &FrontVec);
-		//yÃàÀ» Á×¿©¹ö¸²
+		//yì¶•ì„ ì£½ì—¬ë²„ë¦¼
 		FrontVec.y = 0.f;
 		return FrontVec;
 	}

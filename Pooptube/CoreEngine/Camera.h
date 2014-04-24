@@ -1,8 +1,8 @@
-/**
-* @author ¾çÇöÂù
+ï»¿/**
+* @author ì–‘í˜„ì°¬
 * @brief
-* ÇÁ·ÎÁ§¼ÇÀ» ´ã´çÇÏ´Â Ä«¸Ş¶ó.
-* µğÆúÆ®·Î perspective projectionÀ» ÇÑ´Ù.
+* í”„ë¡œì ì…˜ì„ ë‹´ë‹¹í•˜ëŠ” ì¹´ë©”ë¼.
+* ë””í´íŠ¸ë¡œ perspective projectionì„ í•œë‹¤.
 * @date 2014/04/22
 * @file Camera.h
 */

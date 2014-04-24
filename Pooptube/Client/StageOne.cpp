@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "StageOne.h"
 #include "Application.h"
 #include "ObjectManager.h"
@@ -31,8 +31,8 @@ StageOne* StageOne::Create() {
 }
 
 bool StageOne::Init() {
-	//ÅÂ½ºÆ®ÇÏ±âÀ§ÇØ ¼³Á¤µéÀ» ²Ù°Ü³Ö¾úÀ½
-	//¶ËÆ©ºê ¸Ô°í½Í´Ù.
+	//íƒœìŠ¤íŠ¸í•˜ê¸°ìœ„í•´ ì„¤ì •ë“¤ì„ ê¾¸ê²¨ë„£ì—ˆìŒ
+	//ë˜¥íŠœë¸Œ ë¨¹ê³ ì‹¶ë‹¤.
 	EnableKeyEvent();
 	EnableMouseEvent();
 
@@ -49,7 +49,7 @@ bool StageOne::Init() {
 	D3DXVECTOR3 vecDir;
 	D3DLIGHT9 light;
 
-	//±¤¿øÀÇ À§Ä¡
+	//ê´‘ì›ì˜ ìœ„ì¹˜
 	vecDir = D3DXVECTOR3(10.f,
 		10.f,
 		-10.f);
@@ -63,7 +63,7 @@ bool StageOne::Init() {
 	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
 	light.Range = 1000.0f;
 
-	//µð¹ÙÀÌ½º¿¡ ±¤¿øÀ» ¼³Á¤ÇÕ´Ï´Ù.
+	//ë””ë°”ì´ìŠ¤ì— ê´‘ì›ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 	mDevice->SetLight(0, &light);
 	mDevice->LightEnable(0, TRUE);
 

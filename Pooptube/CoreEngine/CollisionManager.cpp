@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "CollisionManager.h"
 #include "CollisionBox.h"
 
@@ -51,7 +51,7 @@ namespace pooptube {
 
 	CollisionManager::~CollisionManager()
 	{
-		//ÀÌ°Íµµ ¼ö»óÇÔ
+		//ì´ê²ƒë„ ìˆ˜ìƒí•¨
 		//mCollisionBoxList.clear( );
 	}
 

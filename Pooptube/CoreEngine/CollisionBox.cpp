@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Application.h"
 #include "CollisionBox.h"
 #include "CollisionManager.h"
@@ -34,7 +34,7 @@ namespace pooptube {
 		if( pCollisionBox->Init() ) {
 			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
 		}
-		//È¤½Ã ¸ô¶ó¼­ ¿¡·¯Ã³¸® Ãß°¡
+		//í˜¹ì‹œ ëª°ë¼ì„œ ì—ëŸ¬ì²˜ë¦¬ ì¶”ê°€
 		else 
 			return nullptr;
 

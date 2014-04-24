@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -19,7 +19,7 @@ namespace pooptube {
 			mScene = pScene;
 		} else {
 			//mScene.reset(pScene);
-			// agebreak : ObjectManager¿¡¼­ Remove ½ÃÄÑ ¹ö¸®¸é? ¾ÀÀÌ Ã¼ÀÎÁöµÇ¸é ÀÌÀü ¾ÀÀº ¾î¶»°Ô ÇÏ³ª?? A -> B -> A ·Î ¾ÀÀ» Ã¼ÀÎÁö ÇßÀ»°æ¿ì.. ÀüºÎ RemoveObject µÇÁö ¾Ê³ª??
+			// agebreak : ObjectManagerì—ì„œ Remove ì‹œì¼œ ë²„ë¦¬ë©´? ì”¬ì´ ì²´ì¸ì§€ë˜ë©´ ì´ì „ ì”¬ì€ ì–´ë–»ê²Œ í•˜ë‚˜?? A -> B -> A ë¡œ ì”¬ì„ ì²´ì¸ì§€ í–ˆì„ê²½ìš°.. ì „ë¶€ RemoveObject ë˜ì§€ ì•Šë‚˜??
 			ObjectManager::GetInstance()->RemoveObject( mScene );
 			mScene = pScene;
 		}
@@ -27,7 +27,7 @@ namespace pooptube {
 
 	bool SceneManager::Init( HWND hwnd, int width, int height, bool isWindowed ) {
 
-		// agebreak : ¾Æ·¡¿Í °°ÀÌ ·»´õ·¯¸¦ ¹ÝÈ¯ÇÏ´Â ÇüÅÂ°¡ ´õ ¸í¹éÇÏ°í ÁÁ´Ù. 
+		// agebreak : ì•„ëž˜ì™€ ê°™ì´ ë Œë”ëŸ¬ë¥¼ ë°˜í™˜í•˜ëŠ” í˜•íƒœê°€ ë” ëª…ë°±í•˜ê³  ì¢‹ë‹¤. 
 		mRenderer = _CreateRenderer(hwnd, width, height, isWindowed);
 
 		return mRenderer ? true : false;
@@ -52,9 +52,9 @@ namespace pooptube {
 	D3D9Renderer* SceneManager::_CreateRenderer(HWND hwnd, int width, int height, bool isWindowed) {
 		D3D9Renderer* newRenderer = new D3D9Renderer();
 
-		// agebreak : »ý¼ºµÈ ¿ÀºêÁ§Æ®°¡ ¹«Á¶°Ç, ¿ÀºêÁ§Æ® ¸Å´ÏÀú¿¡ µé¾î°£´Ù¸é, ¿ÀºêÁ§Æ®ÀÇ »ý¼ºÀÚ¿Í ¼Ò¸êÀÚ¿¡ ³Ö´Â°ÍÀÌ ÁÁÁö ¾Ê³ª?
-		// »ý¼º½Ã¿¡ ÀÚµ¿À¸·Î ¿ÀºêÁ§Æ® ¸Å´ÏÀú¿¡ µé¾î°¡´Âµ¥, ±×·³ Áß°£¿¡ Á¦°ÅÇÒ¶§´Â ¾î¶»°Ô ÇØ¾ß ÇÏ´Â°¡?
-		// Áß°£¿¡ Á¦°ÅÇÒ¶§´Â ²À delete ÇÏ±âÀü¿¡ RemoveObject()¸¦ È£ÃâÇØ¾ß¸¸ µÇ´Â ¹®Á¦°¡ »ý±âÁö ¾Ê³ª?
+		// agebreak : ìƒì„±ëœ ì˜¤ë¸Œì íŠ¸ê°€ ë¬´ì¡°ê±´, ì˜¤ë¸Œì íŠ¸ ë§¤ë‹ˆì €ì— ë“¤ì–´ê°„ë‹¤ë©´, ì˜¤ë¸Œì íŠ¸ì˜ ìƒì„±ìžì™€ ì†Œë©¸ìžì— ë„£ëŠ”ê²ƒì´ ì¢‹ì§€ ì•Šë‚˜?
+		// ìƒì„±ì‹œì— ìžë™ìœ¼ë¡œ ì˜¤ë¸Œì íŠ¸ ë§¤ë‹ˆì €ì— ë“¤ì–´ê°€ëŠ”ë°, ê·¸ëŸ¼ ì¤‘ê°„ì— ì œê±°í• ë•ŒëŠ” ì–´ë–»ê²Œ í•´ì•¼ í•˜ëŠ”ê°€?
+		// ì¤‘ê°„ì— ì œê±°í• ë•ŒëŠ” ê¼­ delete í•˜ê¸°ì „ì— RemoveObject()ë¥¼ í˜¸ì¶œí•´ì•¼ë§Œ ë˜ëŠ” ë¬¸ì œê°€ ìƒê¸°ì§€ ì•Šë‚˜?
 		if (newRenderer->Init(hwnd, width, height, isWindowed) == true) {
 			ObjectManager::GetInstance()->AddObject( newRenderer );
 		} else {

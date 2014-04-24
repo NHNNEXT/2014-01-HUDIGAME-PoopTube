@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "Camera.h"
 
@@ -22,7 +22,7 @@ namespace pooptube {
 	bool Camera::Init() {
 		Node::Init();
 
-		//¾Æ·¡ µÎÇÔ¼öÀÇ Àû¿ë¼ø¼­°¡ °íÁ¤µÈ´Ù. ÇØ°á¹æ¹ýÀ» Ã£¾Æº¸ÀÚ
+		//ì•„ëž˜ ë‘í•¨ìˆ˜ì˜ ì ìš©ìˆœì„œê°€ ê³ ì •ëœë‹¤. í•´ê²°ë°©ë²•ì„ ì°¾ì•„ë³´ìž
 		SetPosition(D3DXVECTOR3(0.f, 3.f, 10.f));
 		SetFrontPoint(D3DXVECTOR3(0.f, 0.f, 0.f));
 
@@ -32,15 +32,15 @@ namespace pooptube {
 	void Camera::Render() {
 		Node::Render();
 
-		//ºäÇà·ÄÀ» »ý¼º
+		//ë·°í–‰ë ¬ì„ ìƒì„±
 		D3DXMatrixLookAtLH(&mMatView, &Node::GetPosition(), &Node::GetFrontPoint(), &Node::GetUpVec());
-		//»ý¼ºµÈ ºäÇà·ÄÀ» Àû¿ë
+		//ìƒì„±ëœ ë·°í–‰ë ¬ì„ ì ìš©
 		GetDevice()->SetTransform(D3DTS_VIEW, &mMatView);
 
-		//ÇÁ·ÎÁ§¼Ç ¼³Á¤
-		//perspectiveÇÁ·ÎÁ§¼Ç
+		//í”„ë¡œì ì…˜ ì„¤ì •
+		//perspectiveí”„ë¡œì ì…˜
 		D3DXMatrixPerspectiveFovLH(&mMatProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
-		//»ý¼ºÇÑ ÇÁ·ÎÁ§¼Ç Á¤º¸¸¦ µð¹ÙÀÌ½º¸¦ ÅëÇØ ¼³Á¤
+		//ìƒì„±í•œ í”„ë¡œì ì…˜ ì •ë³´ë¥¼ ë””ë°”ì´ìŠ¤ë¥¼ í†µí•´ ì„¤ì •
 		GetDevice()->SetTransform(D3DTS_PROJECTION, &mMatProj);
 	}
 

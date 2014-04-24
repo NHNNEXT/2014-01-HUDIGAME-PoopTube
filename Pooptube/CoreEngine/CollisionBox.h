@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Node.h"
 
 namespace pooptube {
@@ -53,11 +53,11 @@ namespace pooptube {
 		const D3DXVECTOR3 GetSpeed() const { return mSpeed; }
 
 	private:
-		COLLISION_TYPE mCollisionType;	// Ãæµ¹ Á¾·ù
-		float mBound;		// ¹İ¹ß°è¼ö
-		float mMass;		// Áú·®
-		D3DXVECTOR3 mSpeed;	// ¼Óµµ
+		COLLISION_TYPE mCollisionType;	// ì¶©ëŒ ì¢…ë¥˜
+		float mBound;		// ë°˜ë°œê³„ìˆ˜
+		float mMass;		// ì§ˆëŸ‰
+		D3DXVECTOR3 mSpeed;	// ì†ë„
 
-		float mAxisLen[3];			// »óÀÚÀÇ ¼¼ ÃàÀÇ ±æÀÌ Àı¹İ.
+		float mAxisLen[3];			// ìƒìì˜ ì„¸ ì¶•ì˜ ê¸¸ì´ ì ˆë°˜.
 	};
 }

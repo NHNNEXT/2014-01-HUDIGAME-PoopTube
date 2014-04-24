@@ -1,7 +1,7 @@
-/**
-* @author ¾çÇöÂù
+ï»¿/**
+* @author ì–‘í˜„ì°¬
 * @brief
-* 3ÀÎÄª Ä«¸Ş¶ó
+* 3ì¸ì¹­ ì¹´ë©”ë¼
 * @date 2014/04/22
 * @file Camera.h
 */
@@ -15,8 +15,8 @@ namespace pooptube {
 		virtual ~ThirdPersonCamera();
 
 		//@param Target 
-		//@brief node¿¡¼­ »ó¼ÓµÈ ¸ğµç °´Ã¼¿¡ »ç¿ë°¡´É
-		//@return »ı¼ºÇÑ 3ÀÎÄª Ä«¸Ş¶ó ¹İÈ¯
+		//@brief nodeì—ì„œ ìƒì†ëœ ëª¨ë“  ê°ì²´ì— ì‚¬ìš©ê°€ëŠ¥
+		//@return ìƒì„±í•œ 3ì¸ì¹­ ì¹´ë©”ë¼ ë°˜í™˜
 		static std::shared_ptr<ThirdPersonCamera> Create(std::shared_ptr<Node> Target);
 
 		virtual bool Init(std::shared_ptr<Node> Target);

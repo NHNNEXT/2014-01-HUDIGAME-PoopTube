@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "HeightMap.h"
 #include "Mesh.h"
 #include "ResourceManager.h"
@@ -30,7 +30,7 @@ namespace pooptube {
 		return true;
 	}
 
-	//¸Å¹ø ¸®¼Â°¡´ÉÇÏµµ·Ï ¼öÁ¤ÇØ¾ßÇÔ
+	//ë§¤ë²ˆ ë¦¬ì…‹ê°€ëŠ¥í•˜ë„ë¡ ìˆ˜ì •í•´ì•¼í•¨
 	bool HeightMap::SetBuffer() {
 		int col = mHeightMapData->GetColSize()-1;
 		int row = mHeightMapData->GetRowSize()-1;
@@ -44,7 +44,7 @@ namespace pooptube {
 		//int imageSize = (col + 1) * (row + 1) * 3 - 3;
 		for (int z = 0; z < row + 1; ++z) {
 			for (int x = 0; x < col + 1; ++x) {
-				// ZÃà ¹ÝÀü ±¸ÇöÇØ¾ßÇÔ.
+				// Zì¶• ë°˜ì „ êµ¬í˜„í•´ì•¼í•¨.
 				nIndex = (z * (col + 1)) + x;
 				//int nIndex2 = (row - z) * (col + 1) + x;
 
@@ -110,7 +110,7 @@ namespace pooptube {
 // 		mVertexBuffer->Release();
 // 		mIndexBuffer->Release();
 
-		//¹öÅÃ½º ¹öÆÛ »ý¼º
+		//ë²„íƒìŠ¤ ë²„í¼ ìƒì„±
 		if (GetDevice()->CreateVertexBuffer(mVertexCount*sizeof(MESH_CUSTOM_VERTEX),
 			0, D3DFVF_CUSTOMVERTEX,
 			D3DPOOL_DEFAULT, &mVertexBuffer, NULL) < 0)
@@ -118,22 +118,22 @@ namespace pooptube {
 			return false;
 		}
 
-		//¶ô°ú ¾ð¶ôÀ» ÃÖ´ëÇÑ ÃâÀÏ ¼ö ÀÖ´Â ¹æ¹ýÀ» ¿¬±¸ÇØ¾ßÇÔ
+		//ë½ê³¼ ì–¸ë½ì„ ìµœëŒ€í•œ ì¶œì¼ ìˆ˜ ìžˆëŠ” ë°©ë²•ì„ ì—°êµ¬í•´ì•¼í•¨
 		VOID* pVertices;
 		if (mVertexBuffer->Lock(0, mVertexCount*sizeof(MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
 			return nullptr;
 		memcpy(pVertices, vertex, mVertexCount*sizeof(MESH_CUSTOM_VERTEX));
 		mVertexBuffer->Unlock();
 
-		//ÀÎµ¦½º ¹öÆÛ »ý¼º
+		//ì¸ë±ìŠ¤ ë²„í¼ ìƒì„±
 		if (GetDevice()->CreateIndexBuffer(mIndexCount*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX16,
 			D3DPOOL_DEFAULT, &mIndexBuffer, NULL) < 0)
 		{
 			return false;
 		}
 
-		/// ÀÎµ¦½º¹öÆÛ¸¦ °ªÀ¸·Î Ã¤¿î´Ù. 
-		/// ÀÎµ¦½º¹öÆÛÀÇ Lock()ÇÔ¼ö¸¦ È£ÃâÇÏ¿© Æ÷ÀÎÅÍ¸¦ ¾ò¾î¿Â´Ù.
+		/// ì¸ë±ìŠ¤ë²„í¼ë¥¼ ê°’ìœ¼ë¡œ ì±„ìš´ë‹¤. 
+		/// ì¸ë±ìŠ¤ë²„í¼ì˜ Lock()í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ í¬ì¸í„°ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 		VOID* pIndices;
 		if (mIndexBuffer->Lock(0, mIndexCount*sizeof(MESH_CUSTOM_INDEX), (void**)&pIndices, 0) < 0)
 			return false;
@@ -147,7 +147,7 @@ namespace pooptube {
 	}
 
 	float HeightMap::GetHeight(float x, float z) const{
-		//Æú¸®°ï »çÀÌÁî¿¡ ¸Â°Ô º¯°æ
+		//í´ë¦¬ê³¤ ì‚¬ì´ì¦ˆì— ë§žê²Œ ë³€ê²½
 		x /= mPolygonSize;
 		z /= mPolygonSize;
 
@@ -188,13 +188,13 @@ namespace pooptube {
 	void HeightMap::Render() {
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
 
-		//Çà·ÄÀÇ ¿¬»êÀº node¿¡¼­ »ó¼Ó¹Þ´Â´Ù.
+		//í–‰ë ¬ì˜ ì—°ì‚°ì€ nodeì—ì„œ ìƒì†ë°›ëŠ”ë‹¤.
 		Node::Render();
 
-		//µð¹ÙÀÌ½º¿¡ ¹öÅØ½º¹öÆÛ¸¦ Àü´Þ
+		//ë””ë°”ì´ìŠ¤ì— ë²„í…ìŠ¤ë²„í¼ë¥¼ ì „ë‹¬
 		GetDevice()->SetStreamSource(0, mVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
 
-		//ÀÎµ¦½º ¼³Á¤
+		//ì¸ë±ìŠ¤ ì„¤ì •
 		GetDevice()->SetIndices(mIndexBuffer);
 
 		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mVertexCount, 0, mIndexCount);

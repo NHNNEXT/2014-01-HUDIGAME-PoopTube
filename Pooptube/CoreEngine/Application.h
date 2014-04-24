@@ -1,9 +1,9 @@
-/**
-* @author ¾çÇöÂù
+ï»¿/**
+* @author ì–‘í˜„ì°¬
 * @brief
-* ÇÁ·¹ÀÓ¿öÅ©¸¦ ÃÊ±âÈ­ÇÏ°í ±âº»ÀûÀÎ ±â´ÉÀ» ¼öÇàÇÏ´Â °´Ã¼
-* À©µµ¿ì ÇÁ·¹ÀÓ, ·»´õ·¯, ¾À¸Å´ÏÀú »ý¼º ¹× °ü¸®¸¦ ¼öÇàÇÑ´Ù.
-* ÇØ´ç ÇÁ·¹ÀÓ¿öÅ©¸¦ »ç¿ëÇÏ±â À§ÇØ¼­´Â ¾Æ·¡ ½Ì±ÛÅæ°´Ã¼¸¦ initÇØÁÖ¾î¾ß ÇÑ´Ù.
+* í”„ë ˆìž„ì›Œí¬ë¥¼ ì´ˆê¸°í™”í•˜ê³  ê¸°ë³¸ì ì¸ ê¸°ëŠ¥ì„ ìˆ˜í–‰í•˜ëŠ” ê°ì²´
+* ìœˆë„ìš° í”„ë ˆìž„, ë Œë”ëŸ¬, ì”¬ë§¤ë‹ˆì € ìƒì„± ë° ê´€ë¦¬ë¥¼ ìˆ˜í–‰í•œë‹¤.
+* í•´ë‹¹ í”„ë ˆìž„ì›Œí¬ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ì„œëŠ” ì•„ëž˜ ì‹±ê¸€í†¤ê°ì²´ë¥¼ inití•´ì£¼ì–´ì•¼ í•œë‹¤.
 * @date 2014/04/20
 * @file Application.h
 */
@@ -18,8 +18,8 @@
 namespace pooptube {
 
 	//@brief 
-	//D3DXMATRIXA16»ç¿ë¿¡ ´ëÇØ¼­ ÃÖÀûÈ­µÈ ¸Þ¸ð¸® ÇÒ´çÀ» À§ÇÑ ¼³Á¤
-	//ÀÚ¼¼ÇÑ »çÇ×Àº À§Å°È®ÀÎ
+	//D3DXMATRIXA16ì‚¬ìš©ì— ëŒ€í•´ì„œ ìµœì í™”ëœ ë©”ëª¨ë¦¬ í• ë‹¹ì„ ìœ„í•œ ì„¤ì •
+	//ìžì„¸í•œ ì‚¬í•­ì€ ìœ„í‚¤í™•ì¸
 	const size_t POOPTUBE_ALIGNMENT_SIZE = 16;
 
 	class Application : public Object {

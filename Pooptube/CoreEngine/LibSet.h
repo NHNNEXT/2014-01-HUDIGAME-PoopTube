@@ -1,9 +1,9 @@
-
+ï»¿
 #pragma once
 
-#pragma comment(lib, "winmm.lib") // timeGetTime Áö¿ì¸é ÇÊ¿ä¾øÀ»°É ¾Æ¸¶ chrono·Î ¹Ù²Ù¸é »èÁ¦ÇÕ½Ã´Ù
+#pragma comment(lib, "winmm.lib") // timeGetTime ì§€ìš°ë©´ í•„ìš”ì—†ì„ê±¸ ì•„ë§ˆ chronoë¡œ ë°”ê¾¸ë©´ ì‚­ì œí•©ì‹œë‹¤
 
-#pragma comment(lib, "ws2_32.lib") // À©¼Ó ¶óÀÌºê·¯¸®
+#pragma comment(lib, "ws2_32.lib") // ìœˆì† ë¼ì´ë¸ŒëŸ¬ë¦¬
 
 // d3d
 //#pragma comment(lib, "C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86\\d3d9.lib")

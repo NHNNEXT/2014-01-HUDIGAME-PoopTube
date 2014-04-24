@@ -1,8 +1,8 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 
 namespace pooptube {
 
-	//¹ö±×ÀÖÀ» ¼ö ÀÖÀ½
+	//ë²„ê·¸ìˆì„ ìˆ˜ ìˆìŒ
 	void CalculateNormal(D3DXVECTOR3* pOut, D3DXVECTOR3* v0, D3DXVECTOR3* v1, D3DXVECTOR3* v2) {
 		D3DXVECTOR3 n;
 		D3DXVECTOR3 A = *v2 - *v0;

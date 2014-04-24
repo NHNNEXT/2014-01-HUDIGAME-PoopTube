@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "ResourceManager.h"
 #include "Mesh.h"
@@ -42,18 +42,18 @@ namespace pooptube {
 	}
 
 	bool ResourceManager::_FBXInit() {
-		//sdk¿¡¼­ Á¦°øÇÏ´Â fbx¸Ş´ÏÁ®
+		//sdkì—ì„œ ì œê³µí•˜ëŠ” fbxë©”ë‹ˆì ¸
 		mManager = FbxManager::Create();
 		if (!mManager)
 			return false;
 
-		//import¿Í export ¼¼ÆÃÀ» °ü¸®ÇÏ´Â fbxiosettingÀ» ¸¸µç´Ù
+		//importì™€ export ì„¸íŒ…ì„ ê´€ë¦¬í•˜ëŠ” fbxiosettingì„ ë§Œë“ ë‹¤
 		FbxIOSettings* ios = FbxIOSettings::Create(mManager, IOSROOT);
 		if (!ios)
 			return false;
 		mManager->SetIOSettings(ios);
 
-		//ÇÃ·¯±×ÀÎ Á¤º¸¸¦ ¹Ş¾Æ¿É´Ï´Ù. fbxsdk¿¡ ºÙ¿©¼­ »ç¿ëÇÒ ¼ö ÀÖ´Â ÇÃ·¯±×ÀÎÀÌ ÀÖ½À´Ï´Ù.
+		//í”ŒëŸ¬ê·¸ì¸ ì •ë³´ë¥¼ ë°›ì•„ì˜µë‹ˆë‹¤. fbxsdkì— ë¶™ì—¬ì„œ ì‚¬ìš©í•  ìˆ˜ ìˆëŠ” í”ŒëŸ¬ê·¸ì¸ì´ ìˆìŠµë‹ˆë‹¤.
 		FbxString lPath = FbxGetApplicationDirectory();
 		mManager->LoadPluginsDirectory(lPath.Buffer());
 
@@ -63,7 +63,7 @@ namespace pooptube {
 
 	std::shared_ptr<Mesh> ResourceManager::LoadMeshFromFBX(const std::string& FilePath) {
 
-		//mapÀ» »ç¿ëÇÒ ¶§ Á¶½ÉÇØ¾ß ÇÒ ºÎºĞ
+		//mapì„ ì‚¬ìš©í•  ë•Œ ì¡°ì‹¬í•´ì•¼ í•  ë¶€ë¶„
 		if (mFBXMeshTable.find(FilePath) == mFBXMeshTable.end()) {
 			mFBXMeshTable[FilePath] = _LoadFBXFile(FilePath);
 		}
@@ -75,7 +75,7 @@ namespace pooptube {
 		int lFileFormat = -1;
 		FbxImporter* pImporter = nullptr;
 
-		// importer¸¦ »ı¼ºÇÕ´Ï´Ù.
+		// importerë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
 		pImporter = FbxImporter::Create(mManager, "");
 		if (!mManager->GetIOPluginRegistry()->DetectReaderFileFormat(FilePath.c_str(), lFileFormat)) {
 			// Unrecognizable file format. Try to fall back to FbxImporter::eFBX_BINARY
@@ -87,7 +87,7 @@ namespace pooptube {
 			//if (!pImporter->Initialize(pFileName, -1, mManager->GetIOSettings()))
 			return nullptr;
 
-		//fbxsceneÀ» ¸¸µì´Ï´Ù.
+		//fbxsceneì„ ë§Œë“­ë‹ˆë‹¤.
 		FbxScene* pScene = FbxScene::Create(mManager, FilePath.c_str());
 		if (!pScene)
 			return nullptr;
@@ -128,18 +128,18 @@ namespace pooptube {
 				FbxVector4* pVertices = pMesh->GetControlPoints();
 				const int lVertexCount = pMesh->GetControlPointsCount();
 
-				// 0ÀÌ¸é ¿Ö±×·Á
+				// 0ì´ë©´ ì™œê·¸ë ¤
 				if (lVertexCount == 0)
 					return nullptr;
 
 				int countVertex = 0;
-				//fbx¸Å½¬ »ı¼º
+				//fbxë§¤ì‰¬ ìƒì„±
 				pNewMesh = Mesh::Create(lVertexCount, pMesh->GetPolygonCount());
 
 				for (int j = 0; j < pMesh->GetPolygonCount(); j++) {
 					int iNumVertices = pMesh->GetPolygonSize(j);
 
-					//´ëÃæÃ³¸®
+					//ëŒ€ì¶©ì²˜ë¦¬
 					if (iNumVertices != 3)
 						return nullptr;
 
@@ -159,7 +159,7 @@ namespace pooptube {
 						vertex[iControlPointIndex].normal.y = (float)normal[1];
 						vertex[iControlPointIndex].normal.z = (float)normal[2];
 
-						//ÀÏ´Ü »öÀº ÀÓÀÇ·Î ÁöÁ¤
+						//ì¼ë‹¨ ìƒ‰ì€ ì„ì˜ë¡œ ì§€ì •
 						vertex[iControlPointIndex].color = 0xff00ff00;
 
 						countVertex++;
@@ -189,7 +189,7 @@ namespace pooptube {
 	}
 
 	std::shared_ptr<HeightMapData> ResourceManager::LoadHeightMap(const std::string& FilePath) {
-		//mapÀ» »ç¿ëÇÒ ¶§ Á¶½ÉÇØ¾ß ÇÒ ºÎºĞ
+		//mapì„ ì‚¬ìš©í•  ë•Œ ì¡°ì‹¬í•´ì•¼ í•  ë¶€ë¶„
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 
 			FILE* filePtr;
@@ -259,7 +259,7 @@ namespace pooptube {
 
 	LPDIRECT3DTEXTURE9 ResourceManager::LoadTexture(const std::wstring& FilePath) {
 
-		//mapÀ» »ç¿ëÇÒ ¶§ Á¶½ÉÇØ¾ß ÇÒ ºÎºĞ
+		//mapì„ ì‚¬ìš©í•  ë•Œ ì¡°ì‹¬í•´ì•¼ í•  ë¶€ë¶„
 		if (mTextureTable.find(FilePath) == mTextureTable.end()) {
 			LPDIRECT3DTEXTURE9 D3DTexture;
 

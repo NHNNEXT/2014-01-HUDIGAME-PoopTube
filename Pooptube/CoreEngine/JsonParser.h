@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 
 #include "stdafx.h"
-#include "../Library/JsonCpp/include/json/json.h"	// agebreak : °æ·Î´Â ¼Ó¼º¿¡¼­ ³Ö°í, ¿©±â¼­´Â ±×³É Çì´õ ÆÄÀÏ¸¸ ÀÖ´Â°Ô ÁÁÀ½
+#include "../Library/JsonCpp/include/json/json.h"	// agebreak : ê²½ë¡œëŠ” ì†ì„±ì—ì„œ ë„£ê³ , ì—¬ê¸°ì„œëŠ” ê·¸ëƒ¥ í—¤ë” íŒŒì¼ë§Œ ìˆëŠ”ê²Œ ì¢‹ìŒ
 
 namespace pooptube {
 	class JsonParser {
@@ -19,7 +19,7 @@ namespace pooptube {
 		void JsonToCString();
 
 	private:
-		char* mJsonFilePath;		// agebreak : °ú¿¬ ÀÌ º¯¼ö´Â ¾ÈÀüÇÒ±î??
+		char* mJsonFilePath;		// agebreak : ê³¼ì—° ì´ ë³€ìˆ˜ëŠ” ì•ˆì „í• ê¹Œ??
 		char mPath[1024];
 	};
 }

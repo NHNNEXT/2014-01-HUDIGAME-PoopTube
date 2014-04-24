@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "NetworkSystem.h"
 #include "Application.h"
@@ -124,7 +124,7 @@ namespace pooptube
 
 			int sent = send(mSocket, data, size, 0);
 
-			/// ´Ù¸¦¼ö ÀÖ´Ù
+			/// ë‹¤ë¥¼ìˆ˜ ìžˆë‹¤
 			if (sent != size)
 				OutputDebugStringA("sent != request\n");
 
@@ -149,10 +149,10 @@ namespace pooptube
 
 		if (1 <= type && type <= 2)
 		{
-			// ÆÐÅ¶ »çÀÌÁî Ã¼Å©ÇÏ°í ¾È¸ÂÀ¸¸é write ¾ÈÇÏµµ·Ï ÇÏ´Â ºÎºÐ Ãß°¡ÇØ¾ßÇÔ.
+			// íŒ¨í‚· ì‚¬ì´ì¦ˆ ì²´í¬í•˜ê³  ì•ˆë§žìœ¼ë©´ write ì•ˆí•˜ë„ë¡ í•˜ëŠ” ë¶€ë¶„ ì¶”ê°€í•´ì•¼í•¨.
 			if (!mRecvBuffer.Write(inBuf, recvLen))
 			{
-				/// ¹öÆÛ ²ËÃ¡´Ù. 
+				/// ë²„í¼ ê½‰ì°¼ë‹¤. 
 				//assert(false) ;
 			}
 			else
