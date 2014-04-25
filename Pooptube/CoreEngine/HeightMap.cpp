@@ -89,7 +89,6 @@ namespace pooptube {
 				D3DXVec3Normalize(&normal, &normal);
 
 				vertex[nIndex].normal = normal;
-				vertex[nIndex].normal.y *= -1.f;
 			}
 		}
 

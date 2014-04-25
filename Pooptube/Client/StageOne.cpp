@@ -51,7 +51,7 @@ bool StageOne::Init() {
 
 	//광원의 위치
 	vecDir = D3DXVECTOR3(10.f,
-		10.f,
+		-10.f,
 		-10.f);
 
 	ZeroMemory(&light, sizeof(D3DLIGHT9));
@@ -103,8 +103,8 @@ void StageOne::Render() {
 
 	testDummy->Render();
 
-	mCamera->Render();
-	//mCamera_2->Render();
+	//mCamera->Render();
+	mCamera_2->Render();
 
 	mSkyBox->Render();
 }
