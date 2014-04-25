@@ -56,7 +56,7 @@ namespace pooptube {
 		mMeshVertexBuffer->Unlock();
 
 		//인덱스 버퍼 생성
-		if (GetDevice()->CreateIndexBuffer(mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX16,
+		if (GetDevice()->CreateIndexBuffer(mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX32,
 			D3DPOOL_DEFAULT, &mMeshIndexBuffer, NULL) < 0)
 		{
 			return false;

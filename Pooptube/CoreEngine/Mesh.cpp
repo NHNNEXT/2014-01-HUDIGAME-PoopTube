@@ -27,6 +27,14 @@ namespace pooptube {
 		if (!Node::Init())
 			return false;
 
+		ZeroMemory(&mMaterial, sizeof(D3DMATERIAL9));
+		mMaterial.Specular.r = mMaterial.Diffuse.r = mMaterial.Ambient.r = 0.0f;
+		mMaterial.Specular.g = mMaterial.Diffuse.g = mMaterial.Ambient.g = 0.0f;
+		mMaterial.Specular.b = mMaterial.Diffuse.b = mMaterial.Ambient.b = 0.0f;
+		mMaterial.Specular.a = mMaterial.Diffuse.a = mMaterial.Ambient.a = 0.0f;
+		GetDevice()->SetMaterial(&mMaterial);
+
+
 		mVertexCount = VertexCount;
 		mPolygonCount = PolygonCount;
 
@@ -65,42 +73,6 @@ namespace pooptube {
 
 	void Mesh::Update(float dTime) {
 		Node::Update(dTime);
-	}
-
-	float Mesh::GetHeight(float x, float z) const {
-// 		x *= 2.0f;
-// 		z *= 2.0f;
-// 
-// 		if (x <= 0 || x >= (mCol - 1) || z <= 0 || z >= (mRow - 1))
-// 			return 0.0f;
-// 
-// 		D3DXVECTOR3 v[3];
-// 		v[1].x = std::floor(x);
-// 		v[1].z = std::floor(z);
-// 		v[1].y = (float)GetHeightData(UINT(v[1].x), UINT(v[1].z));
-// 		v[2].x = std::floor(x) + 1;
-// 		v[2].z = std::floor(z) + 1;
-// 		v[2].y = (float)GetHeightData(UINT(v[2].x), UINT(v[2].z));
-// 
-// 		float y;
-// 		D3DXVECTOR3 cVec;
-// 		if (x - std::floor(x) < z - std::floor(z)){
-// 			v[0].x = std::floor(x);
-// 			v[0].z = std::floor(z) + 1;
-// 			v[0].y = (float)GetHeightData(UINT(v[0].x), UINT(v[0].z));
-// 		}
-// 		else{
-// 			v[0].x = std::floor(x) + 1;
-// 			v[0].z = std::floor(z);
-// 			v[0].y = (float)GetHeightData(UINT(v[0].x), UINT(v[0].z));
-// 		}
-// 
-// 		D3DXVec3Cross(&cVec, &(v[1] - v[0]), &(v[2] - v[0]));
-// 		y = (((v[0].x - x) * cVec.x + (v[0].z - z) * cVec.z) / cVec.y) + v[0].y;
-// 
-// 		return y * mAmp;
-
-		return 1.f;
 	}
 
 }

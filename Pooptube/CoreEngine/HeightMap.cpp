@@ -32,18 +32,18 @@ namespace pooptube {
 
 	//매번 리셋가능하도록 수정해야함
 	bool HeightMap::SetBuffer() {
-		int col = mHeightMapData->GetColSize()-1;
-		int row = mHeightMapData->GetRowSize()-1;
+		UINT col = mHeightMapData->GetColSize() - 1;
+		UINT row = mHeightMapData->GetRowSize() - 1;
 
 		mVertexCount = (col + 1) * (row + 1);
 		mIndexCount = col * row * 2;
 
 		MESH_CUSTOM_VERTEX* vertex = new MESH_CUSTOM_VERTEX[mVertexCount];
 
-		int nIndex = 0;
+		UINT nIndex = 0;
 		//int imageSize = (col + 1) * (row + 1) * 3 - 3;
-		for (int z = 0; z < row + 1; ++z) {
-			for (int x = 0; x < col + 1; ++x) {
+		for (UINT z = 0; z < row + 1; ++z) {
+			for (UINT x = 0; x < col + 1; ++x) {
 				// Z축 반전 구현해야함.
 				nIndex = (z * (col + 1)) + x;
 				//int nIndex2 = (row - z) * (col + 1) + x;
@@ -58,8 +58,8 @@ namespace pooptube {
 		}
 
 		nIndex = 0;
-		for (int z = 1; z < row; ++z) {
-			for (int x = 1; x < col; ++x) {
+		for (UINT z = 1; z < row; ++z) {
+			for (UINT x = 1; x < col; ++x) {
 
 				int nVtxT = col + 1;
 
@@ -94,15 +94,15 @@ namespace pooptube {
 
 		MESH_CUSTOM_INDEX* Index = new MESH_CUSTOM_INDEX[mIndexCount];
 		nIndex = 0;
-		for (int z = 0; z < row; z++) {
-			for (int x = 0; x < col; x++) {
-				Index[nIndex].w0 = WORD(z * (col + 1) + x);
-				Index[nIndex].w1 = WORD((z + 1)*(col + 1) + x + 1);
-				Index[nIndex++].w2 = WORD((z + 1)*(col + 1) + x);
+		for (UINT z = 0; z < row; z++) {
+			for (UINT x = 0; x < col; x++) {
+				Index[nIndex].w0 = UINT(z * (col + 1) + x);
+				Index[nIndex].w1 = UINT((z + 1)*(col + 1) + x + 1);
+				Index[nIndex++].w2 = UINT((z + 1)*(col + 1) + x);
 
-				Index[nIndex].w0 = WORD(z * (col + 1) + x);
-				Index[nIndex].w1 = WORD(z * (col + 1) + x + 1);
-				Index[nIndex++].w2 = WORD((z + 1)*(col + 1) + x + 1);
+				Index[nIndex].w0 = UINT(z * (col + 1) + x);
+				Index[nIndex].w1 = UINT(z * (col + 1) + x + 1);
+				Index[nIndex++].w2 = UINT((z + 1)*(col + 1) + x + 1);
 			}
 		}
 
@@ -125,7 +125,7 @@ namespace pooptube {
 		mVertexBuffer->Unlock();
 
 		//인덱스 버퍼 생성
-		if (GetDevice()->CreateIndexBuffer(mIndexCount*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX16,
+		if (GetDevice()->CreateIndexBuffer(mIndexCount*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX32,
 			D3DPOOL_DEFAULT, &mIndexBuffer, NULL) < 0)
 		{
 			return false;

@@ -128,7 +128,7 @@ namespace pooptube{
 		/// 인덱스버퍼 생성
 		/// D3DFMT_INDEX16은 인덱스의 단위가 16비트 라는 것이다.
 		/// 우리는 MYINDEX 구조체에서 WORD형으로 선언했으므로 D3DFMT_INDEX16을 사용한다.
-		if (FAILED(GetDevice()->CreateIndexBuffer(36 * sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &mIndexBuffer, NULL)))
+		if (FAILED(GetDevice()->CreateIndexBuffer(36 * sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &mIndexBuffer, NULL)))
 		{
 			return false;
 		}
@@ -149,6 +149,7 @@ namespace pooptube{
 		//행렬의 연산은 node에서 상속받는다.
 		Node::Render();
 
+		//빛을끈다.
 		GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX_SKYBOX);
 
@@ -179,8 +180,8 @@ namespace pooptube{
 
 		GetDevice()->SetTexture(0, mRightTexture);
 		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 30, 4);
-
-
+		
+		GetDevice()->SetTexture(0, 0);
 		GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
 	}
 

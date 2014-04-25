@@ -26,15 +26,6 @@ namespace pooptube {
 
 		mIndex = mCountIndex++;
 
-		//이건 메쉬쪽으로
-// 		D3DMATERIAL9 mtrl;
-// 		ZeroMemory(&mtrl, sizeof(D3DMATERIAL9));
-// 		mtrl.Specular.r = mtrl.Diffuse.r = mtrl.Ambient.r = 0.0f;
-// 		mtrl.Specular.g = mtrl.Diffuse.g = mtrl.Ambient.g = 0.0f;
-// 		mtrl.Specular.b = mtrl.Diffuse.b = mtrl.Ambient.b = 0.0f;
-// 		mtrl.Specular.a = mtrl.Diffuse.a = mtrl.Ambient.a = 0.0f;
-// 		GetDevice()->SetMaterial(&mtrl);
-
 		//광원의 위치
 		ZeroMemory(&mD3DLight, sizeof(D3DLIGHT9));
 		//mD3DLight.Type = D3DLIGHT_DIRECTIONAL;

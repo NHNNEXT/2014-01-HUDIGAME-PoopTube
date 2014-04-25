@@ -25,7 +25,7 @@ namespace pooptube {
 	//커스텀 인덱스
 	//현제 16비트 크기 설정 조정시 32비트로 조정 필요
 	struct MESH_CUSTOM_INDEX {
-		WORD w0, w1, w2;
+		UINT w0, w1, w2;
 	};
 
 	class Mesh : public Node
@@ -50,20 +50,20 @@ namespace pooptube {
 		MESH_CUSTOM_VERTEX*		GetVertices() const { return mVertices; }
 		MESH_CUSTOM_INDEX*		GetIndices() const { return mIndices; }
 
-		float					GetHeight(float x, float z) const;
-
 	protected:
 
 
 	private:
 
-		int								mPolygonCount = 0;
-		int								mVertexCount = 0;
+		UINT							mPolygonCount = 0;
+		UINT							mVertexCount = 0;
 
 		MESH_CUSTOM_VERTEX*				mVertices = nullptr;
 		MESH_CUSTOM_INDEX*				mIndices = nullptr;
 		
 		LPDIRECT3DDEVICE9				mDevice = nullptr;
+
+		D3DMATERIAL9					mMaterial;
 
 		float							mHeightMapSize = 0.5f;
 	};

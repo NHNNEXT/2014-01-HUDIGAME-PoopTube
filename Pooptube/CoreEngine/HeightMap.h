@@ -30,8 +30,8 @@ namespace pooptube {
 		LPDIRECT3DVERTEXBUFFER9 mVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9	mIndexBuffer = nullptr;
 
-		int						mVertexCount = 0;
-		int						mIndexCount = 0;
+		UINT					mVertexCount = 0;
+		UINT					mIndexCount = 0;
 
 		std::shared_ptr<HeightMapData>	mHeightMapData;
 

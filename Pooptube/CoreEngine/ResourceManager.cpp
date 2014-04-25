@@ -194,10 +194,10 @@ namespace pooptube {
 
 			FILE* filePtr;
 			int error;
-			unsigned int count;
+			UINT count;
 			BITMAPFILEHEADER bitmapFileHeader;
 			BITMAPINFOHEADER bitmapInfoHeader;
-			int imageSize;
+			UINT imageSize;
 			unsigned char*	 bitmapImage;
 
 			// Open the height map file in binary.
@@ -215,7 +215,7 @@ namespace pooptube {
 			if (count != 1)
 				return nullptr;
 
-			int col, row;
+			UINT col, row;
 
 			// Save the dimensions of the terrain.
 			col = bitmapInfoHeader.biWidth - 1;
@@ -233,13 +233,13 @@ namespace pooptube {
 			fseek(filePtr, bitmapFileHeader.bfOffBits, SEEK_SET);
 
 			// Read in the bitmap image data.
+			// 데이터의 크기와 실제 크기가 다를경우 팅궈버림
 			count = fread(bitmapImage, 1, imageSize, filePtr);
 			if (count != imageSize){
 				delete[] bitmapImage;
 				return nullptr;
 			}
 				
-
 			// Close the file.
 			error = fclose(filePtr);
 			if (error != 0) {
