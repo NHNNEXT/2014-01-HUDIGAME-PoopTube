@@ -23,6 +23,8 @@ namespace pooptube {
 	}
 
 	bool Scene::Init() {
+		if (!Node::Init())
+			return false;
 		return true;
 	}
 

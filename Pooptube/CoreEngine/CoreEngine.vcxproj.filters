@@ -256,6 +256,9 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Nodes\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="SunLight.h">
+      <Filter>Nodes\Light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -372,6 +375,9 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Nodes\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SunLight.cpp">
+      <Filter>Nodes\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

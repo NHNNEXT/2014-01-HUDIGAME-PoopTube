@@ -9,6 +9,8 @@
 #include "MainCharacter.h"
 #include "SkyBox.h"
 #include "HeightMap.h"
+#include "Light.h"
+#include "SunLight.h"
 
 StageOne::StageOne() {
 }
@@ -36,39 +38,10 @@ bool StageOne::Init() {
 	EnableKeyEvent();
 	EnableMouseEvent();
 
-	mDevice = pooptube::Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+	pooptube::Scene::Init();
 
-	D3DMATERIAL9 mtrl;
-	ZeroMemory(&mtrl, sizeof(D3DMATERIAL9));
-	mtrl.Diffuse.r = mtrl.Ambient.r = 1.0f;
-	mtrl.Diffuse.g = mtrl.Ambient.g = 1.0f;
-	mtrl.Diffuse.b = mtrl.Ambient.b = 1.0f;
-	mtrl.Diffuse.a = mtrl.Ambient.a = 1.0f;
-	mDevice->SetMaterial(&mtrl);
-
-	D3DXVECTOR3 vecDir;
-	D3DLIGHT9 light;
-
-	//광원의 위치
-	vecDir = D3DXVECTOR3(10.f,
-		-10.f,
-		-10.f);
-
-	ZeroMemory(&light, sizeof(D3DLIGHT9));
-	light.Type = D3DLIGHT_DIRECTIONAL;
-	light.Diffuse.r = 1.0f;
-	light.Diffuse.g = 1.0f;
-	light.Diffuse.b = 1.0f;
-
-	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
-	light.Range = 1000.0f;
-
-	//디바이스에 광원을 설정합니다.
-	mDevice->SetLight(0, &light);
-	mDevice->LightEnable(0, TRUE);
-
-	mDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-	mDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
+	mLight = pooptube::Light::Create();
+	mSunLight = pooptube::SunLight::Create();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
 
@@ -76,7 +49,6 @@ bool StageOne::Init() {
 
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 	mCamera_2 = pooptube::Camera::Create();
-
 
 	mGround = pooptube::HeightMap::Create("test.bmp");
 
@@ -94,6 +66,9 @@ bool StageOne::Init() {
 }
 
 void StageOne::Render() {
+
+	//mLight->Render();
+	mSunLight->Render();
 
 	mCharacter->Render();
 
@@ -135,16 +110,16 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'W':
-		mCamera_2->Translation(0, 0, -0.1f);
+		mCamera_2->Translation(mCamera_2->GetFrontVector()*0.1f);
 		break;
 	case 'S':
-		mCamera_2->Translation(0, 0, 0.1f);
+		mCamera_2->Translation(mCamera_2->GetFrontVector()*-0.1f);
 		break;
 	case 'A':
-		mCamera_2->Translation(0.1f, 0, 0);
+		mCamera_2->Translation(mCamera_2->GetLeftVector()*0.1f);
 		break;
 	case 'D':
-		mCamera_2->Translation(-0.1f, 0, 0);
+		mCamera_2->Translation(mCamera_2->GetRightVector()*0.1f);
 		break;
 	case VK_LEFT:
 		mCamera_2->RotateFrontVectorY(-0.1f);
@@ -154,10 +129,10 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 		break;
 
 	case 'Q':
-		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		break;
 	case 'E':
-		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		break;
 	}
 }

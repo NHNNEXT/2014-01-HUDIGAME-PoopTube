@@ -9,6 +9,8 @@ namespace pooptube {
 	class CollisionBox;
 	class SkyBox;
 	class HeightMap;
+	class Light;
+	class SunLight;
 }
 
 class MainCharacter;
@@ -45,12 +47,12 @@ private:
 	std::shared_ptr<MainCharacter>					mCharacter = nullptr;
 	std::shared_ptr<pooptube::SkinnedMesh>			mSkinnedMesh = nullptr;
 	std::shared_ptr<pooptube::HeightMap>			mGround = nullptr;
-	std::shared_ptr<pooptube::SkyBox>	mSkyBox = nullptr;
+	std::shared_ptr<pooptube::SkyBox>				mSkyBox = nullptr;
+	std::shared_ptr<pooptube::Light>				mLight = nullptr;
+	std::shared_ptr<pooptube::SunLight>				mSunLight = nullptr;
 
 	float				mTimeForFPS = 0.f;
 
 	std::shared_ptr<pooptube::CollisionBox>	testDummy;
-
-	LPDIRECT3DDEVICE9	mDevice = nullptr;
 };
 
