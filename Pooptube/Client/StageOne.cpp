@@ -114,6 +114,10 @@ void StageOne::Update(float dTime)
 	mSkinnedMesh->Update(dTime);
 	mCharacter->Update(dTime);
 
+	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
+	CharPos.y = mGround->GetHeight(CharPos.x, CharPos.z);
+	mCharacter->SetPosition(CharPos);
+
 	if (mTimeForFPS > 2.f) {
 		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
 		mTimeForFPS = 0.f;
