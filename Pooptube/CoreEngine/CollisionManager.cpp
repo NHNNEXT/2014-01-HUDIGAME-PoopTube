@@ -14,6 +14,12 @@ namespace pooptube {
 		return mInstance;
 	}
 
+	CollisionManager::CollisionManager() {
+	}
+
+	CollisionManager::~CollisionManager() {
+	}
+
 	void CollisionManager::AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
 	{
 		mCollisionBoxList.push_front( pCollisionBox );
@@ -44,15 +50,4 @@ namespace pooptube {
 
 		return nullptr;
 	}
-
-	CollisionManager::CollisionManager()
-	{
-	}
-
-	CollisionManager::~CollisionManager()
-	{
-		//이것도 수상함
-		//mCollisionBoxList.clear( );
-	}
-
 }

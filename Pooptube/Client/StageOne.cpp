@@ -80,7 +80,7 @@ bool StageOne::Init() {
 
 	mGround = pooptube::HeightMap::Create("test.bmp");
 
-	testDummy = pooptube::CollisionBox::Create(pooptube::COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f);
+	testDummy = pooptube::CollisionBox::Create();
 	testDummy->SetAxisLen(0.5, 0.5, 0.5);
 
 	mSkyBox = pooptube::SkyBox::Create(L"Top.bmp",

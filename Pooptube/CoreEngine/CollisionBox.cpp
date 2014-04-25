@@ -4,56 +4,54 @@
 #include "CollisionManager.h"
 
 namespace pooptube {
-	CollisionBox::CollisionBox()
-	{
-		CollisionBox( COLLISION_TYPE::COLLISION_NONE, 0.0f, 1.0f );
+	CollisionBox::CollisionBox() {
 	}
 
-	CollisionBox::CollisionBox( COLLISION_TYPE collisionType, float bound, float mass )
-		: mCollisionType( collisionType )
-		, mBound( bound )
-		, mMass( mass )
-	{
-		mAxisLen[0] = 0.5f;
-		mAxisLen[1] = 0.5f;
-		mAxisLen[2] = 0.5f;
+	CollisionBox::~CollisionBox() {
 	}
 
-	CollisionBox::~CollisionBox()
-	{
-	}
-
-	std::shared_ptr<CollisionBox> CollisionBox::Create( )
-	{
-		return Create( COLLISION_TYPE::COLLISION_NONE, 0.0f, 1.0f );
-	}
-	std::shared_ptr<CollisionBox> CollisionBox::Create( COLLISION_TYPE collisionType, float bound, float mass )
-	{
+	std::shared_ptr<CollisionBox> CollisionBox::Create() {
 		std::shared_ptr<CollisionBox> pCollisionBox(new CollisionBox);
 
 		if( pCollisionBox->Init() ) {
 			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
+			return pCollisionBox;
 		}
-		//혹시 몰라서 에러처리 추가
 		else 
 			return nullptr;
+	}
 
-		return pCollisionBox;
+	std::shared_ptr<CollisionBox> CollisionBox::Create(MESH_CUSTOM_VERTEX* vertices) {
+		return nullptr;
+	}
+
+	bool CollisionBox::Init() {
+		if (!Node::Init())
+			return false;
+
+		mAxisLen[0] = 0.5f;
+		mAxisLen[1] = 0.5f;
+		mAxisLen[2] = 0.5f;
+		
+		return true;
+	}
+
+	void CollisionBox::SetCollisionBoxFromVertices() {
+
 	}
 
 	void CollisionBox::Render()
 	{
-#ifdef _DEBUG
-		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+		Node::Render();
 
 		D3DXMATRIX projMat, viewMat;
-		pDevice->GetTransform( D3DTS_PROJECTION, &projMat );
-		pDevice->GetTransform( D3DTS_VIEW, &viewMat );
+		GetDevice()->GetTransform( D3DTS_PROJECTION, &projMat );
+		GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
 		viewMat *= projMat;
 
 		ID3DXLine *Line;
 
-		if( D3DXCreateLine( pDevice, &Line ) != D3D_OK )
+		if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
 			return;
 		Line->SetWidth( 1 );
 		Line->SetAntialias( true );
@@ -97,16 +95,13 @@ namespace pooptube {
 		Line->End();
 
 		Line->Release();
-#endif
 	}
 
-	void CollisionBox::Update( float dTime )
-	{
+	void CollisionBox::Update( float dTime ) {
 		Node::Update( dTime );
 	}
 
-	bool CollisionBox::CollisionCheck( const CollisionBox* target )
-	{
+	bool CollisionBox::CollisionCheck( const CollisionBox* target ) {
 		D3DXVECTOR3 D = GetPosition() - target->GetPosition();
 
 		//Check By Sphere
