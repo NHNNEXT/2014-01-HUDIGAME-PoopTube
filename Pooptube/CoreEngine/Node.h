@@ -1,8 +1,8 @@
-/**
-* @author ¾çÇöÂù
+ï»¿/**
+* @author ì–‘í˜„ì°¬
 * @brief
-* È­¸é¿¡ »Ñ¸®´Â ¸ğµç °´Ã¼ÀÇ »Ñ¸®°¡ µÇ´Â °´Ã¼
-* Çà·ÄÀÇ ¿¬»ê µîÀÌ ¿©±â¼­ ±¸ÇöµÈ´Ù.
+* í™”ë©´ì— ë¿Œë¦¬ëŠ” ëª¨ë“  ê°ì²´ì˜ ë¿Œë¦¬ê°€ ë˜ëŠ” ê°ì²´
+* í–‰ë ¬ì˜ ì—°ì‚° ë“±ì´ ì—¬ê¸°ì„œ êµ¬í˜„ëœë‹¤.
 * @date 2014/04/17
 * @file SkinnedMesh.h
 */
@@ -32,25 +32,25 @@ namespace pooptube {
 		Node();
 		virtual ~Node();
 
-		//@brief À§Ä¡ÁöÁ¤ new¸¦ »ç¿ë. 
+		//@brief ìœ„ì¹˜ì§€ì • newë¥¼ ì‚¬ìš©. 
 		static void* operator new (std::size_t size, void* ptr) throw(){
 			return ::operator new(size, ptr);
 		}
 
-		//@brief À§Ä¡ÁöÁ¤ new¸¦ »ç¿ëÇßÀ¸´Ï ÇØ´ç deleteµµ ¸¸µé¾îÁØ´Ù. 
+		//@brief ìœ„ì¹˜ì§€ì • newë¥¼ ì‚¬ìš©í–ˆìœ¼ë‹ˆ í•´ë‹¹ deleteë„ ë§Œë“¤ì–´ì¤€ë‹¤. 
 		static void operator delete (void *p, void *ptr) throw() {
 			if (p == nullptr) return;
 			return ::operator delete(p, ptr);
 		}
 
-		//@brief ¹«Á¶°Ç 16¹ÙÀÌÆ® alignment·Î »ı¼ºµÇµµ·Ï ÇÔ
+		//@brief ë¬´ì¡°ê±´ 16ë°”ì´íŠ¸ alignmentë¡œ ìƒì„±ë˜ë„ë¡ í•¨
 		static void* operator new (std::size_t size) throw(){
-			//»ı¼ºÀÚ¿Í ¼Ò¸êÀÚÈ®ÀÎ
+			//ìƒì„±ìì™€ ì†Œë©¸ìí™•ì¸
 			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
 			return ptr;
 		}
 
-		//@brief ÀÏ¹İ deleteµµ À§Ä¡ÁöÁ¤ delete¿Í °°ÀÌ ÇØÁ¦µÇµµ·Ï ¼³Á¤
+		//@brief ì¼ë°˜ deleteë„ ìœ„ì¹˜ì§€ì • deleteì™€ ê°™ì´ í•´ì œë˜ë„ë¡ ì„¤ì •
 		static void operator delete (void *p) throw() {
 			if (p == nullptr) return;
 			return _aligned_free(p);
@@ -63,8 +63,8 @@ namespace pooptube {
 		virtual void Render();
 		virtual void Update( float dTime );
 
-		virtual void AddChild( Node* pChild );
-		virtual void RemoveChild( Node* pChild );
+// 		virtual void AddChild( Node* pChild );
+// 		virtual void RemoveChild( Node* pChild );
 
 		virtual void DisableKeyEvent();
 		virtual void DisableMouseEvent();
@@ -72,11 +72,11 @@ namespace pooptube {
 		virtual void EnableKeyEvent();
 		virtual void EnableMouseEvent();
 
-		//@brief ¾Æ·¡ µÎ°³ ÇÏ´ÂÀÏ °°À½
-		//ÁÂÇ¥ÃàÀº Ç×»ó ¹°Ã¼ÀÇ Áß¾Ó¿¡ °íÁ¤
-		//È¸Àüº¯È¯¿¡µµ ÁÂÇ¥ÃàÀº °íÁ¤
-		//@todo ÇöÀç ¾÷º¤ÅÍÀÇ ¿µÇâÀ» ÁÖÁö¾Ê´Â º¯È¯¸¸ ±¸Çö
-		//x,zÃà º¯È¯µµ Ãß°¡ÇØ¾ßÇÔ
+		//@brief ì•„ë˜ ë‘ê°œ í•˜ëŠ”ì¼ ê°™ìŒ
+		//ì¢Œí‘œì¶•ì€ í•­ìƒ ë¬¼ì²´ì˜ ì¤‘ì•™ì— ê³ ì •
+		//íšŒì „ë³€í™˜ì—ë„ ì¢Œí‘œì¶•ì€ ê³ ì •
+		//@todo í˜„ì¬ ì—…ë²¡í„°ì˜ ì˜í–¥ì„ ì£¼ì§€ì•ŠëŠ” ë³€í™˜ë§Œ êµ¬í˜„
+		//x,zì¶• ë³€í™˜ë„ ì¶”ê°€í•´ì•¼í•¨
 		virtual void		RotationY(float Angle);
 		virtual void		RotateFrontVectorY(float angle);
 
@@ -104,18 +104,18 @@ namespace pooptube {
 		void _RegistrationToMouseEventDispatcher();
 		
 	private:
-		std::vector<Node*> mChildList;
+		//std::vector<Node*> mChildList;
 
 		bool mIsKeyEventEnabled = false;
 		bool mIsMouseEventEnabled = false;
 
-		// TODO: °¢Á¾ Çà·Ä °è»ê ¿ë µ¥ÀÌÅÍµé..
-		//@brief mPosition´Â Æ÷Áö¼ÇÁ¤º¸¸¦ ´ã°íÀÖ´Ù.
+		// TODO: ê°ì¢… í–‰ë ¬ ê³„ì‚° ìš© ë°ì´í„°ë“¤..
+		//@brief mPositionëŠ” í¬ì§€ì…˜ì •ë³´ë¥¼ ë‹´ê³ ìˆë‹¤.
 		D3DXVECTOR3		mPosition = { 0.f, 0.f, 0.f};
 		D3DXVECTOR3		mScaleVec = { 1.f, 1.f, 1.f};
 
-		//@brief mFrontPoint´Â ·ÎÅ×ÀÌÆ®Á¤º¸¸¦ ´ã°íÀÖ´Ù.
-		//ÇÁ·ĞÆ® º¤ÅÍ·Î ¹Ù²ã¾ßÇÔ
+		//@brief mFrontPointëŠ” ë¡œí…Œì´íŠ¸ì •ë³´ë¥¼ ë‹´ê³ ìˆë‹¤.
+		//í”„ë¡ íŠ¸ ë²¡í„°ë¡œ ë°”ê¿”ì•¼í•¨
 		D3DXVECTOR3		mFrontPoint = { 0.f, 0.f, 1.f};
 		D3DXVECTOR3		mUpVec = { 0.f, 1.f, 0.f};
 

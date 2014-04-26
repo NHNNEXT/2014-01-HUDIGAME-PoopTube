@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "JsonParser.h"
 
 namespace pooptube {
@@ -45,7 +45,7 @@ namespace pooptube {
 		} 
 		
 		const Json::Value resourceFilePath = root["path"];
-		for (int index = 0; index < resourceFilePath.size(); ++index) {
+		for (UINT index = 0; index < resourceFilePath.size(); ++index) {
 			strcat_s(mPath, resourceFilePath[index].asCString());
 			strcat_s(mPath, " ");
 		}

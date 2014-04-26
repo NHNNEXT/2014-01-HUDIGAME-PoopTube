@@ -1,4 +1,4 @@
-
+ï»¿
 #include "PacketType.h"
 #include "NetworkSystem.h"
 
@@ -12,11 +12,11 @@ namespace pooptube
 	public:
 		virtual void HandlingPacket(short packetType, CircularBuffer* circularBuffer, PacketHeader* header, int recvLen)
 		{
-			// ½ÇÁ¦ ¹ÞÀº ÆÐÅ¶ÀÇ Å©±â(recvLen)¿Í ÆÐÅ¶¿¡ ÀûÈù Å©±â(mSize)°¡ ´Ù¸¦ °æ¿ì
-			// ½ÇÁ¦ ¹ÞÀº ÆÐÅ¶ÀÇ Å©±â¸¸Å­ circularBuffer¿¡¼­ »Ì¾Æ³½´Ù.
+			// ì‹¤ì œ ë°›ì€ íŒ¨í‚·ì˜ í¬ê¸°(recvLen)ì™€ íŒ¨í‚·ì— ì ížŒ í¬ê¸°(mSize)ê°€ ë‹¤ë¥¼ ê²½ìš°
+			// ì‹¤ì œ ë°›ì€ íŒ¨í‚·ì˜ í¬ê¸°ë§Œí¼ circularBufferì—ì„œ ë½‘ì•„ë‚¸ë‹¤.
 			// or
-			// ÆÐÅ¶¿¡ ÀûÈù Å©±â(mSize)¿Í packetType¿¡¼­ ¿ä±¸ÇÏ´Â Å©±â(sizeof(LoginResult))°¡ ´Ù¸¦ °æ¿ì
-			// ½ÇÁ¦ ¹ÞÀº ÆÐÅ¶ÀÇ Å©±â¸¸Å­ circularBuffer¿¡¼­ »Ì¾Æ³½´Ù.
+			// íŒ¨í‚·ì— ì ížŒ í¬ê¸°(mSize)ì™€ packetTypeì—ì„œ ìš”êµ¬í•˜ëŠ” í¬ê¸°(sizeof(LoginResult))ê°€ ë‹¤ë¥¼ ê²½ìš°
+			// ì‹¤ì œ ë°›ì€ íŒ¨í‚·ì˜ í¬ê¸°ë§Œí¼ circularBufferì—ì„œ ë½‘ì•„ë‚¸ë‹¤.
 
 			if (header->mSize != recvLen || recvLen != sizeof(LoginResult))
 			{
@@ -27,7 +27,7 @@ namespace pooptube
 				return;
 			}
 
-			// ·Î±×ÀÎ °á°ú Ã³¸®
+			// ë¡œê·¸ì¸ ê²°ê³¼ ì²˜ë¦¬
 			LoginResult packet;
 			circularBuffer->Read((char*)&packet, packet.mSize);
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define MAX_CHAT_LEN	1024
 
@@ -26,14 +26,14 @@ enum PacketTypes
 	PKT_CS_SYNC = 9,
 	PKT_SC_SYNC = 10,
 
-	PKT_SC_NEW = 11, // »õ ÇÃ·¹ÀÌ¾î³ª ¿ÀºêÁ§Æ® »ı¼º
+	PKT_SC_NEW = 11, // ìƒˆ í”Œë ˆì´ì–´ë‚˜ ì˜¤ë¸Œì íŠ¸ ìƒì„±
 
 	PKT_MAX = 1024
 };
 
 #pragma pack(push, 1)
 
-// ·Î±×ÀÎ ¿äÃ»
+// ë¡œê·¸ì¸ ìš”ì²­
 struct LoginRequest : public PacketHeader
 {
 	LoginRequest()

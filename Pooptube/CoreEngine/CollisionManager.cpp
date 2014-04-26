@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "CollisionManager.h"
 #include "CollisionBox.h"
 
@@ -12,6 +12,12 @@ namespace pooptube {
 		}
 
 		return mInstance;
+	}
+
+	CollisionManager::CollisionManager() {
+	}
+
+	CollisionManager::~CollisionManager() {
 	}
 
 	void CollisionManager::AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
@@ -44,15 +50,4 @@ namespace pooptube {
 
 		return nullptr;
 	}
-
-	CollisionManager::CollisionManager()
-	{
-	}
-
-	CollisionManager::~CollisionManager()
-	{
-		//ÀÌ°Íµµ ¼ö»óÇÔ
-		//mCollisionBoxList.clear( );
-	}
-
 }

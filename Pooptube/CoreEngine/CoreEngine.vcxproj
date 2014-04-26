@@ -101,6 +101,8 @@
     <ClInclude Include="EventDispatcher.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventProcess.h" />
+    <ClInclude Include="HeightMap.h" />
+    <ClInclude Include="HeightMapData.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="JsonParser.h" />
@@ -131,10 +133,12 @@
     <ClInclude Include="SkinnedMesh.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SunLight.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TextureCube.h" />
     <ClInclude Include="ThirdPersonCamera.h" />
+    <ClInclude Include="PooMath.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -153,6 +157,8 @@
     <ClCompile Include="EventDispatcher.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
+    <ClCompile Include="HeightMap.cpp" />
+    <ClCompile Include="HeightMapData.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -178,6 +184,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SunLight.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureCube.cpp" />
     <ClCompile Include="ThirdPersonCamera.cpp" />

@@ -1,4 +1,4 @@
-// CoreEngine.cpp : ÄÜ¼Ö ÀÀ¿ë ÇÁ·Î±×·¥¿¡ ´ëÇÑ ÁøÀÔÁ¡À» Á¤ÀÇÇÕ´Ï´Ù.
+ï»¿// CoreEngine.cpp : ì½˜ì†” ì‘ìš© í”„ë¡œê·¸ëž¨ì— ëŒ€í•œ ì§„ìž…ì ì„ ì •ì˜í•©ë‹ˆë‹¤.
 //
 
 #include "stdafx.h"
@@ -18,7 +18,7 @@ int main() {
 // 
 // 	if (TestScene == nullptr)
 // 	{
-// 		//¾Æ¸¶ cone.fbxÆÄÀÏÀÌ ¾ø¾î¼­ ÀÏ°Ì´Ï´Ù. ¶óÀÎ¿¡ ¹®ÀÇÇÏ¼¼¿ä.
+// 		//ì•„ë§ˆ cone.fbxíŒŒì¼ì´ ì—†ì–´ì„œ ì¼ê²ë‹ˆë‹¤. ë¼ì¸ì— ë¬¸ì˜í•˜ì„¸ìš”.
 // 		printf("TestScene Create Error!\n");
 // 		system("pause");
 // 		pooptube::Application::GetInstance()->Release();

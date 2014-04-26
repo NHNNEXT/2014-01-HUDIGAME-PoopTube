@@ -1,9 +1,9 @@
-/**
-* @author ¾çÇöÂù
+ï»¿/**
+* @author ì–‘í˜„ì°¬
 * @brief
-* ¸®¼Ò½º¸¦ ·ÎµåÇÏ°í ·ÎµåµÈ ¸®¼Ò½º´Â Çì½¬¿¡ º¸°üÇÏ´Â °´Ã¼
-* fbxsdk°ü·Ã °´Ã¼µé °ü¸®
-* ½Ì±ÛÅæ±¸Á¶, ¿ÀºêÁ§Æ® ¸Ş´ÏÁ®¿¡¼­ °ü¸®
+* ë¦¬ì†ŒìŠ¤ë¥¼ ë¡œë“œí•˜ê³  ë¡œë“œëœ ë¦¬ì†ŒìŠ¤ëŠ” í—¤ì‰¬ì— ë³´ê´€í•˜ëŠ” ê°ì²´
+* fbxsdkê´€ë ¨ ê°ì²´ë“¤ ê´€ë¦¬
+* ì‹±ê¸€í†¤êµ¬ì¡°, ì˜¤ë¸Œì íŠ¸ ë©”ë‹ˆì ¸ì—ì„œ ê´€ë¦¬
 * @date 2014/04/17
 * @file ResourceManager.h
 */
@@ -15,6 +15,7 @@
 namespace pooptube {
 
 	class Mesh;
+	class HeightMapData;
 
 	class ResourceManager : public Object {
 	public:
@@ -23,26 +24,23 @@ namespace pooptube {
 
 		static ResourceManager* GetInstance();
 
-		std::shared_ptr<Mesh> LoadMeshFromFBX(const std::string& FilePath);
-		std::shared_ptr<Mesh> LoadMeshFromHeightMap(const std::string& FilePath);
+		std::shared_ptr<Mesh>			LoadMeshFromFBX(const std::string& FilePath);
+		std::shared_ptr<HeightMapData>	LoadHeightMap(const std::string& FilePath);
 
 		LPDIRECT3DTEXTURE9 LoadTexture(const std::wstring& FilePath);
-
-		void CalculateNormal(D3DXVECTOR3* pOut, D3DXVECTOR3* v0, D3DXVECTOR3* v1, D3DXVECTOR3* v2);
 
 	protected:
 		bool _Init();
 		bool _FBXInit();
 
 		std::shared_ptr<Mesh> _LoadFBXFile(const std::string& FilePath);
-		std::shared_ptr<Mesh> _LoadHeightMap(const std::string& FilePath);
 
 		//@brief 
-		//ÀÓ½Ã·Î ¸Å½¬¸¸ »Ì¾Æ³»µµ·Ï ¸¸µç ÇÔ¼ö
-		//¸ÓÅ×¸®¾ó Á¤º¸´Â ÀÓ½Ã·Î ÃÊ·Ï»öÀ¸·Î ÁöÁ¤
+		//ì„ì‹œë¡œ ë§¤ì‰¬ë§Œ ë½‘ì•„ë‚´ë„ë¡ ë§Œë“  í•¨ìˆ˜
+		//ë¨¸í…Œë¦¬ì–¼ ì •ë³´ëŠ” ì„ì‹œë¡œ ì´ˆë¡ìƒ‰ìœ¼ë¡œ ì§€ì •
 		//@todo
-		//fbxÆÄÀÏÀÇ ³ëµå¸¦ ¼øÈ¸ÇÏ¸é¼­ ¸Ş½¬, ¿¡´Ï¸ŞÀÌ¼Ç Ä³½¬, ÅØ½ºÃÄ µîÀÇ Á¤º¸¸¦ »Ì¾Æ
-		//¸¸µç ÀÚ·áÇü¿¡ º¸°üÇÏ´Â ±â´ÉÀ» ±¸ÇöÇØ¾ß ÇÑ´Ù.
+		//fbxíŒŒì¼ì˜ ë…¸ë“œë¥¼ ìˆœíšŒí•˜ë©´ì„œ ë©”ì‰¬, ì—ë‹ˆë©”ì´ì…˜ ìºì‰¬, í…ìŠ¤ì³ ë“±ì˜ ì •ë³´ë¥¼ ë½‘ì•„
+		//ë§Œë“  ìë£Œí˜•ì— ë³´ê´€í•˜ëŠ” ê¸°ëŠ¥ì„ êµ¬í˜„í•´ì•¼ í•œë‹¤.
 		std::shared_ptr<Mesh> _ReadVerticesFromFBX(FbxScene* pScene);
 
 
@@ -53,14 +51,14 @@ namespace pooptube {
 		LPDIRECT3DDEVICE9				mDevice;
 
 		//@brief
-		//sdk¿¡¼­ Á¦°øÇÏ´Â FbxManager
+		//sdkì—ì„œ ì œê³µí•˜ëŠ” FbxManager
 		FbxManager*						mManager = nullptr;
 
 		//@brief
-		//·ÎµåµÈ fbxmeshÁ¤º¸¸¦ Áã°íÀÖ´Â meshtable
-		std::map<std::string, std::shared_ptr<Mesh>>	mFBXMeshTable;
-		std::map<std::string, std::shared_ptr<Mesh>>	mHeightMapTable;
-		std::map<std::wstring, LPDIRECT3DTEXTURE9>		mTextureTable;
+		//ë¡œë“œëœ fbxmeshì •ë³´ë¥¼ ì¥ê³ ìˆëŠ” meshtable
+		std::map<std::string, std::shared_ptr<Mesh>>			mFBXMeshTable;
+		std::map<std::string, std::shared_ptr<HeightMapData>>	mHeightMapTable;
+		std::map<std::wstring, LPDIRECT3DTEXTURE9>				mTextureTable;
 
 
 	};

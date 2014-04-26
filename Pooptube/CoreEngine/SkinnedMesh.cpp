@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "SkinnedMesh.h"
 #include "ObjectManager.h"
 #include "resourcemanager.h"
@@ -36,14 +36,11 @@ namespace pooptube {
 		if (ResourceType & RESOURCE_FBX) {
 			mMesh = ResourceManager::GetInstance()->LoadMeshFromFBX(MeshFilePath);
 		}
-		else if (ResourceType & RESOURCE_HEIGHTMAP) {
-			mMesh = ResourceManager::GetInstance()->LoadMeshFromHeightMap(MeshFilePath);
-		}
 
 		if (mMesh == nullptr)
 			return false;
 
-		//¹öÅÃ½º ¹öÆÛ »ý¼º
+		//ë²„íƒìŠ¤ ë²„í¼ ìƒì„±
 		if (GetDevice()->CreateVertexBuffer(mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX),
 			0, D3DFVF_CUSTOMVERTEX,
 			D3DPOOL_DEFAULT, &mMeshVertexBuffer, NULL) < 0)
@@ -51,22 +48,22 @@ namespace pooptube {
 			return false;
 		}
 
-		//¶ô°ú ¾ð¶ôÀ» ÃÖ´ëÇÑ ÃâÀÏ ¼ö ÀÖ´Â ¹æ¹ýÀ» ¿¬±¸ÇØ¾ßÇÔ
+		//ë½ê³¼ ì–¸ë½ì„ ìµœëŒ€í•œ ì¶œì¼ ìˆ˜ ìžˆëŠ” ë°©ë²•ì„ ì—°êµ¬í•´ì•¼í•¨
 		VOID* pVertices;
 		if (mMeshVertexBuffer->Lock(0, mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
 			return nullptr;
 		memcpy(pVertices, mMesh->GetVertices(), mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX));
 		mMeshVertexBuffer->Unlock();
 
-		//ÀÎµ¦½º ¹öÆÛ »ý¼º
-		if (GetDevice()->CreateIndexBuffer(mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX16,
+		//ì¸ë±ìŠ¤ ë²„í¼ ìƒì„±
+		if (GetDevice()->CreateIndexBuffer(mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX32,
 			D3DPOOL_DEFAULT, &mMeshIndexBuffer, NULL) < 0)
 		{
 			return false;
 		}
 
-		/// ÀÎµ¦½º¹öÆÛ¸¦ °ªÀ¸·Î Ã¤¿î´Ù. 
-		/// ÀÎµ¦½º¹öÆÛÀÇ Lock()ÇÔ¼ö¸¦ È£ÃâÇÏ¿© Æ÷ÀÎÅÍ¸¦ ¾ò¾î¿Â´Ù.
+		/// ì¸ë±ìŠ¤ë²„í¼ë¥¼ ê°’ìœ¼ë¡œ ì±„ìš´ë‹¤. 
+		/// ì¸ë±ìŠ¤ë²„í¼ì˜ Lock()í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ í¬ì¸í„°ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 		VOID* pIndices;
 		if (mMeshIndexBuffer->Lock(0, mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), (void**)&pIndices, 0) < 0)
 			return false;
@@ -77,17 +74,15 @@ namespace pooptube {
 	}
 
 	void SkinnedMesh::Render() {
-		if (mResourceType & RESOURCE_FBX) {
-			GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
-		}
+		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
 
-		//Çà·ÄÀÇ ¿¬»êÀº node¿¡¼­ »ó¼Ó¹Þ´Â´Ù.
+		//í–‰ë ¬ì˜ ì—°ì‚°ì€ nodeì—ì„œ ìƒì†ë°›ëŠ”ë‹¤.
 		Node::Render();
 
-		//µð¹ÙÀÌ½º¿¡ ¹öÅØ½º¹öÆÛ¸¦ Àü´Þ
+		//ë””ë°”ì´ìŠ¤ì— ë²„í…ìŠ¤ë²„í¼ë¥¼ ì „ë‹¬
 		GetDevice()->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
 
-		//ÀÎµ¦½º ¼³Á¤
+		//ì¸ë±ìŠ¤ ì„¤ì •
 		GetDevice()->SetIndices(mMeshIndexBuffer);
 
 		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());

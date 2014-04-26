@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "ThirdPersonCamera.h"
 
@@ -35,9 +35,9 @@ namespace pooptube {
 	void ThirdPersonCamera::Update(float dTime) {
 		Camera::Update(dTime);
 
-		//Á¹¶ó ´ëÃæ±¸ÇöµÊ. ¾÷¹éÅÍÀÇ º¯È¯±îÁö »ý°¢ÇØ¼­ ±¸ÇöÇØ¾ßÇÔ
+		//ì¡¸ë¼ ëŒ€ì¶©êµ¬í˜„ë¨. ì—…ë°±í„°ì˜ ë³€í™˜ê¹Œì§€ ìƒê°í•´ì„œ êµ¬í˜„í•´ì•¼í•¨
 		D3DXVECTOR3 FrontPoint = mTarget->GetPosition();
-		FrontPoint.y += 3.f;
+		FrontPoint.y += 2.f;
 		Node::SetFrontPoint(FrontPoint);
 
 		D3DXVECTOR3 Pos = 2.f * mTarget->GetPosition() - mTarget->GetFrontPoint();

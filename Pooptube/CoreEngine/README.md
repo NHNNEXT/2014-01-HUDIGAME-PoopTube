@@ -1,7 +1,7 @@
-# CoreEngine
+ï»¿# CoreEngine
 
-·»´õ¸µ°ú °¢Á¾ ÀÌº¥Æ® ·ÎÁ÷À» ´ã´çÇÏ´Â ÄÚ¾î ¿£Áø ºÎºÐ ÀÔ´Ï´Ù.
+ë Œë”ë§ê³¼ ê°ì¢… ì´ë²¤íŠ¸ ë¡œì§ì„ ë‹´ë‹¹í•˜ëŠ” ì½”ì–´ ì—”ì§„ ë¶€ë¶„ ìž…ë‹ˆë‹¤.
 
-ÀÌ ÇÁ·ÎÁ§Æ®´Â FBX SDK 2014.2.1¹öÀüÀ» »ç¿ëÇÏ°í ÀÖ½À´Ï´Ù.
+ì´ í”„ë¡œì íŠ¸ëŠ” FBX SDK 2014.2.1ë²„ì „ì„ ì‚¬ìš©í•˜ê³  ìžˆìŠµë‹ˆë‹¤.
 http://usa.autodesk.com/adsk/servlet/pc/item?siteID=123112&id=10775847
-À§ ¸µÅ©¿¡¼­ ´Ù¿î·Îµå ÇØÁÖ¼¼¿ä.
+ìœ„ ë§í¬ì—ì„œ ë‹¤ìš´ë¡œë“œ í•´ì£¼ì„¸ìš”.

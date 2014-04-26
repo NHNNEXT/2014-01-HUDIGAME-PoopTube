@@ -1,4 +1,4 @@
-// CLICore.h
+﻿// CLICore.h
 
 #pragma once
 
@@ -8,6 +8,6 @@ namespace Core {
 
 	public ref class Object
 	{
-		// TODO: ���⿡ �� Ŭ������ ���� �޼��带 �߰��մϴ�.
+		// TODO: 여기에 이 클래스에 대한 메서드를 추가합니다.
 	};
 }

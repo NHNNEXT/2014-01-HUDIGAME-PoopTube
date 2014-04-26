@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "D3D9Renderer.h"
 
@@ -21,7 +21,7 @@ namespace pooptube {
 		ZeroMemory( &d3dPresentParameters, sizeof(d3dPresentParameters) );
 
 		D3DMULTISAMPLE_TYPE mst = D3DMULTISAMPLE_NONE;
-		/* »ùÇÃ¸µ
+		/* ìƒ˜í”Œë§
 		switch(4)
 		{
 		case 1: mst = D3DMULTISAMPLE_NONMASKABLE;break;
@@ -52,7 +52,7 @@ namespace pooptube {
 		d3dPresentParameters.hDeviceWindow = hwnd;
 		d3dPresentParameters.Windowed = isWindowed;
 		
-		//±íÀÌ ¹öÆÛ ¼³Á¤ Ãß°¡
+		//ê¹Šì´ ë²„í¼ ì„¤ì • ì¶”ê°€
 		d3dPresentParameters.EnableAutoDepthStencil = TRUE;
 		d3dPresentParameters.AutoDepthStencilFormat = D3DFMT_D16;
 
@@ -69,9 +69,9 @@ namespace pooptube {
 			return false;
 		}
 
-		// ÄÃ¸µÀ» ¼³Á¤ÇÕ´Ï´Ù.
+		// ì»¬ë§ì„ ì„¤ì •í•©ë‹ˆë‹¤.
 		mD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-		// z¹öÆÛ¸¦ »ç¿ëÇÕ´Ï´Ù.
+		// zë²„í¼ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤.
 		mD3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 		return true;
@@ -102,7 +102,7 @@ namespace pooptube {
 		if ( mD3DDevice == nullptr )
 			return false;
 
-		//z¹öÆÛ Ãß°¡
+		//zë²„í¼ ì¶”ê°€
 		if( FAILED(mD3DDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(255,0,0,0), 1.0f, 0 )) )
 			return false;
 

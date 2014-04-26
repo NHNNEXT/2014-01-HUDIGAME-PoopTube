@@ -1,4 +1,4 @@
-
+﻿
 #include "stdafx.h"
 #include "Scene.h"
 #include "Application.h"
@@ -23,6 +23,8 @@ namespace pooptube {
 	}
 
 	bool Scene::Init() {
+		if (!Node::Init())
+			return false;
 		return true;
 	}
 

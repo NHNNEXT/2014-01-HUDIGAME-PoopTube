@@ -1,66 +1,91 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Application.h"
 #include "CollisionBox.h"
 #include "CollisionManager.h"
+#include "SkinnedMesh.h"
 
 namespace pooptube {
-	CollisionBox::CollisionBox()
-	{
-		CollisionBox( COLLISION_TYPE::COLLISION_NONE, 0.0f, 1.0f );
+	CollisionBox::CollisionBox() {
 	}
 
-	CollisionBox::CollisionBox( COLLISION_TYPE collisionType, float bound, float mass )
-		: mCollisionType( collisionType )
-		, mBound( bound )
-		, mMass( mass )
-	{
-		mAxisLen[0] = 0.5f;
-		mAxisLen[1] = 0.5f;
-		mAxisLen[2] = 0.5f;
+	CollisionBox::~CollisionBox() {
 	}
 
-	CollisionBox::~CollisionBox()
-	{
-	}
-
-	std::shared_ptr<CollisionBox> CollisionBox::Create( )
-	{
-		return Create( COLLISION_TYPE::COLLISION_NONE, 0.0f, 1.0f );
-	}
-	std::shared_ptr<CollisionBox> CollisionBox::Create( COLLISION_TYPE collisionType, float bound, float mass )
-	{
+	std::shared_ptr<CollisionBox> CollisionBox::Create() {
 		std::shared_ptr<CollisionBox> pCollisionBox(new CollisionBox);
 
 		if( pCollisionBox->Init() ) {
 			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
+			return pCollisionBox;
 		}
-		//Ȥ�� ���� ����ó�� �߰�
 		else 
 			return nullptr;
+	}
 
-		return pCollisionBox;
+	bool CollisionBox::Init() {
+		if (!Node::Init())
+			return false;
+
+		mAxisLen[AXIS_X] = 0.5f;
+		mAxisLen[AXIS_Y] = 0.5f;
+		mAxisLen[AXIS_Z] = 0.5f;
+
+		return true;
+	}
+
+	void CollisionBox::SetAABBCollisionBoxFromVertices(MESH_CUSTOM_VERTEX* vertices, UINT Size) {
+
+		MESH_CUSTOM_VERTEX Max;
+		MESH_CUSTOM_VERTEX Min;
+
+		if (Size == 0)
+			return;
+
+		Max = vertices[0];
+		Min = vertices[0];
+
+		for (UINT i = 1; i < Size; ++i) {
+			Min.position.x = __min(Min.position.x, vertices[i].position.x);
+			Min.position.y = __min(Min.position.y, vertices[i].position.y);
+			Min.position.z = __min(Min.position.z, vertices[i].position.z);
+			Max.position.x = __max(Max.position.x, vertices[i].position.x);
+			Max.position.y = __max(Max.position.y, vertices[i].position.y);
+			Max.position.z = __max(Max.position.z, vertices[i].position.z);
+		}
+
+		mAxisLen[AXIS_X] = (Max.position.x - Min.position.x) * 0.5f;
+		mAxisLen[AXIS_Y] = (Max.position.y - Min.position.y) * 0.5f;
+		mAxisLen[AXIS_Z] = (Max.position.z - Min.position.z) * 0.5f;
+
+		Node::Translation(D3DXVECTOR3(0.f, mAxisLen[AXIS_Y], 0.f));
+
+		return;
+	}
+
+
+	void CollisionBox::SetAABBCollisionBoxFromSkinnedMesh(std::shared_ptr<SkinnedMesh> pMesh) {
+		SetAABBCollisionBoxFromVertices(pMesh->GetMeshData()->GetVertices(), pMesh->GetMeshData()->GetVertexCount());
 	}
 
 	void CollisionBox::Render()
 	{
-#ifdef _DEBUG
-		LPDIRECT3DDEVICE9 pDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+		Node::Render();
 
 		D3DXMATRIX projMat, viewMat;
-		pDevice->GetTransform( D3DTS_PROJECTION, &projMat );
-		pDevice->GetTransform( D3DTS_VIEW, &viewMat );
+		GetDevice()->GetTransform( D3DTS_PROJECTION, &projMat );
+		GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
 		viewMat *= projMat;
 
 		ID3DXLine *Line;
 
-		if( D3DXCreateLine( pDevice, &Line ) != D3D_OK )
+		if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
 			return;
 		Line->SetWidth( 1 );
 		Line->SetAntialias( true );
 
 		D3DXVECTOR3 mXDirVec, tXDirVec;
-		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontPoint() );
-		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontPoint() };
+		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontVector() );
+		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontVector() };
 		D3DXVECTOR3 vF[3];
 		for( int i = 0; i < 3; ++i ){
 			vF[i] = mAxisDir[i] * mAxisLen[i];
@@ -97,19 +122,17 @@ namespace pooptube {
 		Line->End();
 
 		Line->Release();
-#endif
 	}
 
-	void CollisionBox::Update( float dTime )
-	{
+	void CollisionBox::Update( float dTime ) {
 		Node::Update( dTime );
 	}
 
-	bool CollisionBox::CollisionCheck( const CollisionBox* target )
-	{
+	bool CollisionBox::CollisionCheck( const CollisionBox* target ) {
 		D3DXVECTOR3 D = GetPosition() - target->GetPosition();
 
 		//Check By Sphere
+		//속도 문제 개선 필요 여기 내용들은 매번 업데이트마다 순회함
 		if( D3DXVec3Length( &D ) > D3DXVec3Length( &(
 			D3DXVECTOR3( mAxisLen[0], mAxisLen[1], mAxisLen[2] )
 			- D3DXVECTOR3( target->mAxisLen[0], target->mAxisLen[1], target->mAxisLen[2] )

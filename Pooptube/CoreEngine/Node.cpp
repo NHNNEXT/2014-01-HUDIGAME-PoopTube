@@ -1,4 +1,4 @@
-
+Ôªø
 #include "stdafx.h"
 #include "Node.h"
 
@@ -8,10 +8,10 @@ namespace pooptube {
 	Node::Node() {
 	}
 	Node::~Node() {
-		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
-			ObjectManager::GetInstance()->RemoveObject((*iter));
-		}
-		mChildList.clear();
+// 		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
+// 			ObjectManager::GetInstance()->RemoveObject((*iter));
+// 		}
+// 		mChildList.clear();
 	}
 
 	std::shared_ptr<Node> Node::Create() {
@@ -28,7 +28,7 @@ namespace pooptube {
 	}
 
 	void Node::Render() {
-		// TODO: «‡∑ƒ ∞ËªÍ
+		// TODO: ÌñâÎ†¨ Í≥ÑÏÇ∞
 		D3DXMATRIXA16	MatWorld;
 		D3DXMATRIXA16	MatTrans;
 		D3DXMATRIXA16	MatScale;
@@ -36,13 +36,13 @@ namespace pooptube {
 		
 		D3DXMatrixIdentity(&MatWorld);
 
-		//ø¿∏•º’ ¡¬«•∞Ë
-		//«¡∑–∆Æ πÈ≈Õ¿« ∞™ø° µ˚∂Û »∏¿¸
+		//Ïò§Î•∏ÏÜê Ï¢åÌëúÍ≥Ñ
+		//ÌîÑÎ°†Ìä∏ Î∞±ÌÑ∞Ïùò Í∞íÏóê Îî∞Îùº ÌöåÏ†Ñ
 		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &mFrontPoint, &mUpVec);
-		//∫‰«‡∑ƒ¿ª ∞°¡Æø‘±‚ ∂ßπÆø° ∑Œ≈◊¿Ãº««— ∞Õ√≥∑≥ «‡∑ƒ¿ª ∫Ø»Ø«“ « ø‰∞° ¿÷¥Ÿ.
-		//∫‰«‡∑ƒ¿∫ ¿⁄Ω≈¿Ã øÚ¡˜¿Ã¥¬ ∞Õ¿Ã æ∆¥— ¿⁄Ω≈¿ª ¡¶ø‹«— ∏µÁ ¡¬«•µÈ¿Ã øÚ¡˜¿Ãµµ∑œ µ«æÓ¿÷¥¬ «‡∑ƒ¿Ã¥Ÿ.
-		//(ƒ´∏ﬁ∂Û¿« ¡¬«•∞Ëø° ∏¬√Á¡Æ¿÷¥Ÿ)
-		//∫‰«‡∑ƒ¿« ø™«‡∑ƒ¿∫ transpose«ÿ¡ÿ «¸≈¬øÕ µø¿œ«œ¥Ÿ.
+		//Î∑∞ÌñâÎ†¨ÏùÑ Í∞ÄÏ†∏ÏôîÍ∏∞ ÎïåÎ¨∏Ïóê Î°úÌÖåÏù¥ÏÖòÌïú Í≤ÉÏ≤òÎüº ÌñâÎ†¨ÏùÑ Î≥ÄÌôòÌï† ÌïÑÏöîÍ∞Ä ÏûàÎã§.
+		//Î∑∞ÌñâÎ†¨ÏùÄ ÏûêÏã†Ïù¥ ÏõÄÏßÅÏù¥Îäî Í≤ÉÏù¥ ÏïÑÎãå ÏûêÏã†ÏùÑ Ï†úÏô∏Ìïú Î™®Îì† Ï¢åÌëúÎì§Ïù¥ ÏõÄÏßÅÏù¥ÎèÑÎ°ù ÎêòÏñ¥ÏûàÎäî ÌñâÎ†¨Ïù¥Îã§.
+		//(Ïπ¥Î©îÎùºÏùò Ï¢åÌëúÍ≥ÑÏóê ÎßûÏ∂∞Ï†∏ÏûàÎã§)
+		//Î∑∞ÌñâÎ†¨Ïùò Ïó≠ÌñâÎ†¨ÏùÄ transposeÌï¥Ï§Ä ÌòïÌÉúÏôÄ ÎèôÏùºÌïòÎã§.
 		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
 		D3DXMatrixTranspose(&MatRotate, &MatRotate);
 
@@ -53,29 +53,29 @@ namespace pooptube {
 
 		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 
-		for (auto child : mChildList) {
-			child->Render();
-		}
+// 		for (auto child : mChildList) {
+// 			child->Render();
+// 		}
 	}
 	void Node::Update(float dTime) {
-		for (auto child : mChildList) {
-			child->Update(dTime);
-		}
+// 		for (auto child : mChildList) {
+// 			child->Update(dTime);
+// 		}
 	}
 
-	void Node::AddChild(Node* pChild) {
-		mChildList.push_back(pChild);
-	}
-	void Node::RemoveChild(Node* pChild) {
-		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
-			if ((*iter) == pChild) {
-				//(*iter).reset();
-				ObjectManager::GetInstance()->RemoveObject((*iter));
-				mChildList.erase(iter);
-				break;
-			}
-		}
-	}
+// 	void Node::AddChild(Node* pChild) {
+// 		mChildList.push_back(pChild);
+// 	}
+// 	void Node::RemoveChild(Node* pChild) {
+// 		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
+// 			if ((*iter) == pChild) {
+// 				//(*iter).reset();
+// 				ObjectManager::GetInstance()->RemoveObject((*iter));
+// 				mChildList.erase(iter);
+// 				break;
+// 			}
+// 		}
+// 	}
 
 	void Node::DisableKeyEvent() {
 		if (mIsKeyEventEnabled == true) {
@@ -149,7 +149,7 @@ namespace pooptube {
 	D3DXVECTOR3 Node::GetFrontVector() {
 		D3DXVECTOR3 FrontVec = mFrontPoint - mPosition;
 		D3DXVec3Normalize(&FrontVec, &FrontVec);
-		//y√‡¿ª ¡◊ø©πˆ∏≤
+		//yÏ∂ïÏùÑ Ï£ΩÏó¨Î≤ÑÎ¶º
 		FrontVec.y = 0.f;
 		return FrontVec;
 	}

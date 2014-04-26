@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "ResourceManager.h"
 #include "SkyBox.h"
 #include "Mesh.h"
@@ -52,7 +52,7 @@ namespace pooptube{
 		float y = GetPosition().y;
 		float z = GetPosition().z;
 
-		/// »óÀÚ(cube)¸¦ ·»´õ¸µÇÏ±âÀ§ÇØ 8°³ÀÇ Á¤Á¡À» ¼±¾ð
+		/// ìƒìž(cube)ë¥¼ ë Œë”ë§í•˜ê¸°ìœ„í•´ 8ê°œì˜ ì •ì ì„ ì„ ì–¸
 		SKYBOX_CUSTOM_VERTEX vertices[] =
 		{
 			//back
@@ -92,9 +92,9 @@ namespace pooptube{
 			{ D3DXVECTOR3(x + w, y + h, z - d), 0.0f, 0.0f },
 		};
 
-		/// Á¤Á¡¹öÆÛ »ý¼º
-		/// 8°³ÀÇ »ç¿ëÀÚÁ¤Á¡À» º¸°üÇÒ ¸Þ¸ð¸®¸¦ ÇÒ´çÇÑ´Ù.
-		/// FVF¸¦ ÁöÁ¤ÇÏ¿© º¸°üÇÒ µ¥ÀÌÅÍÀÇ Çü½ÄÀ» ÁöÁ¤ÇÑ´Ù.
+		/// ì •ì ë²„í¼ ìƒì„±
+		/// 8ê°œì˜ ì‚¬ìš©ìžì •ì ì„ ë³´ê´€í•  ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹í•œë‹¤.
+		/// FVFë¥¼ ì§€ì •í•˜ì—¬ ë³´ê´€í•  ë°ì´í„°ì˜ í˜•ì‹ì„ ì§€ì •í•œë‹¤.
 		if (FAILED(GetDevice()->CreateVertexBuffer(24 * sizeof(SKYBOX_CUSTOM_VERTEX),
 			0, D3DFVF_CUSTOMVERTEX_SKYBOX,
 			D3DPOOL_DEFAULT, &mVertexBuffer, NULL)))
@@ -102,8 +102,8 @@ namespace pooptube{
 			return false;
 		}
 
-		/// Á¤Á¡¹öÆÛ¸¦ °ªÀ¸·Î Ã¤¿î´Ù. 
-		/// Á¤Á¡¹öÆÛÀÇ Lock()ÇÔ¼ö¸¦ È£ÃâÇÏ¿© Æ÷ÀÎÅÍ¸¦ ¾ò¾î¿Â´Ù.
+		/// ì •ì ë²„í¼ë¥¼ ê°’ìœ¼ë¡œ ì±„ìš´ë‹¤. 
+		/// ì •ì ë²„í¼ì˜ Lock()í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ í¬ì¸í„°ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 		VOID* pVertices;
 		if (FAILED(mVertexBuffer->Lock(0, sizeof(vertices), (void**)&pVertices, 0)))
 			return false;
@@ -111,7 +111,7 @@ namespace pooptube{
 		mVertexBuffer->Unlock();
 
 
-		/// »óÀÚ(cube)¸¦ ·»´õ¸µÇÏ±âÀ§ÇØ 12°³ÀÇ ¸éÀ» ¼±¾ð
+		/// ìƒìž(cube)ë¥¼ ë Œë”ë§í•˜ê¸°ìœ„í•´ 12ê°œì˜ ë©´ì„ ì„ ì–¸
 		MESH_CUSTOM_INDEX indices[] = { 0, 1, 2,
 			2, 3, 0,
 			4, 5, 6,
@@ -125,16 +125,16 @@ namespace pooptube{
 			20, 21, 22,
 			22, 23, 20 };
 
-		/// ÀÎµ¦½º¹öÆÛ »ý¼º
-		/// D3DFMT_INDEX16Àº ÀÎµ¦½ºÀÇ ´ÜÀ§°¡ 16ºñÆ® ¶ó´Â °ÍÀÌ´Ù.
-		/// ¿ì¸®´Â MYINDEX ±¸Á¶Ã¼¿¡¼­ WORDÇüÀ¸·Î ¼±¾ðÇßÀ¸¹Ç·Î D3DFMT_INDEX16À» »ç¿ëÇÑ´Ù.
-		if (FAILED(GetDevice()->CreateIndexBuffer(36 * sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &mIndexBuffer, NULL)))
+		/// ì¸ë±ìŠ¤ë²„í¼ ìƒì„±
+		/// D3DFMT_INDEX16ì€ ì¸ë±ìŠ¤ì˜ ë‹¨ìœ„ê°€ 16ë¹„íŠ¸ ë¼ëŠ” ê²ƒì´ë‹¤.
+		/// ìš°ë¦¬ëŠ” MYINDEX êµ¬ì¡°ì²´ì—ì„œ WORDí˜•ìœ¼ë¡œ ì„ ì–¸í–ˆìœ¼ë¯€ë¡œ D3DFMT_INDEX16ì„ ì‚¬ìš©í•œë‹¤.
+		if (FAILED(GetDevice()->CreateIndexBuffer(36 * sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX32, D3DPOOL_DEFAULT, &mIndexBuffer, NULL)))
 		{
 			return false;
 		}
 
-		/// ÀÎµ¦½º¹öÆÛ¸¦ °ªÀ¸·Î Ã¤¿î´Ù. 
-		/// ÀÎµ¦½º¹öÆÛÀÇ Lock()ÇÔ¼ö¸¦ È£ÃâÇÏ¿© Æ÷ÀÎÅÍ¸¦ ¾ò¾î¿Â´Ù.
+		/// ì¸ë±ìŠ¤ë²„í¼ë¥¼ ê°’ìœ¼ë¡œ ì±„ìš´ë‹¤. 
+		/// ì¸ë±ìŠ¤ë²„í¼ì˜ Lock()í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ í¬ì¸í„°ë¥¼ ì–»ì–´ì˜¨ë‹¤.
 		VOID* pIndices;
 		if (FAILED(mIndexBuffer->Lock(0, sizeof(indices), (void**)&pIndices, 0)))
 			return false;
@@ -146,16 +146,17 @@ namespace pooptube{
 
 	void SkyBox::Render() {
 
-		//Çà·ÄÀÇ ¿¬»êÀº node¿¡¼­ »ó¼Ó¹Þ´Â´Ù.
+		//í–‰ë ¬ì˜ ì—°ì‚°ì€ nodeì—ì„œ ìƒì†ë°›ëŠ”ë‹¤.
 		Node::Render();
 
+		//ë¹›ì„ëˆë‹¤.
 		GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX_SKYBOX);
 
-		//µð¹ÙÀÌ½º¿¡ ¹öÅØ½º¹öÆÛ¸¦ Àü´Þ
+		//ë””ë°”ì´ìŠ¤ì— ë²„í…ìŠ¤ë²„í¼ë¥¼ ì „ë‹¬
 		GetDevice()->SetStreamSource(0, mVertexBuffer, 0, sizeof(SKYBOX_CUSTOM_VERTEX));
 
-		//ÀÎµ¦½º ¼³Á¤
+		//ì¸ë±ìŠ¤ ì„¤ì •
 		GetDevice()->SetIndices(mIndexBuffer);
 
 		GetDevice()->SetTexture(0, mBackTexture);
@@ -179,8 +180,8 @@ namespace pooptube{
 
 		GetDevice()->SetTexture(0, mRightTexture);
 		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 30, 4);
-
-
+		
+		GetDevice()->SetTexture(0, 0);
 		GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
 	}
 

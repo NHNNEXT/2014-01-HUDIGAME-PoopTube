@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 
 class CircularBuffer
@@ -21,11 +21,11 @@ public:
 
 	bool Read(char* data, size_t bytes);
 
-	/// µ¥ÀÌÅÍ ÈÉÃÄº¸±â (Á¦°ÅÇÏÁö ¾Ê°í)
+	/// ë°ì´í„° í›”ì³ë³´ê¸° (ì œê±°í•˜ì§€ ì•Šê³ )
 	void Peek(char* data);
 	bool Peek(char* data, size_t bytes);
 
-	/// µ¥ÀÌÅÍ Á¦°Å
+	/// ë°ì´í„° ì œê±°
 	bool Consume(size_t bytes);
 
 private:

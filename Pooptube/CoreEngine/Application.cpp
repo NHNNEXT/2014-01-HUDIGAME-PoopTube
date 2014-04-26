@@ -1,4 +1,4 @@
-
+ï»¿
 #include "stdafx.h"
 #include "Application.h"
 #include "NetworkSystem.h"
@@ -46,7 +46,7 @@ namespace pooptube {
 		return true;
 	}
 	bool Application::Run() {
-		// ÇÁ·¹ÀÓ °è»ê¿¡ ¾²ÀÏ º¯¼öµé
+		// í”„ë ˆì„ ê³„ì‚°ì— ì“°ì¼ ë³€ìˆ˜ë“¤
 		float fpsTimer = 0.f;
 		int prevTime = 0;
 		int nowTime = 0;
@@ -102,7 +102,7 @@ namespace pooptube {
 
 		RegisterClassEx( &wcex );
 
-		DWORD style = WS_OVERLAPPEDWINDOW; // FullscreenÀÏ¶§´Â WS_POPUPÀ¸·Î ÇÏ´øµ¥ ±× ÀÌÀ¯´Â?
+		DWORD style = WS_OVERLAPPEDWINDOW; // Fullscreenì¼ë•ŒëŠ” WS_POPUPìœ¼ë¡œ í•˜ë˜ë° ê·¸ ì´ìœ ëŠ”?
 
 		RECT wr = {0, 0, width, height};
 		AdjustWindowRect( &wr, style, FALSE );
@@ -156,7 +156,7 @@ namespace pooptube {
 
 	bool Application::_UpdateFrame( float& fpsTimer, int& prevTime, int& nowTime, int& frameCount ) {
 		frameCount++;
-		nowTime = timeGetTime(); // ÈÄ¿¡ std::chrono ¼öÁ¤ÇÏ¿© °³¼±
+		nowTime = timeGetTime(); // í›„ì— std::chrono ìˆ˜ì •í•˜ì—¬ ê°œì„ 
 		if ( prevTime == 0.f )
 			prevTime = nowTime;
 
@@ -210,7 +210,7 @@ namespace pooptube {
 
 			case FD_WRITE:
 			{
-				/// ½ÇÁ¦·Î ¹öÆÛ¿¡ ÀÖ´Â°Íµé ²¨³»¼­ º¸³»±â
+				/// ì‹¤ì œë¡œ ë²„í¼ì— ìˆëŠ”ê²ƒë“¤ êº¼ë‚´ì„œ ë³´ë‚´ê¸°
 				NetworkSystem::GetInstance()->Send();
 			}
 				break;

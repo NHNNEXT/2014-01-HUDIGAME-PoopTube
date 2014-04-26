@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Mesh.h"
 #include "Application.h"
 
@@ -27,6 +27,14 @@ namespace pooptube {
 		if (!Node::Init())
 			return false;
 
+		ZeroMemory(&mMaterial, sizeof(D3DMATERIAL9));
+		mMaterial.Specular.r = mMaterial.Diffuse.r = mMaterial.Ambient.r = 0.0f;
+		mMaterial.Specular.g = mMaterial.Diffuse.g = mMaterial.Ambient.g = 0.0f;
+		mMaterial.Specular.b = mMaterial.Diffuse.b = mMaterial.Ambient.b = 0.0f;
+		mMaterial.Specular.a = mMaterial.Diffuse.a = mMaterial.Ambient.a = 0.0f;
+		GetDevice()->SetMaterial(&mMaterial);
+
+
 		mVertexCount = VertexCount;
 		mPolygonCount = PolygonCount;
 
@@ -39,20 +47,20 @@ namespace pooptube {
 		memset(mVertices, 0, VertexCount);
 		memset(mIndices, 0, PolygonCount);
 
-		//¾Æ·¡ ÇÔ¼öµéÀ» »ç¿ëÇÏ¸é heightmapÀÌ´ø fbx´ø 
-		//directx¿¡¼­ Á¦°øÇÏ´Â ¸Ş½¬ ÀÎÅÍÆäÀÌ½º·Î ¸¸µé ¼ö ÀÖÀ» °Í °°´Ù.
-		//ÇÏÁö¸¸ ½Ã°£ÀÌ ¾ø¾î¼­ ÀÔ¸À¸¸ ´ÙÁö°íÀÖ´Ù.
-		//¸¸¾à ¼º°øÇÑ´Ù¸é directx¿¡¼­ Á¦°øÇÏ´Â ´Ù¾çÇÑ ¸Ş½ÃÁö¿ø ÇÔ¼öµéÀ» »ç¿ëÇÒ ¼ö ÀÖ´Ù.
-		//¸¸¾à ´Ù¸¥ÆÀ¿¡¼­ ÀÌ±ÛÀ» º»´Ù¸é ¾îÂ¼¸é ±¸ÇöÇØÁÖ½ÇÁöµµ...?
+		//ì•„ë˜ í•¨ìˆ˜ë“¤ì„ ì‚¬ìš©í•˜ë©´ heightmapì´ë˜ fbxë˜ 
+		//directxì—ì„œ ì œê³µí•˜ëŠ” ë©”ì‰¬ ì¸í„°í˜ì´ìŠ¤ë¡œ ë§Œë“¤ ìˆ˜ ìˆì„ ê²ƒ ê°™ë‹¤.
+		//í•˜ì§€ë§Œ ì‹œê°„ì´ ì—†ì–´ì„œ ì…ë§›ë§Œ ë‹¤ì§€ê³ ìˆë‹¤.
+		//ë§Œì•½ ì„±ê³µí•œë‹¤ë©´ directxì—ì„œ ì œê³µí•˜ëŠ” ë‹¤ì–‘í•œ ë©”ì‹œì§€ì› í•¨ìˆ˜ë“¤ì„ ì‚¬ìš©í•  ìˆ˜ ìˆë‹¤.
+		//ë§Œì•½ ë‹¤ë¥¸íŒ€ì—ì„œ ì´ê¸€ì„ ë³¸ë‹¤ë©´ ì–´ì©Œë©´ êµ¬í˜„í•´ì£¼ì‹¤ì§€ë„...?
 		//http://telnet.or.kr/directx/graphics/reference/d3dx/functions/mesh/d3dxcreatemesh.htm
-		//Ä£ÀıÇÏ°Ôµµ ¼³¸íurl±îÁö ´Ş¾Æµ×´Ù.
+		//ì¹œì ˆí•˜ê²Œë„ ì„¤ëª…urlê¹Œì§€ ë‹¬ì•„ë’€ë‹¤.
 		//LPD3DXMESH test;
 		//D3DXCreateMesh(0, mVertexCount, 0, MESH_CUSTOM_VERTEX, mDevice, &test);
 		//D3DVERTEXELEMENT9;
 
-		//d3dx¿¡¼­ Ä£ÀıÇÏ°Ôµµ meshÀÇ ÀÎµ¦½º ¹öÆÛ¸¦ stripÀ¸·Î ÇØÁÖ´Â ÇÔ¼ö°¡ ÀÖ´Â °Í °°´Ù.
-		//Á¤È®ÇÑ ±â´ÉÀº ¸ğ¸£°Ú´Ù¸¸ ¾Æ¸¶ ¿ì¸®°¡ ¿øÇÏ´Â ±× ±â´ÉÀ» °¡Áö°í ÀÖ´Â µí ÇÏ´Ù.
-		//ÇÏÁö¸¸ d3dx¿¡¼­ È£È¯µÇ´Â meshÀÎÅÍÆäÀÌ½º ÇüÅÂ¸¦ °¡Áö°í ÀÖ¾î¾ß¸¸ ÀÌ ÇÔ¼ö¸¦ »ç¿ëÇÒ ¼ö ÀÖ´Ù.
+		//d3dxì—ì„œ ì¹œì ˆí•˜ê²Œë„ meshì˜ ì¸ë±ìŠ¤ ë²„í¼ë¥¼ stripìœ¼ë¡œ í•´ì£¼ëŠ” í•¨ìˆ˜ê°€ ìˆëŠ” ê²ƒ ê°™ë‹¤.
+		//ì •í™•í•œ ê¸°ëŠ¥ì€ ëª¨ë¥´ê² ë‹¤ë§Œ ì•„ë§ˆ ìš°ë¦¬ê°€ ì›í•˜ëŠ” ê·¸ ê¸°ëŠ¥ì„ ê°€ì§€ê³  ìˆëŠ” ë“¯ í•˜ë‹¤.
+		//í•˜ì§€ë§Œ d3dxì—ì„œ í˜¸í™˜ë˜ëŠ” meshì¸í„°í˜ì´ìŠ¤ í˜•íƒœë¥¼ ê°€ì§€ê³  ìˆì–´ì•¼ë§Œ ì´ í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•  ìˆ˜ ìˆë‹¤.
 		//http://telnet.or.kr/directx/graphics/reference/d3dx/functions/mesh/d3dxconvertmeshsubsettostrips.htm
 		//D3DXConvertMeshSubsetToStrips();
 
@@ -65,41 +73,6 @@ namespace pooptube {
 
 	void Mesh::Update(float dTime) {
 		Node::Update(dTime);
-	}
-
-	float Mesh::GetHeight(float x, float z) const {
-// 		x *= 2.0f;
-// 		z *= 2.0f;
-// 
-// 		if (x <= 0 || x >= (mCol - 1) || z <= 0 || z >= (mRow - 1))
-// 			return 0.0f;
-// 
-// 		D3DXVECTOR3 v[3];
-// 		v[1].x = std::floor(x) + 1;
-// 		v[1].z = std::floor(z);
-// 		v[1].y = (float)GetHeightData(UINT(v[1].x), UINT(v[1].z));
-// 		v[2].x = std::floor(x);
-// 		v[2].z = std::floor(z) + 1;
-// 		v[2].y = (float)GetHeightData(UINT(v[2].x), UINT(v[2].z));
-// 
-// 		float y;
-// 		D3DXVECTOR3 cVec;
-// 		if (x - std::floor(x) < z - std::floor(z)){
-// 			v[0].x = std::floor(x);
-// 			v[0].z = std::floor(z);
-// 			v[0].y = (float)GetHeightData(UINT(v[0].x), UINT(v[0].z));
-// 		}
-// 		else{
-// 			v[0].x = std::floor(x) + 1;
-// 			v[0].z = std::floor(z) + 1;
-// 			v[0].y = (float)GetHeightData(UINT(v[0].x), UINT(v[0].z));
-// 		}
-// 		D3DXVec3Cross(&cVec, &(v[1] - v[0]), &(v[2] - v[0]));
-// 		y = (((v[0].x - x) * cVec.x + (v[0].z - z) * cVec.z) / cVec.y) + v[0].y;
-// 
-// 		return y * mAmp;
-
-		return 1.f;
 	}
 
 }

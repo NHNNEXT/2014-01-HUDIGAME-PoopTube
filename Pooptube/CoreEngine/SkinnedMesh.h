@@ -1,9 +1,9 @@
-/**
-* @author ¾çÇöÂù
+ï»¿/**
+* @author ì–‘í˜„ì°¬
 * @brief
-* ¹öÅØ½º, ¿¡´Ï¸ŞÀÌ¼Ç, ÅØ½ºÃÄ µîÀÇ Á¤º¸¸¦ ÀĞ¾î¿Í ·»´õÇÏ´Â °´Ã¼
-* ÆÑÅä¸® ±¸Á¶. Mesh¸¦ »ı¼ºÇÑÈÄ objmanager¿¡¼­ °ü¸®
-* »ç¿ëÀÚ°¡ Á÷Á¢ Á¢±ÙÇÏ´Â ÇÔ¼ö
+* ë²„í…ìŠ¤, ì—ë‹ˆë©”ì´ì…˜, í…ìŠ¤ì³ ë“±ì˜ ì •ë³´ë¥¼ ì½ì–´ì™€ ë Œë”í•˜ëŠ” ê°ì²´
+* íŒ©í† ë¦¬ êµ¬ì¡°. Meshë¥¼ ìƒì„±í•œí›„ objmanagerì—ì„œ ê´€ë¦¬
+* ì‚¬ìš©ìê°€ ì§ì ‘ ì ‘ê·¼í•˜ëŠ” í•¨ìˆ˜
 * @date 2014/04/17
 * @file SkinnedMesh.h
 */
@@ -14,11 +14,10 @@ namespace pooptube {
 
 	class Mesh;
 
-	//@brief ¸Ş½¬ÀÇ ¸®¼Ò½º Å¸ÀÔÁ¤º¸¸¦ °¡Áü
+	//@brief ë©”ì‰¬ì˜ ë¦¬ì†ŒìŠ¤ íƒ€ì…ì •ë³´ë¥¼ ê°€ì§
 	enum RESOURCE_TYPE {
 		RESOURCE_NULL = 0,
 		RESOURCE_FBX = 1,
-		RESOURCE_HEIGHTMAP = 2,
 	};
 
 	class SkinnedMesh : public Node {
@@ -29,13 +28,15 @@ namespace pooptube {
 		//@param VertexCount 
 		//@param PolygonCount
 		//@param ResourceType
-		//@return »ı¼ºÇÑ Mesh¸¦ ¹İÈ¯
-		//@exception ÃÊ±âÈ­¿¡ ½ÇÆĞÇÏ°Å³ª ¸®¼Ò½º Å¸ÀÔÀÌ nullÀÏ °æ¿ì nullptr¹İÈ¯
+		//@return ìƒì„±í•œ Meshë¥¼ ë°˜í™˜
+		//@exception ì´ˆê¸°í™”ì— ì‹¤íŒ¨í•˜ê±°ë‚˜ ë¦¬ì†ŒìŠ¤ íƒ€ì…ì´ nullì¼ ê²½ìš° nullptrë°˜í™˜
 		static std::shared_ptr<SkinnedMesh> Create(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType);
 		virtual bool Init(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType);
 
 		virtual void Render();
 		virtual void Update(float dTime);
+
+		std::shared_ptr<Mesh> GetMeshData() const { return mMesh; }
 
 	protected:
 
@@ -47,7 +48,7 @@ namespace pooptube {
 		LPDIRECT3DINDEXBUFFER9	mMeshIndexBuffer = nullptr;
 
 		std::shared_ptr<Mesh>	mMesh = nullptr;
-
+		
 		RESOURCE_TYPE			mResourceType = RESOURCE_NULL;
 	};
 

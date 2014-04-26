@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "stdafx.h"
 #include "Scene.h"
 
@@ -8,9 +8,12 @@ namespace pooptube {
 	class SkinnedMesh;
 	class CollisionBox;
 	class SkyBox;
+	class Light;
+	class SunLight;
 }
 
 class MainCharacter;
+class Ground;
 
 class StageOne
 	: public pooptube::Scene
@@ -43,13 +46,16 @@ private:
 	std::shared_ptr<pooptube::Camera>				mCamera_2 = nullptr;
 	std::shared_ptr<MainCharacter>					mCharacter = nullptr;
 	std::shared_ptr<pooptube::SkinnedMesh>			mSkinnedMesh = nullptr;
-	std::shared_ptr<pooptube::SkinnedMesh>			mGround = nullptr;
-	std::shared_ptr<pooptube::SkyBox>	mSkyBox = nullptr;
+	std::shared_ptr<Ground>							mGround = nullptr;
+	std::shared_ptr<pooptube::SkyBox>				mSkyBox = nullptr;
+	std::shared_ptr<pooptube::Light>				mLight = nullptr;
+	std::shared_ptr<pooptube::SunLight>				mSunLight = nullptr;
 
 	float				mTimeForFPS = 0.f;
+	float				mTimeForJump = 0.f;
+	float				mBeforeJumpYPos = 0.f;
+	bool				mRecordJumpPos = false;
 
 	std::shared_ptr<pooptube::CollisionBox>	testDummy;
-
-	LPDIRECT3DDEVICE9	mDevice = nullptr;
 };
 

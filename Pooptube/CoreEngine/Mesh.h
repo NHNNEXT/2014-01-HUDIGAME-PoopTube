@@ -1,8 +1,8 @@
-/**
-* @author ¾çÇöÂù
-* @brief ¸Ş½¬ÀÇ µ¥ÀÌÅÍ¸¦ ¹°°íÀÖ´Â °´Ã¼
-* ÆÑÅä¸® ±¸Á¶. Mesh¸¦ »ı¼ºÇÑÈÄ objmanager¿¡¼­ °ü¸®
-* »ç¿ëÀÚ°¡ Á÷Á¢ Á¢±ÙÇÒ ÀÏÀº ¾øÀ½
+ï»¿/**
+* @author ì–‘í˜„ì°¬
+* @brief ë©”ì‰¬ì˜ ë°ì´í„°ë¥¼ ë¬¼ê³ ìˆëŠ” ê°ì²´
+* íŒ©í† ë¦¬ êµ¬ì¡°. Meshë¥¼ ìƒì„±í•œí›„ objmanagerì—ì„œ ê´€ë¦¬
+* ì‚¬ìš©ìê°€ ì§ì ‘ ì ‘ê·¼í•  ì¼ì€ ì—†ìŒ
 * @date 2014/04/17
 * @file Mesh.h
 */
@@ -11,10 +11,10 @@
 
 namespace pooptube {
 
-	//@brief Ä¿½ºÅÒ ¹öÅØ½º¸¦ ¼³Á¤
+	//@brief ì»¤ìŠ¤í…€ ë²„í…ìŠ¤ë¥¼ ì„¤ì •
 	const int D3DFVF_CUSTOMVERTEX = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE;
 
-	//@brief Ä¿½ºÅÒ ¹öÅØ½º
+	//@brief ì»¤ìŠ¤í…€ ë²„í…ìŠ¤
 	struct MESH_CUSTOM_VERTEX {
 		D3DXVECTOR3	position;
 		D3DXVECTOR3	normal;
@@ -22,10 +22,10 @@ namespace pooptube {
 	};
 
 	//@brief 
-	//Ä¿½ºÅÒ ÀÎµ¦½º
-	//ÇöÁ¦ 16ºñÆ® Å©±â ¼³Á¤ Á¶Á¤½Ã 32ºñÆ®·Î Á¶Á¤ ÇÊ¿ä
+	//ì»¤ìŠ¤í…€ ì¸ë±ìŠ¤
+	//í˜„ì œ 16ë¹„íŠ¸ í¬ê¸° ì„¤ì • ì¡°ì •ì‹œ 32ë¹„íŠ¸ë¡œ ì¡°ì • í•„ìš”
 	struct MESH_CUSTOM_INDEX {
-		WORD w0, w1, w2;
+		UINT w0, w1, w2;
 	};
 
 	class Mesh : public Node
@@ -36,8 +36,8 @@ namespace pooptube {
 
 		//@param VertexCount 
 		//@param PolygonCount
-		//@return »ı¼ºÇÑ Mesh¸¦ ¹İÈ¯
-		//@exception ÃÊ±âÈ­¿¡ ½ÇÆĞÇÏ¸é nullptr¹İÈ¯
+		//@return ìƒì„±í•œ Meshë¥¼ ë°˜í™˜
+		//@exception ì´ˆê¸°í™”ì— ì‹¤íŒ¨í•˜ë©´ nullptrë°˜í™˜
 		static std::shared_ptr<Mesh> Create(int VertexCount, int PolygonCount);
 
 		virtual bool Init(int VertexCount, int PolygonCount);
@@ -50,20 +50,20 @@ namespace pooptube {
 		MESH_CUSTOM_VERTEX*		GetVertices() const { return mVertices; }
 		MESH_CUSTOM_INDEX*		GetIndices() const { return mIndices; }
 
-		float					GetHeight(float x, float z) const;
-
 	protected:
 
 
 	private:
 
-		int								mPolygonCount = 0;
-		int								mVertexCount = 0;
+		UINT							mPolygonCount = 0;
+		UINT							mVertexCount = 0;
 
 		MESH_CUSTOM_VERTEX*				mVertices = nullptr;
 		MESH_CUSTOM_INDEX*				mIndices = nullptr;
 		
 		LPDIRECT3DDEVICE9				mDevice = nullptr;
+
+		D3DMATERIAL9					mMaterial;
 
 		float							mHeightMapSize = 0.5f;
 	};

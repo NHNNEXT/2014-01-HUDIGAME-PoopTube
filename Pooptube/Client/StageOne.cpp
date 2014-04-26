@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "StageOne.h"
 #include "Application.h"
 #include "ObjectManager.h"
@@ -8,6 +8,9 @@
 #include "ThirdPersonCamera.h"
 #include "MainCharacter.h"
 #include "SkyBox.h"
+#include "Light.h"
+#include "SunLight.h"
+#include "Ground.h"
 
 StageOne::StageOne() {
 }
@@ -30,44 +33,15 @@ StageOne* StageOne::Create() {
 }
 
 bool StageOne::Init() {
-	//ÅÂ½ºÆ®ÇÏ±âÀ§ÇØ ¼³Á¤µéÀ» ²Ù°Ü³Ö¾úÀ½
-	//¶ËÆ©ºê ¸Ô°í½Í´Ù.
+	//íƒœìŠ¤íŠ¸í•˜ê¸°ìœ„í•´ ì„¤ì •ë“¤ì„ ê¾¸ê²¨ë„£ì—ˆìŒ
+	//ë˜¥íŠœë¸Œ ë¨¹ê³ ì‹¶ë‹¤.
 	EnableKeyEvent();
 	EnableMouseEvent();
 
-	mDevice = pooptube::Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+	pooptube::Scene::Init();
 
-	D3DMATERIAL9 mtrl;
-	ZeroMemory(&mtrl, sizeof(D3DMATERIAL9));
-	mtrl.Diffuse.r = mtrl.Ambient.r = 1.0f;
-	mtrl.Diffuse.g = mtrl.Ambient.g = 1.0f;
-	mtrl.Diffuse.b = mtrl.Ambient.b = 1.0f;
-	mtrl.Diffuse.a = mtrl.Ambient.a = 1.0f;
-	mDevice->SetMaterial(&mtrl);
-
-	D3DXVECTOR3 vecDir;
-	D3DLIGHT9 light;
-
-	//±¤¿øÀÇ À§Ä¡
-	vecDir = D3DXVECTOR3(10.f,
-		10.f,
-		-10.f);
-
-	ZeroMemory(&light, sizeof(D3DLIGHT9));
-	light.Type = D3DLIGHT_DIRECTIONAL;
-	light.Diffuse.r = 1.0f;
-	light.Diffuse.g = 1.0f;
-	light.Diffuse.b = 1.0f;
-
-	D3DXVec3Normalize((D3DXVECTOR3*)&light.Direction, &vecDir);
-	light.Range = 1000.0f;
-
-	//µð¹ÙÀÌ½º¿¡ ±¤¿øÀ» ¼³Á¤ÇÕ´Ï´Ù.
-	mDevice->SetLight(0, &light);
-	mDevice->LightEnable(0, TRUE);
-
-	mDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-	mDevice->SetRenderState(D3DRS_AMBIENT, 0x00202020);
+	mLight = pooptube::Light::Create();
+	mSunLight = pooptube::SunLight::Create();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
 
@@ -76,11 +50,11 @@ bool StageOne::Init() {
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 	mCamera_2 = pooptube::Camera::Create();
 
+	mGround = Ground::Create();
 
-	mGround = pooptube::SkinnedMesh::Create("test.bmp", pooptube::RESOURCE_HEIGHTMAP);
-
-	testDummy = pooptube::CollisionBox::Create(pooptube::COLLISION_TYPE::COLLISION_BLOCK, 0.0f, 10.0f);
-	testDummy->SetAxisLen(0.5, 0.5, 0.5);
+	testDummy = pooptube::CollisionBox::Create();
+	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
+	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
 	mSkyBox = pooptube::SkyBox::Create(L"Top.bmp",
 		L"Bottom.bmp",
@@ -93,6 +67,9 @@ bool StageOne::Init() {
 }
 
 void StageOne::Render() {
+
+	//mLight->Render();
+	mSunLight->Render();
 
 	mCharacter->Render();
 
@@ -113,6 +90,39 @@ void StageOne::Update(float dTime)
 	mSkinnedMesh->Update(dTime);
 	mCharacter->Update(dTime);
 
+	//ìºë¦­í„° ì í”„ ì•Œê³ ë¦¬ì¦˜
+	CHAR_STATE	CharState = mCharacter->GetState();
+	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
+	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
+	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
+	float		GroundAccel = mGround->GetGravAccel();
+
+	if (CharState == JUMP) {
+		mTimeForJump += dTime;
+
+		if (!mRecordJumpPos) {
+			mBeforeJumpYPos = CharPos.y;
+			mRecordJumpPos = true;
+		}
+
+		float JumpHeight = CharJumpSpeed * mTimeForJump - 0.5f*GroundAccel*mTimeForJump*mTimeForJump;
+		CharPos.y = JumpHeight + mBeforeJumpYPos;
+
+		if (MapHeight > CharPos.y) {
+			CharPos.y = MapHeight;
+			mCharacter->SetPosition(CharPos);
+			mCharacter->SetState(NONE);
+
+			mTimeForJump = 0.f;
+			mRecordJumpPos = false;
+		}
+		mCharacter->SetPosition(CharPos);
+	}
+	else if (CharState == NONE) {
+		CharPos.y = MapHeight;
+		mCharacter->SetPosition(CharPos);
+	}
+	
 	if (mTimeForFPS > 2.f) {
 		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
 		mTimeForFPS = 0.f;
@@ -130,16 +140,16 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'W':
-		mCamera_2->Translation(0, 0, -0.1f);
+		mCamera_2->Translation(mCamera_2->GetFrontVector()*0.1f);
 		break;
 	case 'S':
-		mCamera_2->Translation(0, 0, 0.1f);
+		mCamera_2->Translation(mCamera_2->GetFrontVector()*-0.1f);
 		break;
 	case 'A':
-		mCamera_2->Translation(0.1f, 0, 0);
+		mCamera_2->Translation(mCamera_2->GetLeftVector()*0.1f);
 		break;
 	case 'D':
-		mCamera_2->Translation(-0.1f, 0, 0);
+		mCamera_2->Translation(mCamera_2->GetRightVector()*0.1f);
 		break;
 	case VK_LEFT:
 		mCamera_2->RotateFrontVectorY(-0.1f);
@@ -149,10 +159,10 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 		break;
 
 	case 'Q':
-		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		break;
 	case 'E':
-		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		break;
 	}
 }
