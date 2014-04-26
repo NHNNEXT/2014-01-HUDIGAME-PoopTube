@@ -1,5 +1,6 @@
 ﻿/**
-* @author 양현찬
+* @author 이선협
+* @version 2014/04/26 김지환 ( Tool에서 사용할 수 있게 개조함 )
 * @brief
 * 프레임워크를 초기화하고 기본적인 기능을 수행하는 객체
 * 윈도우 프레임, 렌더러, 씬매니저 생성 및 관리를 수행한다.
@@ -9,6 +10,7 @@
 */
 #pragma once
 
+#include <windows.h>
 #include "Object.h"
 #include "D3D9Renderer.h"
 #include "SceneManager.h"
@@ -27,13 +29,15 @@ namespace pooptube {
 		static Application* GetInstance();
 
 	public:
-		bool Init( wchar_t* title, int width, int height, bool isWindowed );
+		bool Init(wchar_t* title, int width, int height, bool isWindowed);	// for Client
+		bool Init(HWND hWnd, int Height, int Width);						// for Tool
 		bool Release();
-		bool Run();
+		bool Run(bool isAsync=false);
 
 	public:
 		inline HWND			GetHWND() const { return mHwnd; }
 		inline HINSTANCE	GetHandleInstance() const { return mHInstance; }
+		inline VOID			SetScreenSize(int Height, int Width) { mScreenHeight = Height; mScreenWidth = Width; }
 
 		// TODO: Getter, Setter
 		// TODO: Pause - Issue: Network?

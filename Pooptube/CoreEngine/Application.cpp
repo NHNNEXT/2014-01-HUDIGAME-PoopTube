@@ -38,6 +38,30 @@ namespace pooptube {
 
 		return true;
 	}
+
+	bool Application::Init(HWND hWnd, int Height, int Width)
+	{
+//		mTitle = L"";
+		mScreenWidth = Width;
+		mScreenHeight = Height;
+		mIsWindowed = true;
+
+		mHwnd = hWnd;
+// 		if (_CreateWindowFrame(title, width, height) == false) {
+// 			return false;
+// 		}
+
+		if (_CreateSceneManager() == false) {
+			return false;
+		}
+
+		if (_CreateEventDispatcher() == false) {
+			return false;
+		}
+
+		return true;
+	}
+
 	bool Application::Release() {
 		//mRenderer->Release();
 		
@@ -45,7 +69,7 @@ namespace pooptube {
 
 		return true;
 	}
-	bool Application::Run() {
+	bool Application::Run(bool isAsync) {
 		// 프레임 계산에 쓰일 변수들
 		float fpsTimer = 0.f;
 		int prevTime = 0;
@@ -55,7 +79,7 @@ namespace pooptube {
 		MSG msg;
 		ZeroMemory( &msg, sizeof(msg) );
 
-		while (true) {
+		do {
 			if ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) ) {
 				if ( msg.message == WM_QUIT )
 					return true;
@@ -77,7 +101,7 @@ namespace pooptube {
 				mSceneManager->Update( mDeltaTime );
 				mSceneManager->Render();
 			}
-		}
+		} while (isAsync == false);
 
 		return true;
 	}

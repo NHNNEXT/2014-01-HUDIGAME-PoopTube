@@ -5,6 +5,7 @@
 
 #pragma comment(lib, "ws2_32.lib") // 윈속 라이브러리
 
+#pragma comment(lib, "user32.lib")
 // d3d
 //#pragma comment(lib, "C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86\\d3d9.lib")
 #pragma comment(lib, "d3d9.lib")

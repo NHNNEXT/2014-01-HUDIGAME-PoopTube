@@ -120,7 +120,8 @@ namespace pooptube {
 		//락과 언락을 최대한 출일 수 있는 방법을 연구해야함
 		VOID* pVertices;
 		if (mVertexBuffer->Lock(0, mVertexCount*sizeof(MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
-			return nullptr;
+			return false;
+
 		memcpy(pVertices, vertex, mVertexCount*sizeof(MESH_CUSTOM_VERTEX));
 		mVertexBuffer->Unlock();
 

@@ -382,5 +382,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
