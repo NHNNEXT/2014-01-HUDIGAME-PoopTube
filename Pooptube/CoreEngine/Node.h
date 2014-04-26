@@ -63,8 +63,8 @@ namespace pooptube {
 		virtual void Render();
 		virtual void Update( float dTime );
 
-		virtual void AddChild( Node* pChild );
-		virtual void RemoveChild( Node* pChild );
+// 		virtual void AddChild( Node* pChild );
+// 		virtual void RemoveChild( Node* pChild );
 
 		virtual void DisableKeyEvent();
 		virtual void DisableMouseEvent();
@@ -104,7 +104,7 @@ namespace pooptube {
 		void _RegistrationToMouseEventDispatcher();
 		
 	private:
-		std::vector<Node*> mChildList;
+		//std::vector<Node*> mChildList;
 
 		bool mIsKeyEventEnabled = false;
 		bool mIsMouseEventEnabled = false;

@@ -8,9 +8,9 @@
 #include "ThirdPersonCamera.h"
 #include "MainCharacter.h"
 #include "SkyBox.h"
-#include "HeightMap.h"
 #include "Light.h"
 #include "SunLight.h"
+#include "Ground.h"
 
 StageOne::StageOne() {
 }
@@ -50,7 +50,7 @@ bool StageOne::Init() {
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 	mCamera_2 = pooptube::Camera::Create();
 
-	mGround = pooptube::HeightMap::Create("test.bmp");
+	mGround = Ground::Create();
 
 	testDummy = pooptube::CollisionBox::Create();
 	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);

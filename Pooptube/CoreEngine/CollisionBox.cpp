@@ -57,6 +57,8 @@ namespace pooptube {
 		mAxisLen[AXIS_Y] = (Max.position.y - Min.position.y) * 0.5f;
 		mAxisLen[AXIS_Z] = (Max.position.z - Min.position.z) * 0.5f;
 
+		Node::Translation(D3DXVECTOR3(0.f, mAxisLen[AXIS_Y], 0.f));
+
 		return;
 	}
 

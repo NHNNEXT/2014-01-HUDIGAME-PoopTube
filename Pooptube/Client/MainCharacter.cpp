@@ -33,8 +33,8 @@ void MainCharacter::Update(float dTime) {
 	mSkinnedMesh->SetFrontPoint(Node::GetFrontPoint());
 	mSkinnedMesh->Update(dTime);
 
-	//mCollisionBox->SetPosition(Node::GetPosition() + D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
 	mCollisionBox->SetPosition(Node::GetPosition());
+	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
 	mCollisionBox->SetFrontPoint(Node::GetFrontPoint());
 	mCollisionBox->Update(dTime);
 }

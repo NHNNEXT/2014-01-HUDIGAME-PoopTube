@@ -8,10 +8,10 @@ namespace pooptube {
 	Node::Node() {
 	}
 	Node::~Node() {
-		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
-			ObjectManager::GetInstance()->RemoveObject((*iter));
-		}
-		mChildList.clear();
+// 		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
+// 			ObjectManager::GetInstance()->RemoveObject((*iter));
+// 		}
+// 		mChildList.clear();
 	}
 
 	std::shared_ptr<Node> Node::Create() {
@@ -53,29 +53,29 @@ namespace pooptube {
 
 		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 
-		for (auto child : mChildList) {
-			child->Render();
-		}
+// 		for (auto child : mChildList) {
+// 			child->Render();
+// 		}
 	}
 	void Node::Update(float dTime) {
-		for (auto child : mChildList) {
-			child->Update(dTime);
-		}
+// 		for (auto child : mChildList) {
+// 			child->Update(dTime);
+// 		}
 	}
 
-	void Node::AddChild(Node* pChild) {
-		mChildList.push_back(pChild);
-	}
-	void Node::RemoveChild(Node* pChild) {
-		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
-			if ((*iter) == pChild) {
-				//(*iter).reset();
-				ObjectManager::GetInstance()->RemoveObject((*iter));
-				mChildList.erase(iter);
-				break;
-			}
-		}
-	}
+// 	void Node::AddChild(Node* pChild) {
+// 		mChildList.push_back(pChild);
+// 	}
+// 	void Node::RemoveChild(Node* pChild) {
+// 		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
+// 			if ((*iter) == pChild) {
+// 				//(*iter).reset();
+// 				ObjectManager::GetInstance()->RemoveObject((*iter));
+// 				mChildList.erase(iter);
+// 				break;
+// 			}
+// 		}
+// 	}
 
 	void Node::DisableKeyEvent() {
 		if (mIsKeyEventEnabled == true) {
