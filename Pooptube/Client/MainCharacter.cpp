@@ -52,7 +52,6 @@ bool MainCharacter::Init() {
 	return true;
 }
 
-<<<<<<< HEAD
 void MainCharacter::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 }
 
@@ -80,99 +79,7 @@ void MainCharacter::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 		break;
 	}
 }
-void MainCharacter::KeyUp(pooptube::KeyEvent* pKeyEvent) {
 
-}
-
-void MainCharacter::MouseDown(pooptube::MouseEvent* pMouseEvent) {
-
-}
-
-void MainCharacter::MouseMove(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void MainCharacter::MouseUp(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void MainCharacter::MousePressed(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void MainCharacter::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
-||||||| merged common ancestors
-void MainCharacter::KeyDown(pooptube::KeyEvent* pKeyEvent) {
-}
-
-void MainCharacter::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
-	switch (pKeyEvent->GetKeyCode())
-	{
-	case 'W':
-		Translation(Node::GetFrontVector()*mSpeed);
-		break;
-	case 'S':
-		Translation(Node::GetFrontVector()*mSpeed*-1.f);
-		break;
-	case 'A':
-		Translation(Node::GetLeftVector()*mSpeed);
-		break;
-	case 'D':
-		Translation(Node::GetRightVector()*mSpeed);
-		break;
-
-	case VK_LEFT:
-		RotationY(-0.1f);
-		break;
-	case VK_RIGHT:
-		RotationY(0.1f);
-		break;
-	}
-}
-void MainCharacter::KeyUp(pooptube::KeyEvent* pKeyEvent) {
-
-}
-
-void MainCharacter::MouseDown(pooptube::MouseEvent* pMouseEvent) {
-
-}
-
-void MainCharacter::MouseMove(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void MainCharacter::MouseUp(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void MainCharacter::MousePressed(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void MainCharacter::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
-=======
-void MainCharacter::KeyDown(pooptube::KeyEvent* pKeyEvent) {
-
-}
-
-void MainCharacter::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
-	switch (pKeyEvent->GetKeyCode())
-	{
-	case 'W':
-		Translation(Node::GetFrontVector()*mSpeed);
-		break;
-	case 'S':
-		Translation(Node::GetFrontVector()*mSpeed*-1.f);
-		break;
-	case 'A':
-		Translation(Node::GetLeftVector()*mSpeed);
-		break;
-	case 'D':
-		Translation(Node::GetRightVector()*mSpeed);
-		break;
-
-	case VK_LEFT:
-		RotationY(-0.1f);
-		break;
-	case VK_RIGHT:
-		RotationY(0.1f);
-		break;
-	}
-}
 void MainCharacter::KeyUp(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode()) {
 	case VK_SPACE:
@@ -182,7 +89,6 @@ void MainCharacter::KeyUp(pooptube::KeyEvent* pKeyEvent) {
 }
 
 void MainCharacter::MouseDown(pooptube::MouseEvent* pMouseEvent) {
-
 }
 
 void MainCharacter::MouseMove(pooptube::MouseEvent* pMouseEvent) {
@@ -195,5 +101,5 @@ void MainCharacter::MousePressed(pooptube::MouseEvent* pMouseEvent) {
 }
 
 void MainCharacter::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
->>>>>>> deb9f8d65228cc649e04bbe1ac19a847f818407f
+
 }

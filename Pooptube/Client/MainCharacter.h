@@ -31,7 +31,6 @@ public:
 	void Render();
 	void Update(float dTime);
 
-<<<<<<< HEAD
 	void KeyDown(pooptube::KeyEvent* pKeyEvent);
 	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
 	void KeyUp(pooptube::KeyEvent* pKeyEvent);
@@ -39,28 +38,13 @@ public:
 	void MouseMove(pooptube::MouseEvent* pMouseEvent);
 	void MouseUp(pooptube::MouseEvent* pMouseEvent);
 	void MousePressed(pooptube::MouseEvent* pMouseEvent);
-||||||| merged common ancestors
-	void KeyDown(pooptube::KeyEvent* pKeyEvent);
-	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
-	void KeyUp(pooptube::KeyEvent* pKeyEvent);
-	void MouseDown(pooptube::MouseEvent* pMouseEvent);
-	void MouseMove(pooptube::MouseEvent* pMouseEvent);
-	void MouseUp(pooptube::MouseEvent* pMouseEvent);
-	void MousePressed(pooptube::MouseEvent* pMouseEvent);
-=======
+
+
 	CHAR_STATE	GetState() const { return mState; }
 	void		SetState(CHAR_STATE val) { mState = val; }
 
 	float		GetJumpSpeed() const { return mJumpSpeed; }
 
-	void KeyDown(pooptube::KeyEvent* pKeyEvent);
-	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
-	void KeyUp(pooptube::KeyEvent* pKeyEvent);
-	void MouseDown(pooptube::MouseEvent* pMouseEvent);
-	void MouseMove(pooptube::MouseEvent* pMouseEvent);
-	void MouseUp(pooptube::MouseEvent* pMouseEvent);
-	void MousePressed(pooptube::MouseEvent* pMouseEvent);
->>>>>>> deb9f8d65228cc649e04bbe1ac19a847f818407f
 	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
 
 	std::shared_ptr<pooptube::SkinnedMesh> GetSkinnedMesh() const { return mSkinnedMesh; }

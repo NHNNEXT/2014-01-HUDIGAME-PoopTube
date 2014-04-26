@@ -14,10 +14,10 @@ public:
 	Creature();
 	virtual ~Creature();
 
-	bool Init();
+	/*bool Init();
 
 	void Render();
-	void Update(float dTime);
+	void Update(float dTime);*/
 
 private:
 	float mSpeed = 0.1f;
