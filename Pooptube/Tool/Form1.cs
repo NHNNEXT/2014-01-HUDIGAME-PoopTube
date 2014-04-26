@@ -12,9 +12,25 @@ namespace Tool
 {
     public partial class Form1 : Form
     {
+        Core.Application aa = new Core.Application();
+
         public Form1()
         {
             InitializeComponent();
+
+            aa.init(this.Handle.ToInt32(), this.Size.Height, this.Size.Width);
+
+            Render();
+            
+        }
+
+        private async void Render()
+        {
+            while (true)
+            {
+                aa.Run();
+                await Task.Delay(10);
+            }
         }
     }
 }
