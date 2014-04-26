@@ -5,22 +5,43 @@
 * @date 2014/04/22
 * @file Creature.h
 */
+#pragma once
+#include "stdafx.h"
 #include "Node.h"
 
-#pragma once
+namespace pooptube {
+	class SkinnedMesh;
+	class CollisionBox;
+}
+
+enum CREATURE_STATE {
+	IDLE,
+	CHASE,
+	ATTACK,
+};
+
 class Creature : public pooptube::Node
 {
 public:
 	Creature();
-	virtual ~Creature();
+	~Creature();
 
-	/*bool Init();
+	bool Init();
 
 	void Render();
-	void Update(float dTime);*/
+	void Update(float dTime);
+
+	CREATURE_STATE GetState() const { return mState; }
+	void Setstate(CREATURE_STATE state) { mState = state; }
+
+	std::shared_ptr<pooptube::SkinnedMesh> GetSkinnedMesh() const { return mSkinnedMesh; }
 
 private:
+	CREATURE_STATE	mState = IDLE;
+
 	float mSpeed = 0.1f;
 
+	std::shared_ptr<pooptube::SkinnedMesh>	mSkinnedMesh = nullptr;
+	std::shared_ptr<pooptube::CollisionBox> mCollisionBox = nullptr;
 };
 
