@@ -52,6 +52,9 @@ private:
 	std::shared_ptr<pooptube::SunLight>				mSunLight = nullptr;
 
 	float				mTimeForFPS = 0.f;
+	float				mTimeForJump = 0.f;
+	float				mBeforeJumpYPos = 0.f;
+	bool				mRecordJumpPos = false;
 
 	std::shared_ptr<pooptube::CollisionBox>	testDummy;
 };

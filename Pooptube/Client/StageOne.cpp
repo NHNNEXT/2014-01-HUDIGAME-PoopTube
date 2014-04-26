@@ -79,8 +79,8 @@ void StageOne::Render() {
 
 	testDummy->Render();
 
-	//mCamera->Render();
-	mCamera_2->Render();
+	mCamera->Render();
+	//mCamera_2->Render();
 
 	mSkyBox->Render();
 }
@@ -90,10 +90,39 @@ void StageOne::Update(float dTime)
 	mSkinnedMesh->Update(dTime);
 	mCharacter->Update(dTime);
 
+	//캐릭터 점프 알고리즘
+	CHAR_STATE	CharState = mCharacter->GetState();
 	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
-	CharPos.y = mGround->GetHeight(CharPos.x, CharPos.z);
-	mCharacter->SetPosition(CharPos);
+	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
+	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
+	float		GroundAccel = mGround->GetGravAccel();
 
+	if (CharState == JUMP) {
+		mTimeForJump += dTime;
+
+		if (!mRecordJumpPos) {
+			mBeforeJumpYPos = CharPos.y;
+			mRecordJumpPos = true;
+		}
+
+		float JumpHeight = CharJumpSpeed * mTimeForJump - 0.5f*GroundAccel*mTimeForJump*mTimeForJump;
+		CharPos.y = JumpHeight + mBeforeJumpYPos;
+
+		if (MapHeight > CharPos.y) {
+			CharPos.y = MapHeight;
+			mCharacter->SetPosition(CharPos);
+			mCharacter->SetState(NONE);
+
+			mTimeForJump = 0.f;
+			mRecordJumpPos = false;
+		}
+		mCharacter->SetPosition(CharPos);
+	}
+	else if (CharState == NONE) {
+		CharPos.y = MapHeight;
+		mCharacter->SetPosition(CharPos);
+	}
+	
 	if (mTimeForFPS > 2.f) {
 		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
 		mTimeForFPS = 0.f;

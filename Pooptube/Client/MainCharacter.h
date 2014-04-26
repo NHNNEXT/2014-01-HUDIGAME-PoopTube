@@ -14,6 +14,11 @@ namespace pooptube{
 	class CollisionBox;
 }
 
+enum CHAR_STATE {
+	NONE,
+	JUMP,
+};
+
 class MainCharacter : public pooptube::Node{
 public:
 	MainCharacter();
@@ -25,6 +30,11 @@ public:
 
 	void Render();
 	void Update(float dTime);
+
+	CHAR_STATE	GetState() const { return mState; }
+	void		SetState(CHAR_STATE val) { mState = val; }
+
+	float		GetJumpSpeed() const { return mJumpSpeed; }
 
 	void KeyDown(pooptube::KeyEvent* pKeyEvent);
 	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
@@ -42,7 +52,10 @@ protected:
 
 private:
 
+	CHAR_STATE				mState = NONE;
+	
 	float					mSpeed = 0.1f;
+	float					mJumpSpeed = 7.f;
 
 	std::shared_ptr<pooptube::SkinnedMesh>	mSkinnedMesh = nullptr;
 	std::shared_ptr<pooptube::CollisionBox> mCollisionBox = nullptr;

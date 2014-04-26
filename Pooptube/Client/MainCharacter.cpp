@@ -53,6 +53,7 @@ bool MainCharacter::Init() {
 }
 
 void MainCharacter::KeyDown(pooptube::KeyEvent* pKeyEvent) {
+
 }
 
 void MainCharacter::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
@@ -80,7 +81,11 @@ void MainCharacter::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	}
 }
 void MainCharacter::KeyUp(pooptube::KeyEvent* pKeyEvent) {
-
+	switch (pKeyEvent->GetKeyCode()) {
+	case VK_SPACE:
+		mState = JUMP;
+		break;
+	}
 }
 
 void MainCharacter::MouseDown(pooptube::MouseEvent* pMouseEvent) {
