@@ -5,11 +5,22 @@
 * @date 2014/04/22
 * @file Creature.h
 */
+#include "Node.h"
+
 #pragma once
-class Creature
+class Creature : public pooptube::Node
 {
 public:
 	Creature();
 	virtual ~Creature();
+
+	bool Init();
+
+	void Render();
+	void Update(float dTime);
+
+private:
+	float mSpeed = 0.1f;
+
 };
 
