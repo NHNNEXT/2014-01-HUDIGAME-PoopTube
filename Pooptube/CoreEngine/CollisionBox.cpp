@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "CollisionBox.h"
 #include "CollisionManager.h"
+#include "SkinnedMesh.h"
 
 namespace pooptube {
 	CollisionBox::CollisionBox() {
@@ -25,9 +26,9 @@ namespace pooptube {
 		if (!Node::Init())
 			return false;
 
-		mAxisLen[0] = 0.5f;
-		mAxisLen[1] = 0.5f;
-		mAxisLen[2] = 0.5f;
+		mAxisLen[AXIS_X] = 0.5f;
+		mAxisLen[AXIS_Y] = 0.5f;
+		mAxisLen[AXIS_Z] = 0.5f;
 
 		return true;
 	}
@@ -52,11 +53,16 @@ namespace pooptube {
 			Max.position.z = __max(Max.position.z, vertices[i].position.z);
 		}
 
-		mAxisLen[0] = (Max.position.x - Min.position.x) * 0.5f;
-		mAxisLen[1] = (Max.position.y - Min.position.y) * 0.5f;
-		mAxisLen[2] = (Max.position.z - Min.position.z) * 0.5f;
+		mAxisLen[AXIS_X] = (Max.position.x - Min.position.x) * 0.5f;
+		mAxisLen[AXIS_Y] = (Max.position.y - Min.position.y) * 0.5f;
+		mAxisLen[AXIS_Z] = (Max.position.z - Min.position.z) * 0.5f;
 
 		return;
+	}
+
+
+	void CollisionBox::SetAABBCollisionBoxFromSkinnedMesh(std::shared_ptr<SkinnedMesh> pMesh) {
+		SetAABBCollisionBoxFromVertices(pMesh->GetMeshData()->GetVertices(), pMesh->GetMeshData()->GetVertexCount());
 	}
 
 	void CollisionBox::Render()
@@ -124,6 +130,7 @@ namespace pooptube {
 		D3DXVECTOR3 D = GetPosition() - target->GetPosition();
 
 		//Check By Sphere
+		//속도 문제 개선 필요 여기 내용들은 매번 업데이트마다 순회함
 		if( D3DXVec3Length( &D ) > D3DXVec3Length( &(
 			D3DXVECTOR3( mAxisLen[0], mAxisLen[1], mAxisLen[2] )
 			- D3DXVECTOR3( target->mAxisLen[0], target->mAxisLen[1], target->mAxisLen[2] )

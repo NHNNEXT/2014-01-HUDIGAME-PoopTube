@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "MainCharacter.h"
 #include "SkinnedMesh.h"
+#include "CollisionBox.h"
 
 MainCharacter::MainCharacter() {
 }
@@ -22,6 +23,7 @@ void MainCharacter::Render() {
 	Node::Render();
 
 	mSkinnedMesh->Render();
+	mCollisionBox->Render();
 }
 
 void MainCharacter::Update(float dTime) {
@@ -30,6 +32,11 @@ void MainCharacter::Update(float dTime) {
 	mSkinnedMesh->SetPosition(Node::GetPosition());
 	mSkinnedMesh->SetFrontPoint(Node::GetFrontPoint());
 	mSkinnedMesh->Update(dTime);
+
+	//mCollisionBox->SetPosition(Node::GetPosition() + D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
+	mCollisionBox->SetPosition(Node::GetPosition());
+	mCollisionBox->SetFrontPoint(Node::GetFrontPoint());
+	mCollisionBox->Update(dTime);
 }
 
 bool MainCharacter::Init() {
@@ -39,6 +46,8 @@ bool MainCharacter::Init() {
 	EnableMouseEvent();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
+	mCollisionBox = pooptube::CollisionBox::Create();
+	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 
 	return true;
 }

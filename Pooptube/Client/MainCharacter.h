@@ -11,6 +11,7 @@
 
 namespace pooptube{
 	class SkinnedMesh;
+	class CollisionBox;
 }
 
 class MainCharacter : public pooptube::Node{
@@ -44,5 +45,6 @@ private:
 	float					mSpeed = 0.1f;
 
 	std::shared_ptr<pooptube::SkinnedMesh>	mSkinnedMesh = nullptr;
+	std::shared_ptr<pooptube::CollisionBox> mCollisionBox = nullptr;
 };
 
