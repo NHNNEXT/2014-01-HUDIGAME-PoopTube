@@ -12,30 +12,25 @@ namespace Tool
 {
     public partial class Form1 : Form
     {
-        Core.Application aa = new Core.Application();
+        Core.Application Application = new Core.Application();
 
         public Form1()
         {
             InitializeComponent();
 
-            aa.init(this.ViewBox.Handle.ToInt32(), this.Size.Height, this.Size.Width);
+            Application.init(this.ViewBox.Handle.ToInt32(), this.Size.Height, this.Size.Width);
 
-            Render();
+            Run();
             
         }
 
-        private async void Render()
+        private async void Run()
         {
             while (true)
             {
-                aa.Run();
+                Application.Run();
                 await Task.Delay(10);
             }
-        }
-
-        private void ViewBox_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
