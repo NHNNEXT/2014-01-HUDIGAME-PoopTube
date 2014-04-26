@@ -18,7 +18,7 @@ namespace pooptube {
 		virtual void Render();
 		virtual void Update( float dTime );
 
-		void SetCollisionBoxFromVertices();
+		void SetAABBCollisionBoxFromVertices(MESH_CUSTOM_VERTEX* vertices, UINT Size);
 
 		bool CollisionCheck( const CollisionBox* target );
 

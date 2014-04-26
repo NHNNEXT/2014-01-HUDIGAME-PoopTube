@@ -53,7 +53,8 @@ bool StageOne::Init() {
 	mGround = pooptube::HeightMap::Create("test.bmp");
 
 	testDummy = pooptube::CollisionBox::Create();
-	testDummy->SetAxisLen(0.5, 0.5, 0.5);
+	testDummy->SetAABBCollisionBoxFromVertices(mSkinnedMesh->GetMeshData()->GetVertices(), mSkinnedMesh->GetMeshData()->GetVertexCount());
+	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
 	mSkyBox = pooptube::SkyBox::Create(L"Top.bmp",
 		L"Bottom.bmp",

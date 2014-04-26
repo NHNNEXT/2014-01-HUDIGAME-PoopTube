@@ -34,6 +34,8 @@ public:
 	void MousePressed(pooptube::MouseEvent* pMouseEvent);
 	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
 
+	std::shared_ptr<pooptube::SkinnedMesh> GetSkinnedMesh() const { return mSkinnedMesh; }
+
 protected:
 
 
@@ -42,6 +44,5 @@ private:
 	float					mSpeed = 0.1f;
 
 	std::shared_ptr<pooptube::SkinnedMesh>	mSkinnedMesh = nullptr;
-
 };
 

@@ -21,10 +21,6 @@ namespace pooptube {
 			return nullptr;
 	}
 
-	std::shared_ptr<CollisionBox> CollisionBox::Create(MESH_CUSTOM_VERTEX* vertices) {
-		return nullptr;
-	}
-
 	bool CollisionBox::Init() {
 		if (!Node::Init())
 			return false;
@@ -32,12 +28,35 @@ namespace pooptube {
 		mAxisLen[0] = 0.5f;
 		mAxisLen[1] = 0.5f;
 		mAxisLen[2] = 0.5f;
-		
+
 		return true;
 	}
 
-	void CollisionBox::SetCollisionBoxFromVertices() {
+	void CollisionBox::SetAABBCollisionBoxFromVertices(MESH_CUSTOM_VERTEX* vertices, UINT Size) {
 
+		MESH_CUSTOM_VERTEX Max;
+		MESH_CUSTOM_VERTEX Min;
+
+		if (Size == 0)
+			return;
+
+		Max = vertices[0];
+		Min = vertices[0];
+
+		for (UINT i = 1; i < Size; ++i) {
+			Min.position.x = __min(Min.position.x, vertices[i].position.x);
+			Min.position.y = __min(Min.position.y, vertices[i].position.y);
+			Min.position.z = __min(Min.position.z, vertices[i].position.z);
+			Max.position.x = __max(Max.position.x, vertices[i].position.x);
+			Max.position.y = __max(Max.position.y, vertices[i].position.y);
+			Max.position.z = __max(Max.position.z, vertices[i].position.z);
+		}
+
+		mAxisLen[0] = (Max.position.x - Min.position.x) * 0.5f;
+		mAxisLen[1] = (Max.position.y - Min.position.y) * 0.5f;
+		mAxisLen[2] = (Max.position.z - Min.position.z) * 0.5f;
+
+		return;
 	}
 
 	void CollisionBox::Render()
@@ -57,8 +76,8 @@ namespace pooptube {
 		Line->SetAntialias( true );
 
 		D3DXVECTOR3 mXDirVec, tXDirVec;
-		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontPoint() );
-		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontPoint() };
+		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontVector() );
+		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontVector() };
 		D3DXVECTOR3 vF[3];
 		for( int i = 0; i < 3; ++i ){
 			vF[i] = mAxisDir[i] * mAxisLen[i];

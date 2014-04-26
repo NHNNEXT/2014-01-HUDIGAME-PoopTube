@@ -36,6 +36,8 @@ namespace pooptube {
 		virtual void Render();
 		virtual void Update(float dTime);
 
+		std::shared_ptr<Mesh> GetMeshData() const { return mMesh; }
+
 	protected:
 
 
@@ -46,7 +48,7 @@ namespace pooptube {
 		LPDIRECT3DINDEXBUFFER9	mMeshIndexBuffer = nullptr;
 
 		std::shared_ptr<Mesh>	mMesh = nullptr;
-
+		
 		RESOURCE_TYPE			mResourceType = RESOURCE_NULL;
 	};
 
