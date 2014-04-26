@@ -21,7 +21,7 @@ std::shared_ptr<MainCharacter> MainCharacter::Create() {
 
 void MainCharacter::Render() {
 	Node::Render();
-
+	
 	mSkinnedMesh->Render();
 	mCollisionBox->Render();
 }
