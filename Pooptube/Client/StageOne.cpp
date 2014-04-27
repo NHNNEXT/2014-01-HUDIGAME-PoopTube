@@ -71,23 +71,6 @@ bool StageOne::Init() {
 	
 	mCreature->pss = mCharacter; // 크리처 테스트 위한 거
 
-	mCharacter->Render();
-
-	mSkinnedMesh->Render();
-
-	mGround->Render();
-
-	testDummy->Render();
-
-	mCamera->Render();
-	//mCamera_2->Render();
-
-	mSkyBox->Render();
-
-	// creature
-
-	mCreature->Render();
-
 	return true;
 }
 void StageOne::Render() {
