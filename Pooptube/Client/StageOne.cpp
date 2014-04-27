@@ -79,8 +79,8 @@ void StageOne::Render() {
 
 	testDummy->Render();
 
-	mCamera->Render();
-	//mCamera_2->Render();
+	//mCamera->Render();
+	mCamera_2->Render();
 
 	mSkyBox->Render();
 }
