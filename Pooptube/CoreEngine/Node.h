@@ -100,9 +100,9 @@ namespace pooptube {
 		D3DXVECTOR3			GetLeftVector();
 
 //		virtual void CollsionReceive( std::shared_ptr<Node> target ){};
-		virtual void CollsionReceive( Node* target ){};
+//		virtual void CollsionReceive( Node* target ){};
 //		virtual void CollsionFeedBack( std::shared_ptr<Node> target ){};
-		virtual void CollsionFeedBack( Node* target ){};
+//		virtual void CollsionFeedBack( Node* target ){};
 
 	private:
 		void _RegistrationToKeyEventDispatcher();
@@ -116,7 +116,7 @@ namespace pooptube {
 
 		// TODO: 각종 행렬 계산 용 데이터들..
 		//@brief mPosition는 포지션정보를 담고있다.
-		D3DXVECTOR3		mPosition = { 1.f, 0.f, 1.f};
+		D3DXVECTOR3		mPosition = { 0.f, 0.f, 0.f};
 		D3DXVECTOR3		mScaleVec = { 1.f, 1.f, 1.f};
 
 		//@brief mFrontPoint는 로테이트정보를 담고있다.
