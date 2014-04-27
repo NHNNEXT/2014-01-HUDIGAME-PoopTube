@@ -2,6 +2,7 @@
 #include "Creature.h"
 #include "SkinnedMesh.h"
 #include "CollisionBox.h"
+#include "CollisionManager.h"
 
 Creature::Creature()
 {
@@ -14,15 +15,15 @@ Creature::~Creature()
 
 std::shared_ptr<Creature> Creature::Create()
 {
-	std::shared_ptr<Creature> pCollisionBox(new Creature);
+	std::shared_ptr<Creature> pCreature( new Creature );
 
-	if (pCollisionBox->Init())
-		return pCollisionBox;
+	if( pCreature->Init( pCreature ) )
+		return pCreature;
 	else
 		return nullptr;
 }
 
-bool Creature::Init()
+bool Creature::Init( std::shared_ptr<Creature> pCreature )
 {
 	Node::Init();
 
@@ -30,10 +31,10 @@ bool Creature::Init()
 	EnableMouseEvent();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
-//	mCollisionBox = pooptube::CollisionBox::Create();
-//	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
+	mCollisionBox = pooptube::CollisionBox::Create( pCreature.get() );
+	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 
-	//Creature::SetPosition(initialPosition);
+	Creature::SetPosition(initialPosition);
 
 	return true;
 
@@ -47,8 +48,6 @@ void Creature::Render()
 	mCollisionBox->Render();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
-//	mCollisionBox = pooptube::CollisionBox::Create();
-//	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 }
 
 void Creature::Update(float dTime)
@@ -59,10 +58,17 @@ void Creature::Update(float dTime)
 	mSkinnedMesh->SetFrontPoint(Node::GetFrontPoint());
 	mSkinnedMesh->Update(dTime);
 
-	mCollisionBox->SetPosition(Node::GetPosition());
-	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
-	mCollisionBox->SetFrontPoint(Node::GetFrontPoint());
-	mCollisionBox->Update(dTime);
+ 	mCollisionBox->SetPosition(Node::GetPosition());
+ 	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
+ 	mCollisionBox->SetFrontPoint(Node::GetFrontPoint());
+ 	mCollisionBox->Update(dTime);
+	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck( mCollisionBox.get() );
+	if( collisionResult != nullptr ){
+		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetPosition();
+		D3DXVec3Normalize( &dPos, &dPos );
+		dPos *= mSpeed;
+		Translation( dPos );
+	}
 }
 
 void Creature::ChangeState()

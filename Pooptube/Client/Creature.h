@@ -36,7 +36,7 @@ public:
 
 	static std::shared_ptr<Creature> Create();
 
-	bool Init();
+	bool Init( std::shared_ptr<Creature> pCreature );
 
 	void Render();
 	void Update(float dTime);

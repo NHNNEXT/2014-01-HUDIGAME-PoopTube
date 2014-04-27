@@ -16,7 +16,7 @@ namespace pooptube {
 		std::shared_ptr<CollisionBox> pCollisionBox(new CollisionBox);
 
 		if( pCollisionBox->Init( pNode ) ) {
-			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
+			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox, pNode );
 			return pCollisionBox;
 		}
 		else 
@@ -86,8 +86,9 @@ namespace pooptube {
 		Line->SetWidth( 1 );
 		Line->SetAntialias( true );
 
-		D3DXVECTOR3 mXDirVec, tXDirVec;
-		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontVector() );
+		D3DXVECTOR3 mXDirVec, mFrontVector, tXDirVec;
+		D3DXVec3Normalize( &mFrontVector, &GetFrontVector() );
+		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &mFrontVector );
 		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontVector() };
 		D3DXVECTOR3 vF[3];
 		for( int i = 0; i < 3; ++i ){
@@ -129,7 +130,7 @@ namespace pooptube {
 
 	void CollisionBox::Update( float dTime ) {
 		Node::Update( dTime );
-		CollisionManager::GetInstance()->CollisionCheck( this );
+//		CollisionManager::GetInstance()->CollisionCheck( this );
 	}
 
 	bool CollisionBox::CollisionCheck( CollisionBox* target ) {
@@ -153,11 +154,13 @@ namespace pooptube {
 		float AD[3];      //Dot(A_i,D)
 		float R0, R1, R;    //interval radii and distance between centers
 		float R01;        //=R0+R1
-		D3DXVECTOR3 mXDirVec, tXDirVec;
-		D3DXVec3Cross( &mXDirVec, &GetFrontVector( ), &GetUpVector( ) );
-		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector( ), GetFrontVector( ) };
-		D3DXVec3Cross( &tXDirVec, &target->GetFrontVector(), &target->GetUpVector());
-		D3DXVECTOR3 tAxisDir[3] = { tXDirVec, target->GetUpVector( ), target->GetFrontVector( ) };
+		D3DXVECTOR3 mXDirVec, tXDirVec, fVec;
+		D3DXVec3Normalize( &fVec, &GetFrontVector( ) );
+		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &fVec );
+		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector( ), fVec };
+		D3DXVec3Normalize( &fVec, &target->GetFrontVector( ) );
+		D3DXVec3Cross( &tXDirVec, &target->GetUpVector( ), &fVec );
+		D3DXVECTOR3 tAxisDir[3] = { tXDirVec, target->GetUpVector( ), fVec };
 
 		//A0~2
 		for( int j = 0; j < 3; ++j ){

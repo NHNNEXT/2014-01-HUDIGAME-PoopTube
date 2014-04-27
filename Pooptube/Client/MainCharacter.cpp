@@ -2,6 +2,7 @@
 #include "MainCharacter.h"
 #include "SkinnedMesh.h"
 #include "CollisionBox.h"
+#include "CollisionManager.h"
 
 MainCharacter::MainCharacter() {
 }
@@ -38,6 +39,13 @@ void MainCharacter::Update(float dTime) {
 	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
 	mCollisionBox->SetFrontPoint(Node::GetFrontPoint());
 	mCollisionBox->Update(dTime);
+	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck( mCollisionBox.get() );
+	if( collisionResult != nullptr ){
+		D3DXVECTOR3 dPos = GetPosition( ) - collisionResult->GetPosition( );
+		D3DXVec3Normalize( &dPos, &dPos );
+		dPos *= mSpeed;
+		Translation( dPos );
+	}
 }
 
 bool MainCharacter::Init( std::shared_ptr<MainCharacter> pMainCharacter ) {
@@ -104,18 +112,18 @@ void MainCharacter::MousePressed(pooptube::MouseEvent* pMouseEvent) {
 void MainCharacter::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
 
 }
-
-//void MainCharacter::CollsionReceive( std::shared_ptr<Node> target )
-void MainCharacter::CollsionReceive( Node* target )
-{
-
-}
-
-//void MainCharacter::CollsionFeedBack( std::shared_ptr<Node> target )
-void MainCharacter::CollsionFeedBack( Node* target )
-{
-	D3DXVECTOR3 dPos = GetPosition() - target->GetPosition();
-	D3DXVec3Normalize( &dPos, &dPos );
-	dPos *= mSpeed;
-	Translation( dPos );
-}
+//
+////void MainCharacter::CollsionReceive( std::shared_ptr<Node> target )
+//void MainCharacter::CollsionReceive( Node* target )
+//{
+//
+//}
+//
+////void MainCharacter::CollsionFeedBack( std::shared_ptr<Node> target )
+//void MainCharacter::CollsionFeedBack( Node* target )
+//{
+//	D3DXVECTOR3 dPos = GetPosition() - target->GetPosition();
+//	D3DXVec3Normalize( &dPos, &dPos );
+//	dPos *= mSpeed;
+//	Translation( dPos );
+//}

@@ -20,33 +20,37 @@ namespace pooptube {
 	CollisionManager::~CollisionManager() {
 	}
 
-	void CollisionManager::AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
+	void CollisionManager::AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox, Node* pNode )
 	{
-		mCollisionBoxList.push_back( pCollisionBox );
+		mCollisionBoxList.push_back( std::make_pair(pCollisionBox, pNode) );
 	}
 
 	void CollisionManager::RemoveCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
 	{
 		for( auto iter = mCollisionBoxList.begin(); iter != mCollisionBoxList.end(); ++iter ) {
-			if( *iter == pCollisionBox ) {
+			//if( *iter == pCollisionBox ) {
+			if( iter->first == pCollisionBox ) {
 				mCollisionBoxList.erase( iter );
 				return;
 			}
 		}
 	}
 
-	void CollisionManager::CollisionCheck( CollisionBox* pTarget ) const
+	//void CollisionManager::CollisionCheck( CollisionBox* pTarget ) const
+	Node* CollisionManager::CollisionCheck( CollisionBox* pTarget ) const
 	{
 		if( pTarget == nullptr )
-			return;
+			return nullptr;
 
 		for( auto box : mCollisionBoxList ) {
-			if( box->CollisionCheck( pTarget ) ) {
-				box->GetParent()->CollsionReceive( pTarget->GetParent() );
-				pTarget->GetParent( )->CollsionFeedBack( box->GetParent( ) );
+			//if( box->CollisionCheck( pTarget ) ) {
+			if( box.first->CollisionCheck( pTarget ) ) {
+				return box.second;
+				//box->GetParent()->CollsionReceive( pTarget->GetParent() );
+				//pTarget->GetParent( )->CollsionFeedBack( box->GetParent( ) );
 			}
 		}
 
-		return;
+		return nullptr;
 	}
 }
