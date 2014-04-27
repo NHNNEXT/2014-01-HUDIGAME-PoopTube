@@ -139,10 +139,6 @@ void StageOne::Update(float dTime)
 		mTimeForFPS = 0.f;
 	}
 
-	mCamera->Update(dTime);
-
-	mTimeForFPS += dTime;
-
 	// creature
 	static float ssss = 0.0f;
 	
@@ -189,6 +185,9 @@ void StageOne::Update(float dTime)
 	printf("%f %f %f \n", CreaturePos.x, CreaturePos.y, CreaturePos.z);
 	printf("%f\n", distanceTemp);
 	printf("%d\n", mCreature->GetState());
+
+	mCamera->Update(dTime);
+	mTimeForFPS += dTime;
 }
 
 void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
@@ -197,22 +196,22 @@ void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode())
 	{
-	case 'W':
+	case 'T':
 		mCamera_2->Translation(mCamera_2->GetFrontVector()*0.1f);
 		break;
-	case 'S':
+	case 'G':
 		mCamera_2->Translation(mCamera_2->GetFrontVector()*-0.1f);
 		break;
-	case 'A':
+	case 'F':
 		mCamera_2->Translation(mCamera_2->GetLeftVector()*0.1f);
 		break;
-	case 'D':
+	case 'H':
 		mCamera_2->Translation(mCamera_2->GetRightVector()*0.1f);
 		break;
-	case VK_LEFT:
+	case VK_UP:
 		mCamera_2->RotateFrontVectorY(-0.1f);
 		break;
-	case VK_RIGHT:
+	case VK_DOWN:
 		mCamera_2->RotateFrontVectorY(0.1f);
 		break;
 
