@@ -26,27 +26,31 @@ namespace pooptube {
 		CollisionBox(const D3DXVECTOR3& fMax, const D3DXVECTOR3& fMin);
 		virtual ~CollisionBox();
 
-		static std::shared_ptr<CollisionBox> Create();
-		static std::shared_ptr<CollisionBox> Create(MESH_CUSTOM_VERTEX* vertices);
+//		static std::shared_ptr<CollisionBox> Create( std::shared_ptr<Node> pNode );
+		static std::shared_ptr<CollisionBox> Create( Node* pNode );
+//		static std::shared_ptr<CollisionBox> Create(MESH_CUSTOM_VERTEX* vertices);
 
-		bool Init();
+//		bool			Init( std::shared_ptr<Node> pNode );
+		bool			Init( Node* pNode );
 
-		virtual void Render();
-		virtual void Update( float dTime );
+		virtual void	Render();
+		virtual void	Update( float dTime );
 
-		void SetAABBCollisionBoxFromSkinnedMesh(std::shared_ptr<SkinnedMesh> pMesh);
-		void SetAABBCollisionBoxFromVertices(MESH_CUSTOM_VERTEX* vertices, UINT Size);
+//		void			SetParent( std::shared_ptr<Node> pNode ){ mParentNode = pNode; }
+		void			SetAABBCollisionBoxFromSkinnedMesh(std::shared_ptr<SkinnedMesh> pMesh);
+		void			SetAABBCollisionBoxFromVertices(MESH_CUSTOM_VERTEX* vertices, UINT Size);
 
-		bool CollisionCheck( const CollisionBox* target );
+		bool			CollisionCheck( CollisionBox* target );
 
-		float GetAxisLenX() { return mAxisLen[AXIS_X]; }
-		float GetAxisLenY() { return mAxisLen[AXIS_Y]; }
-		float GetAxisLenZ() { return mAxisLen[AXIS_Z]; }
-
-	protected:
-
-		float mAxisLen[AXIS_NUM];
+		float			GetAxisLenX() { return mAxisLen[AXIS_X]; }
+		float			GetAxisLenY() { return mAxisLen[AXIS_Y]; }
+		float			GetAxisLenZ() { return mAxisLen[AXIS_Z]; }
+//		std::shared_ptr<Node>	GetParent() const { return mParentNode; }
+		Node*			GetParent( ) const { return mParentNode; }
 
 	private:
+		float			mAxisLen[AXIS_NUM];
+//		std::shared_ptr<Node>	mParentNode;
+		Node*			mParentNode;
 	};
 }

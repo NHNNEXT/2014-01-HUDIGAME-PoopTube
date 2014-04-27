@@ -26,7 +26,8 @@ public:
 
 	static std::shared_ptr<MainCharacter> Create();
 
-	bool Init();
+//	bool Init();
+	bool Init( std::shared_ptr<MainCharacter> pMainCharacter );
 
 	void Render();
 	void Update(float dTime);
@@ -48,6 +49,11 @@ public:
 	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
 
 	std::shared_ptr<pooptube::SkinnedMesh> GetSkinnedMesh() const { return mSkinnedMesh; }
+
+//	virtual void CollsionReceive( std::shared_ptr<Node> target );
+	virtual void CollsionReceive( Node* target );
+//	virtual void CollsionFeedBack( std::shared_ptr<Node> target );
+	virtual void CollsionFeedBack( Node* target );
 
 protected:
 

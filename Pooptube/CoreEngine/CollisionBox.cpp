@@ -11,10 +11,11 @@ namespace pooptube {
 	CollisionBox::~CollisionBox() {
 	}
 
-	std::shared_ptr<CollisionBox> CollisionBox::Create() {
+//	std::shared_ptr<CollisionBox> CollisionBox::Create( std::shared_ptr<Node> pNode ) {
+	std::shared_ptr<CollisionBox> CollisionBox::Create( Node* pNode ) {
 		std::shared_ptr<CollisionBox> pCollisionBox(new CollisionBox);
 
-		if( pCollisionBox->Init() ) {
+		if( pCollisionBox->Init( pNode ) ) {
 			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox );
 			return pCollisionBox;
 		}
@@ -22,13 +23,15 @@ namespace pooptube {
 			return nullptr;
 	}
 
-	bool CollisionBox::Init() {
+//	bool CollisionBox::Init( std::shared_ptr<Node> pNode ) {
+	bool CollisionBox::Init( Node* pNode ) {
 		if (!Node::Init())
 			return false;
 
 		mAxisLen[AXIS_X] = 0.5f;
 		mAxisLen[AXIS_Y] = 0.5f;
 		mAxisLen[AXIS_Z] = 0.5f;
+		mParentNode = pNode;
 
 		return true;
 	}
@@ -126,17 +129,20 @@ namespace pooptube {
 
 	void CollisionBox::Update( float dTime ) {
 		Node::Update( dTime );
+		CollisionManager::GetInstance()->CollisionCheck( this );
 	}
 
-	bool CollisionBox::CollisionCheck( const CollisionBox* target ) {
+	bool CollisionBox::CollisionCheck( CollisionBox* target ) {
 		D3DXVECTOR3 D = GetPosition() - target->GetPosition();
+
+		if( mParentNode == target->mParentNode )
+			return false;
 
 		//Check By Sphere
 		//속도 문제 개선 필요 여기 내용들은 매번 업데이트마다 순회함
-		if( D3DXVec3Length( &D ) > D3DXVec3Length( &(
-			D3DXVECTOR3( mAxisLen[0], mAxisLen[1], mAxisLen[2] )
-			- D3DXVECTOR3( target->mAxisLen[0], target->mAxisLen[1], target->mAxisLen[2] )
-			) ) )
+		if( D3DXVec3Length( &D ) > D3DXVec3Length( &D3DXVECTOR3( mAxisLen[0], mAxisLen[1], mAxisLen[2] ) )
+			+ D3DXVec3Length( &D3DXVECTOR3( target->mAxisLen[0], target->mAxisLen[1], target->mAxisLen[2] ) )
+			)
 		{
 			return false;
 		}
@@ -148,10 +154,10 @@ namespace pooptube {
 		float R0, R1, R;    //interval radii and distance between centers
 		float R01;        //=R0+R1
 		D3DXVECTOR3 mXDirVec, tXDirVec;
-		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &GetFrontPoint() );
-		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontPoint() };
-		D3DXVec3Cross(&tXDirVec, &GetUpVector(), &GetFrontPoint());
-		D3DXVECTOR3 tAxisDir[3] = { tXDirVec, GetUpVector(), GetFrontPoint() };
+		D3DXVec3Cross( &mXDirVec, &GetFrontVector( ), &GetUpVector( ) );
+		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector( ), GetFrontVector( ) };
+		D3DXVec3Cross( &tXDirVec, &target->GetFrontVector(), &target->GetUpVector());
+		D3DXVECTOR3 tAxisDir[3] = { tXDirVec, target->GetUpVector( ), target->GetFrontVector( ) };
 
 		//A0~2
 		for( int j = 0; j < 3; ++j ){

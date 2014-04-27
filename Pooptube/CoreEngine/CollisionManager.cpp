@@ -22,32 +22,31 @@ namespace pooptube {
 
 	void CollisionManager::AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
 	{
-		mCollisionBoxList.push_front( pCollisionBox );
+		mCollisionBoxList.push_back( pCollisionBox );
 	}
 
 	void CollisionManager::RemoveCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
 	{
-		for( auto iter = mCollisionBoxList.begin( ); iter != mCollisionBoxList.end( ); iter++ ) {
-			if( (*iter) == pCollisionBox ) {
-				mCollisionBoxList.erase_after( iter );
-				break;
+		for( auto iter = mCollisionBoxList.begin(); iter != mCollisionBoxList.end(); ++iter ) {
+			if( *iter == pCollisionBox ) {
+				mCollisionBoxList.erase( iter );
+				return;
 			}
 		}
 	}
 
-	const CollisionBox* CollisionManager::CollisionCheck( const CollisionBox* pTarget ) const
+	void CollisionManager::CollisionCheck( CollisionBox* pTarget ) const
 	{
 		if( pTarget == nullptr )
-			return nullptr;
+			return;
 
-		CollisionBox * temp = nullptr;
-		for( auto iter = mCollisionBoxList.begin( ); iter != mCollisionBoxList.end( ); iter++ ) {
-			temp = (*iter).get();
-			if( temp != pTarget && temp->CollisionCheck( pTarget ) ) {
-				return temp;
+		for( auto box : mCollisionBoxList ) {
+			if( box->CollisionCheck( pTarget ) ) {
+				box->GetParent()->CollsionReceive( pTarget->GetParent() );
+				pTarget->GetParent( )->CollsionFeedBack( box->GetParent( ) );
 			}
 		}
 
-		return nullptr;
+		return;
 	}
 }

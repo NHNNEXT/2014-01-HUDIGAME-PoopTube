@@ -52,7 +52,7 @@ bool StageOne::Init() {
 
 	mGround = Ground::Create();
 
-	testDummy = pooptube::CollisionBox::Create();
+	testDummy = pooptube::CollisionBox::Create( mSkinnedMesh.get() );
 	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 

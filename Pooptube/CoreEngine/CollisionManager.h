@@ -20,7 +20,7 @@ namespace pooptube {
 		void AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox );
 		void RemoveCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox );
 
-		const CollisionBox* CollisionCheck( const CollisionBox* pTarget ) const; // TODO :
+		void CollisionCheck( CollisionBox* pTarget ) const;
 
 	private:
 		CollisionManager();
@@ -30,6 +30,6 @@ namespace pooptube {
 
 		//@tobo : 매번 업데이트 할때마다 순회 해야하는 풀이니, 더 빠를 필요가 있음
 		//어레이로 자료구조를 전환해야함
-		std::forward_list<std::shared_ptr<CollisionBox>> mCollisionBoxList;
+		std::vector<std::shared_ptr<CollisionBox>> mCollisionBoxList;
 	};
 }

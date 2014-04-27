@@ -11,10 +11,11 @@ MainCharacter::~MainCharacter() {
 }
 
 std::shared_ptr<MainCharacter> MainCharacter::Create() {
-	std::shared_ptr<MainCharacter> pCollisionBox(new MainCharacter);
+	std::shared_ptr<MainCharacter> pMainCharacter(new MainCharacter);
 
-	if (pCollisionBox->Init())
-		return pCollisionBox;
+	if( pMainCharacter->Init( pMainCharacter ) ){
+		return pMainCharacter;
+	}
 	else
 		return nullptr;
 }
@@ -39,14 +40,14 @@ void MainCharacter::Update(float dTime) {
 	mCollisionBox->Update(dTime);
 }
 
-bool MainCharacter::Init() {
+bool MainCharacter::Init( std::shared_ptr<MainCharacter> pMainCharacter ) {
 	Node::Init();
 
 	EnableKeyEvent();
 	EnableMouseEvent();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
-	mCollisionBox = pooptube::CollisionBox::Create();
+	mCollisionBox = pooptube::CollisionBox::Create( pMainCharacter.get() );
 	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 
 	return true;
@@ -102,4 +103,19 @@ void MainCharacter::MousePressed(pooptube::MouseEvent* pMouseEvent) {
 
 void MainCharacter::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
 
+}
+
+//void MainCharacter::CollsionReceive( std::shared_ptr<Node> target )
+void MainCharacter::CollsionReceive( Node* target )
+{
+
+}
+
+//void MainCharacter::CollsionFeedBack( std::shared_ptr<Node> target )
+void MainCharacter::CollsionFeedBack( Node* target )
+{
+	D3DXVECTOR3 dPos = GetPosition() - target->GetPosition();
+	D3DXVec3Normalize( &dPos, &dPos );
+	dPos *= mSpeed;
+	Translation( dPos );
 }
