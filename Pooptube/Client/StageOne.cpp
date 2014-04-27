@@ -11,6 +11,7 @@
 #include "Light.h"
 #include "SunLight.h"
 #include "Ground.h"
+#include "Creature.h"
 
 StageOne::StageOne() {
 }
@@ -46,7 +47,7 @@ bool StageOne::Init() {
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
 
 	mCharacter = MainCharacter::Create();
-
+	
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 	mCamera_2 = pooptube::Camera::Create();
 
@@ -63,9 +64,32 @@ bool StageOne::Init() {
 		L"Left.bmp",
 		L"Right.bmp");
 
+	mCreature = Creature::Create();
+	D3DXVECTOR3 initialPosition = { -10.f, 0.f, 10.f };
+
+	mCreature->SetPosition(initialPosition);
+	
+	mCreature->pss = mCharacter; // 크리처 테스트 위한 거
+
+	mCharacter->Render();
+
+	mSkinnedMesh->Render();
+
+	mGround->Render();
+
+	testDummy->Render();
+
+	mCamera->Render();
+	//mCamera_2->Render();
+
+	mSkyBox->Render();
+
+	// creature
+
+	mCreature->Render();
+
 	return true;
 }
-
 void StageOne::Render() {
 
 	//mLight->Render();
@@ -83,12 +107,16 @@ void StageOne::Render() {
 	mCamera_2->Render();
 
 	mSkyBox->Render();
-}
 
+	// creature
+
+	mCreature->Render();
+}
 void StageOne::Update(float dTime)
 {
 	mSkinnedMesh->Update(dTime);
 	mCharacter->Update(dTime);
+	mCreature->Update(dTime); // creature
 
 	//캐릭터 점프 알고리즘
 	CHAR_STATE	CharState = mCharacter->GetState();
@@ -131,6 +159,53 @@ void StageOne::Update(float dTime)
 	mCamera->Update(dTime);
 
 	mTimeForFPS += dTime;
+
+	// creature
+	static float ssss = 0.0f;
+	
+	D3DXVECTOR3 CreaturePos = mCreature->GetPosition();
+	float PI = 3.14f;
+	D3DXVECTOR3 distance = mCharacter->GetPosition() - mCreature->GetPosition();
+	float distanceTemp = D3DXVec3Length(&distance);
+
+	D3DXVECTOR3 temp = CharPos - CreaturePos;
+
+	if (distanceTemp >= 5) {
+		mCreature->SetState(CREATURE_STATE::IDLE);
+		CreaturePos.x = -10 + 2 * sinf(ssss);
+		ssss += dTime;			
+		mCreature->SetPosition(CreaturePos);
+
+		/*if (distanceTemp < 5)
+		{
+			mCreature->SetState(CREATURE_STATE::ANGRY);
+			mCreature->SetPosition(CreaturePos + temp / 100);
+		}
+		else
+		{
+			D3DXVECTOR3 initialPosition = { 10.f, 10.f, 0.f };
+			temp = initialPosition - CreaturePos;
+			mCreature->SetPosition(CreaturePos + temp / 100);
+		}*/
+	}
+	else 
+	{
+		mCreature->SetState(CREATURE_STATE::ANGRY);
+		mCreature->SetPosition(CreaturePos + temp / 100);
+
+		if (distanceTemp >= 5)
+		{
+			mCreature->SetState(CREATURE_STATE::IDLE);
+			D3DXVECTOR3 initialPosition = { 10.f, 10.f, 0.f };
+			temp = initialPosition - CreaturePos;
+			mCreature->SetPosition(CreaturePos + temp / 100);
+		}
+	}
+
+	printf("%f %f %f \n", CharPos.x, CharPos.y, CharPos.z);
+	printf("%f %f %f \n", CreaturePos.x, CreaturePos.y, CreaturePos.z);
+	printf("%f\n", distanceTemp);
+	printf("%d\n", mCreature->GetState());
 }
 
 void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {

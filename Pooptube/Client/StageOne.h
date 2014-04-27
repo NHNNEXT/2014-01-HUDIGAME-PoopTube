@@ -14,6 +14,7 @@ namespace pooptube {
 
 class MainCharacter;
 class Ground;
+class Creature;
 
 class StageOne
 	: public pooptube::Scene
@@ -50,6 +51,8 @@ private:
 	std::shared_ptr<pooptube::SkyBox>				mSkyBox = nullptr;
 	std::shared_ptr<pooptube::Light>				mLight = nullptr;
 	std::shared_ptr<pooptube::SunLight>				mSunLight = nullptr;
+
+	std::shared_ptr<Creature>						mCreature = nullptr; // 크리처
 
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;
