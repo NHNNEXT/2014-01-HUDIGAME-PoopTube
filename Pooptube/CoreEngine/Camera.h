@@ -1,5 +1,5 @@
 ﻿/**
-* @author 양현찬
+* @author 김지환
 * @brief
 * 프로젝션을 담당하는 카메라.
 * 디폴트로 perspective projection을 한다.

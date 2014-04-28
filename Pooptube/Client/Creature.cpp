@@ -72,6 +72,7 @@ void Creature::Update(float dTime)
 		Translation( dPos );
 	}
 
+	FSM();
 	switch (mState) {
 	case IDLE:
 		DoIdle(dTime);
@@ -82,6 +83,15 @@ void Creature::Update(float dTime)
 	case RAGE:
 		DoRage();
 		break;
+	}
+
+	D3DXVECTOR3 pos = GetPosition();
+	float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
+	//float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
+
+	if (height != pos.y) {
+		pos.y = height;
+		SetPosition(pos);
 	}
 }
 

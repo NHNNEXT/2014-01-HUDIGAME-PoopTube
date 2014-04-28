@@ -1,5 +1,6 @@
 ﻿/**
 * @author 양현찬
+* @version 2014/04/29 김지환 크리쳐의 지형에 따른 y값 변화
 * @brief
 * 무서운 크리쳐
 * @date 2014/04/22
@@ -14,11 +15,15 @@
 #include "stdafx.h"
 #include "Node.h"
 #include "MainCharacter.h"
+#include "StageOne.h"
+#include "Ground.h"
 
 namespace pooptube {
 	class SkinnedMesh;
 	class CollisionBox;
+	class Ground;
 }
+class StageOne;
 
 enum CREATURE_STATE : int {
 	IDLE,

@@ -78,8 +78,8 @@ bool StageOne::Init() {
 	this->AddChild(&*mSkinnedMesh);
 	//this->AddChild(&*mXMesh);
 	this->AddChild(&*mCharacter);
-	this->AddChild(&*mCamera);
-	//this->AddChild(&*mCamera_2);
+	//this->AddChild(&*mCamera);
+	this->AddChild(&*mCamera_2);
 	this->AddChild(&*mGround);
 	this->AddChild(&*testDummy);
 	this->AddChild(&*mSkyBox);
@@ -89,43 +89,23 @@ bool StageOne::Init() {
 }
 void StageOne::Render() {
 	Node::Render();
-	return;
-	//mLight->Render();
-	mSunLight->Render();
-
-	mCharacter->Render();
-
-	mSkinnedMesh->Render();
-	mXMesh->Render();
-
-	mGround->Render();
-
-	testDummy->Render();
-
-	mCamera->Render();
-	//mCamera_2->Render();
-
-	mSkyBox->Render();
-
-	// creature
-
-	mCreature->Render();
 }
 void StageOne::Update(float dTime) {
+	Node::Update(dTime);
 	//2초마다 한번씩
 	if (mTimeForFPS > 2.f) {
 		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
 		mTimeForFPS = 0.f;
 	}
 	
-	mSkinnedMesh->Update(dTime);
-	mCharacter->Update(dTime);
-	mCreature->Update(dTime); // creature
+//	mSkinnedMesh->Update(dTime);
+// 	mCharacter->Update(dTime);
+// 	mCreature->Update(dTime); // creature
 
 	MainCharacterJumpUpdate(dTime);
-	CreatureUpdate(dTime);
-
-	mCamera->Update(dTime);
+// 	CreatureUpdate(dTime);
+// 
+// 	mCamera->Update(dTime);
 	mTimeForFPS += dTime;
 }
 
@@ -215,55 +195,4 @@ void StageOne::MainCharacterJumpUpdate(float dTime) {
 		CharPos.y = MapHeight;
 		mCharacter->SetPosition(CharPos);
 	}
-}
-
-void StageOne::CreatureUpdate(float dTime) {
-	// creature
-	//D3DXVECTOR3 CharPos = mCharacter->GetPosition();
-	//static float ssss = 0.0f;
-
-	//D3DXVECTOR3 CreaturePos = mCreature->GetPosition();
-	//float PI = 3.14f;
-	//D3DXVECTOR3 distance = mCharacter->GetPosition() - mCreature->GetPosition();
-	//float distanceTemp = D3DXVec3Length(&distance);
-
-	//D3DXVECTOR3 temp = CharPos - CreaturePos;
-
-	//if (distanceTemp >= 8) {
-	//	mCreature->SetState(CREATURE_STATE::IDLE);
-	//	CreaturePos.x = 10 + 2 * sinf(ssss);
-	//	ssss += dTime;
-	//	mCreature->SetPosition(CreaturePos);
-
-	//	/*if (distanceTemp < 5)
-	//	{
-	//	mCreature->SetState(CREATURE_STATE::ANGRY);
-	//	mCreature->SetPosition(CreaturePos + temp / 100);
-	//	}
-	//	else
-	//	{
-	//	D3DXVECTOR3 initialPosition = { 10.f, 10.f, 0.f };
-	//	temp = initialPosition - CreaturePos;
-	//	mCreature->SetPosition(CreaturePos + temp / 100);
-	//	}*/
-	//}
-	//else
-	//{
-	//	mCreature->SetState(CREATURE_STATE::ANGRY);
-	//	mCreature->SetPosition(CreaturePos + temp / 100);
-
-	//	if (distanceTemp >= 8)
-	//	{
-	//		mCreature->SetState(CREATURE_STATE::IDLE);
-	//		D3DXVECTOR3 initialPosition = { 10.f, 10.f, 0.f };
-	//		temp = initialPosition - CreaturePos;
-	//		mCreature->SetPosition(CreaturePos + temp / 100);
-	//	}
-	//}
-
-	/*printf("%f %f %f \n", CharPos.x, CharPos.y, CharPos.z);
-	printf("%f %f %f \n", CreaturePos.x, CreaturePos.y, CreaturePos.z);
-	printf("%f\n", distanceTemp);*/
-
-	mCreature->FSM();
 }

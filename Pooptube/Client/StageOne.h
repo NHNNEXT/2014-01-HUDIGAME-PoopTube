@@ -44,6 +44,7 @@ public:
 	void MouseUp(pooptube::MouseEvent* pMouseEvent);
 	void MousePressed(pooptube::MouseEvent* pMouseEvent);
 	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
+	std::shared_ptr<pooptube::Ground> GetGroundModule() const { return mGround; }
 
 protected:
 
