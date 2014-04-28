@@ -12,6 +12,7 @@
 #include "SunLight.h"
 #include "Ground.h"
 #include "Creature.h"
+#include "XMesh.h"
 
 StageOne::StageOne() {
 }
@@ -45,6 +46,7 @@ bool StageOne::Init() {
 	mSunLight = pooptube::SunLight::Create();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
+	mXMesh = pooptube::XMesh::Create(L"tiger.x");
 
 	mCharacter = MainCharacter::Create();
 	
@@ -81,6 +83,7 @@ void StageOne::Render() {
 	mCharacter->Render();
 
 	mSkinnedMesh->Render();
+	mXMesh->Render();
 
 	mGround->Render();
 

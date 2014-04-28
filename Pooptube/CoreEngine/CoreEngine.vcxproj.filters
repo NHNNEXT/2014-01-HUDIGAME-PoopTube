@@ -262,6 +262,9 @@
     <ClInclude Include="XMesh.h">
       <Filter>Nodes\SkinnedMesh</Filter>
     </ClInclude>
+    <ClInclude Include="PooString.h">
+      <Filter>Util\Ease</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
