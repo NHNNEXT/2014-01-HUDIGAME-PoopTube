@@ -20,7 +20,7 @@ namespace pooptube {
 	class CollisionBox;
 }
 
-enum CREATURE_STATE {
+enum CREATURE_STATE : int {
 	IDLE,
 	ANGRY,
 	RAGE,
@@ -29,8 +29,8 @@ enum CREATURE_STATE {
 class Creature : public pooptube::Node
 {
 public:
-	std::shared_ptr<MainCharacter> pss;
-
+	std::shared_ptr<MainCharacter> pss; // mainCharacter를 가리키는 임시 포인터
+										// stageManager를 작성하면 지운다.
 	Creature();
 	~Creature();
 
@@ -41,17 +41,21 @@ public:
 	void Render();
 	void Update(float dTime);
 
+	CREATURE_STATE FSM();
+
+	void DoIdle(float dTime);
+	void DoAngry();
+	void DoRage();
+
 	CREATURE_STATE GetState() const { return mState; }
 	void SetState(CREATURE_STATE state) { mState = state; }
-
-	void ChangeState();
 
 	std::shared_ptr<pooptube::SkinnedMesh> GetSkinnedMesh() const { return mSkinnedMesh; }
 
 private:
 	CREATURE_STATE	mState = IDLE;
 
-	float mSpeed = 0.05f;
+	float mSpeed = 0.03f;
 	float mDistanceFromMainCharater = 0;
 	D3DXVECTOR3 initialPosition = { 10.f, 0.f, 10.f };
 

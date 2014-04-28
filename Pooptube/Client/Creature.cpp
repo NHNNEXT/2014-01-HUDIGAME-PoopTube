@@ -58,29 +58,79 @@ void Creature::Update(float dTime)
 	mSkinnedMesh->SetFrontPoint(Node::GetFrontPoint());
 	mSkinnedMesh->Update(dTime);
 
- 	mCollisionBox->SetPosition(Node::GetPosition());
- 	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
- 	mCollisionBox->SetFrontPoint(Node::GetFrontPoint());
- 	mCollisionBox->Update(dTime);
+	mCollisionBox->SetPosition(Node::GetPosition());
+	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
+	mCollisionBox->SetFrontPoint(Node::GetFrontPoint());
+	mCollisionBox->Update(dTime);
+
 	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck( mCollisionBox.get() );
-	if( collisionResult != nullptr ){
+
+	if( collisionResult != nullptr ) {
 		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetPosition();
 		D3DXVec3Normalize( &dPos, &dPos );
 		dPos *= mSpeed;
 		Translation( dPos );
 	}
+
+	switch (mState) {
+	case IDLE:
+		DoIdle(dTime);
+		break;
+	case ANGRY:
+		DoAngry();
+		break;
+	case RAGE:
+		DoRage();
+		break;
+	}
 }
 
-void Creature::ChangeState()
+CREATURE_STATE Creature::FSM()
 {
-	//static float ssss = 0.0f;
+	D3DXVECTOR3 CharacterPosition = pss->GetPosition();
+	D3DXVECTOR3 CreaturePosition = GetPosition();
+	D3DXVECTOR3 distance = pss->GetPosition() - GetPosition();
 
-	/*D3DXVECTOR3 CreaturePos = Creature::GetPosition();
+	if (8 < D3DXVec3Length(&distance)) {
+		SetState(IDLE);
+		printf("idle\n");
+	}
+
+	if (8 >= D3DXVec3Length(&distance) && D3DXVec3Length(&distance) >= 2) {
+		SetState(ANGRY);
+		printf("angry\n");
+	}
+
+	if (2 > D3DXVec3Length(&distance)) {
+		SetState(RAGE);
+		printf("rage\n");
+	}
+
+	return IDLE;
+}
+
+void Creature::DoIdle(float dTime)
+{
 	float PI = 3.14f;
-	D3DXVECTOR3 distance = pss->GetPosition() - Creature::GetPosition();
-	float distanceTemp = D3DXVec3Length(&distance);
+	static float temp = 0;
+	temp += dTime;
 
-	D3DXVECTOR3 temp = pss->GetPosition() - CreaturePos;*/
-	//mDistanceFromMainCharater = 
-	//if ()
+	D3DXVECTOR3 CreaturePosition = GetPosition();
+	CreaturePosition.x = initialPosition.x + 2 * sinf(temp);
+	SetPosition(CreaturePosition);
+	
+	printf("%f\n", temp);
+	printf("%f\n", CreaturePosition.x);
+}
+
+void Creature::DoAngry()
+{
+	D3DXVECTOR3 CharacterPosition = pss->GetPosition();
+	D3DXVECTOR3 CreaturePosition = GetPosition();
+	SetPosition(CreaturePosition + (CharacterPosition - CreaturePosition) / 100);
+}
+
+void Creature::DoRage()
+{
+
 }
