@@ -113,7 +113,7 @@ void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 }
 
 void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
-	return
+	return;
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'T':
