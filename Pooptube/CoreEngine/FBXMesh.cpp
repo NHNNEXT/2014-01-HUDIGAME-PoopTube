@@ -20,8 +20,7 @@ namespace pooptube{
 	}
 
 	bool FBXMesh::Init(const std::string& FilePath) {
-
-		mFbxScene = ResourceManager::GetInstance()->LoadFBX(FilePath);
+		//mFbxScene = ResourceManager::GetInstance()->LoadFBX(FilePath);
 
 		return true;
 	}

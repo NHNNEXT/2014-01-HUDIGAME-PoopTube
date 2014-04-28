@@ -40,16 +40,22 @@ namespace pooptube {
 		std::shared_ptr<Mesh> GetMeshData() const { return mMesh; }
 
 	protected:
-
-
+		bool _InitFBX(const std::string& MeshFilePath);
+		bool _InitX(const std::string& MeshFilePath);
 
 	private:
 
+		//x파일 로드를 위한 변수들
+		LPD3DXMESH				mXMesh = nullptr;
+		D3DMATERIAL9*			mMaterial = nullptr;
+		LPDIRECT3DTEXTURE9*		mTexture = nullptr;
+		DWORD					mMaterialCount = 0;
+
+
 		LPDIRECT3DVERTEXBUFFER9 mMeshVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9	mMeshIndexBuffer = nullptr;
-
 		std::shared_ptr<Mesh>	mMesh = nullptr;
-		
+
 		RESOURCE_TYPE			mResourceType = RESOURCE_NULL;
 	};
 

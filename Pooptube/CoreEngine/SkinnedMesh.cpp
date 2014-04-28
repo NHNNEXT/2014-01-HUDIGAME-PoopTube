@@ -33,9 +33,36 @@ namespace pooptube {
 		if (!Node::Init())
 			return false;
 
-		if (ResourceType & RESOURCE_FBX) {
-			mMesh = ResourceManager::GetInstance()->LoadMeshFromFBX(MeshFilePath);
-		}
+		if (ResourceType == RESOURCE_FBX)
+			return _InitFBX(MeshFilePath);
+
+		if (ResourceType == RESOURCE_X)
+			return _InitX(MeshFilePath);
+
+		return true;
+	}
+
+	void SkinnedMesh::Render() {
+		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
+
+		//행렬의 연산은 node에서 상속받는다.
+		Node::Render();
+
+		//디바이스에 버텍스버퍼를 전달
+		GetDevice()->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
+
+		//인덱스 설정
+		GetDevice()->SetIndices(mMeshIndexBuffer);
+
+		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());
+		//mDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mMesh->GetPolygonCount());
+	}
+
+	void SkinnedMesh::Update(float dTime) {
+	}
+
+	bool SkinnedMesh::_InitFBX(const std::string& MeshFilePath) {
+		mMesh = ResourceManager::GetInstance()->LoadMeshFromFBX(MeshFilePath);
 
 		if (mMesh == nullptr)
 			return false;
@@ -73,23 +100,9 @@ namespace pooptube {
 		return true;
 	}
 
-	void SkinnedMesh::Render() {
-		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
+	bool SkinnedMesh::_InitX(const std::string& MeshFilePath) {
 
-		//행렬의 연산은 node에서 상속받는다.
-		Node::Render();
-
-		//디바이스에 버텍스버퍼를 전달
-		GetDevice()->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
-
-		//인덱스 설정
-		GetDevice()->SetIndices(mMeshIndexBuffer);
-
-		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());
-		//mDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mMesh->GetPolygonCount());
-	}
-
-	void SkinnedMesh::Update(float dTime) {
+		return true;
 	}
 
 
