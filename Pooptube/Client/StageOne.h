@@ -10,6 +10,7 @@ namespace pooptube {
 	class SkyBox;
 	class Light;
 	class SunLight;
+	class XMesh;
 }
 
 class MainCharacter;
@@ -55,6 +56,7 @@ private:
 	std::shared_ptr<pooptube::SkyBox>				mSkyBox = nullptr;
 	std::shared_ptr<pooptube::Light>				mLight = nullptr;
 	std::shared_ptr<pooptube::SunLight>				mSunLight = nullptr;
+	std::shared_ptr<pooptube::XMesh>				mXMesh = nullptr;
 
 	std::shared_ptr<Creature>						mCreature = nullptr; // 크리처
 

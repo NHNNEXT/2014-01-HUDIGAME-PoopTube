@@ -1,18 +1,26 @@
 #pragma once
-#include "SkinnedMesh.h"
+#include "Node.h"
 
 namespace pooptube{
-	class XMesh : public SkinnedMesh {
+	class XMesh : public Node {
 	public:
 		XMesh();
 		virtual ~XMesh();
 
-		static std::shared_ptr<XMesh> Create(const std::string& FilePath);
+		static std::shared_ptr<XMesh> Create(const std::wstring& FilePath);
 
-		bool Init();
+		//그냥 귀찮아서 리소스 메니져 안거치고 다 때려박음
+		bool Init(const std::wstring& FilePath);
+
+		void Update(float dTime);
+		void Render();
 
 	private:
-		D3DMATERIAL9*			mMaterial = nullptr;
+		LPD3DXMESH			mXMesh = nullptr;
+		D3DMATERIAL9*		mMaterial = nullptr;
+		LPDIRECT3DTEXTURE9* mTexture = nullptr;
+
+		DWORD				mNumMaterial = 0;
 	};
 }
 

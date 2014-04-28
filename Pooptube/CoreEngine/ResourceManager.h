@@ -25,11 +25,9 @@ namespace pooptube {
 
 		static ResourceManager* GetInstance();
 
-		std::shared_ptr<Mesh>						LoadMeshFromFBX(const std::string& FilePath);
-		std::shared_ptr<HeightMap::MapData>			LoadHeightMap(const std::string& FilePath);
-		LPDIRECT3DTEXTURE9							LoadTexture(const std::wstring& FilePath);
-		LPD3DXMESH									LoadMeshFromX(const std::wstring& FilePath);
-
+		std::shared_ptr<Mesh>				LoadMeshFromFBX(const std::string& FilePath);
+		std::shared_ptr<HeightMap::MapData>	LoadHeightMap(const std::string& FilePath);
+		LPDIRECT3DTEXTURE9					LoadTexture(const std::wstring& FilePath);
 		//처참한 fbx의 흔적
 		//FbxScene*						LoadFBX(const std::string &FilePath);
 
@@ -62,9 +60,7 @@ namespace pooptube {
 		std::map<std::string, std::shared_ptr<Mesh>>			mFBXMeshTable;
 		std::map<std::string, std::shared_ptr<HeightMap::MapData>>			mHeightMapTable;
 		std::map<std::wstring, LPDIRECT3DTEXTURE9>				mTextureTable;
-		std::map<std::wstring, LPD3DXMESH>						mXMeshTable;
 
-		
 		//std::map<std::string, FbxScene*>						mFBXTable;
 	};
 
