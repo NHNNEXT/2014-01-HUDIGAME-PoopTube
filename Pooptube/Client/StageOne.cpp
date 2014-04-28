@@ -78,8 +78,8 @@ bool StageOne::Init() {
 	this->AddChild(&*mSkinnedMesh);
 	//this->AddChild(&*mXMesh);
 	this->AddChild(&*mCharacter);
-	//this->AddChild(&*mCamera);
-	this->AddChild(&*mCamera_2);
+	this->AddChild(&*mCamera);
+	//this->AddChild(&*mCamera_2);
 	this->AddChild(&*mGround);
 	this->AddChild(&*testDummy);
 	this->AddChild(&*mSkyBox);
@@ -113,6 +113,7 @@ void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 }
 
 void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
+	return
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'T':
