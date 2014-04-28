@@ -113,7 +113,6 @@ void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 }
 
 void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
-	return
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'T':
@@ -165,35 +164,5 @@ void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
 
 void StageOne::MainCharacterJumpUpdate(float dTime) {
 	//캐릭터 점프 알고리즘
-	CHAR_STATE	CharState = mCharacter->GetState();
-	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
-	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
-	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
-	float		GroundAccel = mGround->GetGravity();
-
-	if (CharState == JUMP) {
-		mTimeForJump += dTime;
-
-		if (!mRecordJumpPos) {
-			mBeforeJumpYPos = CharPos.y;
-			mRecordJumpPos = true;
-		}
-
-		float JumpHeight = CharJumpSpeed * mTimeForJump - 0.5f*GroundAccel*mTimeForJump*mTimeForJump;
-		CharPos.y = JumpHeight + mBeforeJumpYPos;
-
-		if (MapHeight > CharPos.y) {
-			CharPos.y = MapHeight;
-			mCharacter->SetPosition(CharPos);
-			mCharacter->SetState(NONE);
-
-			mTimeForJump = 0.f;
-			mRecordJumpPos = false;
-		}
-		mCharacter->SetPosition(CharPos);
-	}
-	else if (CharState == NONE) {
-		CharPos.y = MapHeight;
-		mCharacter->SetPosition(CharPos);
-	}
+	
 }

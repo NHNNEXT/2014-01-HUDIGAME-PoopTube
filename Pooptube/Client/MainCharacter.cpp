@@ -47,7 +47,6 @@ void MainCharacter::Update(float dTime) {
 		Translation( dPos );
 	}
 }
-
 bool MainCharacter::Init( std::shared_ptr<MainCharacter> pMainCharacter ) {
 	Node::Init();
 

@@ -6,7 +6,7 @@ using namespace System;
 
 namespace Core {
 
-	public ref class Character
+	public ref class Node : public pooptube::Node
 	{
 // 	protected:
 // 		pooptube::Node *pInstance = nullptr;

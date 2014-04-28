@@ -13,7 +13,7 @@ namespace Tool
     public partial class Form1 : Form
     {
         Core.Application Application = new Core.Application();
-
+       
         public Form1()
         {
             InitializeComponent();

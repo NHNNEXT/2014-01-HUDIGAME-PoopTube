@@ -8,6 +8,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Node.h"
+#include "StageOne.h"
 
 namespace pooptube{
 	class SkinnedMesh;
