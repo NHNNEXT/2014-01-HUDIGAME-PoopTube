@@ -111,16 +111,27 @@ CREATURE_STATE Creature::FSM()
 
 void Creature::DoIdle(float dTime)
 {
-	float PI = 3.14f;
 	static float temp = 0;
 	temp += dTime;
 
+	float PI = 3.14f;
+
 	D3DXVECTOR3 CreaturePosition = GetPosition();
-	CreaturePosition.x = initialPosition.x + 2 * sinf(temp);
-	SetPosition(CreaturePosition);
+	D3DXVECTOR3 distance = initialPosition - GetPosition();
+
+	if (IDLE == GetState() && D3DXVec3Length(&distance) < 0.5) {
+		
+		//CreaturePosition.x = initialPosition.x + 1 * sinf(temp);
+		this->RotationY(0.1f);
+		SetPosition(initialPosition);
+	}
+	else if (CreaturePosition != initialPosition) {
+		SetPosition(CreaturePosition + (initialPosition - CreaturePosition) / 100);
+	}
 	
 	printf("%f\n", temp);
 	printf("%f\n", CreaturePosition.x);
+	printf("%f\n", CreaturePosition.z);
 }
 
 void Creature::DoAngry()
