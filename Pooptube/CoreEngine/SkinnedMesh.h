@@ -35,15 +35,14 @@ namespace pooptube {
 	protected:
 		bool _InitFBX(const std::string& MeshFilePath);
 
-		D3DMATERIAL9*			mMaterial = nullptr;
-		LPDIRECT3DTEXTURE9*		mTexture = nullptr;
-		DWORD					mMaterialCount = 0;
+		std::vector<D3DMATERIAL9>		mMaterial;
+		std::vector<LPDIRECT3DTEXTURE9>	mTexture;
 
 	private:
 
-		LPDIRECT3DVERTEXBUFFER9 mMeshVertexBuffer = nullptr;
-		LPDIRECT3DINDEXBUFFER9	mMeshIndexBuffer = nullptr;
-		std::shared_ptr<Mesh>	mMesh = nullptr;
+		LPDIRECT3DVERTEXBUFFER9			mMeshVertexBuffer = nullptr;
+		LPDIRECT3DINDEXBUFFER9			mMeshIndexBuffer = nullptr;
+		std::shared_ptr<Mesh>			mMesh = nullptr;
 	};
 
 }

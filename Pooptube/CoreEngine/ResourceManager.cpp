@@ -3,7 +3,6 @@
 #include "ResourceManager.h"
 #include "Mesh.h"
 #include "Application.h"
-#include "HeightMapData.h"
 
 namespace pooptube {
 
@@ -194,7 +193,7 @@ namespace pooptube {
 		return pNewMesh;
 	}
 
-	std::shared_ptr<HeightMapData> ResourceManager::LoadHeightMap(const std::string& FilePath) {
+	std::shared_ptr<Ground::MapData> ResourceManager::LoadHeightMap(const std::string& FilePath) {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 
@@ -254,10 +253,8 @@ namespace pooptube {
 			}
 				
 
-			std::shared_ptr<HeightMapData> pHeightMapData(HeightMapData::Create(row+1, col+1));
-			pHeightMapData->SetHeightMapData(bitmapImage);
-
-			mHeightMapTable[FilePath] = pHeightMapData;
+			std::shared_ptr<Ground::MapData> pMapData(new Ground::MapData(bitmapImage, row + 1, col + 1));
+			mHeightMapTable[FilePath] = pMapData;
 			delete[] bitmapImage;
 		}
 		return mHeightMapTable[FilePath];
@@ -277,81 +274,4 @@ namespace pooptube {
 
 		return mTextureTable[FilePath];
 	}
-
-	LPD3DXMESH ResourceManager::LoadMeshFromX(const std::wstring& FilePath) {
-// 		//map을 사용할 때 조심해야 할 부분
-// 		if (mXMeshTable.find(FilePath) == mXMeshTable.end()) {
-// 			LPD3DXMESH xMesh;
-// 			// 재질을 임시로 보관할 버퍼선언
-// 			LPD3DXBUFFER pD3DXMtrlBuffer;
-// 			DWORD NumMaterials = 0;
-// 
-// 			if (FAILED(D3DXLoadMeshFromX(	FilePath.c_str(), D3DXMESH_SYSTEMMEM,
-// 											mDevice, NULL,
-// 											&pD3DXMtrlBuffer, NULL, &NumMaterials,
-// 											&xMesh)))
-// 				return nullptr;
-// 
-// 			// 재질정보와 텍스쳐 정보를 따로 뽑아낸다.
-// 			D3DXMATERIAL* d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();
-// 			g_pMeshMaterials[0] = new D3DMATERIAL9[g_dwNumMaterials[0]];			// 재질개수만큼 재질구조체 배열 생성
-// 			g_pMeshTextures[0] = new LPDIRECT3DTEXTURE9[g_dwNumMaterials[0]];	// 재질개수만큼 텍스쳐 배열 생성
-// 
-// 			for (DWORD j = 0; j<g_dwNumMaterials[j]; j++)
-// 			{
-// 				// 재질정보를 복사
-// 				g_pMeshMaterials[0][j] = d3dxMaterials[0].MatD3D;
-// 
-// 				// 주변광원정보를 Diffuse정보로
-// 				g_pMeshMaterials[0][j].Ambient = g_pMeshMaterials[0][j].Diffuse;
-// 
-// 				g_pMeshTextures[0][j] = NULL;
-// 				if (d3dxMaterials[j].pTextureFilename != NULL &&
-// 					lstrlen(MultiCharToUniChar(d3dxMaterials[j].pTextureFilename)) > 0)
-// 				{
-// 					// 텍스쳐를 파일에서 로드한다
-// 					if (FAILED(D3DXCreateTextureFromFile(g_pd3dDevice,
-// 						MultiCharToUniChar(d3dxMaterials[j].pTextureFilename),
-// 						&g_pMeshTextures[0][j])))
-// 					{
-// 						const TCHAR* strPrefix = TEXT("..\\");
-// 						const int lenPrefix = lstrlen(strPrefix);
-// 						TCHAR strTexture[MAX_PATH];
-// 						lstrcpyn(strTexture, strPrefix, MAX_PATH);
-// 						lstrcpyn(strTexture + lenPrefix, MultiCharToUniChar(d3dxMaterials[0].pTextureFilename), MAX_PATH - lenPrefix);
-// 						if (FAILED(D3DXCreateTextureFromFile(g_pd3dDevice,
-// 							strTexture,
-// 							&g_pMeshTextures[0][j])))
-// 						{
-// 							MessageBox(NULL, L"Could not find texture map", L"ERROR", MB_OK);
-// 						}
-// 					}
-// 				}
-// 			}
-// 
-// 			//메쉬에 법선백터를 추가하는 부분
-// 			if (!(g_pMesh[0]->GetFVF() & D3DFVF_NORMAL))
-// 			{
-// 				//가지고 있지 않다면 메쉬를 복제하고 D3DFVF_NORMAL을 추가한다.
-// 				ID3DXMesh* pTempMesh = 0;
-// 
-// 				g_pMesh[0]->CloneMeshFVF(D3DXMESH_MANAGED,
-// 					g_pMesh[0]->GetFVF() | D3DFVF_NORMAL,  //이곳에 추가
-// 					g_pd3dDevice,
-// 					&pTempMesh);
-// 
-// 				// 법선을 계산한다.
-// 				D3DXComputeNormals(pTempMesh, 0);
-// 
-// 				g_pMesh[0]->Release(); // 기존메쉬를 제거한다
-// 				g_pMesh[0] = pTempMesh; // 기존메쉬를 법선이 계산된 메쉬로 지정한다.
-// 			}
-// 
-// 
-// 			mXMeshTable[FilePath] = xMesh;
-// 		}
-
-		return mXMeshTable[FilePath];
-	}
-
 }

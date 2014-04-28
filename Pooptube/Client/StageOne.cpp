@@ -12,6 +12,7 @@
 #include "SunLight.h"
 #include "Ground.h"
 #include "Creature.h"
+#include "XMesh.h"
 
 StageOne::StageOne() {
 }
@@ -45,13 +46,14 @@ bool StageOne::Init() {
 	mSunLight = pooptube::SunLight::Create();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
+	mXMesh = pooptube::XMesh::Create(L"tiger.x");
 
 	mCharacter = MainCharacter::Create();
 	
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 	mCamera_2 = pooptube::Camera::Create();
 
-	mGround = Ground::Create();
+	mGround = pooptube::Ground::Create("test.bmp");
 
 	testDummy = pooptube::CollisionBox::Create( mSkinnedMesh.get() );
 	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
@@ -71,16 +73,30 @@ bool StageOne::Init() {
 	
 	mCreature->pss = mCharacter; // 크리처 테스트 위한 거
 
+	//this->AddChild(&*mLight);
+	this->AddChild(&*mSunLight);
+	this->AddChild(&*mSkinnedMesh);
+	//this->AddChild(&*mXMesh);
+	this->AddChild(&*mCharacter);
+	this->AddChild(&*mCamera);
+	//this->AddChild(&*mCamera_2);
+	this->AddChild(&*mGround);
+	this->AddChild(&*testDummy);
+	this->AddChild(&*mSkyBox);
+	this->AddChild(&*mCreature);
+
 	return true;
 }
 void StageOne::Render() {
-
+	Node::Render();
+	return;
 	//mLight->Render();
 	mSunLight->Render();
 
 	mCharacter->Render();
 
 	mSkinnedMesh->Render();
+	mXMesh->Render();
 
 	mGround->Render();
 
@@ -172,7 +188,7 @@ void StageOne::MainCharacterJumpUpdate(float dTime) {
 	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
 	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
 	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
-	float		GroundAccel = mGround->GetGravAccel();
+	float		GroundAccel = mGround->GetGravity();
 
 	if (CharState == JUMP) {
 		mTimeForJump += dTime;
