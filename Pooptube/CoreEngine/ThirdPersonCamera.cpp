@@ -40,8 +40,8 @@ namespace pooptube {
 		FrontPoint.y += 2.f;
 		Node::SetFrontPoint(FrontPoint);
 
-		D3DXVECTOR3 Pos = 2.f * mTarget->GetPosition() - mTarget->GetFrontPoint();
-		Pos.y += 3.f;
+		D3DXVECTOR3 Pos = mTarget->GetPosition() - mTarget->GetFrontVector() * 8.f;
+		Pos.y += 5.f;
 		Node::SetPosition(Pos);
 	}
 
