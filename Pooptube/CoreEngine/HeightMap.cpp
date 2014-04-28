@@ -24,7 +24,7 @@ namespace pooptube {
 
 	bool HeightMap::_Init(const std::string& FilePath) {
 		Node::Init();
-		mHeightMapData = ResourceManager::GetInstance()->LoadHeightMap(FilePath);
+		mData = ResourceManager::GetInstance()->LoadHeightMap(FilePath);
 		_SetBuffer();
 
 		return true;
@@ -32,8 +32,8 @@ namespace pooptube {
 
 	//매번 리셋가능하도록 수정해야함
 	bool HeightMap::_SetBuffer() {
-		UINT col = mHeightMapData->GetColSize() - 1;
-		UINT row = mHeightMapData->GetRowSize() - 1;
+		UINT col = mData->col - 1;
+		UINT row = mData->row - 1;
 
 		mVertexCount = (col + 1) * (row + 1);
 		mIndexCount = col * row * 2;
@@ -51,7 +51,7 @@ namespace pooptube {
 				vertex[nIndex].position.x = mPolygonSize * x;
 				vertex[nIndex].position.z = mPolygonSize * z;
 				//vertex[nIndex].position.y = (float)bitmapImage[nIndex * 3] * 0.005f;
-				vertex[nIndex].position.y = mHeightMapData->GetHeightData(x, z) * mHeightMapData->GetAmplifier();
+				vertex[nIndex].position.y = mData->GetHeight(x, z) * mData->amp;
 
 				vertex[nIndex].color = D3DCOLOR_RGBA(255, 50, 255, 255);
 			}
@@ -151,9 +151,9 @@ namespace pooptube {
 		x /= mPolygonSize;
 		z /= mPolygonSize;
 
-		UINT mCol = mHeightMapData->GetColSize();
-		UINT mRow = mHeightMapData->GetRowSize();
-		float mAmp = mHeightMapData->GetAmplifier();
+		UINT mCol = mData->col;
+		UINT mRow = mData->row;
+		float mAmp = mData->amp;
 
 		if (x <= 0 || x >= (mCol - 1) || z <= 0 || z >= (mRow - 1))
 			return 0.0f;
@@ -161,22 +161,22 @@ namespace pooptube {
 		D3DXVECTOR3 v[3];
 		v[1].x = std::floor(x);
 		v[1].z = std::floor(z);
-		v[1].y = (float)mHeightMapData->GetHeightData(UINT(v[1].x), UINT(v[1].z));
+		v[1].y = (float)mData->GetHeight(UINT(v[1].x), UINT(v[1].z));
 		v[2].x = std::floor(x) + 1;
 		v[2].z = std::floor(z) + 1;
-		v[2].y = (float)mHeightMapData->GetHeightData(UINT(v[2].x), UINT(v[2].z));
+		v[2].y = (float)mData->GetHeight(UINT(v[2].x), UINT(v[2].z));
 
 		float y;
 		D3DXVECTOR3 cVec;
 		if (x - std::floor(x) < z - std::floor(z)){
 			v[0].x = std::floor(x);
 			v[0].z = std::floor(z) + 1;
-			v[0].y = (float)mHeightMapData->GetHeightData(UINT(v[0].x), UINT(v[0].z));
+			v[0].y = (float)mData->GetHeight(UINT(v[0].x), UINT(v[0].z));
 		}
 		else{
 			v[0].x = std::floor(x) + 1;
 			v[0].z = std::floor(z);
-			v[0].y = (float)mHeightMapData->GetHeightData(UINT(v[0].x), UINT(v[0].z));
+			v[0].y = (float)mData->GetHeight(UINT(v[0].x), UINT(v[0].z));
 		}
 
 		D3DXVec3Cross(&cVec, &(v[1] - v[0]), &(v[2] - v[0]));

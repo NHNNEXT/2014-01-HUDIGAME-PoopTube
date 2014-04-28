@@ -1,5 +1,6 @@
 ﻿/**
-* @author 양현찬
+* @author 이선협
+* @version 2014/04/28 김지환 - HeightMapData 삭제
 * @brief
 * 리소스를 로드하고 로드된 리소스는 헤쉬에 보관하는 객체
 * fbxsdk관련 객체들 관리
@@ -10,12 +11,12 @@
 #pragma once
 #include "stdafx.h"
 #include "Object.h"
-
+#include "HeightMap.h"
 
 namespace pooptube {
 
 	class Mesh;
-	class HeightMapData;
+	class HeightMap;
 
 	class ResourceManager : public Object {
 	public:
@@ -24,10 +25,10 @@ namespace pooptube {
 
 		static ResourceManager* GetInstance();
 
-		std::shared_ptr<Mesh>			LoadMeshFromFBX(const std::string& FilePath);
-		std::shared_ptr<HeightMapData>	LoadHeightMap(const std::string& FilePath);
-		LPDIRECT3DTEXTURE9				LoadTexture(const std::wstring& FilePath);
-		LPD3DXMESH						LoadMeshFromX(const std::wstring& FilePath);
+		std::shared_ptr<Mesh>						LoadMeshFromFBX(const std::string& FilePath);
+		std::shared_ptr<HeightMap::TEST>			LoadHeightMap(const std::string& FilePath);
+		LPDIRECT3DTEXTURE9							LoadTexture(const std::wstring& FilePath);
+		LPD3DXMESH									LoadMeshFromX(const std::wstring& FilePath);
 
 		//처참한 fbx의 흔적
 		//FbxScene*						LoadFBX(const std::string &FilePath);
@@ -59,7 +60,7 @@ namespace pooptube {
 		//로드된 fbxmesh정보를 쥐고있는 meshtable
 		//아직 특정 data 제거기능을 안넣음
 		std::map<std::string, std::shared_ptr<Mesh>>			mFBXMeshTable;
-		std::map<std::string, std::shared_ptr<HeightMapData>>	mHeightMapTable;
+		std::map<std::string, std::shared_ptr<HeightMap::TEST>>			mHeightMapTable;
 		std::map<std::wstring, LPDIRECT3DTEXTURE9>				mTextureTable;
 		std::map<std::wstring, LPD3DXMESH>						mXMeshTable;
 

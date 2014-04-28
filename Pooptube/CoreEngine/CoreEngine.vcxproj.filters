@@ -184,9 +184,6 @@
     <ClInclude Include="Mesh.h">
       <Filter>Nodes\SkinnedMesh</Filter>
     </ClInclude>
-    <ClInclude Include="HeightMapData.h">
-      <Filter>Nodes\HeightMap</Filter>
-    </ClInclude>
     <ClInclude Include="PooMath.h">
       <Filter>Util\Ease</Filter>
     </ClInclude>
@@ -330,9 +327,6 @@
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Nodes\SkinnedMesh</Filter>
-    </ClCompile>
-    <ClCompile Include="HeightMapData.cpp">
-      <Filter>Nodes\HeightMap</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>CoreObject</Filter>
