@@ -25,13 +25,13 @@ namespace pooptube {
 	bool HeightMap::_Init(const std::string& FilePath) {
 		Node::Init();
 		mHeightMapData = ResourceManager::GetInstance()->LoadHeightMap(FilePath);
-		SetBuffer();
+		_SetBuffer();
 
 		return true;
 	}
 
 	//매번 리셋가능하도록 수정해야함
-	bool HeightMap::SetBuffer() {
+	bool HeightMap::_SetBuffer() {
 		UINT col = mHeightMapData->GetColSize() - 1;
 		UINT row = mHeightMapData->GetRowSize() - 1;
 
@@ -202,6 +202,13 @@ namespace pooptube {
 
 	void HeightMap::Update(float dTime) {
 		
+	}
+
+	bool HeightMap::ResetBuffer() {
+		mVertexBuffer->Release();
+		mIndexBuffer->Release();
+
+		return _SetBuffer();
 	}
 
 }

@@ -31,6 +31,10 @@ public:
 
 	void Update(float dTime);
 
+	//아래 둘을 어디로 옮길지 생각중
+	void MainCharacterJumpUpdate(float dTime);
+	void CreatureUpdate(float dTime);
+
 	void KeyDown(pooptube::KeyEvent* pKeyEvent);
 	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
 	void KeyUp(pooptube::KeyEvent* pKeyEvent);

@@ -24,34 +24,15 @@ namespace pooptube {
 
 	bool Node::Init() {
 		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
+
+		UpdateMatrix();
+
 		return true;
 	}
 
 	void Node::Render() {
-		// TODO: 행렬 계산
-		D3DXMATRIXA16	MatWorld;
-		D3DXMATRIXA16	MatTrans;
-		D3DXMATRIXA16	MatScale;
-		D3DXMATRIXA16	MatRotate;
-		
-		D3DXMatrixIdentity(&MatWorld);
 
-		//오른손 좌표계
-		//프론트 백터의 값에 따라 회전
-		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &mFrontPoint, &mUpVec);
-		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
-		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
-		//(카메라의 좌표계에 맞춰져있다)
-		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
-		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
-		D3DXMatrixTranspose(&MatRotate, &MatRotate);
-
-		D3DXMatrixTranslation(&MatTrans, mPosition.x, mPosition.y, mPosition.z);
-		D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
-
-		MatWorld = MatScale*MatRotate*MatTrans;
-
-		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+		UpdateMatrix();
 
 		for (auto child : mChildList) {
 			child->Render();
@@ -165,6 +146,34 @@ namespace pooptube {
 		D3DXVec3Cross(&Vec, &Vec, &mUpVec);
 		return Vec;
 	}
+
+	void Node::UpdateMatrix() {
+		// TODO: 행렬 계산
+		D3DXMATRIXA16	MatWorld;
+		D3DXMATRIXA16	MatTrans;
+		D3DXMATRIXA16	MatScale;
+		D3DXMATRIXA16	MatRotate;
+
+		D3DXMatrixIdentity(&MatWorld);
+
+		//오른손 좌표계
+		//프론트 백터의 값에 따라 회전
+		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &mFrontPoint, &mUpVec);
+		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
+		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
+		//(카메라의 좌표계에 맞춰져있다)
+		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
+		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
+		D3DXMatrixTranspose(&MatRotate, &MatRotate);
+
+		D3DXMatrixTranslation(&MatTrans, mPosition.x, mPosition.y, mPosition.z);
+		D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
+
+		MatWorld = MatScale*MatRotate*MatTrans;
+
+		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+	}
+
 
 
 

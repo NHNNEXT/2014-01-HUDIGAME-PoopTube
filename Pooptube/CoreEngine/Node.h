@@ -99,6 +99,8 @@ namespace pooptube {
 		D3DXVECTOR3			GetRightVector();
 		D3DXVECTOR3			GetLeftVector();
 
+		void				UpdateMatrix();
+
 //		virtual void CollsionReceive( std::shared_ptr<Node> target ){};
 //		virtual void CollsionReceive( Node* target ){};
 //		virtual void CollsionFeedBack( std::shared_ptr<Node> target ){};

@@ -11,7 +11,8 @@ namespace pooptube {
 
 		static std::shared_ptr<HeightMap> Create(const std::string& FilePath);
 
-		bool SetBuffer();
+		//메시 데이터에 변경이 있을때 아래 함수 호출
+		bool ResetBuffer();
 		float GetHeight(float x, float z) const;
 		UINT GetRowSize() { return mHeightMapData->GetRowSize(); };
 		UINT GetColSize() { return mHeightMapData->GetColSize(); };
@@ -24,6 +25,7 @@ namespace pooptube {
 
 	protected:
 		bool _Init(const std::string& FilePath);
+		bool _SetBuffer();
 
 	private:
 
