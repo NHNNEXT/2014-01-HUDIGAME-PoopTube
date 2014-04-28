@@ -115,6 +115,9 @@ void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode())
 	{
+	case 'R' :
+		getchar();
+		break;
 	case 'T':
 		mCamera_2->Translation(mCamera_2->GetFrontVector()*0.1f);
 		break;
