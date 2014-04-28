@@ -30,7 +30,7 @@ bool Creature::Init( std::shared_ptr<Creature> pCreature )
 	EnableKeyEvent();
 	EnableMouseEvent();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
+	mSkinnedMesh = pooptube::SkinnedMesh::Create("Gorilla.fbx", pooptube::RESOURCE_FBX);
 	mCollisionBox = pooptube::CollisionBox::Create( pCreature.get() );
 	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 

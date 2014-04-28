@@ -112,7 +112,7 @@ namespace pooptube {
 		
 	private:
 		std::vector<Node*> mChildList;
-
+		
 		bool mIsKeyEventEnabled = false;
 		bool mIsMouseEventEnabled = false;
 

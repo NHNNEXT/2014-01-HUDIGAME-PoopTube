@@ -18,6 +18,7 @@ namespace pooptube {
 	enum RESOURCE_TYPE {
 		RESOURCE_NULL = 0,
 		RESOURCE_FBX = 1,
+		RESOURCE_X = 2,
 	};
 
 	class SkinnedMesh : public Node {

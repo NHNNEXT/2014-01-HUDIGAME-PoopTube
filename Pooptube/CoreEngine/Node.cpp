@@ -156,7 +156,6 @@ namespace pooptube {
 
 		D3DXMatrixIdentity(&MatWorld);
 
-		//오른손 좌표계
 		//프론트 백터의 값에 따라 회전
 		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &mFrontPoint, &mUpVec);
 		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.

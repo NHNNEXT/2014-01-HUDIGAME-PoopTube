@@ -140,6 +140,7 @@
     <ClInclude Include="EventDispatcher.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventProcess.h" />
+    <ClInclude Include="FBXMesh.h" />
     <ClInclude Include="HeightMap.h" />
     <ClInclude Include="HeightMapData.h" />
     <ClInclude Include="Mesh.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="EventDispatcher.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
+    <ClCompile Include="FBXMesh.cpp" />
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="HeightMapData.cpp" />
     <ClCompile Include="Mesh.cpp" />
