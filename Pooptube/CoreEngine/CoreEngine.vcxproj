@@ -165,7 +165,6 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="PacketHeader.h" />
-    <ClInclude Include="PooString.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />

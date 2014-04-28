@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "XMesh.h"
-#include "PooString.h"
 
 namespace pooptube {
 
@@ -9,6 +8,7 @@ namespace pooptube {
 
 
 	XMesh::~XMesh() {
+		mXMesh->Release();
 		delete[] mMaterial;
 		delete[] mTexture;
 	}
@@ -50,12 +50,15 @@ namespace pooptube {
 			mMaterial[j].Ambient = mMaterial[j].Diffuse;
 
 			mTexture[j] = NULL;
+
+			std::string FileName = d3dxMaterials[j].pTextureFilename;
 			if (d3dxMaterials[j].pTextureFilename != NULL &&
-				lstrlen(MultiCharToUniChar(d3dxMaterials[j].pTextureFilename)) > 0)
+				FileName.length() > 0)
 			{
 				// 텍스쳐를 파일에서 로드한다
-				if (FAILED(D3DXCreateTextureFromFile(GetDevice(),
-					MultiCharToUniChar(d3dxMaterials[j].pTextureFilename),
+				// w로 통일할껀지 정해야함
+				if (FAILED(D3DXCreateTextureFromFileA(GetDevice(),
+					d3dxMaterials[j].pTextureFilename,
 					&mTexture[j])))
 				{
 					MessageBox(NULL, L"Could not find texture map", L"ERROR", MB_OK);
