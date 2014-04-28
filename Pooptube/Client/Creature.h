@@ -62,7 +62,7 @@ private:
 
 	float mSpeed = 0.03f;
 	float mDistanceFromMainCharater = 0;
-	D3DXVECTOR3 initialPosition = { 10.f, 0.f, 10.f };
+	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 10.f };
 
 	std::shared_ptr<pooptube::SkinnedMesh>	mSkinnedMesh = nullptr;
 	std::shared_ptr<pooptube::CollisionBox> mCollisionBox = nullptr;
