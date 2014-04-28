@@ -28,9 +28,6 @@
     <Filter Include="CoreEngine\Temp\%2aInputManager">
       <UniqueIdentifier>{8727beeb-ede8-4d60-a0c0-5cec72278aa3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CoreEngine\Temp\Application">
-      <UniqueIdentifier>{b0c76670-03e2-4d69-981a-7f842f388db6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CoreEngine\Temp\EventInterface">
       <UniqueIdentifier>{3f5b2ca5-2ec9-45ce-b798-2e2dd74a7f7c}</UniqueIdentifier>
     </Filter>
@@ -91,27 +88,6 @@
     <Filter Include="CoreEngine\Temp\NetworkEvent\NetworkEventHandler">
       <UniqueIdentifier>{ed615f86-db40-4db5-817a-7f2ab40e6b0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CoreEngine\Temp\Nodes">
-      <UniqueIdentifier>{ce8e046c-c6a6-4bcd-90cc-273feb14a21b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Nodes\Camera">
-      <UniqueIdentifier>{8771d11d-4adf-413a-be46-e643b4c7611e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Nodes\Camera\FirstPersonCamera">
-      <UniqueIdentifier>{e61a4ecd-a931-4edc-a2e0-26c935bd2d18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Nodes\Camera\ThirdPersonCamera">
-      <UniqueIdentifier>{67d8fe07-fa85-401c-ab75-9585938a3823}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Nodes\Light">
-      <UniqueIdentifier>{720f236c-625c-4e3b-bdcd-09b1edefe946}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Nodes\Mesh">
-      <UniqueIdentifier>{28b30c09-c293-47d7-be27-66936e2e6636}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Nodes\Scene">
-      <UniqueIdentifier>{6962f85e-4336-4b2f-9098-7addd0eee2f7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CoreEngine\Temp\Object">
       <UniqueIdentifier>{5b2a36d7-7a64-4faa-94cb-72c6bf5d00e3}</UniqueIdentifier>
     </Filter>
@@ -151,9 +127,6 @@
     <Filter Include="CoreEngine\Temp\ResourceManager">
       <UniqueIdentifier>{f4c554aa-7b71-4311-af1a-d4fd84eea781}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CoreEngine\Temp\SceneManager">
-      <UniqueIdentifier>{0bfdc6e1-02d2-4c03-8dc6-9ec7b0677012}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CoreEngine\Temp\Util">
       <UniqueIdentifier>{043695bd-8358-4ea2-9db7-ffcd0d7aad2b}</UniqueIdentifier>
     </Filter>
@@ -163,6 +136,33 @@
     <Filter Include="CoreEngine\Temp\Util\OS">
       <UniqueIdentifier>{7d3bbaa4-3ac1-436d-879a-9ba998763604}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CoreEngine\Application">
+      <UniqueIdentifier>{b0c76670-03e2-4d69-981a-7f842f388db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreEngine\Nodes">
+      <UniqueIdentifier>{ce8e046c-c6a6-4bcd-90cc-273feb14a21b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreEngine\Nodes\Camera">
+      <UniqueIdentifier>{8771d11d-4adf-413a-be46-e643b4c7611e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreEngine\Nodes\Camera\FirstPersonCamera">
+      <UniqueIdentifier>{e61a4ecd-a931-4edc-a2e0-26c935bd2d18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreEngine\Nodes\Camera\ThirdPersonCamera">
+      <UniqueIdentifier>{67d8fe07-fa85-401c-ab75-9585938a3823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreEngine\Nodes\Light">
+      <UniqueIdentifier>{720f236c-625c-4e3b-bdcd-09b1edefe946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreEngine\Nodes\Mesh">
+      <UniqueIdentifier>{28b30c09-c293-47d7-be27-66936e2e6636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreEngine\Nodes\Scene">
+      <UniqueIdentifier>{6962f85e-4336-4b2f-9098-7addd0eee2f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreEngine\Temp\SceneManager">
+      <UniqueIdentifier>{0bfdc6e1-02d2-4c03-8dc6-9ec7b0677012}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -171,11 +171,14 @@
     <ClInclude Include="resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>CoreEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Node.h">
-      <Filter>CoreEngine</Filter>
+      <Filter>CoreEngine\Nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>CoreEngine\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>CoreEngine\Nodes\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -185,11 +188,14 @@
     <ClCompile Include="Stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>CoreEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Node.cpp">
-      <Filter>CoreEngine</Filter>
+      <Filter>CoreEngine\Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>CoreEngine\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>CoreEngine\Nodes\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
