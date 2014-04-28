@@ -4,10 +4,10 @@
 namespace pooptube {
 	class HeightMap : public Node {
 	public:
-		struct TEST
+		struct MapData
 		{
 		public:
-			TEST(UCHAR *mapData, UINT _row, UINT _col)
+			MapData(UCHAR *mapData, UINT _row, UINT _col)
 			{
 				row = _row;
 				col = _col;
@@ -16,7 +16,7 @@ namespace pooptube {
 				for (int i = 0; i < row*col; ++i)
 					data[i] = mapData[i * 3];
 			}
-			~TEST()
+			~MapData()
 			{
 				if (data != nullptr)
 					delete []data;
@@ -60,7 +60,7 @@ namespace pooptube {
 		UINT					mVertexCount = 0;
 		UINT					mIndexCount = 0;
 
-		std::shared_ptr<TEST>			mData;
+		std::shared_ptr<MapData>			mData;
 		//std::shared_ptr<HeightMapData>	mHeightMapData;
 
 		float							mPolygonSize = 0.5f;

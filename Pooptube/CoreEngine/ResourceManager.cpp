@@ -193,7 +193,7 @@ namespace pooptube {
 		return pNewMesh;
 	}
 
-	std::shared_ptr<HeightMap::TEST> ResourceManager::LoadHeightMap(const std::string& FilePath) {
+	std::shared_ptr<HeightMap::MapData> ResourceManager::LoadHeightMap(const std::string& FilePath) {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 
@@ -253,7 +253,7 @@ namespace pooptube {
 			}
 				
 
-			std::shared_ptr<HeightMap::TEST> pMapData(new HeightMap::TEST(bitmapImage, row + 1, col + 1));
+			std::shared_ptr<HeightMap::MapData> pMapData(new HeightMap::MapData(bitmapImage, row + 1, col + 1));
 			mHeightMapTable[FilePath] = pMapData;
 			delete[] bitmapImage;
 		}
