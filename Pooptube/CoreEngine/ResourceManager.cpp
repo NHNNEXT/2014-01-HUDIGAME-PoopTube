@@ -121,20 +121,37 @@ namespace pooptube {
 					continue;
 
 				FbxMesh* pMesh = (FbxMesh*)pFbxChildNode->GetNodeAttribute();
-				//FbxGeometryElementNormal* normalEl = pMesh->GetElementNormal();
-				//FbxLayerElementArrayTemplate<FbxVector2>* uv = 0;
-				//pMesh->GetTextureUV(&uv, FbxLayerElement::eTextureDiffuse);
+
+				FbxLayerElementArrayTemplate<FbxVector4>* normal = 0;
+				pMesh->GetNormals(&normal);
+				FbxLayerElementArrayTemplate<FbxVector2>* uv = 0;
+				pMesh->GetTextureUV(&uv, FbxLayerElement::eTextureDiffuse);
 
 				FbxVector4* pVertices = pMesh->GetControlPoints();
 				const int lVertexCount = pMesh->GetControlPointsCount();
 
+				//fbx매쉬 생성
+				pNewMesh = Mesh::Create(lVertexCount, pMesh->GetPolygonCount());
+				MESH_CUSTOM_VERTEX* vertex = pNewMesh->GetVertices();
+
+				for (int j = 0; j < lVertexCount; ++j) {
+					vertex[j].position.x = (float)pVertices[j].mData[0];
+					vertex[j].position.y = (float)pVertices[j].mData[1];
+					vertex[j].position.z = (float)pVertices[j].mData[2];
+
+// 					vertex[j].normal.x = (float)(*normal)[j].mData[0];
+// 					vertex[j].normal.y = (float)(*normal)[j].mData[1];
+// 					vertex[j].normal.z = (float)(*normal)[j].mData[2];
+
+					vertex[j].tu = (float)(*uv)[j].mData[0];
+					vertex[j].tv = (float)(*uv)[j].mData[1];
+
+					vertex[j].color = 0xff00ff00;
+				}
+
 				// 0이면 왜그려
 				if (lVertexCount == 0)
 					return nullptr;
-
-				int countVertex = 0;
-				//fbx매쉬 생성
-				pNewMesh = Mesh::Create(lVertexCount, pMesh->GetPolygonCount());
 
 				for (int j = 0; j < pMesh->GetPolygonCount(); j++) {
 					int iNumVertices = pMesh->GetPolygonSize(j);
@@ -146,23 +163,12 @@ namespace pooptube {
 					for (int k = 0; k < iNumVertices; k++) {
 						int iControlPointIndex = pMesh->GetPolygonVertex(j, k);
 
-						MESH_CUSTOM_VERTEX* vertex = pNewMesh->GetVertices();
-
-						vertex[iControlPointIndex].position.x = (float)pVertices[iControlPointIndex].mData[0];
-						vertex[iControlPointIndex].position.y = (float)pVertices[iControlPointIndex].mData[1];
-						vertex[iControlPointIndex].position.z = (float)pVertices[iControlPointIndex].mData[2];
-
 						FbxVector4 normal;
-
 						pMesh->GetPolygonVertexNormal(j, k, normal);
-						vertex[iControlPointIndex].normal.x = (float)normal[0];
-						vertex[iControlPointIndex].normal.y = (float)normal[1];
-						vertex[iControlPointIndex].normal.z = (float)normal[2];
 
-						//일단 색은 임의로 지정
-						vertex[iControlPointIndex].color = 0xff00ff00;
-
-						countVertex++;
+						vertex[iControlPointIndex].normal.x = (float)normal.mData[0];
+						vertex[iControlPointIndex].normal.y = (float)normal.mData[1];
+						vertex[iControlPointIndex].normal.z = (float)normal.mData[2];
 
 						MESH_CUSTOM_INDEX* Index = pNewMesh->GetIndices();
 

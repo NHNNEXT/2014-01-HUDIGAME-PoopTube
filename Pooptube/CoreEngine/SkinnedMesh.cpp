@@ -15,31 +15,20 @@ namespace pooptube {
 		mMeshIndexBuffer->Release();
 	}
 
-	std::shared_ptr<SkinnedMesh> SkinnedMesh::Create(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType) {
-		if (!ResourceType)
-			return nullptr;
+	std::shared_ptr<SkinnedMesh> SkinnedMesh::Create(const std::string& MeshFilePath) {
 		std::shared_ptr<SkinnedMesh> pMesh(new SkinnedMesh);
-
-		if (pMesh->Init(MeshFilePath, ResourceType))
+		if (pMesh->Init(MeshFilePath))
 			return pMesh;
 		else
 			return nullptr;
 	}
 
-	bool SkinnedMesh::Init(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType) {
-
-		mResourceType = ResourceType;
+	bool SkinnedMesh::Init(const std::string& MeshFilePath) {
 
 		if (!Node::Init())
 			return false;
 
-		if (ResourceType == RESOURCE_FBX)
-			return _InitFBX(MeshFilePath);
-
-		if (ResourceType == RESOURCE_X)
-			return _InitX(MeshFilePath);
-
-		return true;
+		return _InitFBX(MeshFilePath);
 	}
 
 	void SkinnedMesh::Render() {
@@ -99,12 +88,6 @@ namespace pooptube {
 
 		return true;
 	}
-
-	bool SkinnedMesh::_InitX(const std::string& MeshFilePath) {
-
-		return true;
-	}
-
 
 
 }

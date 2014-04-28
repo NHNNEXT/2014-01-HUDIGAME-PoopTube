@@ -259,6 +259,9 @@
     <ClInclude Include="FBXMesh.h">
       <Filter>Nodes\SkinnedMesh</Filter>
     </ClInclude>
+    <ClInclude Include="XMesh.h">
+      <Filter>Nodes\SkinnedMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -380,6 +383,9 @@
       <Filter>Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="FBXMesh.cpp">
+      <Filter>Nodes\SkinnedMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="XMesh.cpp">
       <Filter>Nodes\SkinnedMesh</Filter>
     </ClCompile>
   </ItemGroup>

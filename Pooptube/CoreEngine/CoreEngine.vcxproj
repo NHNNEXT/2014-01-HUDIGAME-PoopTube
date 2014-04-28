@@ -179,6 +179,7 @@
     <ClInclude Include="TextureCube.h" />
     <ClInclude Include="ThirdPersonCamera.h" />
     <ClInclude Include="PooMath.h" />
+    <ClInclude Include="XMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -230,6 +231,7 @@
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TextureCube.cpp" />
     <ClCompile Include="ThirdPersonCamera.cpp" />
+    <ClCompile Include="XMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

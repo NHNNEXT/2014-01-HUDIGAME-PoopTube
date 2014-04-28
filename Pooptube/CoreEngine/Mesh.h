@@ -12,13 +12,14 @@
 namespace pooptube {
 
 	//@brief 커스텀 버텍스를 설정
-	const int D3DFVF_CUSTOMVERTEX = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE;
+	const int D3DFVF_CUSTOMVERTEX = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1;
 
 	//@brief 커스텀 버텍스
 	struct MESH_CUSTOM_VERTEX {
 		D3DXVECTOR3	position;
 		D3DXVECTOR3	normal;
 		D3DCOLOR	color;
+		float		tu, tv;
 	};
 
 	//@brief 

@@ -44,7 +44,7 @@ bool StageOne::Init() {
 	mLight = pooptube::Light::Create();
 	mSunLight = pooptube::SunLight::Create();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx", pooptube::RESOURCE_FBX);
+	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 
 	mCharacter = MainCharacter::Create();
 	

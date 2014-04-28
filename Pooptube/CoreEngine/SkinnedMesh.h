@@ -14,13 +14,6 @@ namespace pooptube {
 
 	class Mesh;
 
-	//@brief 메쉬의 리소스 타입정보를 가짐
-	enum RESOURCE_TYPE {
-		RESOURCE_NULL = 0,
-		RESOURCE_FBX = 1,
-		RESOURCE_X = 2,
-	};
-
 	class SkinnedMesh : public Node {
 	public:
 		SkinnedMesh();
@@ -31,8 +24,8 @@ namespace pooptube {
 		//@param ResourceType
 		//@return 생성한 Mesh를 반환
 		//@exception 초기화에 실패하거나 리소스 타입이 null일 경우 nullptr반환
-		static std::shared_ptr<SkinnedMesh> Create(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType);
-		virtual bool Init(const std::string& MeshFilePath, RESOURCE_TYPE ResourceType);
+		static std::shared_ptr<SkinnedMesh> Create(const std::string& MeshFilePath);
+		virtual bool Init(const std::string& MeshFilePath);
 
 		virtual void Render();
 		virtual void Update(float dTime);
@@ -41,22 +34,16 @@ namespace pooptube {
 
 	protected:
 		bool _InitFBX(const std::string& MeshFilePath);
-		bool _InitX(const std::string& MeshFilePath);
 
-	private:
-
-		//x파일 로드를 위한 변수들
-		LPD3DXMESH				mXMesh = nullptr;
 		D3DMATERIAL9*			mMaterial = nullptr;
 		LPDIRECT3DTEXTURE9*		mTexture = nullptr;
 		DWORD					mMaterialCount = 0;
 
+	private:
 
 		LPDIRECT3DVERTEXBUFFER9 mMeshVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9	mMeshIndexBuffer = nullptr;
 		std::shared_ptr<Mesh>	mMesh = nullptr;
-
-		RESOURCE_TYPE			mResourceType = RESOURCE_NULL;
 	};
 
 }
