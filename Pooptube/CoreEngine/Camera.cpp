@@ -24,7 +24,7 @@ namespace pooptube {
 
 		//아래 두함수의 적용순서가 고정된다. 해결방법을 찾아보자
 		SetPosition(D3DXVECTOR3(0.f, 3.f, 10.f));
-		SetFrontPoint(D3DXVECTOR3(0.f, 0.f, 0.f));
+		SetFrontVector(D3DXVECTOR3(0.f, 0.f, 0.f));
 
 		return true;
 	}
@@ -33,7 +33,7 @@ namespace pooptube {
 		Node::Render();
 
 		//뷰행렬을 생성
-		D3DXMatrixLookAtLH(&mMatView, &Node::GetPosition(), &Node::GetFrontPoint(), &Node::GetUpVec());
+		D3DXMatrixLookAtLH(&mMatView, &Node::GetPosition(), &mLookAtPt, &Node::GetUpVector());
 		//생성된 뷰행렬을 적용
 		GetDevice()->SetTransform(D3DTS_VIEW, &mMatView);
 
@@ -46,5 +46,7 @@ namespace pooptube {
 
 	void Camera::Update(float dTime) {
 		Node::Update(dTime);
+
+		mLookAtPt = GetPosition() + GetFrontVector();
 	}
 }

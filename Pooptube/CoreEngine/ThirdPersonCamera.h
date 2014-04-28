@@ -3,7 +3,7 @@
 * @brief
 * 3인칭 카메라
 * @date 2014/04/22
-* @file Camera.h
+* @file ThirdPersonCamera.h
 */
 #pragma once
 #include "Camera.h"

@@ -34,7 +34,10 @@ bool Creature::Init( std::shared_ptr<Creature> pCreature )
 	mCollisionBox = pooptube::CollisionBox::Create( pCreature.get() );
 	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 
-	Creature::SetPosition(initialPosition);
+	Creature::SetPosition(mInitialPosition);
+
+	AddChild(&*mSkinnedMesh);
+	AddChild(&*mCollisionBox);
 
 	return true;
 
@@ -42,12 +45,7 @@ bool Creature::Init( std::shared_ptr<Creature> pCreature )
 
 void Creature::Render()
 {
-	Node::Render();
-
-	mSkinnedMesh->Render();
-	mCollisionBox->Render();
-
-	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
+	Node::Render();	
 }
 
 void Creature::Update(float dTime)
@@ -102,18 +100,18 @@ CREATURE_STATE Creature::FSM()
 	D3DXVECTOR3 distance = pss->GetPosition() - GetPosition();
 
 	if (8 < D3DXVec3Length(&distance)) {
-		SetState(IDLE);
-		printf("idle\n");
-	}
 
-	if (8 >= D3DXVec3Length(&distance) && D3DXVec3Length(&distance) >= 2) {
+		if (mState != IDLE)
+
+		SetState(CREATURE_STATE::IDLE);
+
+		//printf("idle\n");
+	} else if (8 >= D3DXVec3Length(&distance) && D3DXVec3Length(&distance) >= 2) {
 		SetState(ANGRY);
-		printf("angry\n");
-	}
-
-	if (2 > D3DXVec3Length(&distance)) {
+		//printf("angry\n");
+	} else if (2 > D3DXVec3Length(&distance)) {
 		SetState(RAGE);
-		printf("rage\n");
+		//printf("rage\n");
 	}
 
 	return IDLE;
@@ -127,21 +125,46 @@ void Creature::DoIdle(float dTime)
 	float PI = 3.14f;
 
 	D3DXVECTOR3 CreaturePosition = GetPosition();
-	D3DXVECTOR3 distance = initialPosition - GetPosition();
+	D3DXVECTOR3 distance = mInitialPosition - GetPosition();
+	D3DXVECTOR3 distance2 = -distance;
+	D3DXVECTOR3 CreatureFrontVector = GetFrontVector();
 
-	if (IDLE == GetState() && D3DXVec3Length(&distance) < 0.5) {
-		
-		//CreaturePosition.x = initialPosition.x + 1 * sinf(temp);
-		this->RotationY(0.1f);
-		SetPosition(initialPosition);
+	if (IDLE == GetState() && D3DXVec3Length(&distance) < 0.5f) {
+		RotationY(0.1f);
+		SetPosition(mInitialPosition);
 	}
-	else if (CreaturePosition != initialPosition) {
-		SetPosition(CreaturePosition + (initialPosition - CreaturePosition) / 100);
+	else //if (CreaturePosition != initialPosition) 
+	{
+		float dot = D3DXVec3Dot(&distance2, &CreatureFrontVector);
+		float GoBackRotateAngle;
+		float dis = abs((D3DXVec3Length(&distance2) * D3DXVec3Length(&CreatureFrontVector)));
+
+		if (dot != 0.f && dis != 0.f)
+		{
+			float rotAngle = 0.05f;
+			GoBackRotateAngle = (abs(dot / dis) >= 1.f) ? 0.f : sin(acos(dot / dis));
+
+			if (GoBackRotateAngle > rotAngle)
+				RotationY(rotAngle);
+			else
+				RotationY(GoBackRotateAngle);
+
+			//RotationY(GoBackRotateAngle);
+		}
+		
+		//sin(acos()))
+		/*
+		printf("dot  : %f\n", dot);
+		printf("dis  : %f\n", dis);
+		printf("acos : %f\n", acos(dot / abs((D3DXVec3Length(&distance2) * D3DXVec3Length(&CreatureFrontVector)))));
+		printf("sin  : %f\n\n", sin(acos(dot / abs((D3DXVec3Length(&distance2) * D3DXVec3Length(&CreatureFrontVector))))));
+			*/
+		SetPosition(CreaturePosition + (mInitialPosition - CreaturePosition) / 100);
 	}
 	
-	printf("%f\n", temp);
-	printf("%f\n", CreaturePosition.x);
-	printf("%f\n", CreaturePosition.z);
+	//printf("%f\n", temp);
+	//printf("%f ", CreaturePosition.x);
+	//printf("%f\n", CreaturePosition.z);
 }
 
 void Creature::DoAngry()
