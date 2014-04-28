@@ -141,7 +141,7 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventProcess.h" />
     <ClInclude Include="FBXMesh.h" />
-    <ClInclude Include="HeightMap.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="JsonParser.h" />
@@ -198,7 +198,7 @@
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
     <ClCompile Include="FBXMesh.cpp" />
-    <ClCompile Include="HeightMap.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />

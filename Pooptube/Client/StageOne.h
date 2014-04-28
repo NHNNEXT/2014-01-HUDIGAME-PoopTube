@@ -11,10 +11,10 @@ namespace pooptube {
 	class Light;
 	class SunLight;
 	class XMesh;
+	class Ground;
 }
 
 class MainCharacter;
-class Ground;
 class Creature;
 
 class StageOne
@@ -52,7 +52,7 @@ private:
 	std::shared_ptr<pooptube::Camera>				mCamera_2 = nullptr;
 	std::shared_ptr<MainCharacter>					mCharacter = nullptr;
 	std::shared_ptr<pooptube::SkinnedMesh>			mSkinnedMesh = nullptr;
-	std::shared_ptr<Ground>							mGround = nullptr;
+	std::shared_ptr<pooptube::Ground>				mGround = nullptr;
 	std::shared_ptr<pooptube::SkyBox>				mSkyBox = nullptr;
 	std::shared_ptr<pooptube::Light>				mLight = nullptr;
 	std::shared_ptr<pooptube::SunLight>				mSunLight = nullptr;
