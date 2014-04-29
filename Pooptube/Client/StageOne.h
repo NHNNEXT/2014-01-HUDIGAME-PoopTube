@@ -16,6 +16,7 @@ namespace pooptube {
 
 class MainCharacter;
 class Creature;
+class LightOrb;
 
 class StageOne
 	: public pooptube::Scene
@@ -60,6 +61,7 @@ private:
 	std::shared_ptr<pooptube::XMesh>				mXMesh = nullptr;
 
 	std::shared_ptr<Creature>						mCreature = nullptr; // 크리처
+	std::shared_ptr<LightOrb>				mLightOrb = nullptr; // 환경 물체
 
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;

@@ -12,6 +12,7 @@
 #include "SunLight.h"
 #include "Ground.h"
 #include "Creature.h"
+#include "LightOrb.h"
 #include "XMesh.h"
 
 StageOne::StageOne() {
@@ -67,9 +68,7 @@ bool StageOne::Init() {
 		L"Right.bmp");
 
 	mCreature = Creature::Create();
-	D3DXVECTOR3 initialPosition = { 10.f, 0.f, 10.f };
-
-	mCreature->SetPosition(initialPosition);
+	mLightOrb = LightOrb::Create();
 	
 	mCreature->pss = mCharacter; // 크리처 테스트 위한 거
 
@@ -84,7 +83,7 @@ bool StageOne::Init() {
 	this->AddChild(&*testDummy);
 	this->AddChild(&*mSkyBox);
 	this->AddChild(&*mCreature);
-
+	this->AddChild(&*mLightOrb);
 	return true;
 }
 void StageOne::Render() {

@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Creature.h" />
+    <ClInclude Include="LightOrb.h" />
     <ClInclude Include="LibSet.h" />
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="NetworkManager.h" />
@@ -129,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="LightOrb.cpp" />
     <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
     <ClCompile Include="StageOne.cpp" />
