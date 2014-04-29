@@ -60,6 +60,8 @@ public:
 private:
 	CREATURE_STATE	mState = IDLE;
 
+	float mIdleDistance = 8.f;
+	float mRageDistance = 2.f;
 	float mSpeed = 0.03f;
 	float mDistanceFromMainCharater = 0;
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 10.f };

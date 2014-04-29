@@ -1,10 +1,11 @@
 ﻿/**
-* @author 양현찬
+* @author 이선협
+* @version 2014/04/29 김지환 Add Turn Method
 * @brief
 * 화면에 뿌리는 모든 객체의 뿌리가 되는 객체
 * 행렬의 연산 등이 여기서 구현된다.
 * @date 2014/04/17
-* @file SkinnedMesh.h
+* @file Node.h
 */
 #pragma once
 
@@ -80,9 +81,11 @@ namespace pooptube {
 		virtual void		RotationY(float Angle);
 		virtual void		RotateFrontVectorY(float angle);
 
-		virtual void		SetFrontPoint(const D3DXVECTOR3& vec) { mFrontPoint = vec; }
-		virtual D3DXVECTOR3	GetFrontPoint() const { return mFrontPoint; }
+		virtual void		SetFrontVector(const D3DXVECTOR3& vec) { mFrontVector = vec; }
+		virtual D3DXVECTOR3	GetFrontVector() const { return mFrontVector; }
 		virtual D3DXVECTOR3	GetUpVector() const { return mUpVec; }
+		D3DXVECTOR3			GetRightVector();
+		D3DXVECTOR3			GetLeftVector();
 
 
 		virtual D3DXVECTOR3	GetPosition() const { return mPosition; }
@@ -90,16 +93,13 @@ namespace pooptube {
 		virtual void		Translation(float x, float y, float z);
 		virtual void		Translation( const D3DXVECTOR3& moveVec );		
 
-		virtual D3DXVECTOR3	GetUpVec() const { return mUpVec; }
 		virtual void		SetUpVec(const D3DXVECTOR3& val) { mUpVec = val; }
 
 		LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
 
-		D3DXVECTOR3			GetFrontVector();
-		D3DXVECTOR3			GetRightVector();
-		D3DXVECTOR3			GetLeftVector();
-
 		void				UpdateMatrix();
+		float				GetTurnAngle(D3DXVECTOR3 src, D3DXVECTOR3 dst);
+		bool				Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed);
 
 //		virtual void CollsionReceive( std::shared_ptr<Node> target ){};
 //		virtual void CollsionReceive( Node* target ){};
@@ -121,9 +121,9 @@ namespace pooptube {
 		D3DXVECTOR3		mPosition = { 0.f, 0.f, 0.f};
 		D3DXVECTOR3		mScaleVec = { 1.f, 1.f, 1.f};
 
-		//@brief mFrontPoint는 로테이트정보를 담고있다.
+		//@brief mFrontVector는 로테이트정보를 담고있다.
 		//프론트 벡터로 바꿔야함
-		D3DXVECTOR3		mFrontPoint = { 0.f, 0.f, 1.f};
+		D3DXVECTOR3		mFrontVector = { 0.f, 0.f, 1.f};
 		D3DXVECTOR3		mUpVec = { 0.f, 1.f, 0.f};
 
 		LPDIRECT3DDEVICE9 mDevice;

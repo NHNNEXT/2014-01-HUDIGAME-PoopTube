@@ -22,13 +22,16 @@ namespace pooptube {
 
 		virtual void Render();
 		virtual void Update(float dTime);
+		
+		void		 SetLookAtPt(D3DXVECTOR3 vec) { mLookAtPt = vec;}
+		D3DXVECTOR3	 GetLookAtPt() { return mLookAtPt; }
 
 	protected:
-		D3DXMATRIXA16 mMatView;
-		D3DXMATRIXA16 mMatProj;
+		D3DXMATRIXA16	mMatView;
+		D3DXMATRIXA16	mMatProj;
 
 	private:
-
+		D3DXVECTOR3		mLookAtPt;
 		
 	};
 }

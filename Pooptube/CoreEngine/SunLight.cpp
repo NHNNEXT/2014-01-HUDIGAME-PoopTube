@@ -22,12 +22,12 @@ namespace pooptube {
 			return false;
 
 		mD3DLight.Type = D3DLIGHT_DIRECTIONAL;
-		SetFrontPoint(D3DXVECTOR3(1.f, -1.f, -1.f));
+		SetFrontVector(D3DXVECTOR3(1.f, -1.f, -1.f));
 		return true;
 	}
 
 	void SunLight::Render() {
-		D3DXVec3Normalize((D3DXVECTOR3*)&mD3DLight.Direction, &Node::GetFrontPoint());
+		D3DXVec3Normalize((D3DXVECTOR3*)&mD3DLight.Direction, &Node::GetFrontVector());
 		Light::Render();
 	}
 

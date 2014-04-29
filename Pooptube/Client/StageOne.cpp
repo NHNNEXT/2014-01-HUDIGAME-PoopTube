@@ -14,6 +14,7 @@
 #include "Creature.h"
 #include "LightOrb.h"
 #include "XMesh.h"
+#include <iostream>
 
 StageOne::StageOne() {
 }
@@ -112,9 +113,11 @@ void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 }
 
 void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
-	return;
 	switch (pKeyEvent->GetKeyCode())
 	{
+	case 'R' :
+		getchar();
+		break;
 	case 'T':
 		mCamera_2->Translation(mCamera_2->GetFrontVector()*0.1f);
 		break;
@@ -164,7 +167,8 @@ void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
 
 void StageOne::MainCharacterJumpUpdate(float dTime) {
 	//캐릭터 점프 알고리즘
-	CHAR_STATE	CharState = mCharacter->GetState();
+		//캐릭터 점프 알고리즘
+		CHAR_STATE	CharState = mCharacter->GetState();
 	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
 	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
 	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
@@ -172,27 +176,32 @@ void StageOne::MainCharacterJumpUpdate(float dTime) {
 
 	if (CharState == JUMP) {
 		mTimeForJump += dTime;
-
-		if (!mRecordJumpPos) {
+		
+			if (!mRecordJumpPos) {
 			mBeforeJumpYPos = CharPos.y;
 			mRecordJumpPos = true;
+			
 		}
-
-		float JumpHeight = CharJumpSpeed * mTimeForJump - 0.5f*GroundAccel*mTimeForJump*mTimeForJump;
+		
+			float JumpHeight = CharJumpSpeed * mTimeForJump - 0.5f*GroundAccel*mTimeForJump*mTimeForJump;
 		CharPos.y = JumpHeight + mBeforeJumpYPos;
-
-		if (MapHeight > CharPos.y) {
+		
+			if (MapHeight > CharPos.y) {
 			CharPos.y = MapHeight;
 			mCharacter->SetPosition(CharPos);
 			mCharacter->SetState(NONE);
-
-			mTimeForJump = 0.f;
+			
+				mTimeForJump = 0.f;
 			mRecordJumpPos = false;
+			
 		}
 		mCharacter->SetPosition(CharPos);
+		
 	}
 	else if (CharState == NONE) {
 		CharPos.y = MapHeight;
 		mCharacter->SetPosition(CharPos);
+		
 	}
+	
 }

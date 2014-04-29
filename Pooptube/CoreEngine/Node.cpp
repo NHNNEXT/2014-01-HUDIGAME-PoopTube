@@ -102,47 +102,33 @@ namespace pooptube {
 // 		mFrontVec.x = vx;
 // 		mFrontVec.z = vz;
 // 		D3DXVec3Normalize(&mFrontVec, &mFrontVec);
-		
-		D3DXVECTOR3 view = mFrontPoint - mPosition;
-		D3DXMATRIXA16 matrix;
 
-		D3DXMatrixRotationY(&matrix, angle);
-		D3DXVec3TransformCoord(&view, &view, &matrix);
-
-		mFrontPoint = mPosition + view;
+		mFrontVector.x = mFrontVector.x*cosf(angle) + mFrontVector.z*sinf(angle);
+		mFrontVector.z = -mFrontVector.x*sinf(angle) + mFrontVector.z*cosf(angle);
+		D3DXVec3Normalize(&mFrontVector, &mFrontVector);
 	}
 
 	void Node::Translation( const D3DXVECTOR3& moveVec ) {
 		mPosition += moveVec;
-		mFrontPoint += moveVec;
 	}
 
 	void Node::Translation( float x, float y, float z ) {
-		Translation( D3DXVECTOR3( x, y, z ) );
+		D3DXVECTOR3 temp(x, y, z);
+		Translation( temp );
 	}
 
 	void Node::SetPosition(const D3DXVECTOR3& newPos) {
-		mFrontPoint -= mPosition;
 		mPosition = newPos;
-		mFrontPoint += mPosition;
-	}
-
-	D3DXVECTOR3 Node::GetFrontVector() {
-		D3DXVECTOR3 FrontVec = mFrontPoint - mPosition;
-		D3DXVec3Normalize(&FrontVec, &FrontVec);
-		//y축을 죽여버림
-		FrontVec.y = 0.f;
-		return FrontVec;
 	}
 
 	D3DXVECTOR3 Node::GetRightVector() {
-		D3DXVECTOR3 Vec = GetFrontVector();
+		D3DXVECTOR3 Vec = mFrontVector;
 		D3DXVec3Cross(&Vec, &mUpVec, &Vec);
 		return Vec;
 	}
 
 	D3DXVECTOR3 Node::GetLeftVector() {
-		D3DXVECTOR3 Vec = GetFrontVector();
+		D3DXVECTOR3 Vec = mFrontVector;
 		D3DXVec3Cross(&Vec, &Vec, &mUpVec);
 		return Vec;
 	}
@@ -153,11 +139,13 @@ namespace pooptube {
 		D3DXMATRIXA16	MatTrans;
 		D3DXMATRIXA16	MatScale;
 		D3DXMATRIXA16	MatRotate;
+		D3DXVECTOR3		LookPt = mPosition + mFrontVector;
 
 		D3DXMatrixIdentity(&MatWorld);
 
+
 		//프론트 백터의 값에 따라 회전
-		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &mFrontPoint, &mUpVec);
+		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &LookPt, &mUpVec);
 		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
 		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
 		//(카메라의 좌표계에 맞춰져있다)
@@ -173,8 +161,39 @@ namespace pooptube {
 		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 	}
 
+	float Node::GetTurnAngle(D3DXVECTOR3 src, D3DXVECTOR3 dst)
+	{
+		src.y = dst.y = 0.f;
 
+		D3DXVECTOR3 dir = dst - src;
+		D3DXVECTOR3 Look = GetFrontVector() + src;
+		float dot = D3DXVec3Dot(&dir, &mFrontVector);
+		float dis = abs((D3DXVec3Length(&dir) * D3DXVec3Length(&mFrontVector)));
+		float angle = 0.f;
+		float det = ((dst.x - src.x) * (Look.z - src.z) - (dst.z - src.z) * (Look.x - src.x));
 
+		if (det > 0.f)	det = -1.f; // CW
+		else			det = 1.f;	// CCW
 
+ 		if (dis != 0.f && ((dot / dis) < 1.f))
+ 			angle = det * acos(dot / dis);
+
+		return angle;
+	}
+
+	bool Node::Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed)
+	{
+		float precision = 0.05f;
+		float angle = GetTurnAngle(src, dst);
+
+		if (angle > 0.f)
+			speed *= -1.f;
+
+		if (angle < precision && angle > -precision)	return false;
+		else if (abs(angle) > abs(speed))				RotationY(speed);
+		else											RotationY(angle);
+
+		return true;
+	}
 
 }

@@ -32,12 +32,12 @@ void MainCharacter::Update(float dTime) {
 	Node::Update(dTime);
 
 	mSkinnedMesh->SetPosition(Node::GetPosition());
-	mSkinnedMesh->SetFrontPoint(Node::GetFrontPoint());
+	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
 	mSkinnedMesh->Update(dTime);
 
 	mCollisionBox->SetPosition(Node::GetPosition());
 	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
-	mCollisionBox->SetFrontPoint(Node::GetFrontPoint());
+	mCollisionBox->SetFrontVector(Node::GetFrontVector());
 	mCollisionBox->Update(dTime);
 	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck( mCollisionBox.get() );
 	if( collisionResult != nullptr ){
@@ -47,7 +47,6 @@ void MainCharacter::Update(float dTime) {
 		Translation( dPos );
 	}
 }
-
 bool MainCharacter::Init( std::shared_ptr<MainCharacter> pMainCharacter ) {
 	Node::Init();
 
