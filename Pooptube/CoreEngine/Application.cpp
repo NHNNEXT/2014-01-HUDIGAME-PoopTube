@@ -180,7 +180,8 @@ namespace pooptube {
 
 	bool Application::_UpdateFrame( float& fpsTimer, int& prevTime, int& nowTime, int& frameCount ) {
 		frameCount++;
-		nowTime = timeGetTime(); // 후에 std::chrono 수정하여 개선
+		nowTime = timeGetTime(); // 후에 std::chrono 수정하여 개선하면 안됨 -과부하가 큼
+		//gettickcount로 바꿀예정
 		if ( prevTime == 0.f )
 			prevTime = nowTime;
 

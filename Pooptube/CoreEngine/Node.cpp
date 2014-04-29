@@ -143,9 +143,8 @@ namespace pooptube {
 
 		D3DXMatrixIdentity(&MatWorld);
 
-
 		//프론트 백터의 값에 따라 회전
-		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &LookPt, &mUpVec);
+		D3DXMatrixLookAtRH(&MatRotate, &mPosition, &LookPt, &mUpVec);
 		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
 		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
 		//(카메라의 좌표계에 맞춰져있다)

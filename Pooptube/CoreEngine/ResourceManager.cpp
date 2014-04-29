@@ -171,15 +171,16 @@ namespace pooptube {
 
 						MESH_CUSTOM_INDEX* Index = pNewMesh->GetIndices();
 
+						//뒤집어서 넣어야함
 						switch (k) {
 						case 0:
-							Index[j].w0 = iControlPointIndex;
+							Index[j].w2 = iControlPointIndex;
 							break;
 						case 1:
 							Index[j].w1 = iControlPointIndex;
 							break;
 						case 2:
-							Index[j].w2 = iControlPointIndex;
+							Index[j].w0 = iControlPointIndex;
 							break;
 						default:
 							break;
