@@ -147,6 +147,10 @@ namespace pooptube {
 
 	float Ground::GetHeight(float x, float z) const{
 		//폴리곤 사이즈에 맞게 변경
+		D3DXVECTOR3 pos = Node::GetPosition();
+		x -= pos.x;
+		z -= pos.z;
+
 		x /= -1.f*mPolygonSize;
 		z /= -1.f*mPolygonSize;
 
@@ -181,7 +185,7 @@ namespace pooptube {
 		D3DXVec3Cross(&cVec, &(v[1] - v[0]), &(v[2] - v[0]));
 		y = (((v[0].x - x) * cVec.x + (v[0].z - z) * cVec.z) / cVec.y) + v[0].y;
 
-		return y * mAmp;
+		return y * mAmp + pos.y;
 	}
 
 	void Ground::Render() {
