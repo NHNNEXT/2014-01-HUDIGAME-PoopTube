@@ -147,8 +147,8 @@ namespace pooptube {
 
 	float Ground::GetHeight(float x, float z) const{
 		//폴리곤 사이즈에 맞게 변경
-		x /= mPolygonSize;
-		z /= mPolygonSize;
+		x /= -1.f*mPolygonSize;
+		z /= -1.f*mPolygonSize;
 
 		UINT mCol = mData->col;
 		UINT mRow = mData->row;
