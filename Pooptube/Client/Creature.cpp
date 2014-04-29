@@ -119,11 +119,6 @@ CREATURE_STATE Creature::FSM()
 
 void Creature::DoIdle(float dTime)
 {
-	static float temp = 0;
-	temp += dTime;
-
-	float PI = 3.14f;
-
 	D3DXVECTOR3 CreaturePosition = GetPosition();
 	D3DXVECTOR3 distance = mInitialPosition - GetPosition();
 	D3DXVECTOR3 CreatureFrontVector = GetFrontVector();

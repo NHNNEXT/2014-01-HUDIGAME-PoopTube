@@ -183,18 +183,15 @@ namespace pooptube {
 
 	bool Node::Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed)
 	{
-		float precision = 0.01f;
+		float precision = 0.05f;
 		float angle = GetTurnAngle(src, dst);
 
 		if (angle > 0.f)
 			speed *= -1.f;
 
-		if (angle < precision && angle > -precision)
-			return false;
-		else if (abs(angle) > abs(speed))
-			RotationY(speed);
-		else
-			RotationY(angle);
+		if (angle < precision && angle > -precision)	return false;
+		else if (abs(angle) > abs(speed))				RotationY(speed);
+		else											RotationY(angle);
 
 		return true;
 	}
