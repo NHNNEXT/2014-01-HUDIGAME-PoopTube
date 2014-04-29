@@ -13,6 +13,7 @@
 #include "Ground.h"
 #include "Creature.h"
 #include "XMesh.h"
+#include <iostream>
 
 StageOne::StageOne() {
 }

@@ -129,8 +129,12 @@ void Creature::DoIdle(float dTime)
 	}
 	else //if (CreaturePosition != initialPosition) 
 	{
-		if(Turn(GetPosition(), mInitialPosition, 0.05f) == false)
-			SetPosition(CreaturePosition + (mInitialPosition - CreaturePosition) / 100);
+		D3DXVECTOR3 dir = mInitialPosition - CreaturePosition;
+		D3DXVec3Normalize(&dir, &dir);
+
+		if (Turn(GetPosition(), mInitialPosition, 0.05f) == false)
+			SetPosition(CreaturePosition + dir / 10);
+			
 		
 	}
 }
@@ -142,10 +146,9 @@ void Creature::DoAngry()
 
 	Turn(GetPosition(), CharacterPosition, 0.05f);
 	SetPosition(CreaturePosition + (CharacterPosition - CreaturePosition) / 100);
-	
 }
 
 void Creature::DoRage()
 {
-
+	RotationY(0.4f);
 }
