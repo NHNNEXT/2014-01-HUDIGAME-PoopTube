@@ -65,10 +65,12 @@ namespace pooptube {
 
 					delete[] mMaterial;
 					delete[] mTexture;
+					pD3DXMtrlBuffer->Release();
 					return false;
 				}
 			}
 		}
+		pD3DXMtrlBuffer->Release();
 
 		//메쉬에 법선백터를 추가하는 부분
 		if (!(mXMesh->GetFVF() & D3DFVF_NORMAL)) {
@@ -95,7 +97,10 @@ namespace pooptube {
 	}
 
 	void XMesh::Render() {
+		Node::Render();
+
 		for (DWORD i = 0; i < mNumMaterial; i++) {
+
 			/// 부분집합 메시의 재질과 텍스쳐 설정
 			GetDevice()->SetMaterial(&mMaterial[i]);
 			GetDevice()->SetTexture(0, mTexture[i]);
