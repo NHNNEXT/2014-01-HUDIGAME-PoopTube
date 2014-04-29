@@ -56,7 +56,7 @@ void LightOrb::Render()
 	Node *test = pooptube::CollisionManager::GetInstance()->CollisionCheck(&*mCollisionBox);
 	if (test != nullptr && typeid(dynamic_cast<MainCharacter*>(test)).name() == typeid(MainCharacter *).name())
 		isRender = true;
-		printf("%s :: %s\n", typeid(dynamic_cast<MainCharacter*>(pooptube::CollisionManager::GetInstance()->CollisionCheck(&*mCollisionBox))).name(), typeid(MainCharacter *).name());
+		//printf("%s :: %s\n", typeid(dynamic_cast<MainCharacter*>(pooptube::CollisionManager::GetInstance()->CollisionCheck(&*mCollisionBox))).name(), typeid(MainCharacter *).name());
 	
 		if (isRender == false)
 		Node::Render();
