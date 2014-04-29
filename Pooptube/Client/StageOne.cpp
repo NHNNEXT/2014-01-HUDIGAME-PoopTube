@@ -73,18 +73,18 @@ bool StageOne::Init() {
 	
 	mCreature->pss = mCharacter; // 크리처 테스트 위한 거
 
-	//this->AddChild(&*mLight);
-	this->AddChild(&*mSunLight);
-	this->AddChild(&*mSkinnedMesh);
-	//this->AddChild(&*mXMesh);
-	this->AddChild(&*mCharacter);
-	this->AddChild(&*mCamera);
-	//this->AddChild(&*mCamera_2);
-	this->AddChild(&*mGround);
-	this->AddChild(&*testDummy);
-	this->AddChild(&*mSkyBox);
-	this->AddChild(&*mCreature);
-	this->AddChild(&*mLightOrb);
+	//this->AddChild(mLight.get());
+	this->AddChild(mSunLight.get());
+	//this->AddChild(mSkinnedMesh.get());
+	this->AddChild(mXMesh.get());
+	this->AddChild(mCharacter.get());
+	this->AddChild(mCamera.get());
+	//this->AddChild(mCamera_2.get());
+	this->AddChild(mGround.get());
+	this->AddChild(testDummy.get());
+	this->AddChild(mSkyBox.get());
+	this->AddChild(mCreature.get());
+	this->AddChild(mLightOrb.get());
 	return true;
 }
 void StageOne::Render() {
