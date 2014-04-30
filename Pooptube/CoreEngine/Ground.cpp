@@ -95,13 +95,13 @@ namespace pooptube {
 		nIndex = 0;
 		for (UINT z = 0; z < row; z++) {
 			for (UINT x = 0; x < col; x++) {
-				Index[nIndex].w0 = UINT(z * (col + 1) + x);
+				Index[nIndex].w2 = UINT(z * (col + 1) + x);
 				Index[nIndex].w1 = UINT((z + 1)*(col + 1) + x + 1);
-				Index[nIndex++].w2 = UINT((z + 1)*(col + 1) + x);
+				Index[nIndex++].w0 = UINT((z + 1)*(col + 1) + x);
 
-				Index[nIndex].w0 = UINT(z * (col + 1) + x);
+				Index[nIndex].w2 = UINT(z * (col + 1) + x);
 				Index[nIndex].w1 = UINT(z * (col + 1) + x + 1);
-				Index[nIndex++].w2 = UINT((z + 1)*(col + 1) + x + 1);
+				Index[nIndex++].w0 = UINT((z + 1)*(col + 1) + x + 1);
 			}
 		}
 
@@ -151,8 +151,8 @@ namespace pooptube {
 		x -= pos.x;
 		z -= pos.z;
 
-		x /= -1.f*mPolygonSize;
-		z /= -1.f*mPolygonSize;
+		x /= mPolygonSize;
+		z /= mPolygonSize;
 
 		UINT mCol = mData->col;
 		UINT mRow = mData->row;

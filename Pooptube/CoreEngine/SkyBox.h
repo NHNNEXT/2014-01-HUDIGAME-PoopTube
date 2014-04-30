@@ -15,24 +15,24 @@ namespace pooptube {
 		SkyBox();
 		virtual ~SkyBox();
 
-		static std::shared_ptr<SkyBox> Create(const std::wstring& top,
-			const std::wstring& bottom,
-			const std::wstring& front,
-			const std::wstring& back,
-			const std::wstring& left,
-			const std::wstring& right);
+		static std::shared_ptr<SkyBox> Create(const std::string& top,
+			const std::string& bottom,
+			const std::string& front,
+			const std::string& back,
+			const std::string& left,
+			const std::string& right);
 
 		void Render();
 		void Update(float dTime);
 
 
 	protected:
-		bool _Init(const std::wstring& top,
-			const std::wstring& bottom,
-			const std::wstring& front,
-			const std::wstring& back,
-			const std::wstring& left,
-			const std::wstring& right);
+		bool _Init(const std::string& top,
+			const std::string& bottom,
+			const std::string& front,
+			const std::string& back,
+			const std::string& left,
+			const std::string& right);
 
 	private:
 		LPDIRECT3DTEXTURE9 mTopTexture = nullptr;

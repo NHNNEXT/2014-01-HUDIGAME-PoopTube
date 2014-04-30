@@ -13,12 +13,12 @@ namespace pooptube{
 	}
 
 
-	std::shared_ptr<SkyBox> SkyBox::Create(const std::wstring& top,
-		const std::wstring& bottom,
-		const std::wstring& front,
-		const std::wstring& back,
-		const std::wstring& left,
-		const std::wstring& right)
+	std::shared_ptr<SkyBox> SkyBox::Create(const std::string& top,
+		const std::string& bottom,
+		const std::string& front,
+		const std::string& back,
+		const std::string& left,
+		const std::string& right)
 	{
 		std::shared_ptr<SkyBox> pSkyBox(new SkyBox);
 		if (pSkyBox->_Init(top, bottom, front, back, left, right))
@@ -28,12 +28,12 @@ namespace pooptube{
 	}
 
 
-	bool SkyBox::_Init(const std::wstring& top,
-		const std::wstring& bottom,
-		const std::wstring& front,
-		const std::wstring& back,
-		const std::wstring& left,
-		const std::wstring& right)
+	bool SkyBox::_Init(const std::string& top,
+		const std::string& bottom,
+		const std::string& front,
+		const std::string& back,
+		const std::string& left,
+		const std::string& right)
 	{
 		Node::Init();
 
@@ -112,18 +112,18 @@ namespace pooptube{
 
 
 		/// 상자(cube)를 렌더링하기위해 12개의 면을 선언
-		MESH_CUSTOM_INDEX indices[] = { 2, 1, 0,
-			0, 3, 2,
-			6, 5, 4,
-			4, 7, 6,
-			10, 9, 8,
-			8, 11, 10,
-			14, 13, 12,
-			12, 15, 14,
-			18, 17, 16,
-			16, 19, 18,
-			22, 21, 20,
-			20, 23, 22 };
+		MESH_CUSTOM_INDEX indices[] = { 0, 1, 2,
+			2, 3, 0,
+			4, 5, 6,
+			6, 7, 4,
+			8, 9, 10,
+			10, 11, 8,
+			12, 13, 14,
+			14, 15, 12,
+			16, 17, 18,
+			18, 19, 16,
+			20, 21, 22,
+			22, 23, 20 };
 
 		/// 인덱스버퍼 생성
 		/// D3DFMT_INDEX16은 인덱스의 단위가 16비트 라는 것이다.

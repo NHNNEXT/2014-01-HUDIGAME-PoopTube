@@ -15,7 +15,7 @@ namespace pooptube {
 		delete[] mTexture;
 	}
 
-	std::shared_ptr<XMesh> XMesh::Create(const std::wstring& FilePath) {
+	std::shared_ptr<XMesh> XMesh::Create(const std::string& FilePath) {
 		std::shared_ptr<XMesh> pMesh(new XMesh);
 		if (pMesh->Init(FilePath))
 			return pMesh;
@@ -23,14 +23,14 @@ namespace pooptube {
 			return nullptr;
 	}
 
-	bool XMesh::Init(const std::wstring& FilePath) {
+	bool XMesh::Init(const std::string& FilePath) {
 		Node::Init();
 
 		// 재질을 임시로 보관할 버퍼선언
 		LPD3DXBUFFER pD3DXMtrlBuffer;
 
 		// Tiger.x파일을 메시로 읽어들인다. 이때 재질정보도 함께 읽는다.
-		if (FAILED(D3DXLoadMeshFromX(FilePath.c_str(), D3DXMESH_SYSTEMMEM,
+		if (FAILED(D3DXLoadMeshFromXA(FilePath.c_str(), D3DXMESH_SYSTEMMEM,
 			GetDevice(), NULL,
 			&pD3DXMtrlBuffer, NULL, &mNumMaterial,
 			&mXMesh)))
@@ -52,13 +52,13 @@ namespace pooptube {
 			mMaterial[j].Ambient = mMaterial[j].Diffuse;
 
 			mTexture[j] = NULL;
-
-			std::string FileName = d3dxMaterials[j].pTextureFilename;
+			
 			if (d3dxMaterials[j].pTextureFilename != NULL &&
-				FileName.length() > 0)
+				strlen(d3dxMaterials[j].pTextureFilename) > 0)
 			{
 				// 텍스쳐를 파일에서 로드한다
 				// w로 통일할껀지 정해야함
+				std::string FileName = d3dxMaterials[j].pTextureFilename;
 				if (FAILED(D3DXCreateTextureFromFileA(GetDevice(),
 					d3dxMaterials[j].pTextureFilename,
 					&mTexture[j])))

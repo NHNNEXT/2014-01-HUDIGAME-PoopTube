@@ -116,7 +116,7 @@ namespace pooptube {
 
 				FbxNodeAttribute::EType AttributeType = pFbxChildNode->GetNodeAttribute()->GetAttributeType();
 
-				if (AttributeType != FbxNodeAttribute::eMesh && AttributeType != FbxNodeAttribute::eNull)
+				if (AttributeType != FbxNodeAttribute::eMesh /*&& AttributeType != FbxNodeAttribute::eNull*/)
 					continue;
 
 				FbxMesh* pMesh = (FbxMesh*)pFbxChildNode->GetNodeAttribute();
@@ -174,13 +174,13 @@ namespace pooptube {
 						//뒤집어서 넣어야함
 						switch (k) {
 						case 0:
-							Index[j].w2 = iControlPointIndex;
+							Index[j].w0 = iControlPointIndex;
 							break;
 						case 1:
 							Index[j].w1 = iControlPointIndex;
 							break;
 						case 2:
-							Index[j].w0 = iControlPointIndex;
+							Index[j].w2 = iControlPointIndex;
 							break;
 						default:
 							break;
@@ -261,13 +261,13 @@ namespace pooptube {
 		return mHeightMapTable[FilePath];
 	}
 
-	LPDIRECT3DTEXTURE9 ResourceManager::LoadTexture(const std::wstring& FilePath) {
+	LPDIRECT3DTEXTURE9 ResourceManager::LoadTexture(const std::string& FilePath) {
 
 		//map을 사용할 때 조심해야 할 부분
 		if (mTextureTable.find(FilePath) == mTextureTable.end()) {
 			LPDIRECT3DTEXTURE9 D3DTexture;
 
-			if (FAILED(D3DXCreateTextureFromFile(mDevice, FilePath.c_str(), &D3DTexture)))
+			if (FAILED(D3DXCreateTextureFromFileA(mDevice, FilePath.c_str(), &D3DTexture)))
 				return nullptr;
 
 			mTextureTable[FilePath] = D3DTexture;

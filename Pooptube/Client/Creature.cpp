@@ -3,6 +3,7 @@
 #include "SkinnedMesh.h"
 #include "CollisionBox.h"
 #include "CollisionManager.h"
+#include "XMesh.h"
 
 Creature::Creature()
 {
@@ -30,14 +31,16 @@ bool Creature::Init( std::shared_ptr<Creature> pCreature )
 	EnableKeyEvent();
 	EnableMouseEvent();
 
+	//mXMesh = pooptube::XMesh::Create("kuma.x");
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 	mCollisionBox = pooptube::CollisionBox::Create( pCreature.get() );
 	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 
 	Creature::SetPosition(mInitialPosition);
 
-	AddChild(&*mSkinnedMesh);
-	AddChild(&*mCollisionBox);
+	AddChild(mSkinnedMesh.get());
+	AddChild(mCollisionBox.get());
+	//AddChild(mXMesh.get());
 
 	return true;
 
