@@ -48,7 +48,8 @@ bool StageOne::Init() {
 	mSunLight = pooptube::SunLight::Create();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
-	mXMesh = pooptube::XMesh::Create(L"tiger.x");
+	mXMesh = pooptube::XMesh::Create("tiger.x");
+	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
 
 	mCharacter = MainCharacter::Create();
 	
@@ -61,12 +62,12 @@ bool StageOne::Init() {
 	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
-	mSkyBox = pooptube::SkyBox::Create(L"Top.bmp",
-		L"Bottom.bmp",
-		L"Front.bmp",
-		L"Back.bmp",
-		L"Left.bmp",
-		L"Right.bmp");
+	mSkyBox = pooptube::SkyBox::Create("Top.bmp",
+		"Bottom.bmp",
+		"Front.bmp",
+		"Back.bmp",
+		"Left.bmp",
+		"Right.bmp");
 
 	mCreature = Creature::Create();
 	mLightOrb = LightOrb::Create();
@@ -86,9 +87,13 @@ bool StageOne::Init() {
 	this->AddChild(mCreature.get());
 	this->AddChild(mLightOrb.get());
 	return true;
+
 }
 void StageOne::Render() {
 	Node::Render();
+
+	printf_s("%f %f %f\n", mCamera->GetPosition().x, mCamera->GetPosition().y, mCamera->GetPosition().z);
+	printf_s("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
 }
 void StageOne::Update(float dTime) {
 	Node::Update(dTime);
@@ -167,8 +172,7 @@ void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
 
 void StageOne::MainCharacterJumpUpdate(float dTime) {
 	//캐릭터 점프 알고리즘
-		//캐릭터 점프 알고리즘
-		CHAR_STATE	CharState = mCharacter->GetState();
+	CHAR_STATE	CharState = mCharacter->GetState();
 	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
 	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
 	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
