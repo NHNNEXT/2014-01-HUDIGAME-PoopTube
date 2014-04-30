@@ -11,12 +11,13 @@ namespace Core {
 
 	public ref class Scene : public Node
 	{
-	protected:
-		pooptube::Scene *pInstance = nullptr;
+	//protected:
+		//pooptube::Scene *pInstance = nullptr;
 
 	public:
-		Scene() : pInstance(pooptube::Scene::Create()) { }
-		~Scene() { delete pInstance; }
+		Scene() { pInstance = pooptube::Scene::Create(); }
+		~Scene() { delete Instance<pooptube::Scene *>(pInstance); }
+
 		// TODO: 여기에 이 클래스에 대한 메서드를 추가합니다.
 	};
 }

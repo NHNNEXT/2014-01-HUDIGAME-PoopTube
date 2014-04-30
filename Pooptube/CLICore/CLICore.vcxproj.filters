@@ -163,6 +163,9 @@
     <Filter Include="CoreEngine\Temp\SceneManager">
       <UniqueIdentifier>{0bfdc6e1-02d2-4c03-8dc6-9ec7b0677012}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CoreEngine\Nodes\Ground">
+      <UniqueIdentifier>{898897ac-3fdb-435b-9f12-44eb9545b50f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -180,6 +183,21 @@
     <ClInclude Include="Scene.h">
       <Filter>CoreEngine\Nodes\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>CoreEngine\Nodes\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdPersonCamera.h">
+      <Filter>CoreEngine\Nodes\Camera\ThirdPersonCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>CoreEngine\Nodes\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>CoreEngine\Nodes\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="SunLight.h">
+      <Filter>CoreEngine\Nodes\Light</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -196,6 +214,21 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>CoreEngine\Nodes\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>CoreEngine\Nodes\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdPersonCamera.cpp">
+      <Filter>CoreEngine\Nodes\Camera\ThirdPersonCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>CoreEngine\Nodes\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>CoreEngine\Nodes\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="SunLight.cpp">
+      <Filter>CoreEngine\Nodes\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
