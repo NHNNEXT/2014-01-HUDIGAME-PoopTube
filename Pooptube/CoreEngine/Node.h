@@ -34,28 +34,28 @@ namespace pooptube {
 		virtual ~Node();
 
 		//@brief 위치지정 new를 사용. 
-		static void* operator new (std::size_t size, void* ptr) throw(){
-			return ::operator new(size, ptr);
-		}
+// 		static void* operator new (std::size_t size, void* ptr) throw(){
+// 			return ::operator new(size, ptr);
+// 		}
 
 		//@brief 위치지정 new를 사용했으니 해당 delete도 만들어준다. 
-		static void operator delete (void *p, void *ptr) throw() {
-			if (p == nullptr) return;
-			return ::operator delete(p, ptr);
-		}
+// 		static void operator delete (void *p, void *ptr) throw() {
+// 			if (p == nullptr) return;
+// 			return ::operator delete(p, ptr);
+// 		}
 
 		//@brief 무조건 16바이트 alignment로 생성되도록 함
-		static void* operator new (std::size_t size) throw(){
-			//생성자와 소멸자확인
-			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
-			return ptr;
-		}
+// 		static void* operator new (std::size_t size) throw(){
+// 			//생성자와 소멸자확인
+// 			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
+// 			return ptr;
+// 		}
 
 		//@brief 일반 delete도 위치지정 delete와 같이 해제되도록 설정
-		static void operator delete (void *p) throw() {
-			if (p == nullptr) return;
-			return _aligned_free(p);
-		}
+// 		static void operator delete (void *p) throw() {
+// 			if (p == nullptr) return;
+// 			return _aligned_free(p);
+// 		}
 
 		static std::shared_ptr<Node> Create();
 

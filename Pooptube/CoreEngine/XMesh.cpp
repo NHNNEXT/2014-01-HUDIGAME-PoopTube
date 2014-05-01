@@ -9,7 +9,7 @@ namespace pooptube {
 
 	XMesh::~XMesh() {
 		mXMesh->Release();
-		for (int i = 0; i < mNumMaterial; ++i)
+		for (DWORD i = 0; i < mNumMaterial; ++i)
 			mTexture[i]->Release();
 		delete[] mMaterial;
 		delete[] mTexture;
@@ -65,7 +65,7 @@ namespace pooptube {
 				{
 					MessageBox(NULL, L"Could not find texture map", L"ERROR", MB_OK);
 
-					for (int i = 0; i < mNumMaterial; ++i)
+					for (DWORD i = 0; i < mNumMaterial; ++i)
 						mTexture[i]->Release();
 					delete[] mMaterial;
 					delete[] mTexture;
