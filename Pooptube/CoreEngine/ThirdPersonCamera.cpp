@@ -27,20 +27,9 @@ namespace pooptube {
 
 		return true;
 	}
-
+	
 	void ThirdPersonCamera::Render() {
-		Node::Render();
-
-		//뷰행렬을 생성
-		D3DXMatrixLookAtLH(&mMatView, &Node::GetPosition(), &GetLookAtPt(), &Node::GetUpVector());
-		//생성된 뷰행렬을 적용
-		GetDevice()->SetTransform(D3DTS_VIEW, &mMatView);
-
-		//프로젝션 설정
-		//perspective프로젝션
-		D3DXMatrixPerspectiveFovLH(&mMatProj, D3DX_PI / 4, 1.0f, 1.0f, 1000.0f);
-		//생성한 프로젝션 정보를 디바이스를 통해 설정
-		GetDevice()->SetTransform(D3DTS_PROJECTION, &mMatProj);
+		Camera::Render();
 	}
 
 	void ThirdPersonCamera::Update(float dTime) {
