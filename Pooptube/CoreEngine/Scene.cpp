@@ -29,7 +29,9 @@ namespace pooptube {
 	}
 
 	void Scene::Render() {
+		Node::Render();
 	}
 	void Scene::Update( float dTime ) {
+		Node::Update(dTime);
 	}
 }

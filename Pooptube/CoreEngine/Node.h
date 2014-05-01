@@ -1,6 +1,6 @@
 ﻿/**
 * @author 이선협
-* @version 2014/04/29 김지환 Add Turn Method
+* @version 2014/05/01 김지환 Override D3DVECTOR3 func
 * @brief
 * 화면에 뿌리는 모든 객체의 뿌리가 되는 객체
 * 행렬의 연산 등이 여기서 구현된다.
@@ -82,19 +82,26 @@ namespace pooptube {
 		virtual void		RotateFrontVectorY(float angle);
 
 		virtual void		SetFrontVector(const D3DXVECTOR3& vec) { mFrontVector = vec; }
+		virtual void		SetFrontVector(float x, float y, float z) { mFrontVector = D3DXVECTOR3(x, y, z); }
 		virtual D3DXVECTOR3	GetFrontVector() const { return mFrontVector; }
 		virtual D3DXVECTOR3	GetUpVector() const { return mUpVec; }
 		D3DXVECTOR3			GetRightVector();
 		D3DXVECTOR3			GetLeftVector();
 
 		virtual void		SetScale(const D3DXVECTOR3& newScale) { mScaleVec = newScale; }
+		virtual void		SetScale(float x, float y, float z) { mScaleVec = D3DXVECTOR3(x, y, z); }
 
 		virtual D3DXVECTOR3	GetPosition() const { return mPosition; }
+
 		virtual void		SetPosition(const D3DXVECTOR3& newPos);
+		virtual void		SetPosition(float x, float y, float z) { SetPosition(D3DXVECTOR3(x, y, z)); }
+		virtual void		TESTSET(float x, float y, float z) { mPosition = D3DXVECTOR3(x, y, z); }
+
 		virtual void		Translation(float x, float y, float z);
 		virtual void		Translation( const D3DXVECTOR3& moveVec );		
 
 		virtual void		SetUpVec(const D3DXVECTOR3& val) { mUpVec = val; }
+		virtual void		SetUpVec(float x, float y, float z) { mUpVec = D3DXVECTOR3(x, y, z); }
 
 		LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
 
