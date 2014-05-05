@@ -102,6 +102,9 @@ namespace pooptube {
 		if( FAILED(mD3DDevice->EndScene()) )
 			return false;
 
+		printf_s( "렌더된 메쉬오브젝트 갯수 : %u\n", mRenderCount ); //테스트용
+		mRenderCount = 0;
+		
 		if( FAILED(mD3DDevice->Present( NULL, NULL, NULL, NULL )) )
 			return false;
 

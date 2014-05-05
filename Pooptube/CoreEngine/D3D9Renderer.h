@@ -19,6 +19,8 @@ namespace pooptube {
 		LPDIRECT3DDEVICE9 GetDevice() const { return mD3DDevice; }
 		std::array<D3DXPLANE, 6> GetFrustumPlane() const { return mFrustumPlanes; }
 
+		//테스트용
+		UINT mRenderCount = 0;
 	private:
 		D3D9Renderer();
 		~D3D9Renderer();

@@ -32,6 +32,7 @@ namespace pooptube {
 
 		bool chk = _InitFBX( MeshFilePath );
 
+		//절두체 컬링용 bounding sphere작성
 		MESH_CUSTOM_VERTEX* pMeshVertices = mMesh->GetVertices();
 		std::vector<DirectX::XMFLOAT3> vertices;
 		vertices.reserve( mMesh->GetVertexCount() );
@@ -54,9 +55,9 @@ namespace pooptube {
 		for( auto plane : planes ){
  			if( plane.a * boundingSpherePos.x + plane.b * boundingSpherePos.y + plane.c * boundingSpherePos.z + plane.d >= mBoundingSphereRadius )
  				return;
-//			if( plane.a * GetPosition().x + plane.b * GetPosition().y + plane.c * GetPosition().z + plane.d >= 0 )
-//				return;
 		}
+		Application::GetInstance()->GetSceneManager()->GetRenderer()->mRenderCount++;
+
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
 
 		//행렬의 연산은 node에서 상속받는다.
