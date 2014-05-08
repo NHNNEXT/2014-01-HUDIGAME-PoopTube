@@ -43,6 +43,9 @@ namespace pooptube {
 		LPDIRECT3DVERTEXBUFFER9			mMeshVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9			mMeshIndexBuffer = nullptr;
 		std::shared_ptr<Mesh>			mMesh = nullptr;
+
+		D3DXVECTOR3						mBoundingSphereCenter;
+		float							mBoundingSphereRadius;
 	};
 
 }
