@@ -11,8 +11,8 @@ namespace pooptube{
 	FBXMesh::~FBXMesh(){
 	}
 
-	std::shared_ptr<FBXMesh> FBXMesh::Create(const std::string& FilePath) {
-		std::shared_ptr<FBXMesh> pMesh(new FBXMesh);
+	FBXMesh *FBXMesh::Create(const std::string& FilePath) {
+		FBXMesh *pMesh(new FBXMesh);
 		if (pMesh->Init(FilePath))
 			return pMesh;
 		else

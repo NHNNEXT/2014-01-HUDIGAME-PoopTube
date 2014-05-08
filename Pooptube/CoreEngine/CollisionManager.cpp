@@ -20,12 +20,12 @@ namespace pooptube {
 	CollisionManager::~CollisionManager() {
 	}
 
-	void CollisionManager::AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox, Node* pNode )
+	void CollisionManager::AddCollisionBox( CollisionBox *pCollisionBox, Node* pNode )
 	{
 		mCollisionBoxList.push_back( std::make_pair(pCollisionBox, pNode) );
 	}
 
-	void CollisionManager::RemoveCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox )
+	void CollisionManager::RemoveCollisionBox( CollisionBox *pCollisionBox )
 	{
 		for( auto iter = mCollisionBoxList.begin(); iter != mCollisionBoxList.end(); ++iter ) {
 			//if( *iter == pCollisionBox ) {

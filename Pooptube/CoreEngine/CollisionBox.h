@@ -27,7 +27,7 @@ namespace pooptube {
 		virtual ~CollisionBox();
 
 //		static std::shared_ptr<CollisionBox> Create( std::shared_ptr<Node> pNode );
-		static std::shared_ptr<CollisionBox> Create( Node* pNode );
+		static CollisionBox *Create( Node* pNode );
 //		static std::shared_ptr<CollisionBox> Create(MESH_CUSTOM_VERTEX* vertices);
 
 //		bool			Init( std::shared_ptr<Node> pNode );
@@ -37,7 +37,7 @@ namespace pooptube {
 		virtual void	Update( float dTime );
 
 //		void			SetParent( std::shared_ptr<Node> pNode ){ mParentNode = pNode; }
-		void			SetAABBCollisionBoxFromSkinnedMesh(std::shared_ptr<SkinnedMesh> pMesh);
+		void			SetAABBCollisionBoxFromSkinnedMesh(SkinnedMesh *pMesh);
 		void			SetAABBCollisionBoxFromVertices(MESH_CUSTOM_VERTEX* vertices, UINT Size);
 
 		bool			CollisionCheck( CollisionBox* target );

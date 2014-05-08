@@ -12,7 +12,7 @@ namespace pooptube {
 		virtual ~MouseEventDispatcher();
 
 		virtual bool Init();
-		virtual void Dispatch( std::forward_list<std::shared_ptr<MouseEvent>>& pMouseEventList );
+		virtual void Dispatch( std::forward_list<MouseEvent*>& pMouseEventList );
 
 		void AddEventDelegate( MouseEventDelegate* pEventDelegate );
 		void RemoveEventDelegate( MouseEventDelegate* pEventDelegate );

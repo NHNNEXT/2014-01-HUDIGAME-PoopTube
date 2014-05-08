@@ -20,7 +20,7 @@ namespace pooptube {
 	}
 
 	void ObjectManager::AddObject( Object* pObject ) {
-		mSharedObjectList.push_front( std::shared_ptr<Object>(pObject) );
+		mSharedObjectList.push_front( pObject );
 	}
 	void ObjectManager::RemoveObject( Object* pObject ) {
 		/*for (auto object : mSharedObjectList ) {
@@ -30,7 +30,7 @@ namespace pooptube {
 			}
 		}*/
 		for (auto iter=mSharedObjectList.begin(); iter!=mSharedObjectList.end(); iter++ ) {
-			if ( (*iter).get() == pObject ) {
+			if ( (*iter) == pObject ) {
 				//(*iter).reset();
 				mSharedObjectList.erase_after( iter );
 				break;

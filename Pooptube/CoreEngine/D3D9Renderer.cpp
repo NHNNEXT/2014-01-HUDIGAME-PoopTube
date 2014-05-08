@@ -1,7 +1,6 @@
 ﻿
 #include "stdafx.h"
 #include "D3D9Renderer.h"
-#include <DirectXCollision.h>
 
 namespace pooptube {
 
@@ -85,14 +84,6 @@ namespace pooptube {
 		if( FAILED(mD3DDevice->BeginScene()) )
 			return false;
 
-		//절두체 컬링
-		D3DXMATRIXA16 matViewProj, matProj;
-		mD3DDevice->GetTransform( D3DTS_VIEW, &matViewProj );
-		mD3DDevice->GetTransform( D3DTS_PROJECTION, &matProj );
-		matViewProj *= matProj;
-		if( MakeFrustumPlanes( &matViewProj ) != true )
-			return false;
-
 		return true;
 	}
 	bool D3D9Renderer::DrawEnd() {
@@ -102,9 +93,6 @@ namespace pooptube {
 		if( FAILED(mD3DDevice->EndScene()) )
 			return false;
 
-		printf_s( "렌더된 메쉬오브젝트 갯수 : %u\n", mRenderCount ); //테스트용
-		mRenderCount = 0;
-		
 		if( FAILED(mD3DDevice->Present( NULL, NULL, NULL, NULL )) )
 			return false;
 
@@ -121,35 +109,6 @@ namespace pooptube {
 		return true;
 	}
 	bool D3D9Renderer::ToggleFullscreen() {
-		return true;
-	}
-
-	BOOL D3D9Renderer::MakeFrustumPlanes( D3DXMATRIXA16* pmatViewProj )
-	{
-		D3DXMATRIXA16	matInv;
-
-		D3DXVECTOR3 m_vtx[8];
-		m_vtx[0].x = -1.0f;	m_vtx[0].y = -1.0f;	m_vtx[0].z = 0.0f;
-		m_vtx[1].x = 1.0f;	m_vtx[1].y = -1.0f;	m_vtx[1].z = 0.0f;
-		m_vtx[2].x = 1.0f;	m_vtx[2].y = -1.0f;	m_vtx[2].z = 1.0f;
-		m_vtx[3].x = -1.0f;	m_vtx[3].y = -1.0f;	m_vtx[3].z = 1.0f;
-		m_vtx[4].x = -1.0f;	m_vtx[4].y = 1.0f;	m_vtx[4].z = 0.0f;
-		m_vtx[5].x = 1.0f;	m_vtx[5].y = 1.0f;	m_vtx[5].z = 0.0f;
-		m_vtx[6].x = 1.0f;	m_vtx[6].y = 1.0f;	m_vtx[6].z = 1.0f;
-		m_vtx[7].x = -1.0f;	m_vtx[7].y = 1.0f;	m_vtx[7].z = 1.0f;
-
-		D3DXMatrixInverse( &matInv, NULL, pmatViewProj );
-
-		for( int i = 0; i < 8; i++ )
-			D3DXVec3TransformCoord( &m_vtx[i], &m_vtx[i], &matInv );
-
-		D3DXPlaneFromPoints( &mFrustumPlanes[0], m_vtx + 4, m_vtx + 7, m_vtx + 6 );		// top
-		D3DXPlaneFromPoints( &mFrustumPlanes[1], m_vtx, m_vtx + 1, m_vtx + 2 );			// bottom
-		D3DXPlaneFromPoints( &mFrustumPlanes[2], m_vtx, m_vtx + 4, m_vtx + 5 );			// near
-		D3DXPlaneFromPoints( &mFrustumPlanes[3], m_vtx + 2, m_vtx + 6, m_vtx + 7 );		// far
-		D3DXPlaneFromPoints( &mFrustumPlanes[4], m_vtx, m_vtx + 3, m_vtx + 7 );			// left
-		D3DXPlaneFromPoints( &mFrustumPlanes[5], m_vtx + 1, m_vtx + 5, m_vtx + 6 );		// right
-
 		return true;
 	}
 }

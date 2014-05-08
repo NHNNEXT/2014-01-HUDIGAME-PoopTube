@@ -11,8 +11,8 @@ namespace pooptube {
 		delete[] mIndices;
 	}
 
-	std::shared_ptr<Mesh> Mesh::Create(int VertexCount, int PolygonCount) {
-		std::shared_ptr<Mesh> pMesh(new Mesh);
+	Mesh *Mesh::Create(int VertexCount, int PolygonCount) {
+		Mesh *pMesh(new Mesh);
 
 		if (pMesh->Init(VertexCount, PolygonCount))
 			return pMesh;

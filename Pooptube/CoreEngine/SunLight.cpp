@@ -9,8 +9,8 @@ namespace pooptube {
 	SunLight::~SunLight() {
 	}
 
-	std::shared_ptr<SunLight> SunLight::Create() {
-		std::shared_ptr<SunLight> pSunLight(new SunLight);
+	SunLight *SunLight::Create() {
+		SunLight *pSunLight(new SunLight);
 		if (pSunLight->Init())
 			return pSunLight;
 		else

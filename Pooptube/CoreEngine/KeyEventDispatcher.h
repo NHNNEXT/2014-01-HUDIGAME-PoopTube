@@ -12,7 +12,7 @@ namespace pooptube {
 		virtual ~KeyEventDispatcher();
 
 		virtual bool Init();
-		virtual void Dispatch( std::forward_list<std::shared_ptr<KeyEvent>>& pKeyEventList );
+		virtual void Dispatch( std::forward_list<KeyEvent*>& pKeyEventList );
 
 		void AddEventDelegate( KeyEventDelegate* pEventDelegate );
 		void RemoveEventDelegate( KeyEventDelegate* pEventDelegate );

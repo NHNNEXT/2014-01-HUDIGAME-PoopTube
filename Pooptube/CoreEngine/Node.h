@@ -57,7 +57,7 @@ namespace pooptube {
 // 			return _aligned_free(p);
 // 		}
 
-		static std::shared_ptr<Node> Create();
+		static Node *Create();
 
 		virtual bool Init();
 
@@ -95,7 +95,6 @@ namespace pooptube {
 
 		virtual void		SetPosition(const D3DXVECTOR3& newPos);
 		virtual void		SetPosition(float x, float y, float z) { SetPosition(D3DXVECTOR3(x, y, z)); }
-		virtual void		TESTSET(float x, float y, float z) { mPosition = D3DXVECTOR3(x, y, z); }
 
 		virtual void		Translation(float x, float y, float z);
 		virtual void		Translation( const D3DXVECTOR3& moveVec );		
@@ -119,7 +118,7 @@ namespace pooptube {
 		void _RegistrationToMouseEventDispatcher();
 		
 	private:
-		std::vector<Node*> mChildList;
+		std::vector<std::shared_ptr<Node>> mChildList;
 		
 		bool mIsKeyEventEnabled = false;
 		bool mIsMouseEventEnabled = false;

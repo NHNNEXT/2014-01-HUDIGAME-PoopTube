@@ -18,8 +18,8 @@ namespace pooptube {
 	public:
 		static CollisionManager* GetInstance();
 
-		void AddCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox, Node* pNode );
-		void RemoveCollisionBox( std::shared_ptr<CollisionBox> pCollisionBox );
+		void AddCollisionBox( CollisionBox *pCollisionBox, Node* pNode );
+		void RemoveCollisionBox( CollisionBox *pCollisionBox );
 
 		//void CollisionCheck( CollisionBox* pTarget ) const;
 		Node* CollisionCheck( CollisionBox* pTarget ) const;
@@ -33,6 +33,6 @@ namespace pooptube {
 		//@tobo : 매번 업데이트 할때마다 순회 해야하는 풀이니, 더 빠를 필요가 있음
 		//어레이로 자료구조를 전환해야함
 //		std::vector<std::shared_ptr<CollisionBox>> mCollisionBoxList;
-		std::vector< std::pair<std::shared_ptr<CollisionBox>, Node*> > mCollisionBoxList;
+		std::vector< std::pair<CollisionBox*, Node*> > mCollisionBoxList;
 	};
 }

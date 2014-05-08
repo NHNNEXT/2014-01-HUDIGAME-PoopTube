@@ -38,7 +38,7 @@ namespace pooptube {
 	bool KeyEventDispatcher::Init() {
 		return true;
 	}
-	void KeyEventDispatcher::Dispatch( std::forward_list<std::shared_ptr<KeyEvent>>& pKeyEventList ) {
+	void KeyEventDispatcher::Dispatch( std::forward_list<KeyEvent*>& pKeyEventList ) {
 		if ( pKeyEventList.empty() ) return;
 
 		for (auto KeyEvent : pKeyEventList ) {
@@ -53,18 +53,18 @@ namespace pooptube {
 				switch ( KeyEvent->GetKeyEventType() ) {
 				case KeyEventType::KEY_DOWN:
 					{
-						handler->GetEventDelegate()->KeyDown( KeyEvent.get() );
+						handler->GetEventDelegate()->KeyDown( KeyEvent );
 						KeyEvent->SetKeyEventType( KeyEventType::KEY_PRESSED );
 						break;
 					}
 				case KeyEventType::KEY_PRESSED:
 					{
-						handler->GetEventDelegate()->KeyPressed( KeyEvent.get() );
+						handler->GetEventDelegate()->KeyPressed( KeyEvent );
 						break;
 					}
 				case KeyEventType::KEY_UP:
 					{
-						handler->GetEventDelegate()->KeyUp( KeyEvent.get() );
+						handler->GetEventDelegate()->KeyUp( KeyEvent );
 						break;
 					}
 				case KeyEventType::KEY_UNUSED:
@@ -80,7 +80,7 @@ namespace pooptube {
 			}
 		}
 
-		pKeyEventList.remove_if( [](std::shared_ptr<KeyEvent> keyEvent) {
+		pKeyEventList.remove_if( [](KeyEvent *keyEvent) {
 			return keyEvent->GetKeyEventType() == KeyEventType::KEY_UP;
 		});
 	}

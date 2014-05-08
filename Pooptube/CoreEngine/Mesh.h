@@ -39,7 +39,7 @@ namespace pooptube {
 		//@param PolygonCount
 		//@return 생성한 Mesh를 반환
 		//@exception 초기화에 실패하면 nullptr반환
-		static std::shared_ptr<Mesh> Create(int VertexCount, int PolygonCount);
+		static Mesh *Create(int VertexCount, int PolygonCount);
 
 		virtual bool Init(int VertexCount, int PolygonCount);
 

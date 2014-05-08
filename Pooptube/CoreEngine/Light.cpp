@@ -13,8 +13,8 @@ namespace pooptube {
 
 	}
 
-	std::shared_ptr<Light> Light::Create() {
-		std::shared_ptr<Light> pLight(new Light);
+	Light *Light::Create() {
+		Light *pLight(new Light);
 		if (pLight->Init())
 			return pLight;
 		else

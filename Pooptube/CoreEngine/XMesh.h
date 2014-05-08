@@ -7,7 +7,7 @@ namespace pooptube{
 		XMesh();
 		virtual ~XMesh();
 
-		static std::shared_ptr<XMesh> Create(const std::string& FilePath);
+		static XMesh *Create(const std::string& FilePath);
 
 		//그냥 귀찮아서 리소스 메니져 안거치고 다 때려박음
 		bool Init(const std::string& FilePath);

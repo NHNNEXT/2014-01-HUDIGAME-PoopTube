@@ -13,14 +13,14 @@ namespace pooptube{
 	}
 
 
-	std::shared_ptr<SkyBox> SkyBox::Create(const std::string& top,
+	SkyBox *SkyBox::Create(const std::string& top,
 		const std::string& bottom,
 		const std::string& front,
 		const std::string& back,
 		const std::string& left,
 		const std::string& right)
 	{
-		std::shared_ptr<SkyBox> pSkyBox(new SkyBox);
+		SkyBox *pSkyBox(new SkyBox);
 		if (pSkyBox->_Init(top, bottom, front, back, left, right))
 			return pSkyBox;
 		else

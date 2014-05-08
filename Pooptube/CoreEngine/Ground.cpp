@@ -13,8 +13,8 @@ namespace pooptube {
 	Ground::~Ground() {
 	}
 
-	std::shared_ptr<Ground> Ground::Create(const std::string& FilePath) {
-		std::shared_ptr<Ground> pGround(new Ground);
+	Ground *Ground::Create(const std::string& FilePath) {
+		Ground *pGround(new Ground);
 		if (pGround->_Init(FilePath))
 			return pGround;
 		else

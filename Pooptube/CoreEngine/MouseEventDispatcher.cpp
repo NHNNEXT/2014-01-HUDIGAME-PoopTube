@@ -39,7 +39,7 @@ namespace pooptube {
 	bool MouseEventDispatcher::Init() {
 		return true;
 	}
-	void MouseEventDispatcher::Dispatch( std::forward_list<std::shared_ptr<MouseEvent>>& pMouseEventList ) {
+	void MouseEventDispatcher::Dispatch( std::forward_list<MouseEvent*>& pMouseEventList ) {
 		if ( pMouseEventList.empty() ) return;
 
 		for (auto MouseEvent : pMouseEventList ) {
@@ -63,19 +63,19 @@ namespace pooptube {
 				switch ( MouseEvent->GetMouseEventType() ) {
 				case MouseEventType::MOUSE_LBUTTON_DOWN:
 					{
-						handler->GetEventDelegate()->MouseDown( MouseEvent.get() );
+						handler->GetEventDelegate()->MouseDown( MouseEvent );
 						MouseEvent->SetMouseEventType( MouseEventType::MOUSE_LBUTTON_PRESSED );
 						break;
 					}
 				case MouseEventType::MOUSE_RBUTTON_DOWN:
 					{
-						handler->GetEventDelegate()->MouseDown( MouseEvent.get() );
+						handler->GetEventDelegate()->MouseDown( MouseEvent );
 						MouseEvent->SetMouseEventType( MouseEventType::MOUSE_RBUTTON_PRESSED );
 						break;
 					}
 				case MouseEventType::MOUSE_MBUTTON_DOWN:
 					{
-						handler->GetEventDelegate()->MouseDown( MouseEvent.get() );
+						handler->GetEventDelegate()->MouseDown( MouseEvent );
 						MouseEvent->SetMouseEventType( MouseEventType::MOUSE_MBUTTON_PRESSED );
 						break;
 					}
@@ -83,25 +83,25 @@ namespace pooptube {
 				case MouseEventType::MOUSE_RBUTTON_PRESSED:
 				case MouseEventType::MOUSE_MBUTTON_PRESSED:
 					{
-						handler->GetEventDelegate()->MousePressed( MouseEvent.get() );
+						handler->GetEventDelegate()->MousePressed( MouseEvent );
 						break;
 					}
 				case MouseEventType::MOUSE_LBUTTON_UP:
 				case MouseEventType::MOUSE_RBUTTON_UP:
 				case MouseEventType::MOUSE_MBUTTON_UP:
 					{
-						handler->GetEventDelegate()->MouseUp( MouseEvent.get() );
+						handler->GetEventDelegate()->MouseUp( MouseEvent );
 						break;
 					}
 				case MouseEventType::MOUSE_MOVE:
 					{
-						handler->GetEventDelegate()->MouseMove( MouseEvent.get() );
+						handler->GetEventDelegate()->MouseMove( MouseEvent );
 						break;
 					}
 				case MouseEventType::MOUSE_WHEEL_UP:
 				case MouseEventType::MOUSE_WHEEL_DOWN:
 					{
-						handler->GetEventDelegate()->MouseWheel( MouseEvent.get() );
+						handler->GetEventDelegate()->MouseWheel( MouseEvent );
 						break;
 					}
 				case MouseEventType::MOUSE_UNUSED:
@@ -114,7 +114,7 @@ namespace pooptube {
 			}
 		}
 
-		pMouseEventList.remove_if( [](std::shared_ptr<MouseEvent> keyEvent) {
+		pMouseEventList.remove_if( [](MouseEvent *keyEvent) {
 			return (keyEvent->GetMouseEventType() == MouseEventType::MOUSE_LBUTTON_UP) ||
 				(keyEvent->GetMouseEventType() == MouseEventType::MOUSE_RBUTTON_UP) ||
 				(keyEvent->GetMouseEventType() == MouseEventType::MOUSE_MBUTTON_UP) ||

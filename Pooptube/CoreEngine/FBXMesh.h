@@ -10,7 +10,7 @@ namespace pooptube {
 		FBXMesh();
 		virtual ~FBXMesh();
 
-		static std::shared_ptr<FBXMesh> Create(const std::string& FilePath);
+		static FBXMesh *Create(const std::string& FilePath);
 		bool Init(const std::string& FilePath);
 
 		//문제는 업데이트와 렌더가 나뉜 모델에 맞춰야함

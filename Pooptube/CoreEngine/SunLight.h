@@ -10,7 +10,7 @@ namespace pooptube {
 
 		bool Init();
 
-		static std::shared_ptr<SunLight> Create();
+		static SunLight *Create();
 
 		void Render();
 		void Update(float dTime);

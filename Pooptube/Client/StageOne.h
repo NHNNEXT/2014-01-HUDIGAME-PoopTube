@@ -44,29 +44,29 @@ public:
 	void MouseUp(pooptube::MouseEvent* pMouseEvent);
 	void MousePressed(pooptube::MouseEvent* pMouseEvent);
 	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
-	std::shared_ptr<pooptube::Ground> GetGroundModule() const { return mGround; }
+	pooptube::Ground *GetGroundModule() const { return mGround; }
 
 protected:
 
 private:
-	std::shared_ptr<pooptube::ThirdPersonCamera>	mCamera = nullptr;
-	std::shared_ptr<pooptube::Camera>				mCamera_2 = nullptr;
-	std::shared_ptr<MainCharacter>					mCharacter = nullptr;
-	std::shared_ptr<pooptube::SkinnedMesh>			mSkinnedMesh = nullptr;
-	std::shared_ptr<pooptube::Ground>				mGround = nullptr;
-	std::shared_ptr<pooptube::SkyBox>				mSkyBox = nullptr;
-	std::shared_ptr<pooptube::Light>				mLight = nullptr;
-	std::shared_ptr<pooptube::SunLight>				mSunLight = nullptr;
-	std::shared_ptr<pooptube::XMesh>				mXMesh = nullptr;
+	pooptube::ThirdPersonCamera	*mCamera = nullptr;
+	pooptube::Camera				*mCamera_2 = nullptr;
+	MainCharacter					*mCharacter = nullptr;
+	pooptube::SkinnedMesh			*mSkinnedMesh = nullptr;
+	pooptube::Ground				*mGround = nullptr;
+	pooptube::SkyBox				*mSkyBox = nullptr;
+	pooptube::Light				*mLight = nullptr;
+	pooptube::SunLight				*mSunLight = nullptr;
+	pooptube::XMesh				*mXMesh = nullptr;
 
-	std::shared_ptr<Creature>						mCreature = nullptr; // 크리처
-	std::shared_ptr<LightOrb>				mLightOrb = nullptr; // 환경 물체
+	Creature						*mCreature = nullptr; // 크리처
+	LightOrb				*mLightOrb = nullptr; // 환경 물체
 
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;
 	float				mBeforeJumpYPos = 0.f;
 	bool				mRecordJumpPos = false;
 
-	std::shared_ptr<pooptube::CollisionBox>	testDummy;
+	pooptube::CollisionBox	*testDummy;
 };
 

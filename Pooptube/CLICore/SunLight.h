@@ -11,7 +11,14 @@ namespace Core {
 	{
 		//protected:
 	public:
-		SunLight() { pInstance = &*pooptube::SunLight::Create(); };
-		virtual ~SunLight() { delete pInstance; };
+		SunLight() { };//pInstance = &*pooptube::SunLight::Create(); };
+		virtual ~SunLight() {};// delete Instance<pooptube::SunLight *>(pInstance); };
+
+		static SunLight ^Create() {
+			SunLight ^CreateInstance = gcnew SunLight();
+			CreateInstance->pInstance = pooptube::SunLight::Create();
+			return CreateInstance;
+		}
+		//CREATE(SunLight);
 	};
 }

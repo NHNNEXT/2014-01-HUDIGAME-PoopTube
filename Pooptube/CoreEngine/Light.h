@@ -9,7 +9,7 @@ namespace pooptube {
 		Light ();
 		virtual ~Light ();
 
-		static std::shared_ptr<Light> Create();
+		static Light *Create();
 
 		virtual bool Init();
 

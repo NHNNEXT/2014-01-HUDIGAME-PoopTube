@@ -11,8 +11,8 @@ namespace pooptube {
 	Camera::~Camera() {
 	}
 
-	std::shared_ptr<Camera> Camera::Create() {
-		std::shared_ptr<Camera> pCamera(new Camera);
+	Camera *Camera::Create() {
+		Camera *pCamera(new Camera);
 		if (pCamera->Init())
 			return pCamera;
 		else 

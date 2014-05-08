@@ -262,7 +262,7 @@ namespace pooptube {
 				pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
 				pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
 
-				GetInstance()->mMouseEventList.push_front( std::shared_ptr<MouseEvent>(pMouseEvent) );
+				GetInstance()->mMouseEventList.push_front( pMouseEvent );
 				break;
 			}
 		case WM_LBUTTONDOWN:
@@ -276,7 +276,7 @@ namespace pooptube {
 
 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_LBUTTON, true );
 				
-					GetInstance()->mMouseEventList.push_front( std::shared_ptr<MouseEvent>(pMouseEvent) );
+					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 				} 
 				break;
 			}
@@ -298,7 +298,7 @@ namespace pooptube {
 					pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
 					pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
 				
-					GetInstance()->mMouseEventList.push_front( std::shared_ptr<MouseEvent>(pMouseEvent) );
+					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 				} 
 				break;
 			}
@@ -320,7 +320,7 @@ namespace pooptube {
 					pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
 					pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
 				
-					GetInstance()->mMouseEventList.push_front( std::shared_ptr<MouseEvent>(pMouseEvent) );
+					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 				} 
 				break;
 			}
@@ -336,12 +336,12 @@ namespace pooptube {
 				if( (SHORT)HIWORD(wParam) > 0 ) {
 					MouseEvent* pMouseEvent = new MouseEvent();
 					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_WHEEL_UP );
-					GetInstance()->mMouseEventList.push_front( std::shared_ptr<MouseEvent>(pMouseEvent) );
+					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 				}
 				else {
 					MouseEvent* pMouseEvent = new MouseEvent();
 					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_WHEEL_DOWN );
-					GetInstance()->mMouseEventList.push_front( std::shared_ptr<MouseEvent>(pMouseEvent) );
+					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 				}
 				break;
 			}
@@ -355,7 +355,7 @@ namespace pooptube {
 
 					GetInstance()->mKeyEventDispatcher->SetKeyPressed( wParam, true );
 				
-					GetInstance()->mKeyEventList.push_front( std::shared_ptr<KeyEvent>(pKeyEvent) );
+					GetInstance()->mKeyEventList.push_front( pKeyEvent );
 				} 
 				break;
 			}

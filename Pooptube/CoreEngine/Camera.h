@@ -7,7 +7,6 @@
 * @file Camera.h
 */
 #pragma once
-
 #include "Node.h"
 
 namespace pooptube {
@@ -16,7 +15,7 @@ namespace pooptube {
 		Camera();
 		virtual ~Camera();
 
-		static std::shared_ptr<Camera> Create();
+		static Camera *Create();
 
 		virtual bool Init();
 

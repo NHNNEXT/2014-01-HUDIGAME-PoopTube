@@ -4,8 +4,6 @@
 #include "resourcemanager.h"
 #include "Mesh.h"
 #include "Application.h"
-#include <DirectXCollision.h>
-#include <array>
 
 namespace pooptube {
 
@@ -17,8 +15,8 @@ namespace pooptube {
 		mMeshIndexBuffer->Release();
 	}
 
-	std::shared_ptr<SkinnedMesh> SkinnedMesh::Create(const std::string& MeshFilePath) {
-		std::shared_ptr<SkinnedMesh> pMesh(new SkinnedMesh);
+	SkinnedMesh *SkinnedMesh::Create(const std::string& MeshFilePath) {
+		SkinnedMesh *pMesh(new SkinnedMesh);
 		if (pMesh->Init(MeshFilePath))
 			return pMesh;
 		else
@@ -30,34 +28,10 @@ namespace pooptube {
 		if (!Node::Init())
 			return false;
 
-		bool chk = _InitFBX( MeshFilePath );
-
-		//절두체 컬링용 bounding sphere작성
-		MESH_CUSTOM_VERTEX* pMeshVertices = mMesh->GetVertices();
-		std::vector<DirectX::XMFLOAT3> vertices;
-		vertices.reserve( mMesh->GetVertexCount() );
-		for( int idx = 0; idx < mMesh->GetVertexCount(); ++idx ){
-			vertices.push_back( DirectX::XMFLOAT3( pMeshVertices[idx].position ) );
-		}
-
-		DirectX::BoundingSphere sphere;
-		DirectX::BoundingSphere::CreateFromPoints( sphere, mMesh->GetVertexCount(), &vertices[0], sizeof(DirectX::XMFLOAT3) );
-		mBoundingSphereCenter = D3DXVECTOR3( sphere.Center.x, sphere.Center.y, sphere.Center.z );
-		mBoundingSphereRadius = sphere.Radius;
-
-		return chk;
+		return _InitFBX(MeshFilePath);
 	}
 
 	void SkinnedMesh::Render() {
-		//절두체 컬링
-		std::array<D3DXPLANE, 6> planes = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetFrustumPlane();
-		D3DXVECTOR3 boundingSpherePos = mBoundingSphereCenter + GetPosition();
-		for( auto plane : planes ){
- 			if( plane.a * boundingSpherePos.x + plane.b * boundingSpherePos.y + plane.c * boundingSpherePos.z + plane.d >= mBoundingSphereRadius )
- 				return;
-		}
-		Application::GetInstance()->GetSceneManager()->GetRenderer()->mRenderCount++;
-
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
 
 		//행렬의 연산은 node에서 상속받는다.

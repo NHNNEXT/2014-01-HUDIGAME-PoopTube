@@ -9,8 +9,10 @@ namespace Core {
 	public ref class Light : public Node
 	{
 	public:
-		Light() { pInstance = &*pooptube::Light::Create(); };
-		virtual ~Light() { delete pInstance; };
+		Light() {};// pInstance = &*pooptube::Light::Create(); };
+		virtual ~Light() { delete Instance<pooptube::Light *>(pInstance); };
+
+		CREATE(Light);
 
 		void SetLightState(bool isOn)	{ dynamic_cast<pooptube::Light *>(pInstance)->LightOnOff(isOn); };
 		void SetRange(float range)		{ Instance<pooptube::Light *>(pInstance)->SetRange(range); };

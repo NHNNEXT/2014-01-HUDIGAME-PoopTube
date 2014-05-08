@@ -80,7 +80,7 @@ namespace pooptube {
 		KeyEventDispatcher* mKeyEventDispatcher;
 		MouseEventDispatcher* mMouseEventDispatcher;
 
-		std::forward_list<std::shared_ptr<KeyEvent>> mKeyEventList;
-		std::forward_list<std::shared_ptr<MouseEvent>> mMouseEventList;
+		std::forward_list<KeyEvent *> mKeyEventList;
+		std::forward_list<MouseEvent *> mMouseEventList;
 	};
 }

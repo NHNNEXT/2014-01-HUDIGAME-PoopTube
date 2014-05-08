@@ -41,7 +41,7 @@ namespace pooptube {
 		Ground();
 		~Ground();
 
-		static std::shared_ptr<Ground> Create(const std::string& FilePath);
+		static Ground *Create(const std::string& FilePath);
 
 		//메시 데이터에 변경이 있을때 아래 함수 호출
 		bool ResetBuffer();
@@ -69,7 +69,7 @@ namespace pooptube {
 		UINT					mIndexCount = 0;
 		float					mGravity = 10.f;
 
-		std::shared_ptr<MapData>			mData;
+		MapData			*mData;
 
 		float							mPolygonSize = 0.5f;
 	};

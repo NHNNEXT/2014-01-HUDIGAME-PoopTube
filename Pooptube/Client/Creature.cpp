@@ -101,14 +101,6 @@ CREATURE_STATE Creature::FSM()
 	D3DXVECTOR3 CharacterPosition = pss->GetPosition();
 	D3DXVECTOR3 CreaturePosition = GetPosition();
 	D3DXVECTOR3 distance = pss->GetPosition() - GetPosition();
-	D3DXVECTOR3 CreatureFrontVector = GetFrontVector();
-	float CreatureSightRange = D3DXVec3Dot(&CreatureFrontVector, &distance) / (D3DXVec3Length(&CreatureFrontVector) * D3DXVec3Length(&distance));
-
-	/*printf("CF : %f %f %f \n", CreatureFrontVector.x, CreatureFrontVector.y, CreatureFrontVector.z);
-	printf("PF : %f %f %f \n", CharacterPosition.x, CreatureFrontVector.y, CreatureFrontVector.z);
-	printf("%f  ", temp);
-	printf("%f\n", cos(60 * (3.14 / 180)));*/
-	
 
 	if (mIdleDistance < D3DXVec3Length(&distance)) {
 
@@ -116,14 +108,13 @@ CREATURE_STATE Creature::FSM()
 
 		SetState(CREATURE_STATE::IDLE);
 
-		printf("idle\n");
-	}
-	else if (CreatureSightRange >= cos(60 * (3.14 / 180)) && mIdleDistance >= D3DXVec3Length(&distance) && D3DXVec3Length(&distance) >= mRageDistance) {
+		//printf("idle\n");
+	} else if (mIdleDistance >= D3DXVec3Length(&distance) && D3DXVec3Length(&distance) >= mRageDistance) {
 		SetState(ANGRY);
-		printf("angry\n");
+		//printf("angry\n");
 	} else if (mRageDistance > D3DXVec3Length(&distance)) {
 		SetState(RAGE);
-		printf("rage\n");
+		//printf("rage\n");
 	}
 
 	return IDLE;
@@ -136,7 +127,7 @@ void Creature::DoIdle(float dTime)
 	D3DXVECTOR3 CreatureFrontVector = GetFrontVector();
 
 	if (IDLE == GetState() && D3DXVec3Length(&distance) < 0.5f) {
-		RotationY(0.02f);
+		RotationY(0.1f);
 		SetPosition(mInitialPosition);
 	}
 	else //if (CreaturePosition != initialPosition) 

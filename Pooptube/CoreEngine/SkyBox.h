@@ -15,7 +15,7 @@ namespace pooptube {
 		SkyBox();
 		virtual ~SkyBox();
 
-		static std::shared_ptr<SkyBox> Create(const std::string& top,
+		static SkyBox *Create(const std::string& top,
 			const std::string& bottom,
 			const std::string& front,
 			const std::string& back,

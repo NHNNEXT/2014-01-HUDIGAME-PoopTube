@@ -12,8 +12,8 @@ namespace pooptube {
 	}
 
 //	std::shared_ptr<CollisionBox> CollisionBox::Create( std::shared_ptr<Node> pNode ) {
-	std::shared_ptr<CollisionBox> CollisionBox::Create( Node* pNode ) {
-		std::shared_ptr<CollisionBox> pCollisionBox(new CollisionBox);
+	CollisionBox *CollisionBox::Create( Node* pNode ) {
+		CollisionBox *pCollisionBox(new CollisionBox);
 
 		if( pCollisionBox->Init( pNode ) ) {
 			CollisionManager::GetInstance()->AddCollisionBox( pCollisionBox, pNode );
@@ -66,7 +66,7 @@ namespace pooptube {
 	}
 
 
-	void CollisionBox::SetAABBCollisionBoxFromSkinnedMesh(std::shared_ptr<SkinnedMesh> pMesh) {
+	void CollisionBox::SetAABBCollisionBoxFromSkinnedMesh(SkinnedMesh *pMesh) {
 		SetAABBCollisionBoxFromVertices(pMesh->GetMeshData()->GetVertices(), pMesh->GetMeshData()->GetVertexCount());
 	}
 

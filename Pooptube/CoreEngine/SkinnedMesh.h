@@ -24,13 +24,13 @@ namespace pooptube {
 		//@param ResourceType
 		//@return 생성한 Mesh를 반환
 		//@exception 초기화에 실패하거나 리소스 타입이 null일 경우 nullptr반환
-		static std::shared_ptr<SkinnedMesh> Create(const std::string& MeshFilePath);
+		static SkinnedMesh *Create(const std::string& MeshFilePath);
 		virtual bool Init(const std::string& MeshFilePath);
 
 		virtual void Render();
 		virtual void Update(float dTime);
 
-		std::shared_ptr<Mesh> GetMeshData() const { return mMesh; }
+		Mesh *GetMeshData() const { return mMesh; }
 
 	protected:
 		bool _InitFBX(const std::string& MeshFilePath);
@@ -42,10 +42,7 @@ namespace pooptube {
 
 		LPDIRECT3DVERTEXBUFFER9			mMeshVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9			mMeshIndexBuffer = nullptr;
-		std::shared_ptr<Mesh>			mMesh = nullptr;
-
-		D3DXVECTOR3						mBoundingSphereCenter;
-		float							mBoundingSphereRadius;
+		Mesh			*mMesh = nullptr;
 	};
 
 }

@@ -24,6 +24,6 @@ namespace pooptube {
 
 	private:
 		static ObjectManager* mInstance;
-		std::forward_list<std::shared_ptr<Object>> mSharedObjectList;
+		std::forward_list<Object *> mSharedObjectList;
 	};
 }

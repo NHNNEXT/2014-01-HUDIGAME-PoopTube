@@ -123,7 +123,9 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="SunLight.h" />
-    <ClInclude Include="ThirdPersonCamera.h" />
+    <ClInclude Include="ThirdPersonCamera.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
@@ -139,13 +141,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='CLR|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SunLight.cpp" />
-    <ClCompile Include="ThirdPersonCamera.cpp" />
+    <ClCompile Include="ThirdPersonCamera.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

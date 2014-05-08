@@ -60,7 +60,7 @@ namespace pooptube {
 	}
 
 
-	std::shared_ptr<Mesh> ResourceManager::LoadMeshFromFBX(const std::string& FilePath) {
+	Mesh *ResourceManager::LoadMeshFromFBX(const std::string& FilePath) {
 
 		//map을 사용할 때 조심해야 할 부분
 		if (mFBXMeshTable.find(FilePath) == mFBXMeshTable.end()) {
@@ -70,7 +70,7 @@ namespace pooptube {
 		return mFBXMeshTable[FilePath];
 	}
 
-	std::shared_ptr<Mesh> ResourceManager::_LoadFBXFile(const std::string& FilePath) {
+	Mesh *ResourceManager::_LoadFBXFile(const std::string& FilePath) {
 		int lFileFormat = -1;
 		FbxImporter* pImporter = nullptr;
 
@@ -95,14 +95,14 @@ namespace pooptube {
 			return nullptr;
 		pImporter->Destroy();
 
-		std::shared_ptr<Mesh> temp = _ReadVerticesFromFBX(pScene);
+		Mesh *temp = _ReadVerticesFromFBX(pScene);
 		pScene->Destroy();
 
 		return temp;
 	}
 
-	std::shared_ptr<Mesh> ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {
-		std::shared_ptr<Mesh> pNewMesh = nullptr;
+	Mesh *ResourceManager::_ReadVerticesFromFBX(FbxScene* pScene) {
+		Mesh *pNewMesh = nullptr;
 		FbxNode* pFbxRootNode = pScene->GetRootNode();
 
 		if (pFbxRootNode) {
@@ -194,7 +194,7 @@ namespace pooptube {
 		return pNewMesh;
 	}
 
-	std::shared_ptr<Ground::MapData> ResourceManager::LoadHeightMap(const std::string& FilePath) {
+	Ground::MapData *ResourceManager::LoadHeightMap(const std::string& FilePath) {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 
@@ -254,7 +254,7 @@ namespace pooptube {
 			}
 				
 
-			std::shared_ptr<Ground::MapData> pMapData(new Ground::MapData(bitmapImage, row + 1, col + 1));
+			Ground::MapData *pMapData(new Ground::MapData(bitmapImage, row + 1, col + 1));
 			mHeightMapTable[FilePath] = pMapData;
 			delete[] bitmapImage;
 		}

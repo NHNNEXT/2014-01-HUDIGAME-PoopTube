@@ -15,8 +15,8 @@ namespace pooptube {
 		delete[] mTexture;
 	}
 
-	std::shared_ptr<XMesh> XMesh::Create(const std::string& FilePath) {
-		std::shared_ptr<XMesh> pMesh(new XMesh);
+	XMesh *XMesh::Create(const std::string& FilePath) {
+		XMesh *pMesh(new XMesh);
 		if (pMesh->Init(FilePath))
 			return pMesh;
 		else

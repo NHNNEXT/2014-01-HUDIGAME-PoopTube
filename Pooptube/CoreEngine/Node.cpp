@@ -9,13 +9,13 @@ namespace pooptube {
 	}
 	Node::~Node() {
 		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
-			ObjectManager::GetInstance()->RemoveObject((*iter));
+			ObjectManager::GetInstance()->RemoveObject((*iter).get());
 		}
 		mChildList.clear();
 	}
 
-	std::shared_ptr<Node> Node::Create() {
-		std::shared_ptr<Node> pNode(new Node);
+	Node *Node::Create() {
+		Node *pNode(new Node);
 		if (pNode->Init()) 
 			return pNode;
 		else 
@@ -45,13 +45,13 @@ namespace pooptube {
 	}
 
 	void Node::AddChild(Node* pChild) {
-		mChildList.push_back(pChild);
+		mChildList.push_back(std::shared_ptr<Node>(pChild));
 	}
 	void Node::RemoveChild(Node* pChild) {
 		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
-			if ((*iter) == pChild) {
+			if ((*iter).get() == pChild) {
 				//(*iter).reset();
-				ObjectManager::GetInstance()->RemoveObject((*iter));
+				ObjectManager::GetInstance()->RemoveObject((*iter).get());
 				mChildList.erase(iter);
 				break;
 			}
