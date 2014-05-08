@@ -34,14 +34,14 @@ enum CREATURE_STATE : int {
 class Creature : public pooptube::Node
 {
 public:
-	std::shared_ptr<MainCharacter> pss; // mainCharacter를 가리키는 임시 포인터
+	MainCharacter *pss; // mainCharacter를 가리키는 임시 포인터
 										// stageManager를 작성하면 지운다.
 	Creature();
 	~Creature();
 
-	static std::shared_ptr<Creature> Create();
+	static Creature *Create();
 
-	bool Init( std::shared_ptr<Creature> pCreature );
+	bool Init( Creature *pCreature );
 
 	void Render();
 	void Update(float dTime);
@@ -55,7 +55,7 @@ public:
 	CREATURE_STATE GetState() const { return mState; }
 	void SetState(CREATURE_STATE state) { mState = state; }
 
-	std::shared_ptr<pooptube::SkinnedMesh> GetSkinnedMesh() const { return mSkinnedMesh; }
+	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
 
 private:
 	CREATURE_STATE	mState = IDLE;
@@ -66,8 +66,8 @@ private:
 	float mDistanceFromMainCharater = 0;
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 10.f };
 
-	std::shared_ptr<pooptube::XMesh>		mXMesh = nullptr;
-	std::shared_ptr<pooptube::SkinnedMesh>	mSkinnedMesh = nullptr;
-	std::shared_ptr<pooptube::CollisionBox> mCollisionBox = nullptr;
+	pooptube::XMesh		*mXMesh = nullptr;
+	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
+	pooptube::CollisionBox *mCollisionBox = nullptr;
 };
 

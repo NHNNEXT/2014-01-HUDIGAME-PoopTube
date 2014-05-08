@@ -13,9 +13,9 @@ LightOrb::~LightOrb()
 {
 }
 
-std::shared_ptr<LightOrb> LightOrb::Create()
+LightOrb *LightOrb::Create()
 {
-	std::shared_ptr<LightOrb> pCreature(new LightOrb);
+	LightOrb *pCreature(new LightOrb);
 
 	if (pCreature->Init(pCreature))
 		return pCreature;
@@ -23,7 +23,7 @@ std::shared_ptr<LightOrb> LightOrb::Create()
 		return nullptr;
 }
 
-bool LightOrb::Init(std::shared_ptr<LightOrb> pCreature)
+bool LightOrb::Init(LightOrb *pCreature)
 {
 	Node::Init();
 
@@ -31,13 +31,13 @@ bool LightOrb::Init(std::shared_ptr<LightOrb> pCreature)
 	EnableMouseEvent();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
-	mCollisionBox = pooptube::CollisionBox::Create(pCreature.get());
+	mCollisionBox = pooptube::CollisionBox::Create(pCreature);
 	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 
 	LightOrb::SetPosition(mInitialPosition);
 
-	AddChild(&*mSkinnedMesh);
-	AddChild(&*mCollisionBox);
+	AddChild(mSkinnedMesh);
+	AddChild(mCollisionBox);
 
 	return true;
 }
@@ -75,7 +75,7 @@ void LightOrb::Update(float dTime)
 	mCollisionBox->SetFrontVector(Node::GetFrontVector());
 	mCollisionBox->Update(dTime);
 
-	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck(mCollisionBox.get());
+	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck(mCollisionBox);
 
 	if (collisionResult != nullptr) {
 		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetPosition();

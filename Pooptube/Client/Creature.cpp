@@ -14,9 +14,9 @@ Creature::~Creature()
 {
 }
 
-std::shared_ptr<Creature> Creature::Create()
+Creature *Creature::Create()
 {
-	std::shared_ptr<Creature> pCreature( new Creature );
+	Creature *pCreature( new Creature );
 
 	if( pCreature->Init( pCreature ) )
 		return pCreature;
@@ -24,7 +24,7 @@ std::shared_ptr<Creature> Creature::Create()
 		return nullptr;
 }
 
-bool Creature::Init( std::shared_ptr<Creature> pCreature )
+bool Creature::Init( Creature *pCreature )
 {
 	Node::Init();
 
@@ -33,13 +33,13 @@ bool Creature::Init( std::shared_ptr<Creature> pCreature )
 
 	//mXMesh = pooptube::XMesh::Create("kuma.x");
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
-	mCollisionBox = pooptube::CollisionBox::Create( pCreature.get() );
+	mCollisionBox = pooptube::CollisionBox::Create( pCreature );
 	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 
 	Creature::SetPosition(mInitialPosition);
 
-	AddChild(mSkinnedMesh.get());
-	AddChild(mCollisionBox.get());
+	AddChild(mSkinnedMesh);
+	AddChild(mCollisionBox);
 	//AddChild(mXMesh.get());
 
 	return true;
@@ -64,7 +64,7 @@ void Creature::Update(float dTime)
 	mCollisionBox->SetFrontVector(Node::GetFrontVector());
 	mCollisionBox->Update(dTime);
 
-	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck( mCollisionBox.get() );
+	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck( mCollisionBox );
 
 	if( collisionResult != nullptr ) {
 		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetPosition();

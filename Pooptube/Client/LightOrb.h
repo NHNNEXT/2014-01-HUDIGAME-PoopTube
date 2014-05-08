@@ -30,18 +30,18 @@ public:
 	LightOrb();
 	~LightOrb();
 
-	static std::shared_ptr<LightOrb> Create();
+	static LightOrb *Create();
 
-	bool Init(std::shared_ptr<LightOrb> pCreature);
+	bool Init(LightOrb *pCreature);
 
 	void Render();
 	void Update(float dTime);
 
-	std::shared_ptr<pooptube::SkinnedMesh> GetSkinnedMesh() const { return mSkinnedMesh; }
+	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
 
 private:
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 0.f };
 
-	std::shared_ptr<pooptube::SkinnedMesh>	mSkinnedMesh = nullptr;
-	std::shared_ptr<pooptube::CollisionBox> mCollisionBox = nullptr;
+	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
+	pooptube::CollisionBox *mCollisionBox = nullptr;
 };
