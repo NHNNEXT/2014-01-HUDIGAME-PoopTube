@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{006d5f88-5aaf-4bab-9d6f-2c9aefebd2f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Character">
+      <UniqueIdentifier>{4390ae28-b3b0-49f1-892f-9c25ec33c1ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{d253313b-f093-4ac0-8384-c1b8c7ae3396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PreCompile\ProjectSet">
+      <UniqueIdentifier>{453a3a53-41e4-44ad-b3c3-015448ef427a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetworkManager">
+      <UniqueIdentifier>{fa56346a-c843-478b-ab9b-744c2e856535}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
+    <ClInclude Include="MainCharacter.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="StageOne.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="LibSet.h">
+      <Filter>PreCompile\ProjectSet</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkManager.h">
+      <Filter>NetworkManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketType.h">
+      <Filter>NetworkManager</Filter>
+    </ClInclude>
+    <ClInclude Include="LightOrb.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="MainCharacter.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="StageOne.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkManager.cpp">
+      <Filter>NetworkManager</Filter>
+    </ClCompile>
+    <ClCompile Include="LightOrb.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="batman70.fbx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="test.bmp">
+      <Filter>Resource</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
