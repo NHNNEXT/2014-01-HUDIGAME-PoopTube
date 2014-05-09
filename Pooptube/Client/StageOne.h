@@ -49,18 +49,17 @@ public:
 protected:
 
 private:
-	pooptube::ThirdPersonCamera	*mCamera = nullptr;
-	pooptube::Camera				*mCamera_2 = nullptr;
+	pooptube::ThirdPersonCamera		*mCamera = nullptr;
 	MainCharacter					*mCharacter = nullptr;
 	pooptube::SkinnedMesh			*mSkinnedMesh = nullptr;
 	pooptube::Ground				*mGround = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
-	pooptube::Light				*mLight = nullptr;
+	pooptube::Light					*mLight = nullptr;
 	pooptube::SunLight				*mSunLight = nullptr;
-	pooptube::XMesh				*mXMesh = nullptr;
+	pooptube::XMesh					*mXMesh = nullptr;
 
 	Creature						*mCreature = nullptr; // 크리처
-	LightOrb				*mLightOrb = nullptr; // 환경 물체
+	LightOrb						*mLightOrb = nullptr; // 환경 물체
 
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;

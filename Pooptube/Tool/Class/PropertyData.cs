@@ -49,9 +49,12 @@ namespace Tool.Class
     }
     public class Vector3 : SubCategory
     {
-        public int x { get; set; }
-        public int y { get; set; }
-        public int z { get; set; }
+        public float x { get; set; }
+        public float y { get; set; }
+        public float z { get; set; }
+
+        public void Set(float _x, float _y, float _z) { x = _x; y = _y; z = _z; }
+        public void Set(float[] v) { x = v[0]; y = v[1]; z = v[2]; }
     }
     public class Scale : SubCategory
     {

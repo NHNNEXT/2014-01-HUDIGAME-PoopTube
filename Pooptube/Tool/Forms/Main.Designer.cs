@@ -314,6 +314,7 @@
             this.PropertyForm.Size = new System.Drawing.Size(248, 252);
             this.PropertyForm.TabIndex = 0;
             this.PropertyForm.ToolbarVisible = false;
+            this.PropertyForm.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PropertyValueChanged);
             // 
             // ComponentTab
             // 
@@ -333,9 +334,11 @@
             this.Controls.Add(this.OptionTab);
             this.Controls.Add(this.ViewBox);
             this.Controls.Add(this.MainMenu);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.MainMenu;
             this.Name = "MainForm";
             this.Text = "mastrayer";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.KeyboardInput);
             ((System.ComponentModel.ISupportInitialize)(this.ViewBox)).EndInit();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();

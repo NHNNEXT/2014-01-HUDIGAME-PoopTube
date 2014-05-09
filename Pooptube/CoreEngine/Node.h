@@ -1,6 +1,6 @@
 ﻿/**
 * @author 이선협
-* @version 2014/05/01 김지환 Override D3DVECTOR3 func
+* @version 2014/05/09 김지환 Move 함수 만듦.
 * @brief
 * 화면에 뿌리는 모든 객체의 뿌리가 되는 객체
 * 행렬의 연산 등이 여기서 구현된다.
@@ -37,6 +37,7 @@ namespace pooptube {
 // 		static void* operator new (std::size_t size, void* ptr) throw(){
 // 			return ::operator new(size, ptr);
 // 		}
+
 
 		//@brief 위치지정 new를 사용했으니 해당 delete도 만들어준다. 
 // 		static void operator delete (void *p, void *ptr) throw() {
@@ -81,8 +82,8 @@ namespace pooptube {
 		virtual void		RotationY(float Angle);
 		virtual void		RotateFrontVectorY(float angle);
 
-		virtual void		SetFrontVector(const D3DXVECTOR3& vec) { mFrontVector = vec; }
-		virtual void		SetFrontVector(float x, float y, float z) { mFrontVector = D3DXVECTOR3(x, y, z); }
+		virtual void		SetFrontVector(const D3DXVECTOR3& vec) { D3DXVec3Normalize(&mFrontVector, &vec); }
+		virtual void		SetFrontVector(float x, float y, float z) { SetFrontVector(D3DXVECTOR3(x, y, z)); }
 		virtual D3DXVECTOR3	GetFrontVector() const { return mFrontVector; }
 		virtual D3DXVECTOR3	GetUpVector() const { return mUpVec; }
 		D3DXVECTOR3			GetRightVector();
@@ -90,14 +91,19 @@ namespace pooptube {
 
 		virtual void		SetScale(const D3DXVECTOR3& newScale) { mScaleVec = newScale; }
 		virtual void		SetScale(float x, float y, float z) { mScaleVec = D3DXVECTOR3(x, y, z); }
+		virtual D3DXVECTOR3	GetScale() { return mScaleVec; }
 
 		virtual D3DXVECTOR3	GetPosition() const { return mPosition; }
 
 		virtual void		SetPosition(const D3DXVECTOR3& newPos);
 		virtual void		SetPosition(float x, float y, float z) { SetPosition(D3DXVECTOR3(x, y, z)); }
 
+		// 평행이동
 		virtual void		Translation(float x, float y, float z);
 		virtual void		Translation( const D3DXVECTOR3& moveVec );		
+
+		// 바라보는 방향으로 이동
+		virtual void		Move(float dForward, float dSide);
 
 		virtual void		SetUpVec(const D3DXVECTOR3& val) { mUpVec = val; }
 		virtual void		SetUpVec(float x, float y, float z) { mUpVec = D3DXVECTOR3(x, y, z); }

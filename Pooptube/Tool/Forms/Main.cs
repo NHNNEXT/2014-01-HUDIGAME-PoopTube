@@ -43,8 +43,8 @@ namespace Tool
             Run();
 
             var settings = new Settings();
-            settings.InitValue(Scene);
-            //settings.Position = new Vector3() { x = 1, y = 2, z = 3 };
+            settings.InitValue(Ground);
+            settings.Position = new Vector3() { x = 0, y = 0, z = 0 };
             settings.Scale = new Scale() { x = 1, y = 1, z = 1 };
             settings.FrontVector = new Vector3() { x = 0, y = 0, z = 1 };
 
@@ -62,9 +62,28 @@ namespace Tool
 //                 MyInformation.MyName = i.ToString();
 //                 ++i;
                 Application.Run();
-                await Task.Delay(10);
+                await Task.Delay(1);
             }
         }
-    }
 
+        private void PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            PropertyGrid grid = (PropertyGrid)s;
+            Settings data = (Settings)grid.SelectedObject;
+
+            if (e.ChangedItem.Parent.Label == "Position")
+                data.target.SetPosition(data.Position.x, data.Position.y, data.Position.z);
+
+            else if (e.ChangedItem.Parent.Label == "Scale")
+                data.target.SetScale(data.Scale.x, data.Scale.y, data.Scale.z);
+
+            else if (e.ChangedItem.Parent.Label == "FrontVector")
+            {
+                data.target.SetFrontVector(data.FrontVector.x, data.FrontVector.y, data.FrontVector.z);
+                data.FrontVector.Set(data.target.GetFrontVector());
+                
+            }
+            grid.Refresh();
+        }
+    }
 }

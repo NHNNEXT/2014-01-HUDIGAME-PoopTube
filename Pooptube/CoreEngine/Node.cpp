@@ -117,6 +117,18 @@ namespace pooptube {
 		Translation( temp );
 	}
 
+
+	void Node::Move(float dForward, float dSide)
+	{
+		D3DXVECTOR3 pos = mPosition;
+
+		pos += mFrontVector * dForward;
+		pos += GetLeftVector() * dSide;
+
+		mPosition = pos;
+	}
+
+
 	void Node::SetPosition(const D3DXVECTOR3& newPos) {
 		mPosition = newPos;
 	}

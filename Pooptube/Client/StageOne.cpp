@@ -54,7 +54,6 @@ bool StageOne::Init() {
 	mCharacter = MainCharacter::Create();
 	
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
-	mCamera_2 = pooptube::Camera::Create();
 
 	mGround = pooptube::Ground::Create("test.bmp");
 
@@ -80,7 +79,6 @@ bool StageOne::Init() {
 	this->AddChild(mXMesh);
 	this->AddChild(mCharacter);
 	this->AddChild(mCamera);
-	//this->AddChild(mCamera_2);
 	this->AddChild(mGround);
 	this->AddChild(testDummy);
 	this->AddChild(mSkyBox);
@@ -121,25 +119,22 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'R' :
-		getchar();
 		break;
 	case 'T':
-		mCamera_2->Translation(mCamera_2->GetFrontVector()*0.1f);
+		mCharacter->Move(0.1f, 0.f);
 		break;
 	case 'G':
-		mCamera_2->Translation(mCamera_2->GetFrontVector()*-0.1f);
+		mCharacter->Move(-0.1f, 0.f);
 		break;
 	case 'F':
-		mCamera_2->Translation(mCamera_2->GetLeftVector()*0.1f);
+		mCharacter->Move(0.f, 0.1f);
 		break;
 	case 'H':
-		mCamera_2->Translation(mCamera_2->GetRightVector()*0.1f);
+		mCharacter->Move(0.f, -0.1f);
 		break;
 	case VK_UP:
-		mCamera_2->RotateFrontVectorY(-0.1f);
 		break;
 	case VK_DOWN:
-		mCamera_2->RotateFrontVectorY(0.1f);
 		break;
 
 	case 'Q':

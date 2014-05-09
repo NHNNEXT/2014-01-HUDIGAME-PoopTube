@@ -1,7 +1,6 @@
 #pragma once
 #pragma comment(lib, "CoreEngine")
 #include "..\CoreEngine\Node.h"
-#include "..\CoreEngine\Light.h"
 
 using namespace System;
 
@@ -55,9 +54,13 @@ namespace Core {
 		virtual D3DXVECTOR3		 _GetPosition() { return pInstance->GetPosition(); }
 		array<System::Single>^	 GetPosition() { GETVECTOR(GetPosition) }
 
+		virtual void			 SetScale(float x, float y, float z) { pInstance->SetScale(x, y, z); }
+		virtual D3DXVECTOR3		 _GetScale() { return pInstance->GetScale(); }
+		array<System::Single>^	 GetScale() { GETVECTOR(GetScale) }
 
-// 		virtual void			Translation(float x, float y, float z);
-// 		virtual void			Translation(const D3DXVECTOR3& moveVec);
+
+		virtual void			Translation(float x, float y, float z) { pInstance->Translation(x, y, z); }
+		virtual void			Move(float dForward, float dSide) { pInstance->Move(dForward, dSide); }
 // 
 // 		LPDIRECT3DDEVICE9		GetDevice() const { return mDevice; }
 // 
