@@ -5,13 +5,17 @@
 
 using namespace System;
 
-//CreateInstance->pInstance = &*pooptube::Class::Create();
 #define CREATE(Class) \
 	static Class ^Create() { \
 		Class ^CreateInstance = gcnew Class(); \
 		CreateInstance->pInstance = &*pooptube::Class::Create(); \
 		return CreateInstance; \
 	}
+
+#define GETVECTOR(FUNCTION) \
+	D3DXVECTOR3 temp = pInstance->FUNCTION(); \
+	array<System::Single> ^byte = { temp.x, temp.y, temp.z }; \
+	return byte; \
 
 namespace Core {
 
@@ -29,31 +33,32 @@ namespace Core {
 		
 		CREATE(Node);
 
-		pooptube::Node			*GetInstance()  { return pInstance; }
+		pooptube::Node*			 GetInstance()  { return pInstance; }
 
 		virtual void			 AddChild(Node ^pChild)		{ pInstance->AddChild(pChild->GetInstance()); };
 		virtual void			 RemoveChild(Node ^pChild)	{ pInstance->RemoveChild(pChild->GetInstance()); };
-		virtual void			 SetFrontVector(float x, float y, float z) { pInstance->SetFrontVector(x, y, z); }
-		virtual void			 SetUpVector(float x, float y, float z) { pInstance->SetUpVec(x, y, z); }
-		virtual void			 SetPosition(float x, float y, float z) override { pInstance->SetPosition(x, y, z); }
+
 
 		virtual void			 RotationY(float Angle) { pInstance->RotationY(Angle); };
 		virtual void			 RotateFrontVectorY(float angle) { pInstance->RotateFrontVectorY(angle); };
 	
-		bool TEST() { return pInstance == nullptr ? false : true; }
-// 		virtual D3DXVECTOR3		GetFrontVector() const { return mFrontVector; }
-// 		virtual D3DXVECTOR3		GetUpVector() const { return mUpVec; }
-// 		D3DXVECTOR3				GetRightVector();
-// 		D3DXVECTOR3				GetLeftVector();
-// 
-// 
-// 		virtual D3DXVECTOR3		GetPosition() const { return mPosition; }
-// 		virtual void			SetPosition(const D3DXVECTOR3& newPos);
+
+		virtual void			 SetFrontVector(float x, float y, float z) { pInstance->SetFrontVector(x, y, z); }
+		virtual D3DXVECTOR3		 _GetFrontVector() { return pInstance->GetFrontVector(); }
+		array<System::Single>^	 GetFrontVector() { GETVECTOR(GetFrontVector) }
+
+		virtual void			 SetUpVector(float x, float y, float z) { pInstance->SetUpVec(x, y, z); }
+		virtual D3DXVECTOR3		 _GetUpVector() { return pInstance->GetUpVector(); }
+		array<System::Single>^	 GetUpVector() { GETVECTOR(GetUpVector) }
+
+		virtual void			 SetPosition(float x, float y, float z) { pInstance->SetPosition(x, y, z); }
+		virtual D3DXVECTOR3		 _GetPosition() { return pInstance->GetPosition(); }
+		array<System::Single>^	 GetPosition() { GETVECTOR(GetPosition) }
+
+
 // 		virtual void			Translation(float x, float y, float z);
 // 		virtual void			Translation(const D3DXVECTOR3& moveVec);
 // 
-// 		virtual void			SetUpVec(const D3DXVECTOR3& val) { mUpVec = val; }
-// 
 // 		LPDIRECT3DDEVICE9		GetDevice() const { return mDevice; }
 // 
 // 		void					UpdateMatrix();

@@ -1,6 +1,6 @@
 ﻿namespace Tool
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Property = new System.Windows.Forms.GroupBox();
             this.ViewBox = new System.Windows.Forms.PictureBox();
             this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.파일fToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,21 +55,22 @@
             this.도구TToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.창WToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.도움말HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OptionTab = new System.Windows.Forms.TabControl();
+            this.PropertyTab = new System.Windows.Forms.TabPage();
+            this.ObjectListBox = new System.Windows.Forms.ComboBox();
+            this.PropertyForm = new System.Windows.Forms.PropertyGrid();
+            this.ComponentTab = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.ViewBox)).BeginInit();
             this.MainMenu.SuspendLayout();
+            this.OptionTab.SuspendLayout();
+            this.PropertyTab.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // Property
-            // 
-            this.Property.Location = new System.Drawing.Point(491, 27);
-            this.Property.Name = "Property";
-            this.Property.Size = new System.Drawing.Size(137, 304);
-            this.Property.TabIndex = 0;
-            this.Property.TabStop = false;
-            this.Property.Text = "Property";
             // 
             // ViewBox
             // 
+            this.ViewBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ViewBox.Location = new System.Drawing.Point(12, 27);
             this.ViewBox.Name = "ViewBox";
             this.ViewBox.Size = new System.Drawing.Size(473, 304);
@@ -89,7 +89,7 @@
             this.도움말HToolStripMenuItem});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(640, 24);
+            this.MainMenu.Size = new System.Drawing.Size(753, 24);
             this.MainMenu.TabIndex = 2;
             this.MainMenu.Text = "menuStrip1";
             // 
@@ -267,20 +267,80 @@
             this.도움말HToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.도움말HToolStripMenuItem.Text = "도움말(&H)";
             // 
-            // Form1
+            // OptionTab
+            // 
+            this.OptionTab.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.OptionTab.Controls.Add(this.PropertyTab);
+            this.OptionTab.Controls.Add(this.ComponentTab);
+            this.OptionTab.Location = new System.Drawing.Point(491, 27);
+            this.OptionTab.Name = "OptionTab";
+            this.OptionTab.SelectedIndex = 0;
+            this.OptionTab.Size = new System.Drawing.Size(262, 304);
+            this.OptionTab.TabIndex = 3;
+            // 
+            // PropertyTab
+            // 
+            this.PropertyTab.Controls.Add(this.ObjectListBox);
+            this.PropertyTab.Controls.Add(this.PropertyForm);
+            this.PropertyTab.Location = new System.Drawing.Point(4, 22);
+            this.PropertyTab.Name = "PropertyTab";
+            this.PropertyTab.Padding = new System.Windows.Forms.Padding(3);
+            this.PropertyTab.Size = new System.Drawing.Size(254, 278);
+            this.PropertyTab.TabIndex = 0;
+            this.PropertyTab.Text = "Property";
+            this.PropertyTab.UseVisualStyleBackColor = true;
+            // 
+            // ObjectListBox
+            // 
+            this.ObjectListBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ObjectListBox.FormattingEnabled = true;
+            this.ObjectListBox.Location = new System.Drawing.Point(3, 3);
+            this.ObjectListBox.Margin = new System.Windows.Forms.Padding(0);
+            this.ObjectListBox.Name = "ObjectListBox";
+            this.ObjectListBox.Size = new System.Drawing.Size(248, 20);
+            this.ObjectListBox.TabIndex = 4;
+            // 
+            // PropertyForm
+            // 
+            this.PropertyForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PropertyForm.HelpVisible = false;
+            this.PropertyForm.Location = new System.Drawing.Point(3, 23);
+            this.PropertyForm.Margin = new System.Windows.Forms.Padding(0);
+            this.PropertyForm.Name = "PropertyForm";
+            this.PropertyForm.PropertySort = System.Windows.Forms.PropertySort.Categorized;
+            this.PropertyForm.Size = new System.Drawing.Size(248, 252);
+            this.PropertyForm.TabIndex = 0;
+            this.PropertyForm.ToolbarVisible = false;
+            // 
+            // ComponentTab
+            // 
+            this.ComponentTab.Location = new System.Drawing.Point(4, 22);
+            this.ComponentTab.Name = "ComponentTab";
+            this.ComponentTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ComponentTab.Size = new System.Drawing.Size(254, 278);
+            this.ComponentTab.TabIndex = 1;
+            this.ComponentTab.Text = "Component";
+            this.ComponentTab.UseVisualStyleBackColor = true;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 343);
+            this.ClientSize = new System.Drawing.Size(753, 343);
+            this.Controls.Add(this.OptionTab);
             this.Controls.Add(this.ViewBox);
-            this.Controls.Add(this.Property);
             this.Controls.Add(this.MainMenu);
             this.MainMenuStrip = this.MainMenu;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "mastrayer";
             ((System.ComponentModel.ISupportInitialize)(this.ViewBox)).EndInit();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
+            this.OptionTab.ResumeLayout(false);
+            this.PropertyTab.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,7 +348,6 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox Property;
         private System.Windows.Forms.PictureBox ViewBox;
         private System.Windows.Forms.MenuStrip MainMenu;
         private System.Windows.Forms.ToolStripMenuItem 파일fToolStripMenuItem;
@@ -316,6 +375,11 @@
         private System.Windows.Forms.ToolStripMenuItem DeleteMenu;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem SelectAllMenu;
+        private System.Windows.Forms.TabControl OptionTab;
+        private System.Windows.Forms.TabPage PropertyTab;
+        private System.Windows.Forms.TabPage ComponentTab;
+        private System.Windows.Forms.PropertyGrid PropertyForm;
+        private System.Windows.Forms.ComboBox ObjectListBox;
     }
 }
 

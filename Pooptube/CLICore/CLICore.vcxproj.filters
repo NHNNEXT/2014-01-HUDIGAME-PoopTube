@@ -19,123 +19,6 @@
     <Filter Include="SoundEngine">
       <UniqueIdentifier>{a80b1b80-82b4-4b13-9e11-20e0d23309ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CoreEngine\Temp">
-      <UniqueIdentifier>{cd20ded1-c179-4e0d-9c99-3d9c549b50d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\NetworkSystem">
-      <UniqueIdentifier>{66f3ddfb-aea4-47ee-910c-6b9c01c67412}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\%2aInputManager">
-      <UniqueIdentifier>{8727beeb-ede8-4d60-a0c0-5cec72278aa3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\EventInterface">
-      <UniqueIdentifier>{3f5b2ca5-2ec9-45ce-b798-2e2dd74a7f7c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\EventInterface\EventDelegate">
-      <UniqueIdentifier>{fbfda0c6-6b89-47e1-a3dc-4ef58e7491c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\EventInterface\EventDispatcher">
-      <UniqueIdentifier>{0abb9b6e-7227-441b-9785-7b04990af5f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\EventInterface\EventHandler">
-      <UniqueIdentifier>{9a93c501-01e6-492a-8dd9-57d7db9df7ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\EventInterface\EventObject">
-      <UniqueIdentifier>{f6f6fd5d-b1da-4c31-b502-1483ac9664ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\EventInterface\EventProcess">
-      <UniqueIdentifier>{0d9e434a-5426-438d-8e3b-bb0c765b7eaa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\KeyEvent">
-      <UniqueIdentifier>{e678e00a-5e15-4080-aca1-e01e40ebfe41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\KeyEvent\KeyEvent">
-      <UniqueIdentifier>{e9380147-add5-46f1-b68a-6b28f4319e92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\KeyEvent\KeyEventDelegate">
-      <UniqueIdentifier>{2566d4df-536a-4760-bc5b-daf0c5a28a84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\KeyEvent\KeyEventDispatcher">
-      <UniqueIdentifier>{98fdd6b4-f704-4024-b12a-573aeb80e9ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\KeyEvent\KeyEventHandler">
-      <UniqueIdentifier>{ca9a07ad-5ba6-4f42-bedf-99a56a12ea0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\MouseEvent">
-      <UniqueIdentifier>{a9bf5f4d-4eed-4bb1-aa59-c6b0440ce4c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\MouseEvent\MouseEvent">
-      <UniqueIdentifier>{48e4a13f-0d5e-431c-a81a-e54ae04e2e19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\MouseEvent\MouseEventDelegate">
-      <UniqueIdentifier>{681665c6-15fd-4130-857b-16fb3250bb9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\MouseEvent\MouseEventDispatcher">
-      <UniqueIdentifier>{aee88936-44e1-4396-b17f-c8c7df9ec515}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\MouseEvent\MouseEventHandler">
-      <UniqueIdentifier>{d8ed4455-d096-4828-82a2-9bac2feb179b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\NetworkEvent">
-      <UniqueIdentifier>{2b4eefab-348c-44db-ab21-c2f9201a1c5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\NetworkEvent\NetworkEventDelegate">
-      <UniqueIdentifier>{f4714d5f-49b6-400c-8487-5eb48946abc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\NetworkEvent\NetworkEventDispatcher">
-      <UniqueIdentifier>{415e6afc-c42a-409d-8ec5-4fa67a254712}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\NetworkEvent\NetworkEventHandler">
-      <UniqueIdentifier>{ed615f86-db40-4db5-817a-7f2ab40e6b0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Object">
-      <UniqueIdentifier>{5b2a36d7-7a64-4faa-94cb-72c6bf5d00e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\ObjectManager">
-      <UniqueIdentifier>{2fa6b989-2bd6-4079-9866-d456dbb43132}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\PreCompile">
-      <UniqueIdentifier>{c13270ba-12a7-41a1-a932-b16b63d5cbe4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\ProjectSet">
-      <UniqueIdentifier>{af0e5b5c-9a28-4a96-b65a-555421c15483}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Renderer">
-      <UniqueIdentifier>{0f3d8777-e182-46e5-9518-ad40569578e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Renderer\D3D9Renderer">
-      <UniqueIdentifier>{5feaacc5-073a-40ab-9400-55b91c65d4af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Resource">
-      <UniqueIdentifier>{cf701dab-6ea0-4e60-9873-fb40308903c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Resource\Animation">
-      <UniqueIdentifier>{bb93ee04-afae-430c-941b-55254aa76048}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Resource\Material">
-      <UniqueIdentifier>{c03cc1e2-ae25-4d4b-a216-3dbe8dc9c4de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Resource\Shader">
-      <UniqueIdentifier>{69a2e768-1397-44bb-aa66-4516fa527855}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Resource\Texture2D">
-      <UniqueIdentifier>{7db0980f-51ad-4a77-8477-bb3eaaf48823}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Resource\TextureCube">
-      <UniqueIdentifier>{6c0e63a9-3d48-4cea-adb4-f11ae29d6d35}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\ResourceManager">
-      <UniqueIdentifier>{f4c554aa-7b71-4311-af1a-d4fd84eea781}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Util">
-      <UniqueIdentifier>{043695bd-8358-4ea2-9db7-ffcd0d7aad2b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Util\Ease">
-      <UniqueIdentifier>{06fbb9c2-c4b4-45e5-9fe8-feb8c2a2cca3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\Util\OS">
-      <UniqueIdentifier>{7d3bbaa4-3ac1-436d-879a-9ba998763604}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CoreEngine\Application">
       <UniqueIdentifier>{b0c76670-03e2-4d69-981a-7f842f388db6}</UniqueIdentifier>
     </Filter>
@@ -159,9 +42,6 @@
     </Filter>
     <Filter Include="CoreEngine\Nodes\Scene">
       <UniqueIdentifier>{6962f85e-4336-4b2f-9098-7addd0eee2f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreEngine\Temp\SceneManager">
-      <UniqueIdentifier>{0bfdc6e1-02d2-4c03-8dc6-9ec7b0677012}</UniqueIdentifier>
     </Filter>
     <Filter Include="CoreEngine\Nodes\Ground">
       <UniqueIdentifier>{898897ac-3fdb-435b-9f12-44eb9545b50f}</UniqueIdentifier>
@@ -240,9 +120,5 @@
     <Image Include="app.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>
