@@ -38,6 +38,7 @@ namespace pooptube {
 		inline HWND			 GetHWND() const { return mHwnd; }
 		inline HINSTANCE	 GetHandleInstance() const { return mHInstance; }
 		inline VOID			 SetScreenSize(int Height, int Width) { mScreenHeight = Height; mScreenWidth = Width; }
+		inline D3DXVECTOR2	 GetScreenSize() { return D3DXVECTOR2(mScreenHeight, mScreenWidth); }
 
 		// TODO: Getter, Setter
 		// TODO: Pause - Issue: Network?

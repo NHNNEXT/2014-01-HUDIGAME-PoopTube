@@ -23,9 +23,7 @@ namespace Tool
         public MainForm()
         {
             InitializeComponent();
-
             
-             
             Application.init(this.ViewBox.Handle.ToInt32(), this.Size.Height, this.Size.Width);
             Scene = Core.Scene.Create();
             Ground = Core.Ground.Create();

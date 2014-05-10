@@ -87,11 +87,39 @@ bool StageOne::Init() {
 	return true;
 
 }
+std::vector<std::pair<D3DXVECTOR3, D3DXVECTOR3>> pList;
+
 void StageOne::Render() {
 	Node::Render();
+	
 
-	printf_s("%f %f %f\n", mCamera->GetPosition().x, mCamera->GetPosition().y, mCamera->GetPosition().z);
-	printf_s("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
+
+
+	D3DXCOLOR	lineColor = D3DXCOLOR(0.0f, 0.5f, 1.0f, 1.0f);
+	ID3DXLine *Line;
+	if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
+		return;
+	Line->SetWidth(5);
+	Line->SetAntialias(true);
+
+	D3DXMATRIX viewMat;
+	GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
+
+	Line->Begin();
+	for (auto &p : pList)
+	{
+		D3DXVECTOR3 point[2] = { p.first, p.second };
+		Line->DrawTransform(point, 2, &viewMat, lineColor);
+	}
+		
+	Line->End();
+	Line->Release();
+
+
+
+	
+// 	printf_s("%f %f %f\n", mCamera->GetPosition().x, mCamera->GetPosition().y, mCamera->GetPosition().z);
+// 	printf_s("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
 }
 void StageOne::Update(float dTime) {
 	Node::Update(dTime);
@@ -116,6 +144,7 @@ void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 }
 
 void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
+
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'R' :
@@ -148,9 +177,71 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 void StageOne::KeyUp(pooptube::KeyEvent* pKeyEvent) {
 
 }
+D3DXVECTOR2 StageOne::PICK(float x, float y)
+{
+	D3DXVECTOR2 result;
+	D3DXVECTOR3 v;
+	D3DXVECTOR3 Dir, Orig;
 
+	D3DXMATRIX matProj;
+	GetDevice()->GetTransform(D3DTS_PROJECTION, &matProj);
+
+	v.x = (((2.0f * x) / pooptube::Application::GetInstance()->GetScreenSize().x) - 1) / matProj._11;
+	v.y = -(((2.0f * y) / pooptube::Application::GetInstance()->GetScreenSize().y) - 1) / matProj._22;
+	v.z = 1.0f;
+
+	D3DXMATRIX matView, m;
+	GetDevice()->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&m, NULL, &matView);
+
+	Dir.x = v.x*m._11 + v.y*m._21 + v.z*m._31;
+	Dir.y = v.x*m._12 + v.y*m._22 + v.z*m._32;
+	Dir.z = v.x*m._13 + v.y*m._23 + v.z*m._33;
+
+	Orig.x = m._41;
+	Orig.y = m._42;
+	Orig.z = m._43;
+
+// 	D3DXCOLOR	lineColor = D3DXCOLOR(0.0f, 0.5f, 1.0f, 1.0f);
+// 	D3DXVECTOR3 point[2];
+// 	ID3DXLine *Line;
+// 
+// 	if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
+// 		return result;
+// 	Line->SetWidth(1);
+// 	Line->SetAntialias(true);
+// 
+// 	point[0] = Orig;
+// 	point[1] = Orig + Dir * 10;
+// 	Line->Begin();
+// 	Line->DrawTransform(point, 2, &matView, lineColor);
+// 	Line->End();
+// 
+// 	Line->Release();
+
+	std::pair<D3DXVECTOR3, D3DXVECTOR3> temp;
+	D3DXVECTOR3 p[2];
+	p[0] = Orig - Dir * 100000.f;
+	p[1] = Orig + Dir * 100000.f;
+
+	temp.first = p[0];
+	temp.second = p[1];
+
+	pList.push_back(temp);
+
+	printf("CLICK %0f %0f\n", x, y);
+	printf("RAY (%f %f %f) -> (%f %f %f)\n\n", Orig.x, Orig.y, Orig.z, Dir.x, Dir.y, Dir.z);
+
+	return result;
+	
+}
 void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
-
+	switch (pMouseEvent->GetMouseEventType())
+	{
+	case pooptube::MouseEventType::MOUSE_LBUTTON_DOWN:
+		PICK(pMouseEvent->GetX(), pMouseEvent->GetY());
+		break;
+	}
 }
 
 void StageOne::MouseMove(pooptube::MouseEvent* pMouseEvent) {

@@ -15,5 +15,8 @@ namespace pooptube {
 
 		virtual void Render();
 		virtual void Update( float dTime );
+
+	private :
+		std::vector<Node *> mRenderList;
 	};
 }

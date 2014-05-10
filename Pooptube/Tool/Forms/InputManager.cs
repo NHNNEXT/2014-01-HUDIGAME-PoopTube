@@ -13,6 +13,22 @@ namespace Tool
 {
     public partial class MainForm
     {
+//         [DllImport("user32.dll")]
+//         public static extern int GetKeyboardState(byte[] keystate);
+// 
+// 
+//         private void Form1_KeyDown(object sender, KeyEventArgs e)
+//         {
+//             byte[] keys = new byte[255];
+// 
+//             GetKeyboardState(keys);
+// 
+//             if (keys[(int)Keys.Up] == 129 && keys[(int)Keys.Right] == 129)
+//             {
+//                 Console.WriteLine("Up Arrow key and Right Arrow key down.");
+//             }
+//         }
+        int a = 0, b = 0;
         private void KeyboardInput(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
@@ -20,17 +36,21 @@ namespace Tool
 
             if (input == 'W') // FORWARD
             {
+                label1.Text = a.ToString();
+                ++a;
                 //Camera.RotateFrontVectorY(-0.1f);
                 //Camera.RotationY(-0.1f);
                 Camera.Move(0.1f, 0.0f);
             }
-            else if (input == 'S') // BACK
+            if (input == 'S') // BACK
             {
+                label2.Text = b.ToString();
+                ++b;
                 //Camera.RotateFrontVectorY(0.1f);
                 //Camera.RotationY(0.1f);
                 Camera.Move(-0.1f, 0.0f);
             }
-            else if (input == 'A') // LEFT
+            if (input == 'A') // LEFT
             {
                 Camera.Move(0.0f, 0.1f);
             }
@@ -38,8 +58,8 @@ namespace Tool
             {
                 Camera.Move(0.0f, -0.1f);
             }
-            else
-                e.Handled = false;
+            //else
+            e.Handled = false;
         }
     }
 }

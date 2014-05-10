@@ -33,6 +33,10 @@ public:
 
 	void Update(float dTime);
 
+
+	D3DXVECTOR2 PICK(float x, float y);
+
+
 	//아래 둘을 어디로 옮길지 생각중
 	void MainCharacterJumpUpdate(float dTime);
 
@@ -68,4 +72,3 @@ private:
 
 	pooptube::CollisionBox	*testDummy;
 };
-
