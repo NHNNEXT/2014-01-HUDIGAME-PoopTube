@@ -41,9 +41,10 @@ namespace pooptube {
 	ObjectManager::ObjectManager() {
 	}
 	ObjectManager::~ObjectManager() {
-		/*for (auto& object : mSharedObjectList ) {
-			object.reset();
-		}*/
+		for (auto& object : mSharedObjectList ) {
+			Object* temp = object;
+			delete temp;
+		}
 		mSharedObjectList.clear();
 		// clear만 해도 다 지워지는 거 같은데.. (shared_ptr이 지역변수라 자동으로 소멸자 호출..)
 	}

@@ -53,4 +53,10 @@ namespace pooptube {
 
 		return nullptr;
 	}
+
+	void CollisionManager::ReleaseInstance() {
+		if (mInstance != nullptr)
+			delete mInstance;
+	}
+
 }
