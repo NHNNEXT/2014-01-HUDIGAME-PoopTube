@@ -82,4 +82,7 @@
       <Filter>Resource</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="BasicHLSL.fx" />
+  </ItemGroup>
 </Project>
