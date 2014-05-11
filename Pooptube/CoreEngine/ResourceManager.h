@@ -26,8 +26,10 @@ namespace pooptube {
 		static ResourceManager* GetInstance();
 
 		Mesh				*LoadMeshFromFBX(const std::string& FilePath);
-		Ground::MapData	*LoadHeightMap(const std::string& FilePath);
-		LPDIRECT3DTEXTURE9					LoadTexture(const std::string& FilePath);
+		Ground::MapData		*LoadHeightMap(const std::string& FilePath);
+		LPDIRECT3DTEXTURE9	LoadTexture(const std::string& FilePath);
+		ID3DXEffect*		LoadHLSL(const std::string& FilePath);
+
 		//처참한 fbx의 흔적
 		//FbxScene*						LoadFBX(const std::string &FilePath);
 
@@ -57,9 +59,10 @@ namespace pooptube {
 		//@brief
 		//로드된 fbxmesh정보를 쥐고있는 meshtable
 		//아직 특정 data 제거기능을 안넣음
-		std::map<std::string, Mesh*>			mFBXMeshTable;
-		std::map<std::string, Ground::MapData*>	mHeightMapTable;
-		std::map<std::string, LPDIRECT3DTEXTURE9>				mTextureTable;
+		std::map<std::string, Mesh*>				mFBXMeshTable;
+		std::map<std::string, Ground::MapData*>		mHeightMapTable;
+		std::map<std::string, LPDIRECT3DTEXTURE9>	mTextureTable;
+		std::map<std::string, ID3DXEffect*>			mHLSLShaderTable;
 
 		//std::map<std::string, FbxScene*>						mFBXTable;
 	};
