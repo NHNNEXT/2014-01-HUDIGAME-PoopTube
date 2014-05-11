@@ -14,6 +14,7 @@
 #include "Creature.h"
 #include "LightOrb.h"
 #include "XMesh.h"
+#include "ResourceManager.h"
 #include <iostream>
 
 StageOne::StageOne() {
@@ -49,6 +50,8 @@ bool StageOne::Init() {
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 	mXMesh = pooptube::XMesh::Create("tiger.x");
+	mXMesh->DoRender(false);
+
 	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
 
 	mCharacter = MainCharacter::Create();
