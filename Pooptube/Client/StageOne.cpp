@@ -87,36 +87,8 @@ bool StageOne::Init() {
 	return true;
 
 }
-std::vector<std::pair<D3DXVECTOR3, D3DXVECTOR3>> pList;
-
 void StageOne::Render() {
 	Node::Render();
-	
-
-
-
-	D3DXCOLOR	lineColor = D3DXCOLOR(0.0f, 0.5f, 1.0f, 1.0f);
-	ID3DXLine *Line;
-	if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
-		return;
-	Line->SetWidth(5);
-	Line->SetAntialias(true);
-
-	D3DXMATRIX viewMat;
-	GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
-
-	Line->Begin();
-	for (auto &p : pList)
-	{
-		D3DXVECTOR3 point[2] = { p.first, p.second };
-		Line->DrawTransform(point, 2, &viewMat, lineColor);
-	}
-		
-	Line->End();
-	Line->Release();
-
-
-
 	
 // 	printf_s("%f %f %f\n", mCamera->GetPosition().x, mCamera->GetPosition().y, mCamera->GetPosition().z);
 // 	printf_s("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
@@ -177,9 +149,80 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 void StageOne::KeyUp(pooptube::KeyEvent* pKeyEvent) {
 
 }
+void StageOne::TEST(float x, float y)
+{
+	//getting viewport (p_Device is LPDIRECT3DDEVICE9)
+	D3DVIEWPORT9 view;
+	GetDevice()->GetViewport(&view);
+	//getting projection matrix
+	D3DXMATRIX projMat;
+	GetDevice()->GetTransform(D3DTS_PROJECTION, &projMat);
+
+	//calculating.. mouse ray
+	float vx = (+2.0f*x / view.Width - 1.0f) / projMat._11;
+	float vy = (-2.0f*y / view.Height + 1.0f) / projMat._22;
+	//Vector is D3DVECTOR
+	D3DXVECTOR3 Origin(0.0f, 0.0f, 0.0f);
+	// I used Z as my UP VECTOR, not sure how it will work for you
+	D3DXVECTOR3 Direction(vx, vy, 1.0f);
+	//getting projection matrix
+	D3DXMATRIX viewMat;
+	GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
+	//inversing projection matrix
+	D3DXMATRIX iviewMat;
+	D3DXMatrixInverse(&iviewMat, 0, &viewMat);
+	D3DXVec3TransformCoord(&Origin, &Origin, &iviewMat);
+	D3DXVec3TransformNormal(&Direction, &Direction, &iviewMat);
+	//setting variables
+	DWORD dwFace;
+	FLOAT fBary1, fBary2, fDist;
+	BOOL picked = false;
+
+
+	auto *pIB = mGround->GetIndexBuffer();
+	auto *pVB = mGround->GetVertexBuffer();
+	int IBCount = mGround->GetIndexCount();
+
+	pooptube::MESH_CUSTOM_INDEX* pIndices;
+	if (pIB->Lock(0, mGround->GetIndexCount()*sizeof(pooptube::MESH_CUSTOM_INDEX), (void**)&pIndices, 0) < 0)
+		return;
+	pIB->Unlock();
+
+	pooptube::MESH_CUSTOM_VERTEX* pVertices;
+	if (pVB->Lock(0, mGround->GetVertexCount()*sizeof(pooptube::MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
+		return;
+	//pVB->Unlock();
+
+	for (int i = 0; i < IBCount; ++i)
+	{
+		picked = D3DXIntersectTri(&pVertices[pIndices[i].w0].position, &pVertices[pIndices[i].w1].position, &pVertices[pIndices[i].w2].position, &Origin, &Direction, &fBary1, &fBary2, &fDist);
+
+		if (picked)
+		{
+			printf("GROUND PICKED   %f %f %f\n",fBary1, fBary2, fDist);
+			pVertices[pIndices[i].w0].color += 0x0f0f0f0f;
+			pVertices[pIndices[i].w1].color += 0x0f0f0f0f;
+			pVertices[pIndices[i].w2].color += 0x0f0f0f0f;
+			//pVertices[pIndices[i].w1].position.y += 0.5f;
+			//pVertices[pIndices[i].w2].position.y += 0.5f;
+
+			i = IBCount;
+			break;
+		}
+	}
+	pVB->Unlock();
+	//return;
+	//checking intersection
+ 	D3DXIntersect(mXMesh->GetMesh(), &Origin, &Direction, &picked, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL);
+ 	if(picked) printf("TIGER PICKED\n");
+
+
+}
 D3DXVECTOR2 StageOne::PICK(float x, float y)
 {
 	D3DXVECTOR2 result;
+
+#ifdef OLD
 	D3DXVECTOR3 v;
 	D3DXVECTOR3 Dir, Orig;
 
@@ -202,35 +245,123 @@ D3DXVECTOR2 StageOne::PICK(float x, float y)
 	Orig.y = m._42;
 	Orig.z = m._43;
 
-// 	D3DXCOLOR	lineColor = D3DXCOLOR(0.0f, 0.5f, 1.0f, 1.0f);
-// 	D3DXVECTOR3 point[2];
-// 	ID3DXLine *Line;
-// 
-// 	if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
-// 		return result;
-// 	Line->SetWidth(1);
-// 	Line->SetAntialias(true);
-// 
-// 	point[0] = Orig;
-// 	point[1] = Orig + Dir * 10;
-// 	Line->Begin();
-// 	Line->DrawTransform(point, 2, &matView, lineColor);
-// 	Line->End();
-// 
-// 	Line->Release();
 
-	std::pair<D3DXVECTOR3, D3DXVECTOR3> temp;
-	D3DXVECTOR3 p[2];
-	p[0] = Orig - Dir * 100000.f;
-	p[1] = Orig + Dir * 100000.f;
+#endif
+#ifndef OLD
+	/*
+	float pointX, pointY;
+	D3DXMATRIX projectionMatrix, viewMatrix, inverseViewMatrix, worldMatrix, translateMatrix, inverseWorldMatrix;
+	D3DXVECTOR3 direction, origin, rayOrigin, rayDirection;
 
-	temp.first = p[0];
-	temp.second = p[1];
+	// Move the mouse cursor coordinates into the -1 to +1 range.
+	pointX = ((2.0f * (float)x) / (float)pooptube::Application::GetInstance()->GetScreenSize().x) - 1.0f;
+	pointY = (((2.0f * (float)y) / (float)pooptube::Application::GetInstance()->GetScreenSize().y) - 1.0f) * -1.0f;
 
-	pList.push_back(temp);
+	// Adjust the points using the projection matrix to account for the aspect ratio of the viewport.
+	GetDevice()->GetTransform(D3DTS_PROJECTION, &projectionMatrix);
+	pointX = pointX / projectionMatrix._11;
+	pointY = pointY / projectionMatrix._22;
 
-	printf("CLICK %0f %0f\n", x, y);
-	printf("RAY (%f %f %f) -> (%f %f %f)\n\n", Orig.x, Orig.y, Orig.z, Dir.x, Dir.y, Dir.z);
+	// Get the inverse of the view matrix.
+	GetDevice()->GetTransform(D3DTS_VIEW, &viewMatrix);
+	D3DXMatrixInverse(&inverseViewMatrix, NULL, &viewMatrix);
+
+	// Calculate the direction of the picking ray in view space.
+	direction.x = (pointX * inverseViewMatrix._11) + (pointY * inverseViewMatrix._21) + inverseViewMatrix._31;
+	direction.y = (pointX * inverseViewMatrix._12) + (pointY * inverseViewMatrix._22) + inverseViewMatrix._32;
+	direction.z = (pointX * inverseViewMatrix._13) + (pointY * inverseViewMatrix._23) + inverseViewMatrix._33;
+
+	// Get the origin of the picking ray which is the position of the camera.
+	origin.x = inverseViewMatrix._41;
+	origin.y = inverseViewMatrix._42;
+	origin.z = inverseViewMatrix._43;
+
+	// Get the world matrix and translate to the location of the sphere.
+	GetDevice()->GetTransform(D3DTS_WORLD, &worldMatrix);
+	D3DXMatrixTranslation(&translateMatrix, -5.0f, 1.0f, 5.0f);
+	D3DXMatrixMultiply(&worldMatrix, &worldMatrix, &translateMatrix);
+
+	// Now get the inverse of the translated world matrix.
+	D3DXMatrixInverse(&inverseWorldMatrix, NULL, &worldMatrix);
+
+	// Now transform the ray origin and the ray direction from view space to world space.
+	D3DXVec3TransformCoord(&rayOrigin, &origin, &inverseWorldMatrix);
+	D3DXVec3TransformNormal(&rayDirection, &direction, &inverseWorldMatrix);
+
+	// Normalize the ray direction.
+	D3DXVec3Normalize(&rayDirection, &rayDirection);
+	*/
+
+
+	//We can now call the intersect function on our untransformed graphic mesh data :
+
+	D3DXMATRIX matProj;
+	D3DXVECTOR3 v;
+
+	GetDevice()->GetTransform(D3DTS_PROJECTION, &matProj);
+	v.x = (((2.0f * x) / pooptube::Application::GetInstance()->GetScreenSize().x) - 1) / matProj._11;
+	v.y = -(((2.0f * y) / pooptube::Application::GetInstance()->GetScreenSize().y) - 1) / matProj._22;
+	v.z = 1.0f;
+
+	D3DXMATRIX m, matView;
+	D3DXVECTOR3 rayOrigin, rayDir;
+
+	GetDevice()->GetTransform(D3DTS_VIEW, &matView);
+	D3DXMatrixInverse(&m, NULL, &matView);
+
+	// Transform the screen space pick ray into 3D space
+	rayDir.x = v.x*m._11 + v.y*m._21 + v.z*m._31;
+	rayDir.y = v.x*m._12 + v.y*m._22 + v.z*m._32;
+	rayDir.z = v.x*m._13 + v.y*m._23 + v.z*m._33;
+	rayOrigin.x = m._41;
+	rayOrigin.y = m._42;
+	rayOrigin.z = m._43;
+
+//		//Use inverse of matrix
+// 		D3DXMATRIX matInverse, matWorld;
+// 		GetDevice()->GetTransform(D3DTS_WORLD, &matWorld);
+// 		D3DXMatrixInverse(&matInverse, NULL, &matWorld);
+// 	
+// 		// Transform ray origin and direction by inv matrix
+// 		D3DXVECTOR3 rayObjOrigin, rayObjDirection;
+// 	
+// 		D3DXVec3TransformCoord(&rayObjOrigin, &rayOrigin, &matInverse);
+// 		D3DXVec3TransformNormal(&rayObjDirection, &rayDir, &matInverse);
+// 		D3DXVec3Normalize(&rayObjDirection, &rayObjDirection);
+
+
+
+
+
+	BOOL hasHit = true;
+	float distanceToCollision = 0;
+	
+	if (!mXMesh->GetMesh()) return result;
+
+	// yes, convert ray to model space
+	D3DXVECTOR3 vNear, vDir;
+	D3DXMATRIX invMat;
+	GetDevice()->GetTransform(D3DTS_WORLD, &invMat);
+	D3DXMatrixInverse(&invMat, NULL, &invMat);
+	D3DXVec3TransformCoord(&vNear, &rayOrigin, &invMat);
+	D3DXVec3TransformNormal(&vDir, &rayDir, &invMat);
+
+	// test for intersection
+	BOOL bHit;
+	DWORD dwIndex;
+	float u, fv;
+	float dist;
+	D3DXIntersect(mXMesh->GetMesh(), &vNear, &vDir, &bHit, &dwIndex, &u, &fv, &dist, NULL, NULL);
+
+	//D3DXIntersect(mXMesh->GetMesh(), &rayObjOrigin, &rayObjDirection, &hasHit, NULL, NULL, NULL, &distanceToCollision, NULL, NULL);
+	//D3DXIntersect(mXMesh->GetMesh(), &rayOrigin, &rayDir, &hasHit, NULL, NULL, NULL, &distanceToCollision, NULL, NULL);
+
+	printf("%d %f\n", bHit, dist);// == true ? "TRUE" : "FALSE");
+	//printf("%d %f\n", hasHit,distanceToCollision);// == true ? "TRUE" : "FALSE");
+#endif
+
+	//printf("CLICK %0f %0f\n", x, y);
+	//printf("RAY (%f %f %f) -> (%f %f %f)\n", Orig.x, Orig.y, Orig.z, Dir.x, Dir.y, Dir.z);
 
 	return result;
 	
@@ -239,7 +370,8 @@ void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
 	switch (pMouseEvent->GetMouseEventType())
 	{
 	case pooptube::MouseEventType::MOUSE_LBUTTON_DOWN:
-		PICK(pMouseEvent->GetX(), pMouseEvent->GetY());
+		//PICK(pMouseEvent->GetX(), pMouseEvent->GetY());
+		TEST(pMouseEvent->GetX(), pMouseEvent->GetY());
 		break;
 	}
 }

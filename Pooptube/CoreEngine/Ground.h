@@ -49,9 +49,14 @@ namespace pooptube {
 		UINT GetRowSize() { return mData->row; };
 		UINT GetColSize() { return mData->col; };
 		float GetGravity() { return mGravity; }
+		int GetIndexCount() { return mIndexCount; }
+		int GetVertexCount() { return mVertexCount; }
 
 		float GetPolygonSize() const { return mPolygonSize; }
 		void SetPolygonSize(float val) { mPolygonSize = val; }
+
+		LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer() { return mVertexBuffer; }
+		LPDIRECT3DINDEXBUFFER9 GetIndexBuffer() { return mIndexBuffer; }
 
 		void Render();
 		void Update(float dTime);

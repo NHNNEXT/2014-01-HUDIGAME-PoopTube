@@ -33,7 +33,7 @@ public:
 
 	void Update(float dTime);
 
-
+	void TEST(float x, float y);
 	D3DXVECTOR2 PICK(float x, float y);
 
 

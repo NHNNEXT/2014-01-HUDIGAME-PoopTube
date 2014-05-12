@@ -15,6 +15,8 @@ namespace pooptube{
 		void Update(float dTime);
 		void Render();
 
+		LPD3DXMESH GetMesh() { return mXMesh; }
+
 	private:
 		LPD3DXMESH			mXMesh = nullptr;
 		D3DMATERIAL9*		mMaterial = nullptr;
