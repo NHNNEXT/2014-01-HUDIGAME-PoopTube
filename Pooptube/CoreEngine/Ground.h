@@ -29,13 +29,14 @@ namespace pooptube {
 					delete []data;
 			}
 			UCHAR GetHeight(UINT x, UINT z) { return (x >= col || z >= row) ? 0 : data[z * col + x]; }
+			void  SetHeight(UINT x, UINT z, float value) { data[z * col + x] = value / amp; }
 
 		public:
 			UCHAR	*data	= nullptr; // Ground Data
 			UINT	row		= 0;
 			UINT	col		= 0;
 			UINT	curIdx	= 0;
-			float	amp		= 0.005f;
+			float	amp		= 0.005f * 10;
 		};
 
 		Ground();
@@ -45,12 +46,15 @@ namespace pooptube {
 
 		//메시 데이터에 변경이 있을때 아래 함수 호출
 		bool ResetBuffer();
+		float GetVertexHeight(float x, float z);
 		float GetHeight(float x, float z) const;
+		void SetHeight(float x, float z, float value);
 		UINT GetRowSize() { return mData->row; };
 		UINT GetColSize() { return mData->col; };
 		float GetGravity() { return mGravity; }
 		int GetIndexCount() { return mIndexCount; }
 		int GetVertexCount() { return mVertexCount; }
+		MapData *GetMapData() { return mData; }
 
 		float GetPolygonSize() const { return mPolygonSize; }
 		void SetPolygonSize(float val) { mPolygonSize = val; }
@@ -61,9 +65,11 @@ namespace pooptube {
 		void Render();
 		void Update(float dTime);
 
+		bool _SetBuffer();
+
 	protected:
 		bool _Init(const std::string& FilePath);
-		bool _SetBuffer();
+		//bool _SetBuffer();
 
 	private:
 

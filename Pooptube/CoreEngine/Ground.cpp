@@ -145,7 +145,24 @@ namespace pooptube {
 		return true;
 	}
 
+	float Ground::GetVertexHeight(float x, float z) 
+	{
+		D3DXVECTOR3 pos = Node::GetPosition();
+
+		int vx = ((x - pos.x) / mPolygonSize) + 0.5f;
+		int vz = ((z - pos.z) / mPolygonSize) + 0.5f;
+		int index = (vz * mData->col) + vx;
+
+		MESH_CUSTOM_VERTEX* pVertices;
+		if (mVertexBuffer->Lock(0, mVertexCount*sizeof(pooptube::MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
+			return 0.0f;
+		mVertexBuffer->Unlock();
+
+		return pVertices[index].position.y;
+	}
+
 	float Ground::GetHeight(float x, float z) const{
+
 		//폴리곤 사이즈에 맞게 변경
 		D3DXVECTOR3 pos = Node::GetPosition();
 		x -= pos.x;
@@ -185,8 +202,31 @@ namespace pooptube {
 		D3DXVec3Cross(&cVec, &(v[1] - v[0]), &(v[2] - v[0]));
 		y = (((v[0].x - x) * cVec.x + (v[0].z - z) * cVec.z) / cVec.y) + v[0].y;
 
+	//	printf("%d -> %f\n", mData->GetHeight(x,z), y * mAmp + pos.y);
 		return y * mAmp + pos.y;
+
 	}
+
+	void Ground::SetHeight(float x, float z, float value)
+	{
+		MESH_CUSTOM_VERTEX* pVertices;
+		if (mVertexBuffer->Lock(0, mVertexCount*sizeof(pooptube::MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
+			return;
+
+		D3DXVECTOR3 pos = GetPosition();
+		int vx = ((x - pos.x) / mPolygonSize) + 0.5f;
+		int vz = ((z - pos.z) / mPolygonSize) + 0.5f;
+		int index = (vz*(mData->col)) + vx;
+
+		pVertices[index].position.y = value;
+
+		//D3DXVECTOR3 vx = pVertices[pIndices[mIdx].w0].position + pVertices[pIndices[mIdx].w1].position + pVertices[pIndices[mIdx].w2].position;
+		mData->SetHeight(vx, vz, value);
+	//	printf("(%d,%d) %d(%f)\n", vx, vz, mData->GetHeight(vx, vz),value);
+
+		mVertexBuffer->Unlock();
+	}
+
 
 	void Ground::Render() {
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);

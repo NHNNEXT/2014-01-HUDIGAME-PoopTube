@@ -123,6 +123,7 @@ void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'R' :
+		mGround->_SetBuffer();
 		break;
 	case 'T':
 		mCharacter->Move(0.1f, 0.f);
@@ -196,24 +197,54 @@ void StageOne::TEST(float x, float y)
 		return;
 	//pVB->Unlock();
 
+	float minDistance = 9999.f;
+	float mU, mV;
+	int mIdx;
 	for (int i = 0; i < IBCount; ++i)
 	{
 		picked = D3DXIntersectTri(&pVertices[pIndices[i].w0].position, &pVertices[pIndices[i].w1].position, &pVertices[pIndices[i].w2].position, &Origin, &Direction, &fBary1, &fBary2, &fDist);
 
 		if (picked)
 		{
-			printf("GROUND PICKED   %f %f %f\n",fBary1, fBary2, fDist);
-			pVertices[pIndices[i].w0].color += 0x0f0f0f0f;
-			pVertices[pIndices[i].w1].color += 0x0f0f0f0f;
-			pVertices[pIndices[i].w2].color += 0x0f0f0f0f;
-			//pVertices[pIndices[i].w1].position.y += 0.5f;
-			//pVertices[pIndices[i].w2].position.y += 0.5f;
+			if (fDist < minDistance)
+			{
+				minDistance = fDist;
+				mU = fBary1;
+				mV = fBary2;
+				mIdx = i;
+			}
+// 			pVertices[pIndices[i].w0].color += 0x0f0f0f0f;
+// 			pVertices[pIndices[i].w1].color += 0x0f0f0f0f;
+// 			pVertices[pIndices[i].w2].color += 0x0f0f0f0f;
+// 			pVertices[pIndices[i].w0].position.y += 0.2f;
+// 			pVertices[pIndices[i].w1].position.y += 0.2f;
+// 			pVertices[pIndices[i].w2].position.y += 0.2f;
 
-			i = IBCount;
-			break;
+			//mGround->GetMapData()->SetHeight()
+
+			//i = IBCount;
+			//break;
 		}
 	}
 	pVB->Unlock();
+	if (minDistance != 9999.f)
+	{
+		D3DXVECTOR3 pos = Origin + minDistance * Direction;
+		printf("GROUND PICKED   %f %f %f\n", pos.x, pos.y, pos.z);
+
+		mGround->SetHeight(pos.x, pos.z, mGround->GetVertexHeight(pos.x, pos.z) + 0.2f);
+// 
+// 		pVertices[pIndices[mIdx].w0].position.y += 0.2f;
+// 		pVertices[pIndices[mIdx].w1].position.y += 0.2f;
+// 		pVertices[pIndices[mIdx].w2].position.y += 0.2f;
+
+// 		D3DXVECTOR3 vx = pVertices[pIndices[mIdx].w0].position + pVertices[pIndices[mIdx].w1].position + pVertices[pIndices[mIdx].w2].position;
+//		mGround->GetMapData()->SetHeight(vx.x / 3.f, vx.z / 3.f, mGround->GetHeight(vx.x / 3.f, vx.z / 3.f) + 0.2f);
+		
+
+		//mGround->GetMapData()->SetHeight()
+	}
+	
 	//return;
 	//checking intersection
  	D3DXIntersect(mXMesh->GetMesh(), &Origin, &Direction, &picked, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL);
@@ -352,9 +383,9 @@ D3DXVECTOR2 StageOne::PICK(float x, float y)
 	// test for intersection
 	BOOL bHit;
 	DWORD dwIndex;
-	float u, fv;
+	float fu, fv;
 	float dist;
-	D3DXIntersect(mXMesh->GetMesh(), &vNear, &vDir, &bHit, &dwIndex, &u, &fv, &dist, NULL, NULL);
+	D3DXIntersect(mXMesh->GetMesh(), &vNear, &vDir, &bHit, &dwIndex, &fu, &fv, &dist, NULL, NULL);
 
 	//D3DXIntersect(mXMesh->GetMesh(), &rayObjOrigin, &rayObjDirection, &hasHit, NULL, NULL, NULL, &distanceToCollision, NULL, NULL);
 	//D3DXIntersect(mXMesh->GetMesh(), &rayOrigin, &rayDir, &hasHit, NULL, NULL, NULL, &distanceToCollision, NULL, NULL);
