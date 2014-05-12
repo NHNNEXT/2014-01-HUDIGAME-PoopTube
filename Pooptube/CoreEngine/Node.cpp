@@ -35,7 +35,8 @@ namespace pooptube {
 		UpdateMatrix();
 
 		for (auto child : mChildList) {
-			child->Render();
+			if (child->DoRender())
+				child->Render();
 		}
 	}
 	void Node::Update(float dTime) {

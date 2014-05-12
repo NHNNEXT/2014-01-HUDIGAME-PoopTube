@@ -17,6 +17,7 @@ namespace pooptube {
 	{
 	public:
 		static CollisionManager* GetInstance();
+		static void ReleaseInstance();
 
 		void AddCollisionBox( CollisionBox *pCollisionBox, Node* pNode );
 		void RemoveCollisionBox( CollisionBox *pCollisionBox );

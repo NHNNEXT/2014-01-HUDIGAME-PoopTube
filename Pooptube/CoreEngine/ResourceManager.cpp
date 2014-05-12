@@ -275,4 +275,25 @@ namespace pooptube {
 
 		return mTextureTable[FilePath];
 	}
+
+	ID3DXEffect* ResourceManager::LoadHLSL(const std::string& FilePath) {
+
+		//map을 사용할 때 조심해야 할 부분
+		if (mHLSLShaderTable.find(FilePath) == mHLSLShaderTable.end()) {
+
+			//디버깅 설정만 되어있음
+			//나중에 문제될 가능성이 있음
+			DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE | D3DXSHADER_DEBUG | D3DXSHADER_NO_PRESHADER;
+			ID3DXEffect* pEffect;
+
+			if (FAILED(D3DXCreateEffectFromFileA(mDevice, FilePath.c_str(), NULL, NULL, 
+				dwShaderFlags, NULL, &pEffect, NULL)))
+				return NULL;
+
+			mHLSLShaderTable[FilePath] = pEffect;
+		}
+
+		return mHLSLShaderTable[FilePath];
+	}
 }
+

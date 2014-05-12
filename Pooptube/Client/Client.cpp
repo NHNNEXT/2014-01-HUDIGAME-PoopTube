@@ -12,7 +12,7 @@ int main()
 {
 	//#ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(143);
+	//_CrtSetBreakAlloc(335);
 	//#endif
 
 	pooptube::Application::GetInstance()->Init(L"Test", 800, 600, true);
@@ -28,9 +28,7 @@ int main()
 
 	StageOne* pStageOne = StageOne::Create();
 
-	if (pStageOne == nullptr)
-	{
-		//아마 cone.fbx파일이 없어서 일겁니다. 라인에 문의하세요.
+	if (pStageOne == nullptr) {
 		printf("TestScene Create Error!\n");
 		system("pause");
 		pooptube::Application::GetInstance()->Release();
