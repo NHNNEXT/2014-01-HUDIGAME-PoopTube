@@ -7,18 +7,25 @@
 #include "Object.h"
 
 namespace pooptube {
+	enum class KeyState {
+		KEY_DOWN,
+		KEY_PRESSED,
+		KEY_UP,
+		KEY_NOTPRESSED,
+	};
 	class InputManager : public Object {
 	public:
-		static InputManager* GetInstance();
-
-	private:
 		InputManager();
 		~InputManager();
 
-	private:
-		static InputManager* mInstance;
+	public:
+		void GetKey();
+		KeyState KeyState(int key);
 
+	private:
 		bool mNow[256];
 		bool mPrev[256];
 	};
+
+	extern InputManager gInputManager;
 }
