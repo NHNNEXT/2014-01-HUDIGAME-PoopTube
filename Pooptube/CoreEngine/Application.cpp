@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "NetworkSystem.h"
 #include "ObjectManager.h"
+#include "InputManager.h"
 
 namespace pooptube {
 
@@ -107,6 +108,8 @@ namespace pooptube {
 
 				mKeyEventDispatcher->Dispatch( mKeyEventList );
 				mMouseEventDispatcher->Dispatch( mMouseEventList );
+
+				gInputManager.GetKey();
 
 				mSceneManager->Update( mDeltaTime );
 				mSceneManager->Render();

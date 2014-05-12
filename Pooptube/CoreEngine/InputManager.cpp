@@ -5,14 +5,6 @@
 #include "ObjectManager.h"
 
 namespace pooptube {
-	InputManager* InputManager::GetInstance() {
-		if ( mInstance == nullptr ) {
-			mInstance = new InputManager();
-			ObjectManager::GetInstance()->AddObject( mInstance );
-		}
-
-		return mInstance;
-	}
 
 	InputManager::InputManager() {
 		ZeroMemory( mNow, sizeof(mNow) );
@@ -21,7 +13,31 @@ namespace pooptube {
 	InputManager::~InputManager() {
 	}
 
-	InputManager* InputManager::mInstance = nullptr;
+	void InputManager::GetKey() {
+		for (int i = 0; i < 256; i++) {
+			mPrev[i] = mNow[i];
 
-		
+			if (GetKeyState(i) & 0x8000) {
+				mNow[i] = true;
+			}
+			else {
+				mNow[i] = false;
+			}
+		}
+	}
+	KeyState InputManager::KeyState(int key) {
+		if (mPrev[key] == false && mNow[key] == true) {
+			return KeyState::KEY_DOWN;
+		}
+		if (mPrev[key] == true && mNow[key] == true) {
+			return KeyState::KEY_PRESSED;
+		}
+		if (mPrev[key] == true && mNow[key] == false) {
+			return KeyState::KEY_UP;
+		}
+
+		return KeyState::KEY_NOTPRESSED;
+	}
+
+	InputManager gInputManager;	
 }
