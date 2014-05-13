@@ -17,6 +17,7 @@
 #include "MainCharacter.h"
 #include "StageOne.h"
 #include "Ground.h"
+#include "SoundManager.h"
 
 namespace pooptube {
 	class SkinnedMesh;
@@ -68,6 +69,9 @@ private:
 
 	pooptube::XMesh		*mXMesh = nullptr;
 	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
-	pooptube::CollisionBox *mCollisionBox = nullptr;
+//	pooptube::CollisionBox *mCollisionBox = nullptr;
+	FMOD::Studio::EventInstance *mEffectSound = nullptr;
+	FMOD::Studio::EventInstance *mStepSound = nullptr;
+	FMOD_3D_ATTRIBUTES		mSoundPos;
 };
 

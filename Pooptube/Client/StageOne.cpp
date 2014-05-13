@@ -15,6 +15,7 @@
 #include "LightOrb.h"
 #include "XMesh.h"
 #include "ResourceManager.h"
+#include "SoundBox.h"
 #include <iostream>
 
 StageOne::StageOne() {
@@ -53,6 +54,9 @@ bool StageOne::Init() {
 
 	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
 
+	pooptube::SoundManager::GetInstance()->LoadBank( "Sound\\Master Bank.bank" );
+	pooptube::SoundManager::GetInstance()->LoadBank( "Sound\\Master Bank.strings.bank" );
+
 	mCharacter = MainCharacter::Create();
 	
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
@@ -61,6 +65,7 @@ bool StageOne::Init() {
 
 	testDummy = pooptube::CollisionBox::Create( mSkinnedMesh );
 	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
+	testDummy->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
 	mSkyBox = pooptube::SkyBox::Create("DeepSpaceBlue/upImage.png",
@@ -75,6 +80,16 @@ bool StageOne::Init() {
 	
 	mCreature->pss = mCharacter; // 크리처 테스트 위한 거
 
+	FMOD::Studio::EventInstance* eventInstance = pooptube::SoundManager::GetInstance()->GetSound( "event:/Ambience/Predawn" );
+	pooptube::SoundBox* soundBox = pooptube::SoundBox::Create( eventInstance );
+	pooptube::CollisionBox* soundCBox = pooptube::CollisionBox::Create( soundBox );
+	soundBox->AddChild( soundCBox );
+	soundCBox->SetAxisLenX( mGround->GetRowSize() * mGround->GetPolygonSize() * 0.5f );
+	soundCBox->SetAxisLenY( 2.f );
+	soundCBox->SetAxisLenZ( mGround->GetColSize() * mGround->GetPolygonSize() * 0.5f );
+	soundBox->Translation( soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ() );
+	AddChild( soundBox );
+	
 	//this->AddChild(mLight);
 	this->AddChild(mSunLight);
 	//this->AddChild(mSkinnedMesh);
@@ -112,6 +127,7 @@ void StageOne::Update(float dTime) {
 // 
 // 	mCamera->Update(dTime);
 	mTimeForFPS += dTime;
+	pooptube::SoundManager::GetInstance()->Update();
 }
 
 void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
@@ -233,29 +249,31 @@ void StageOne::MainCharacterJumpUpdate(float dTime) {
 	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
 	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
 	float		GroundAccel = mGround->GetGravity();
-
+	
 	if (CharState == JUMP) {
 		mTimeForJump += dTime;
+		float		currentSpeed = CharJumpSpeed - GroundAccel * mTimeForJump;
+
+		mCharacter->Translation( 0.f, currentSpeed * dTime, 0.f );
+// 			if (!mRecordJumpPos) {
+// 			mBeforeJumpYPos = CharPos.y;
+// 			mRecordJumpPos = true;
+// 			
+// 		}
+// 		
+// 			float JumpHeight = CharJumpSpeed * mTimeForJump - 0.5f*GroundAccel*mTimeForJump*mTimeForJump;
+// 		CharPos.y = JumpHeight + mBeforeJumpYPos;
 		
-			if (!mRecordJumpPos) {
-			mBeforeJumpYPos = CharPos.y;
-			mRecordJumpPos = true;
-			
-		}
-		
-			float JumpHeight = CharJumpSpeed * mTimeForJump - 0.5f*GroundAccel*mTimeForJump*mTimeForJump;
-		CharPos.y = JumpHeight + mBeforeJumpYPos;
-		
-			if (MapHeight > CharPos.y) {
+		if (MapHeight > CharPos.y) {
 			CharPos.y = MapHeight;
 			mCharacter->SetPosition(CharPos);
-			mCharacter->SetState(NONE);
+			mCharacter->SetState( NONE );
 			
-				mTimeForJump = 0.f;
-			mRecordJumpPos = false;
+			mTimeForJump = 0.f;
+//			mRecordJumpPos = false;
 			
 		}
-		mCharacter->SetPosition(CharPos);
+		//mCharacter->SetPosition(CharPos);
 		
 	}
 	else if (CharState == NONE) {
