@@ -7,6 +7,7 @@
 */
 #pragma once
 #include "Object.h"
+#include <unordered_map>
 
 namespace pooptube {
 
@@ -21,9 +22,11 @@ namespace pooptube {
 
 		void AddCollisionBox( CollisionBox *pCollisionBox, Node* pNode );
 		void RemoveCollisionBox( CollisionBox *pCollisionBox );
+		void RemoveCollisionBoxByNode( Node *pNode );
 
 		//void CollisionCheck( CollisionBox* pTarget ) const;
-		Node* CollisionCheck( CollisionBox* pTarget ) const;
+		CollisionBox* CollisionCheck( CollisionBox* pTarget ) const;
+		CollisionBox* CollisionCheckNode( Node* pTarget ) const;
 
 	private:
 		CollisionManager();
@@ -34,6 +37,7 @@ namespace pooptube {
 		//@tobo : 매번 업데이트 할때마다 순회 해야하는 풀이니, 더 빠를 필요가 있음
 		//어레이로 자료구조를 전환해야함
 //		std::vector<std::shared_ptr<CollisionBox>> mCollisionBoxList;
-		std::vector< std::pair<CollisionBox*, Node*> > mCollisionBoxList;
+		std::vector< std::pair<Node*, CollisionBox*> > mCollisionBoxList;
+//		std::unordered_map< Node*, CollisionBox* > mCollisionBoxList;
 	};
 }
