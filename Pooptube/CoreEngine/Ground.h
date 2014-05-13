@@ -62,8 +62,7 @@ namespace pooptube {
 		LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer() { return mVertexBuffer; }
 		LPDIRECT3DINDEXBUFFER9 GetIndexBuffer() { return mIndexBuffer; }
 
-		void Render();
-		void Update(float dTime);
+		virtual void Render();
 
 		bool _SetBuffer();
 

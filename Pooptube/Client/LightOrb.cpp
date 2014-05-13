@@ -31,26 +31,28 @@ bool LightOrb::Init(LightOrb *pCreature)
 	EnableMouseEvent();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
-	mCollisionBox = pooptube::CollisionBox::Create(pCreature);
-	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
+	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
+	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
+	AddChild( collisionBox );
 
 	LightOrb::SetPosition(mInitialPosition);
 
 	AddChild(mSkinnedMesh);
-	AddChild(mCollisionBox);
+
+	mEffectSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Okay" );
 
 	return true;
 }
 
 void LightOrb::Render()
 {
-	static bool isRender = false;
-	Node *test = pooptube::CollisionManager::GetInstance()->CollisionCheck(&*mCollisionBox);
-	if (test != nullptr && typeid(dynamic_cast<MainCharacter*>(test)).name() == typeid(MainCharacter *).name())
-		isRender = true;
+//	static bool isRender = false;
+//	Node *test = pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this );
+//	if (test != nullptr && typeid(dynamic_cast<MainCharacter*>(test)).name() == typeid(MainCharacter *).name())
+//		isRender = true;
 		//printf("%s :: %s\n", typeid(dynamic_cast<MainCharacter*>(pooptube::CollisionManager::GetInstance()->CollisionCheck(&*mCollisionBox))).name(), typeid(MainCharacter *).name());
 	
-		if (isRender == false)
+		if (isRender == true)
 		Node::Render();
 }
 
@@ -62,18 +64,7 @@ void LightOrb::Update(float dTime)
 	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
 	mSkinnedMesh->Update(dTime);
 
-	mCollisionBox->SetPosition(Node::GetPosition());
-	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
-	mCollisionBox->SetFrontVector(Node::GetFrontVector());
-	mCollisionBox->Update(dTime);
-
-	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck(mCollisionBox);
-
-	if (collisionResult != nullptr) {
-		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetPosition();
-		D3DXVec3Normalize(&dPos, &dPos);
-		Translation(dPos);
-	}
+	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	D3DXVECTOR3 pos = GetPosition();
 	float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
@@ -81,5 +72,16 @@ void LightOrb::Update(float dTime)
 	if (height != pos.y) {
 		pos.y = height;
 		SetPosition(pos);
+	}
+}
+
+void LightOrb::_CollsionHandle( pooptube::CollisionBox* collisionResult )
+{
+	if( collisionResult == nullptr )
+		return;
+	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::PLAYER ) {
+		isRender = false;
+		if( mEffectSound != nullptr )
+			pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
 	}
 }

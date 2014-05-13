@@ -16,6 +16,7 @@
 #include "StageOne.h"
 #include "Ground.h"
 #include "CollisionManager.h"
+#include "SoundManager.h"
 
 namespace pooptube {
 	class SkinnedMesh;
@@ -40,8 +41,12 @@ public:
 	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
 
 private:
+	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
+
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 0.f };
 
 	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
-	pooptube::CollisionBox *mCollisionBox = nullptr;
+//	pooptube::CollisionBox *mCollisionBox = nullptr;
+	bool					isRender = true;
+	FMOD::Studio::EventInstance *mEffectSound = nullptr;
 };

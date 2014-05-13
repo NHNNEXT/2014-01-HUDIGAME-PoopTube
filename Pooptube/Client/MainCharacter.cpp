@@ -3,6 +3,7 @@
 #include "SkinnedMesh.h"
 #include "CollisionBox.h"
 #include "CollisionManager.h"
+#include "SoundManager.h"
 
 MainCharacter::MainCharacter() {
 }
@@ -25,7 +26,6 @@ void MainCharacter::Render() {
 	Node::Render();
 	
 	mSkinnedMesh->Render();
-	mCollisionBox->Render();
 }
 
 void MainCharacter::Update(float dTime) {
@@ -35,17 +35,10 @@ void MainCharacter::Update(float dTime) {
 	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
 	mSkinnedMesh->Update(dTime);
 
-	mCollisionBox->SetPosition(Node::GetPosition());
-	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
-	mCollisionBox->SetFrontVector(Node::GetFrontVector());
-	mCollisionBox->Update(dTime);
-	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck( mCollisionBox );
-	if( collisionResult != nullptr ){
-		D3DXVECTOR3 dPos = GetPosition( ) - collisionResult->GetPosition( );
-		D3DXVec3Normalize( &dPos, &dPos );
-		dPos *= mSpeed;
-		Translation( dPos );
-	}
+	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
+
+	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
+	pooptube::SoundManager::GetInstance()->SetListener( &mListener );
 }
 bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 	Node::Init();
@@ -54,8 +47,10 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 	EnableMouseEvent();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
-	mCollisionBox = pooptube::CollisionBox::Create( pMainCharacter );
-	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
+	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pMainCharacter );
+	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
+	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
+	AddChild( collisionBox );
 
 	return true;
 }
@@ -110,6 +105,18 @@ void MainCharacter::MousePressed(pooptube::MouseEvent* pMouseEvent) {
 
 void MainCharacter::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
 
+}
+
+void MainCharacter::_CollsionHandle( pooptube::CollisionBox* collisionResult )
+{
+	if( collisionResult == nullptr )
+		return;
+	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::BLOCK ){
+		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetParent()->GetPosition();
+		D3DXVec3Normalize( &dPos, &dPos );
+		dPos *= mSpeed;
+		Translation( dPos );
+	}
 }
 //
 ////void MainCharacter::CollsionReceive( std::shared_ptr<Node> target )

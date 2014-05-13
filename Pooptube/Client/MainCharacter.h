@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "Node.h"
 #include "StageOne.h"
+#include "..\Library\FMOD\fmod_common.h"
 
 namespace pooptube{
 	class SkinnedMesh;
@@ -40,7 +41,7 @@ public:
 	void MouseMove(pooptube::MouseEvent* pMouseEvent);
 	void MouseUp(pooptube::MouseEvent* pMouseEvent);
 	void MousePressed(pooptube::MouseEvent* pMouseEvent);
-
+	void JumpUpdate( float dTime );
 
 	CHAR_STATE	GetState() const { return mState; }
 	void		SetState(CHAR_STATE val) { mState = val; }
@@ -60,13 +61,14 @@ protected:
 
 
 private:
+	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
 
 	CHAR_STATE				mState = NONE;
 	
 	float					mSpeed = 0.1f;
-	float					mJumpSpeed = 7.f;
+	float					mJumpSpeed = 10.f;
 
 	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
-	pooptube::CollisionBox *mCollisionBox = nullptr;
+	FMOD_3D_ATTRIBUTES		mListener;
 };
 

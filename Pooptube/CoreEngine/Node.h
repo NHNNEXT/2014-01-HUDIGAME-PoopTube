@@ -114,8 +114,11 @@ namespace pooptube {
 		float				GetTurnAngle(D3DXVECTOR3 src, D3DXVECTOR3 dst);
 		bool				Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed);
 
-		bool GetVisible() const { return mIsVisible; }
-		void SetVisible(bool val) { mIsVisible = val; }
+		inline bool GetVisible() const { return mIsVisible; }
+		inline void SetVisible(bool val) { mIsVisible = val; }
+
+		inline bool GetUpdatable() const { return mIsUpdatable; }
+		inline void SetUpdatable(bool val) { mIsUpdatable = val; }
 
 //		virtual void CollsionReceive( std::shared_ptr<Node> target ){};
 //		virtual void CollsionReceive( Node* target ){};
@@ -145,6 +148,7 @@ namespace pooptube {
 		LPDIRECT3DDEVICE9 mDevice;
 		
 		bool			mIsVisible = true;
+		bool			mIsUpdatable = true;
 
 		//std::forward_list<EventProcess> mEventProcessList;
 		friend class SceneManager;

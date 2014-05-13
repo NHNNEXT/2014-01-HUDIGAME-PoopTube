@@ -106,6 +106,9 @@
     <Filter Include="Nodes\Sprite">
       <UniqueIdentifier>{5d3c8d96-afc3-4adc-af0f-9f7fdb8163e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nodes\Sound">
+      <UniqueIdentifier>{ea0a0205-5af7-4ada-93b1-428fcb5b2975}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -267,6 +270,11 @@
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>Nodes\Sprite</Filter>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Nodes\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundBox.h">
+      <Filter>Nodes\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -393,6 +401,11 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Nodes\Sprite</Filter>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Nodes\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundBox.cpp">
+      <Filter>Nodes\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
