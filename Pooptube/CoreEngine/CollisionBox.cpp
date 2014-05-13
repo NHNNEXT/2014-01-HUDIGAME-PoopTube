@@ -33,6 +33,9 @@ namespace pooptube {
 		mAxisLen[AXIS_Z] = 0.5f;
 		mParentNode = pNode;
 
+		mObjectName = "CollisionBox" + std::to_string(Node::ObjectNum++);
+		mClassName = "CollisionBox";
+
 		return true;
 	}
 

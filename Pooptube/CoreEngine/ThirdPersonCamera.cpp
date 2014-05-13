@@ -25,6 +25,9 @@ namespace pooptube {
 		Camera::Init();
 		mTarget = Target;
 
+		mObjectName = "ThirdPersonCamera" + std::to_string(Node::ObjectNum++);
+		mClassName = "ThirdPersonCamera";
+
 		return true;
 	}
 	

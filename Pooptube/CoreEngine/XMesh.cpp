@@ -26,6 +26,9 @@ namespace pooptube {
 	bool XMesh::Init(const std::string& FilePath) {
 		Node::Init();
 
+		mObjectName = "XMesh" + std::to_string(Node::ObjectNum++);
+		mClassName = "XMesh";
+
 		// 재질을 임시로 보관할 버퍼선언
 		LPD3DXBUFFER pD3DXMtrlBuffer;
 

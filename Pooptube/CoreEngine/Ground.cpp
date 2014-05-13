@@ -26,6 +26,9 @@ namespace pooptube {
 		mData = ResourceManager::GetInstance()->LoadHeightMap(FilePath);
 		_SetBuffer();
 
+		mObjectName = "Ground" + std::to_string(Node::ObjectNum++);
+		mClassName = "Ground";
+
 		return true;
 	}
 

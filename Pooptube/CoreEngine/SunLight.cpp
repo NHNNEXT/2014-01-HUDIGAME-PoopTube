@@ -23,6 +23,10 @@ namespace pooptube {
 
 		mD3DLight.Type = D3DLIGHT_DIRECTIONAL;
 		SetFrontVector(D3DXVECTOR3(1.f, -1.f, -1.f));
+
+		mObjectName = "SunLight" + std::to_string(Node::ObjectNum++);
+		mClassName = "SunLight";
+
 		return true;
 	}
 

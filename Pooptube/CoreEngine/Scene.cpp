@@ -25,6 +25,10 @@ namespace pooptube {
 	bool Scene::Init() {
 		if (!Node::Init())
 			return false;
+
+		mObjectName = "Scene" + std::to_string(Node::ObjectNum++);
+		mClassName = "Scene";
+
 		return true;
 	}
 

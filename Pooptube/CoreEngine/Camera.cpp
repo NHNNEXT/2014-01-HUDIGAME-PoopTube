@@ -26,6 +26,9 @@ namespace pooptube {
 		SetPosition(D3DXVECTOR3(0.f, 3.f, 10.f));
 		SetFrontVector(D3DXVECTOR3(0.f, 0.f, 0.f));
 
+		//mObjectName = "Camera" + std::to_string(ObjectNum++);
+		//mClassName = "Camera";
+
 		return true;
 	}
 

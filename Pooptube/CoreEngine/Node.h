@@ -33,6 +33,8 @@ namespace pooptube {
 		Node();
 		virtual ~Node();
 
+		static unsigned int ObjectNum; // 생성된 Object의 갯수를 카운팅
+
 		//@brief 위치지정 new를 사용. 
 // 		static void* operator new (std::size_t size, void* ptr) throw(){
 // 			return ::operator new(size, ptr);
@@ -61,6 +63,10 @@ namespace pooptube {
 		static Node *Create();
 
 		virtual bool Init();
+
+		virtual std::string GetClassName() { return mClassName; }
+		virtual void		SetObjectName(std::string name) { mObjectName = name; }
+		virtual std::string GetObjectName() { return mObjectName; }
 
 		virtual void Render();
 		virtual void Update( float dTime );
@@ -131,7 +137,9 @@ namespace pooptube {
 		
 	protected:
 		std::vector<std::shared_ptr<Node>> mChildList;
-		
+		std::string						   mClassName;
+		std::string						   mObjectName;
+
 		bool mIsKeyEventEnabled = false;
 		bool mIsMouseEventEnabled = false;
 

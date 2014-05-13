@@ -1,10 +1,12 @@
-﻿
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Node.h"
 
 #include "ObjectManager.h"
 
+
 namespace pooptube {
+	unsigned int Node::ObjectNum = 0; // 생성된 Object의 갯수를 카운팅
+
 	Node::Node() {
 	}
 	Node::~Node() {
@@ -24,7 +26,6 @@ namespace pooptube {
 
 	bool Node::Init() {
 		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
-
 		UpdateMatrix();
 
 		return true;

@@ -22,11 +22,13 @@
 #include <list>
 #include <algorithm>
 #include <map>
+#include <string>
 
 //#include <C:\Program Files\Autodesk\FBX\FBX SDK\2014.2.1\include\fbxsdk.h>
 #include <fbxsdk.h>
 
 #include "ObjectManager.h"
+
 
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
