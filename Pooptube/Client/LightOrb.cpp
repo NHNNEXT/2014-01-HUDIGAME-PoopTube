@@ -42,14 +42,6 @@ bool LightOrb::Init(LightOrb *pCreature)
 	return true;
 }
 
-class aaaa
-{
-
-};
-class bbbb : public aaaa
-{
-
-};
 void LightOrb::Render()
 {
 	static bool isRender = false;

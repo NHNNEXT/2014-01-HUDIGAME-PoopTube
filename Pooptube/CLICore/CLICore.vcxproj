@@ -116,6 +116,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="TT.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Node.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="TT.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Node.cpp" />

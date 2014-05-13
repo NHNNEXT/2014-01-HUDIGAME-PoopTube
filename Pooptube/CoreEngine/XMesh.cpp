@@ -74,7 +74,6 @@ namespace pooptube {
 				}
 			}
 		}
-		pD3DXMtrlBuffer->Release();
 
 		//메쉬에 법선백터를 추가하는 부분
 		if (!(mXMesh->GetFVF() & D3DFVF_NORMAL)) {
@@ -92,6 +91,33 @@ namespace pooptube {
 			mXMesh->Release(); // 기존메쉬를 제거한다
 			mXMesh = pTempMesh; // 기존메쉬를 법선이 계산된 메쉬로 지정한다.
 		}
+
+		// Init Vertices and Indices
+
+		int VerticesNum = mXMesh->GetNumVertices();
+		BYTE* vertexBuffer;
+		DWORD numBytesPerVertex = mXMesh->GetNumBytesPerVertex();
+		unsigned int offset = D3DXGetFVFVertexSize(mXMesh->GetFVF());
+
+		mXMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&vertexBuffer);
+		for (WORD i = 0; i < VerticesNum; i++)
+			mVertices.push_back(*((D3DXVECTOR3*)(vertexBuffer + i * offset)));
+		mXMesh->UnlockVertexBuffer();
+		
+
+		void *pIB;
+		int IndicesNum = mXMesh->GetNumFaces();
+		WORD *indexBuffer = new WORD[IndicesNum * 3];
+
+		mXMesh->LockIndexBuffer(D3DLOCK_READONLY, (void**)&pIB);
+		memcpy(indexBuffer, pIB, sizeof(WORD)*IndicesNum * 3);
+		
+		for (int i = 0; i < IndicesNum; ++i)
+			mIndices.push_back((D3DXVECTOR3(indexBuffer[i * 3], indexBuffer[i * 3 + 1], indexBuffer[i * 3 + 2])));
+
+		mXMesh->UnlockIndexBuffer();
+		delete[]indexBuffer;
+
 
 		return true;
 	}
