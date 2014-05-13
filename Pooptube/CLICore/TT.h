@@ -15,7 +15,7 @@ namespace Core {
 		static Tiger ^Create()
 		{
 			Tiger ^CreateInstance = gcnew Tiger();
-			CreateInstance->pInstance = pooptube::XMesh::Create("E:/Project/Poop tube/2014-01-HUDIGAME-PoopTube/Pooptube/Client/tiger.x");
+			CreateInstance->pInstance = pooptube::XMesh::Create("../Client/tiger.x");
 			return CreateInstance;
 		}
 	};
