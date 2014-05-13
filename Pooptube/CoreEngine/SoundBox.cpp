@@ -39,16 +39,17 @@ namespace pooptube {
 // 		mCollisionBox->Translation( D3DXVECTOR3( 0.f, mCollisionBox->GetAxisLenY(), 0.f ) );
 // 		mCollisionBox->SetFrontVector( Node::GetFrontVector() );
 // 		mCollisionBox->Update( dTime );
-		CollisionBox* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this );
-		if( collisionResult == nullptr || collisionResult->GetCollisionType() != CollisionBox::COLLISION_TYPE::PLAYER ){
+		_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
+	}
+
+	void SoundBox::_CollsionHandle( CollisionBox* collisionResult )
+	{
+		if( collisionResult == nullptr || !(collisionResult->GetCollisionType() & CollisionBox::COLLISION_TYPE::PLAYER) ){
 			mSound->stop( FMOD_STUDIO_STOP_ALLOWFADEOUT );
 		}
 		else{
-			FMOD_STUDIO_PLAYBACK_STATE playBackState;
-			mSound->getPlaybackState( &playBackState );
-			if( playBackState != FMOD_STUDIO_PLAYBACK_PLAYING)
-				mSound->start();
+			if( mSound != nullptr )
+				SoundManager::GetInstance()->PlayOnce( *mSound );
 		}
 	}
-
 }

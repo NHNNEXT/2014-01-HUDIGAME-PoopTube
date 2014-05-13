@@ -24,6 +24,8 @@ namespace pooptube {
 		virtual void Update( float dTime );
 
 	private:
+		void _CollsionHandle( CollisionBox* collisionResult );
+
 		FMOD::Studio::EventInstance* mSound = nullptr;
 	};
 }
