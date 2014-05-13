@@ -22,7 +22,7 @@ namespace pooptube {
 			AXIS_NUM = 3,
 		};
 
-		enum class COLLISION_TYPE : unsigned short {
+		enum COLLISION_TYPE : unsigned short {
 			NONE	= 0x0,
 			BLOCK	= 0x1,
 			PLAYER	= 0x2,
