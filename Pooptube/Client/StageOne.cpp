@@ -63,12 +63,12 @@ bool StageOne::Init() {
 	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
-	mSkyBox = pooptube::SkyBox::Create("Top.bmp",
-		"Bottom.bmp",
-		"Front.bmp",
-		"Back.bmp",
-		"Left.bmp",
-		"Right.bmp");
+	mSkyBox = pooptube::SkyBox::Create("DeepSpaceBlue/upImage.png",
+		"DeepSpaceBlue/downImage.png",
+		"DeepSpaceBlue/frontImage.png",
+		"DeepSpaceBlue/backImage.png",
+		"DeepSpaceBlue/leftImage.png",
+		"DeepSpaceBlue/rightImage.png");
 
 	mCreature = Creature::Create();
 	mLightOrb = LightOrb::Create();
@@ -198,56 +198,6 @@ void StageOne::PICK(float x, float y)
 	D3DXIntersect(mXMesh->GetMesh(), &Origin, &Direction, &picked, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL);
 	if (picked) printf("API ");
 
-	printf("\n");
-	/*
-
-		auto *pIB = mGround->GetIndexBuffer();
-		auto *pVB = mGround->GetVertexBuffer();
-		int IBCount = mGround->GetIndexCount();
-
-		pooptube::MESH_CUSTOM_INDEX* pIndices;
-		if (pIB->Lock(0, mGround->GetIndexCount()*sizeof(pooptube::MESH_CUSTOM_INDEX), (void**)&pIndices, 0) < 0)
-			return;
-		pIB->Unlock();
-
-		pooptube::MESH_CUSTOM_VERTEX* pVertices;
-		if (pVB->Lock(0, mGround->GetVertexCount()*sizeof(pooptube::MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
-			return;
-		//pVB->Unlock();
-
-		float minDistance = 9999.f;
-		float mU, mV;
-		int mIdx;
-		for (int i = 0; i < IBCount; ++i)
-		{
-			picked = D3DXIntersectTri(&pVertices[pIndices[i].w0].position, &pVertices[pIndices[i].w1].position, &pVertices[pIndices[i].w2].position, &Origin, &Direction, &fBary1, &fBary2, &fDist);
-
-			if (picked)
-			{
-				if (fDist < minDistance)
-				{
-					minDistance = fDist;
-					mU = fBary1;
-					mV = fBary2;
-					mIdx = i;
-				}
-			}
-		}
-		pVB->Unlock();
-
-
-		if (minDistance != 9999.f)
-		{
-			D3DXVECTOR3 pos = Origin + minDistance * Direction;
-			printf("GROUND PICKED   %f %f %f\n", pos.x, pos.y, pos.z);
-
-			mGround->SetHeight(pos.x, pos.z, mGround->GetVertexHeight(pos.x, pos.z) + 0.2f);
-		}
-
-		D3DXIntersect(mXMesh->GetMesh(), &Origin, &Direction, &picked, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL);
-		if (picked) printf("TIGER PICKED\n");
-		*/
-
 }
 void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
 
@@ -256,7 +206,7 @@ void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
 	switch (pMouseEvent->GetMouseEventType())
 	{
 	case pooptube::MouseEventType::MOUSE_LBUTTON_DOWN:
-		PICK(pMouseEvent->GetX(), pMouseEvent->GetY());
+		//PICK(pMouseEvent->GetX(), pMouseEvent->GetY());
 		mGround->PICKGROUND(pMouseEvent->GetX(), pMouseEvent->GetY(), 0.2f);
 
 		//TEST(pMouseEvent->GetX(), pMouseEvent->GetY());
