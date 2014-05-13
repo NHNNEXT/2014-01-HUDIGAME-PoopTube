@@ -12,11 +12,13 @@ namespace pooptube {
 	class SunLight;
 	class XMesh;
 	class Ground;
+	class Sprite;
 }
 
 class MainCharacter;
 class Creature;
 class LightOrb;
+
 
 class StageOne
 	: public pooptube::Scene
@@ -64,6 +66,7 @@ private:
 
 	Creature						*mCreature = nullptr; // 크리처
 	LightOrb						*mLightOrb = nullptr; // 환경 물체
+	pooptube::Sprite				*mSprite = nullptr; // sprite
 
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;

@@ -100,6 +100,9 @@
     <Filter Include="InputManager">
       <UniqueIdentifier>{07c7bae7-ea8d-43d8-b76e-1b79049c91b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nodes\Sprite">
+      <UniqueIdentifier>{5d3c8d96-afc3-4adc-af0f-9f7fdb8163e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -259,6 +262,9 @@
     <ClInclude Include="Ground.h">
       <Filter>Nodes\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Nodes\Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -381,6 +387,9 @@
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Nodes\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Nodes\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

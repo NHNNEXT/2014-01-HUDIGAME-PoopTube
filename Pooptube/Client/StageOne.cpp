@@ -15,6 +15,7 @@
 #include "LightOrb.h"
 #include "XMesh.h"
 #include "ResourceManager.h"
+#include "Sprite.h"
 #include <iostream>
 
 StageOne::StageOne() {
@@ -76,6 +77,8 @@ bool StageOne::Init() {
 	
 	mCreature->pss = mCharacter; // 크리처 테스트 위한 거
 
+	mSprite = pooptube::Sprite::Create(L"right.bmp");
+
 	//this->AddChild(mLight);
 	this->AddChild(mSunLight);
 	//this->AddChild(mSkinnedMesh);
@@ -87,12 +90,21 @@ bool StageOne::Init() {
 	this->AddChild(mSkyBox);
 	this->AddChild(mCreature);
 	this->AddChild(mLightOrb);
+	this->AddChild(mSprite);
+	
 	return true;
-
 }
 void StageOne::Render() {
 	Node::Render();
 	
+	// sprite test
+	//RECT temp = { 10, 10, 20, 20 };
+
+	//mSprite->Translate(100, 100);
+	//mSprite->Scale(10, 10);
+	//mSprite->Rotate(D3DX_PI / 4);
+	//mSprite->ApplyTransform();
+	//mSprite->Draw(&temp, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255 / 2, 255, 255, 255));
 // 	printf_s("%f %f %f\n", mCamera->GetPosition().x, mCamera->GetPosition().y, mCamera->GetPosition().z);
 // 	printf_s("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
 }
@@ -103,12 +115,14 @@ void StageOne::Update(float dTime) {
 		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
 		mTimeForFPS = 0.f;
 	}
-	
-//	mSkinnedMesh->Update(dTime);
+
+	//RECT temp = { 10, 10, 20, 20 };
+	//	mSkinnedMesh->Update(dTime);
 // 	mCharacter->Update(dTime);
 // 	mCreature->Update(dTime); // creature
 
 	MainCharacterJumpUpdate(dTime);
+	
 // 	CreatureUpdate(dTime);
 // 
 // 	mCamera->Update(dTime);
