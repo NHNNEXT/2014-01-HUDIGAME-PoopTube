@@ -247,8 +247,8 @@ void StageOne::TEST(float x, float y)
 	
 	//return;
 	//checking intersection
- 	D3DXIntersect(mXMesh->GetMesh(), &Origin, &Direction, &picked, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL);
- 	if(picked) printf("TIGER PICKED\n");
+	D3DXIntersect(mXMesh->GetMesh(), &Origin, &Direction, &picked, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL);
+	if(picked) printf("TIGER PICKED\n");
 
 
 }
