@@ -47,9 +47,6 @@ namespace Tool
             settings.FrontVector = new Vector3() { x = 0, y = 0, z = 1 };
 
             PropertyForm.SelectedObject = settings;
-
-            
-            //PropertyForm.SelectedObject;
         }
 
         private async void Run()
@@ -86,9 +83,11 @@ namespace Tool
 
         private void ViewBox_MouseDown(object sender, MouseEventArgs e)
         {
-            label1.Text = e.X.ToString();
-            label2.Text = e.Y.ToString();
             float []pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
+
+            label1.Text = pos[0].ToString();
+            label2.Text = pos[1].ToString();
+            label3.Text = pos[2].ToString();
 
             Core.Tiger t = Core.Tiger.Create();
             t.SetPosition(pos[0], pos[1], pos[2]);
