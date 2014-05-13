@@ -41,7 +41,8 @@ namespace pooptube {
 	}
 	void Node::Update(float dTime) {
 		for (auto child : mChildList) {
-			child->Update(dTime);
+			if (child->GetUpdatable())
+				child->Update(dTime);
 		}
 	}
 
