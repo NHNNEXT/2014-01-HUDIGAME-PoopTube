@@ -133,7 +133,9 @@
     <ClCompile Include="LightOrb.cpp" />
     <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
-    <ClCompile Include="StageOne.cpp" />
+    <ClCompile Include="StageOne.cpp">
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</SDLCheck>
+    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -142,7 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="batman70.fbx" />
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="test.bmp" />

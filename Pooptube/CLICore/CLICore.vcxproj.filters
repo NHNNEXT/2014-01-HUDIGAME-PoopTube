@@ -78,6 +78,9 @@
     <ClInclude Include="SunLight.h">
       <Filter>CoreEngine\Nodes\Light</Filter>
     </ClInclude>
+    <ClInclude Include="TT.h">
+      <Filter>CoreEngine\Nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -109,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="SunLight.cpp">
       <Filter>CoreEngine\Nodes\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="TT.cpp">
+      <Filter>CoreEngine\Nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

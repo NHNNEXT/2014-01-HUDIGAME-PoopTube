@@ -23,8 +23,8 @@ namespace Tool
         public MainForm()
         {
             InitializeComponent();
-            
-            Application.init(this.ViewBox.Handle.ToInt32(), this.Size.Height, this.Size.Width);
+
+            Application.init(this.ViewBox.Handle.ToInt32(), this.ViewBox.Size.Height, this.ViewBox.Size.Width);
             Scene = Core.Scene.Create();
             Ground = Core.Ground.Create();
             SunLight = Core.SunLight.Create();
@@ -82,6 +82,18 @@ namespace Tool
                 
             }
             grid.Refresh();
+        }
+
+        private void ViewBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            label1.Text = e.X.ToString();
+            label2.Text = e.Y.ToString();
+            float []pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
+
+            Core.Tiger t = Core.Tiger.Create();
+            t.SetPosition(pos[0], pos[1], pos[2]);
+
+            Scene.AddChild(t);
         }
     }
 }

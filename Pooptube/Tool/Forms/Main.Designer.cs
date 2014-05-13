@@ -78,6 +78,7 @@
             this.ViewBox.Size = new System.Drawing.Size(473, 304);
             this.ViewBox.TabIndex = 1;
             this.ViewBox.TabStop = false;
+            this.ViewBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ViewBox_MouseDown);
             // 
             // MainMenu
             // 

@@ -13,6 +13,13 @@ namespace Core {
 		Ground() { };//pInstance = &*pooptube::Ground::Create("E:/Project/Poop tube/2014-01-HUDIGAME-PoopTube/Pooptube/Client/test.bmp"); };
 		virtual ~Ground() { delete Instance<pooptube::Ground *>(pInstance); };
 
+		//D3DXVECTOR3 PICKGROUND(float x, float y, float value) { return Instance<pooptube::Ground *>(pInstance)->PICKGROUND(x, y, value); }
+		array<System::Single>^	 PICKGROUND(float x, float y, float value) {
+			D3DXVECTOR3 temp = Instance<pooptube::Ground *>(pInstance)->PICKGROUND(x, y, value);
+			array<System::Single> ^byte = { temp.x, temp.y, temp.z };
+			return byte;
+		}
+
 		static Ground ^Create()
 		{
 			Ground ^CreateInstance = gcnew Ground();

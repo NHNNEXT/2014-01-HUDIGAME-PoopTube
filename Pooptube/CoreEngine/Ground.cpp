@@ -264,6 +264,10 @@ namespace pooptube {
 		D3DXMATRIX projMat;
 		GetDevice()->GetTransform(D3DTS_PROJECTION, &projMat);
 
+// 		wchar_t tem[20] = { 0, };
+// 		swprintf_s(tem, L"%d / %d", view.Width, view.Height);
+// 		MessageBox(pooptube::Application::GetInstance()->GetHWND(), tem, L"", 0);
+
 		//calculating.. mouse ray
 		float vx = (+2.0f*x / view.Width - 1.0f) / projMat._11;
 		float vy = (-2.0f*y / view.Height + 1.0f) / projMat._22;

@@ -36,7 +36,7 @@ namespace Tool
 
             if (input == 'W') // FORWARD
             {
-                label1.Text = a.ToString();
+                //label1.Text = a.ToString();
                 ++a;
                 //Camera.RotateFrontVectorY(-0.1f);
                 //Camera.RotationY(-0.1f);
@@ -44,7 +44,7 @@ namespace Tool
             }
             if (input == 'S') // BACK
             {
-                label2.Text = b.ToString();
+                //label2.Text = b.ToString();
                 ++b;
                 //Camera.RotateFrontVectorY(0.1f);
                 //Camera.RotationY(0.1f);

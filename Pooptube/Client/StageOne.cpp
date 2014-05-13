@@ -200,9 +200,6 @@ void StageOne::PICK(float x, float y)
 
 }
 void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
-
-	float a;
-
 	switch (pMouseEvent->GetMouseEventType())
 	{
 	case pooptube::MouseEventType::MOUSE_LBUTTON_DOWN:
