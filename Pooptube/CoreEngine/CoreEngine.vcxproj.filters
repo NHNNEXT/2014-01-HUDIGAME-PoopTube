@@ -100,6 +100,9 @@
     <Filter Include="Nodes\Ground">
       <UniqueIdentifier>{c194e3a0-99fa-47c5-a248-1d7870d6997e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Nodes\Sound">
+      <UniqueIdentifier>{ea0a0205-5af7-4ada-93b1-428fcb5b2975}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -259,6 +262,12 @@
     <ClInclude Include="Ground.h">
       <Filter>Nodes\Ground</Filter>
     </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Nodes\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundBox.h">
+      <Filter>Nodes\Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -381,6 +390,12 @@
     </ClCompile>
     <ClCompile Include="Ground.cpp">
       <Filter>Nodes\Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Nodes\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundBox.cpp">
+      <Filter>Nodes\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
