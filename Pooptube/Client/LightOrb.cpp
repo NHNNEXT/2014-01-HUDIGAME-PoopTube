@@ -64,13 +64,7 @@ void LightOrb::Update(float dTime)
 	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
 	mSkinnedMesh->Update(dTime);
 
-	pooptube::CollisionBox* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this );
-
-	if ( collisionResult != nullptr && collisionResult->GetCollisionType() == pooptube::CollisionBox::COLLISION_TYPE::PLAYER ) {
-		isRender = false;
-		if( mEffectSound != nullptr )
-			pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
-	}
+	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	D3DXVECTOR3 pos = GetPosition();
 	float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
@@ -78,5 +72,16 @@ void LightOrb::Update(float dTime)
 	if (height != pos.y) {
 		pos.y = height;
 		SetPosition(pos);
+	}
+}
+
+void LightOrb::_CollsionHandle( pooptube::CollisionBox* collisionResult )
+{
+	if( collisionResult == nullptr )
+		return;
+	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::PLAYER ) {
+		isRender = false;
+		if( mEffectSound != nullptr )
+			pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
 	}
 }

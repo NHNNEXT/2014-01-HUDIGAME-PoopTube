@@ -59,6 +59,8 @@ public:
 	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
 
 private:
+	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
+
 	CREATURE_STATE	mState = IDLE;
 
 	float mIdleDistance = 8.f;

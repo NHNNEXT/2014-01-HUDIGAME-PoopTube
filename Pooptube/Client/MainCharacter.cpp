@@ -35,13 +35,7 @@ void MainCharacter::Update(float dTime) {
 	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
 	mSkinnedMesh->Update(dTime);
 
-	pooptube::CollisionBox* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this );
-	if( collisionResult != nullptr && collisionResult->GetCollisionType() == pooptube::CollisionBox::COLLISION_TYPE::BLOCK ){
-		D3DXVECTOR3 dPos = GetPosition( ) - collisionResult->GetPosition( );
-		D3DXVec3Normalize( &dPos, &dPos );
-		dPos *= mSpeed;
-		Translation( dPos );
-	}
+	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
 	pooptube::SoundManager::GetInstance()->SetListener( &mListener );
@@ -55,7 +49,7 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pMainCharacter );
 	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
-	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::PLAYER );
+	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
 	AddChild( collisionBox );
 
 	return true;
@@ -111,6 +105,18 @@ void MainCharacter::MousePressed(pooptube::MouseEvent* pMouseEvent) {
 
 void MainCharacter::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
 
+}
+
+void MainCharacter::_CollsionHandle( pooptube::CollisionBox* collisionResult )
+{
+	if( collisionResult == nullptr )
+		return;
+	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::BLOCK ){
+		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetParent()->GetPosition();
+		D3DXVec3Normalize( &dPos, &dPos );
+		dPos *= mSpeed;
+		Translation( dPos );
+	}
 }
 //
 ////void MainCharacter::CollsionReceive( std::shared_ptr<Node> target )
