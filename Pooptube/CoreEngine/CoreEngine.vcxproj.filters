@@ -100,12 +100,6 @@
     <Filter Include="Nodes\Ground">
       <UniqueIdentifier>{c194e3a0-99fa-47c5-a248-1d7870d6997e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="InputManager">
-      <UniqueIdentifier>{07c7bae7-ea8d-43d8-b76e-1b79049c91b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Nodes\Sprite">
-      <UniqueIdentifier>{5d3c8d96-afc3-4adc-af0f-9f7fdb8163e5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Nodes\Sound">
       <UniqueIdentifier>{ea0a0205-5af7-4ada-93b1-428fcb5b2975}</UniqueIdentifier>
     </Filter>
@@ -268,8 +262,6 @@
     <ClInclude Include="Ground.h">
       <Filter>Nodes\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Nodes\Sprite</Filter>
     <ClInclude Include="SoundManager.h">
       <Filter>Nodes\Sound</Filter>
     </ClInclude>
@@ -399,8 +391,6 @@
     <ClCompile Include="Ground.cpp">
       <Filter>Nodes\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Nodes\Sprite</Filter>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Nodes\Sound</Filter>
     </ClCompile>
