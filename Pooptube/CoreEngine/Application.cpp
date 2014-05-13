@@ -109,7 +109,7 @@ namespace pooptube {
 				mKeyEventDispatcher->Dispatch( mKeyEventList );
 				mMouseEventDispatcher->Dispatch( mMouseEventList );
 
-				gInputManager.GetKey();
+				//gInputManager.GetKey();
 
 				mSceneManager->Update( mDeltaTime );
 				mSceneManager->Render();
