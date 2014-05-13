@@ -35,7 +35,7 @@ namespace pooptube {
 		UpdateMatrix();
 
 		for (auto child : mChildList) {
-			if (child->DoRender())
+			if (child->GetVisible())
 				child->Render();
 		}
 	}

@@ -67,6 +67,9 @@
     <Filter Include="EventInterface">
       <UniqueIdentifier>{c6d2da3e-2f41-4af5-bbc6-194d2cd2fb12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="%2aInputManager">
+      <UniqueIdentifier>{07c7bae7-ea8d-43d8-b76e-1b79049c91b1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="KeyEvent">
       <UniqueIdentifier>{6964865c-ba1b-4e86-8130-68eecb521ca4}</UniqueIdentifier>
     </Filter>
@@ -96,9 +99,6 @@
     </Filter>
     <Filter Include="Nodes\Ground">
       <UniqueIdentifier>{c194e3a0-99fa-47c5-a248-1d7870d6997e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InputManager">
-      <UniqueIdentifier>{07c7bae7-ea8d-43d8-b76e-1b79049c91b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -148,7 +148,7 @@
       <Filter>Resource\Texture</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>InputManager</Filter>
+      <Filter>%2aInputManager</Filter>
     </ClInclude>
     <ClInclude Include="NetworkSystem.h">
       <Filter>NetworkSystem</Filter>
@@ -299,7 +299,7 @@
       <Filter>Resource\Texture</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>InputManager</Filter>
+      <Filter>%2aInputManager</Filter>
     </ClCompile>
     <ClCompile Include="NetworkSystem.cpp">
       <Filter>NetworkSystem</Filter>
@@ -385,5 +385,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
