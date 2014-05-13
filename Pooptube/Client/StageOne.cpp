@@ -64,12 +64,12 @@ bool StageOne::Init() {
 	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
-	mSkyBox = pooptube::SkyBox::Create("Top.bmp",
-		"Bottom.bmp",
-		"Front.bmp",
-		"Back.bmp",
-		"Left.bmp",
-		"Right.bmp");
+	mSkyBox = pooptube::SkyBox::Create("DeepSpaceBlue/upImage.png",
+		"DeepSpaceBlue/downImage.png",
+		"DeepSpaceBlue/frontImage.png",
+		"DeepSpaceBlue/backImage.png",
+		"DeepSpaceBlue/leftImage.png",
+		"DeepSpaceBlue/rightImage.png");
 
 	mCreature = Creature::Create();
 	mLightOrb = LightOrb::Create();
