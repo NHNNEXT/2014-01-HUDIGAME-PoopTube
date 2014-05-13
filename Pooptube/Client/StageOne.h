@@ -33,10 +33,6 @@ public:
 
 	void Update(float dTime);
 
-	void TEST(float x, float y);
-	D3DXVECTOR2 PICK(float x, float y);
-
-
 	//아래 둘을 어디로 옮길지 생각중
 	void MainCharacterJumpUpdate(float dTime);
 
@@ -50,6 +46,7 @@ public:
 	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
 	pooptube::Ground *GetGroundModule() const { return mGround; }
 
+	void PICK(float x, float y);
 protected:
 
 private:
