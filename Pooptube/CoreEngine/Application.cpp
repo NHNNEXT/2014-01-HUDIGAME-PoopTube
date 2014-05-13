@@ -66,15 +66,15 @@ namespace pooptube {
 	bool Application::Release() {
 		//mRenderer->Release();
 		
-		for (auto& object : mKeyEventList) {
-			delete object;
-		}
-		mKeyEventList.clear();
-
-		for (auto& object : mMouseEventList) {
-			delete object;	
-		}
-		mMouseEventList.clear();
+// 		for (auto& object : mKeyEventList) {
+// 			delete object;
+// 		}
+// 		mKeyEventList.clear();
+// 
+// 		for (auto& object : mMouseEventList) {
+// 			delete object;	
+// 		}
+// 		mMouseEventList.clear();
 		
 		ObjectManager::ReleaseInstance();
 
