@@ -29,19 +29,25 @@ namespace pooptube {
 
 		virtual void Render();
 		virtual void Update(float dTime);
-
+		
 		Mesh *GetMeshData() const { return mMesh; }
 
 	protected:
-		bool _InitFBX(const std::string& MeshFilePath);
+		virtual bool CheckFrustum(); //절두체 컬링 체크
+		bool _InitFBX( const std::string& MeshFilePath );
 
 		std::vector<D3DMATERIAL9>		mMaterial;
 		std::vector<LPDIRECT3DTEXTURE9>	mTexture;
 
 	private:
+		void _MakeBoundingSphere( D3DXVECTOR3& outSphereCenter, float& outSphereRadius ); // 절두체 컬링용 Bounding Sphere 작성
 
 		LPDIRECT3DVERTEXBUFFER9			mMeshVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9			mMeshIndexBuffer = nullptr;
+
+		D3DXVECTOR3						mBoundingSphereCenter; // 절두체 컬링용 Bounding Sphere
+		float							mBoundingSphereRadius; // 절두체 컬링용 Bounding Sphere
+
 		Mesh			*mMesh = nullptr;
 	};
 

@@ -33,15 +33,18 @@ bool Creature::Init( Creature *pCreature )
 
 	mXMesh = pooptube::XMesh::Create("tiger.x");
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
-	mCollisionBox = pooptube::CollisionBox::Create( pCreature );
-	//mXMesh->GetMesh()->
-	mCollisionBox->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
-
-	Creature::SetPosition(mInitialPosition);
+	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
+	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
+	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 
 	AddChild(mSkinnedMesh);
-	AddChild(mCollisionBox);
-	//AddChild(mXMesh);
+	AddChild( collisionBox );
+	//AddChild(mXMesh.get());
+	Creature::SetPosition( mInitialPosition );
+
+	mStepSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Footsteps" );
+	mStepSound->setParameterValue( "Surface", 1.f );
+	mEffectSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Okay" );
 
 	return true;
 
@@ -60,19 +63,7 @@ void Creature::Update(float dTime)
 	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
 	mSkinnedMesh->Update(dTime);
 
-	mCollisionBox->SetPosition(Node::GetPosition());
-	mCollisionBox->Translation(D3DXVECTOR3(0.f, mCollisionBox->GetAxisLenY(), 0.f));
-	mCollisionBox->SetFrontVector(Node::GetFrontVector());
-	mCollisionBox->Update(dTime);
-
-	Node* collisionResult = pooptube::CollisionManager::GetInstance()->CollisionCheck( mCollisionBox );
-
-	if( collisionResult != nullptr ) {
-		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetPosition();
-		D3DXVec3Normalize( &dPos, &dPos );
-		dPos *= mSpeed;
-		Translation( dPos );
-	}
+	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	FSM();
 	switch (mState) {
@@ -95,6 +86,9 @@ void Creature::Update(float dTime)
 		pos.y = height;
 		SetPosition(pos);
 	}
+
+	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mSoundPos );
+	mStepSound->set3DAttributes( &mSoundPos );
 }
 
 CREATURE_STATE Creature::FSM()
@@ -126,7 +120,7 @@ void Creature::DoIdle(float dTime)
 	D3DXVECTOR3 CreaturePosition = GetPosition();
 	D3DXVECTOR3 distance = mInitialPosition - GetPosition();
 	D3DXVECTOR3 CreatureFrontVector = GetFrontVector();
-
+	mStepSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
 	if (IDLE == GetState() && D3DXVec3Length(&distance) < 0.5f) {
 		RotationY(0.1f);
 		SetPosition(mInitialPosition);
@@ -147,12 +141,28 @@ void Creature::DoAngry()
 {
 	D3DXVECTOR3 CharacterPosition = pss->GetPosition();
 	D3DXVECTOR3 CreaturePosition = GetPosition();
-
+	if( mStepSound != nullptr )
+		pooptube::SoundManager::GetInstance()->PlayOnce( *mStepSound );
 	Turn(GetPosition(), CharacterPosition, 0.05f);
 	SetPosition(CreaturePosition + (CharacterPosition - CreaturePosition) / 100);
 }
 
 void Creature::DoRage()
 {
+	mStepSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
+	if( mEffectSound != nullptr )
+		pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
 	RotationY(0.4f);
+}
+
+void Creature::_CollsionHandle( pooptube::CollisionBox* collisionResult )
+{
+	if( collisionResult == nullptr )
+		return;
+	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) {
+		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetParent()->GetPosition();
+		D3DXVec3Normalize( &dPos, &dPos );
+		dPos *= mSpeed;
+		Translation( dPos );
+	}
 }

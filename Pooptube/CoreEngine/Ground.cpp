@@ -243,10 +243,6 @@ namespace pooptube {
 		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mVertexCount, 0, mIndexCount);
 	}
 
-	void Ground::Update(float dTime) {
-		
-	}
-
 	bool Ground::ResetBuffer() {
 		mVertexBuffer->Release();
 		mIndexBuffer->Release();

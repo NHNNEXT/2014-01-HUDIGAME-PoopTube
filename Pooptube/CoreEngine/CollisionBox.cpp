@@ -72,6 +72,7 @@ namespace pooptube {
 
 	void CollisionBox::Render()
 	{
+#ifdef _DEBUG
 		Node::Render();
 
 		D3DXMATRIX projMat, viewMat;
@@ -126,6 +127,7 @@ namespace pooptube {
 		Line->End();
 
 		Line->Release();
+#endif // _DEBUG
 	}
 
 	void CollisionBox::Update( float dTime ) {

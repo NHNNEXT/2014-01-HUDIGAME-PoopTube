@@ -22,6 +22,13 @@ namespace pooptube {
 			AXIS_NUM = 3,
 		};
 
+		enum COLLISION_TYPE : unsigned short {
+			NONE	= 0x0,
+			BLOCK	= 0x1,
+			PLAYER	= 0x2,
+			// 필요시 차후 추가
+		};
+
 		CollisionBox();
 		CollisionBox(const D3DXVECTOR3& fMax, const D3DXVECTOR3& fMin);
 		virtual ~CollisionBox();
@@ -39,6 +46,10 @@ namespace pooptube {
 //		void			SetParent( std::shared_ptr<Node> pNode ){ mParentNode = pNode; }
 		void			SetAABBCollisionBoxFromSkinnedMesh(SkinnedMesh *pMesh);
 		void			SetAABBCollisionBoxFromVertices(MESH_CUSTOM_VERTEX* vertices, UINT Size);
+		void			SetAxisLenX( float xLen ) { mAxisLen[AXIS_X] = xLen; }
+		void			SetAxisLenY( float yLen ) { mAxisLen[AXIS_Y] = yLen; }
+		void			SetAxisLenZ( float zLen ) { mAxisLen[AXIS_Z] = zLen; }
+		void			SetCollisionType( COLLISION_TYPE collisionType ){ mCollisionType = collisionType; }
 
 		bool			CollisionCheck( CollisionBox* target );
 
@@ -47,10 +58,12 @@ namespace pooptube {
 		float			GetAxisLenZ() { return mAxisLen[AXIS_Z]; }
 //		std::shared_ptr<Node>	GetParent() const { return mParentNode; }
 		Node*			GetParent( ) const { return mParentNode; }
+		COLLISION_TYPE	GetCollisionType() { return mCollisionType; }
 
 	private:
 		float			mAxisLen[AXIS_NUM];
 //		std::shared_ptr<Node>	mParentNode;
 		Node*			mParentNode;
+		COLLISION_TYPE	mCollisionType = COLLISION_TYPE::NONE;
 	};
 }

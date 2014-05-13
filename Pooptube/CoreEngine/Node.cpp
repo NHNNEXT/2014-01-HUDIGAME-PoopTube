@@ -107,10 +107,18 @@ namespace pooptube {
 		mFrontVector.x = mFrontVector.x*cosf(angle) + mFrontVector.z*sinf(angle);
 		mFrontVector.z = -mFrontVector.x*sinf(angle) + mFrontVector.z*cosf(angle);
 		D3DXVec3Normalize(&mFrontVector, &mFrontVector);
+
+		for( auto child : mChildList ) {
+			child->RotateFrontVectorY( angle );
+		}
 	}
 
 	void Node::Translation( const D3DXVECTOR3& moveVec ) {
 		mPosition += moveVec;
+
+		for( auto child : mChildList ) {
+			child->Translation( moveVec );
+		}
 	}
 
 	void Node::Translation( float x, float y, float z ) {
@@ -127,10 +135,21 @@ namespace pooptube {
 		pos += GetLeftVector() * dSide;
 
 		mPosition = pos;
+
+		for( auto child : mChildList ) {
+			child->Move( dForward, dSide );
+		}
 	}
 
 
 	void Node::SetPosition(const D3DXVECTOR3& newPos) {
+		for( auto child : mChildList ){
+			D3DXVECTOR3 dPos = child->mPosition - mPosition;
+			if( dPos != D3DXVECTOR3( 0.f, 0.f, 0.f ) )
+				child->SetPosition( newPos + dPos );
+			else
+				child->SetPosition( newPos );
+		}
 		mPosition = newPos;
 	}
 
