@@ -13,7 +13,7 @@
 #include "MacroSet.h"
 
 #include <windows.h>
-//#include <C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\d3dx9.h>
+
 #include <d3dx9.h>
 
 #include <memory>
@@ -23,8 +23,8 @@
 #include <algorithm>
 #include <map>
 #include <string>
+#include <unordered_map>
 
-//#include <C:\Program Files\Autodesk\FBX\FBX SDK\2014.2.1\include\fbxsdk.h>
 #include <fbxsdk.h>
 
 #include "ObjectManager.h"

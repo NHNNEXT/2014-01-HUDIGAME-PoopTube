@@ -61,6 +61,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2014.2.1\include;$(SolutionDir)CoreEngine;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Bin;C:\Program Files\Autodesk\FBX\FBX SDK\2014.2.1\lib\vs2012\x86\debug;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;$(SolutionDir)Library\FMOD;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CLR|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -76,7 +78,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>CoreEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CoreEngine.lib;fmod_vc.lib;fmodstudio_vc.lib;d3d9.lib;d3dx9d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -94,6 +96,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>CoreEngine.lib;fmod_vc.lib;fmodstudio_vc.lib;d3d9.lib;d3dx9d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='CLR|Win32'">
