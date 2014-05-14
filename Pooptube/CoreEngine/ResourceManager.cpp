@@ -28,6 +28,25 @@ namespace pooptube {
 
 	ResourceManager::~ResourceManager() {
 
+		for (auto iter : mFBXMeshTable) {
+			std::pair<std::string, Mesh*> temp = iter;
+			delete temp.second;
+		}
+
+		for (auto iter : mHeightMapTable) {
+			std::pair<std::string, Ground::MapData*> temp = iter;
+			delete temp.second;
+		}
+
+		for (auto iter : mTextureTable) {
+			std::pair<std::string, LPDIRECT3DTEXTURE9> temp = iter;
+			temp.second->Release();
+		}
+		for (auto iter : mHLSLShaderTable) {
+			std::pair<std::string, ID3DXEffect*> temp = iter;
+			temp.second->Release();
+		}
+		
 	}
 
 	bool ResourceManager::_Init() {

@@ -61,39 +61,39 @@ namespace pooptube {
 		}
 	}
 
-	void Node::DisableKeyEvent() {
-		if (mIsKeyEventEnabled == true) {
-			//this->_RegistrationToKeyEventDispatcher();
-			Application::GetInstance()->GetKeyEventDispatcher()->RemoveEventDelegate(this);
-			mIsKeyEventEnabled = false;
-		}
-	}
-	void Node::DisableMouseEvent() {
-		if (mIsMouseEventEnabled == true) {
-			Application::GetInstance()->GetMouseEventDispatcher()->RemoveEventDelegate(this);
-			mIsMouseEventEnabled = false;
-		}
-	}
-
-	void Node::EnableKeyEvent() {
-		if (mIsKeyEventEnabled == false) {
-			this->_RegistrationToKeyEventDispatcher();
-			mIsKeyEventEnabled = true;
-		}
-	}
-	void Node::EnableMouseEvent() {
-		if (mIsMouseEventEnabled == false) {
-			this->_RegistrationToMouseEventDispatcher();
-			mIsMouseEventEnabled = true;
-		}
-	}
-
-	void Node::_RegistrationToKeyEventDispatcher() {
-		Application::GetInstance()->GetKeyEventDispatcher()->AddEventDelegate(this);
-	}
-	void Node::_RegistrationToMouseEventDispatcher() {
-		Application::GetInstance()->GetMouseEventDispatcher()->AddEventDelegate(this);
-	}
+// 	void Node::DisableKeyEvent() {
+// 		if (mIsKeyEventEnabled == true) {
+// 			//this->_RegistrationToKeyEventDispatcher();
+// 			Application::GetInstance()->GetKeyEventDispatcher()->RemoveEventDelegate(this);
+// 			mIsKeyEventEnabled = false;
+// 		}
+// 	}
+// 	void Node::DisableMouseEvent() {
+// 		if (mIsMouseEventEnabled == true) {
+// 			Application::GetInstance()->GetMouseEventDispatcher()->RemoveEventDelegate(this);
+// 			mIsMouseEventEnabled = false;
+// 		}
+// 	}
+// 
+// 	void Node::EnableKeyEvent() {
+// 		if (mIsKeyEventEnabled == false) {
+// 			this->_RegistrationToKeyEventDispatcher();
+// 			mIsKeyEventEnabled = true;
+// 		}
+// 	}
+// 	void Node::EnableMouseEvent() {
+// 		if (mIsMouseEventEnabled == false) {
+// 			this->_RegistrationToMouseEventDispatcher();
+// 			mIsMouseEventEnabled = true;
+// 		}
+// 	}
+// 
+// 	void Node::_RegistrationToKeyEventDispatcher() {
+// 		Application::GetInstance()->GetKeyEventDispatcher()->AddEventDelegate(this);
+// 	}
+// 	void Node::_RegistrationToMouseEventDispatcher() {
+// 		Application::GetInstance()->GetMouseEventDispatcher()->AddEventDelegate(this);
+// 	}
 
 	void Node::RotationY(float Angle) {
 		RotateFrontVectorY(Angle);

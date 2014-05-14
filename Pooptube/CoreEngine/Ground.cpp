@@ -160,9 +160,10 @@ namespace pooptube {
 	{
 		D3DXVECTOR3 pos = Node::GetPosition();
 
-		int vx = ((x - pos.x) / mPolygonSize) + 0.5f;
-		int vz = ((z - pos.z) / mPolygonSize) + 0.5f;
-		int index = (vz * mData->col) + vx;
+		float vx = ((x - pos.x) / mPolygonSize) + 0.5f;
+		float vz = ((z - pos.z) / mPolygonSize) + 0.5f;
+		//문제될 가능성이 매우 높음
+		int index = (int)((vz * mData->col) + vx);
 
 		MESH_CUSTOM_VERTEX* pVertices;
 		if (mVertexBuffer->Lock(0, mVertexCount*sizeof(pooptube::MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
@@ -225,14 +226,15 @@ namespace pooptube {
 			return;
 
 		D3DXVECTOR3 pos = GetPosition();
-		int vx = ((x - pos.x) / mPolygonSize) + 0.5f;
-		int vz = ((z - pos.z) / mPolygonSize) + 0.5f;
-		int index = (vz*(mData->col)) + vx;
+		float vx = ((x - pos.x) / mPolygonSize) + 0.5f;
+		float vz = ((z - pos.z) / mPolygonSize) + 0.5f;
+		//문제될 가능성 높음
+		int index =(int)((vz*(mData->col)) + vx);
 
 		pVertices[index].position.y = value;
 
 		//D3DXVECTOR3 vx = pVertices[pIndices[mIdx].w0].position + pVertices[pIndices[mIdx].w1].position + pVertices[pIndices[mIdx].w2].position;
-		mData->SetHeight(vx, vz, value);
+		mData->SetHeight((UINT)vx, (UINT)vz, value);
 	//	printf("(%d,%d) %d(%f)\n", vx, vz, mData->GetHeight(vx, vz),value);
 
 		mVertexBuffer->Unlock();

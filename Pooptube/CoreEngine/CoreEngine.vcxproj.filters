@@ -268,6 +268,7 @@
     <ClInclude Include="SoundBox.h">
       <Filter>Nodes\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -397,6 +398,7 @@
     <ClCompile Include="SoundBox.cpp">
       <Filter>Nodes\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

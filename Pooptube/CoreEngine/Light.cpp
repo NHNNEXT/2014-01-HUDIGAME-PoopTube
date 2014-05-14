@@ -14,7 +14,7 @@ namespace pooptube {
 	}
 
 	Light *Light::Create() {
-		Light *pLight(new Light);
+		Light *pLight = new Light;
 		if (pLight->Init())
 			return pLight;
 		else

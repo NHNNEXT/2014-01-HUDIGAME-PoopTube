@@ -20,11 +20,30 @@ namespace pooptube {
 
 	public:
 		void GetKey();
+		
+		void SetX(int x) { mMouseX = x; }
+		void SetY(int y) { mMouseY = y; }
+
+		//아직 구현안됨
+		void SetDeltaX(int deltaX) { mDeltaMouseX = deltaX; }
+		void SetDeltaY(int deltaY) { mDeltaMouseY = deltaY; }
+
 		KeyState KeyState(int key);
+		int GetX() { return mMouseX; }
+		int GetY() { return mMouseY; }
+
+		int GetDeltaX() { return mDeltaMouseX; }
+		int GetDeltaY() { return mDeltaMouseY; }
 
 	private:
 		bool mNow[256];
 		bool mPrev[256];
+
+		int mMouseX = 0;
+		int mMouseY = 0;
+		int mDeltaMouseX = 0;
+		int	mDeltaMouseY = 0;
+
 	};
 
 	extern InputManager gInputManager;

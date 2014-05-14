@@ -9,10 +9,13 @@ namespace pooptube {
 
 	XMesh::~XMesh() {
 		mXMesh->Release();
-		for (DWORD i = 0; i < mNumMaterial; ++i)
+		for (DWORD i = 0; i < mNumMaterial; ++i) {
 			mTexture[i]->Release();
+		}
+		
 		delete[] mMaterial;
 		delete[] mTexture;
+
 	}
 
 	XMesh *XMesh::Create(const std::string& FilePath) {
@@ -116,7 +119,7 @@ namespace pooptube {
 		memcpy(indexBuffer, pIB, sizeof(WORD)*IndicesNum * 3);
 		
 		for (int i = 0; i < IndicesNum; ++i)
-			mIndices.push_back((D3DXVECTOR3(indexBuffer[i * 3], indexBuffer[i * 3 + 1], indexBuffer[i * 3 + 2])));
+			mIndices.push_back(D3DXVECTOR3(indexBuffer[i * 3], indexBuffer[i * 3 + 1], indexBuffer[i * 3 + 2]));
 
 		mXMesh->UnlockIndexBuffer();
 		delete[]indexBuffer;

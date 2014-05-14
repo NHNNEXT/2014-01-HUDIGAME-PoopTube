@@ -1,29 +1,11 @@
 ﻿
 #pragma once
 
-#pragma comment(lib, "winmm.lib") // timeGetTime 지우면 필요없을걸 아마 chrono로 바꾸면 삭제합시다
-
-#pragma comment(lib, "ws2_32.lib") // 윈속 라이브러리
-
-#pragma comment(lib, "user32.lib")
-// d3d
-//#pragma comment(lib, "C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86\\d3d9.lib")
-#pragma comment(lib, "d3d9.lib")
+// 당분간 쓰지맙시다.
 
 #ifdef _DEBUG
-//#pragma comment(lib, "C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86\\d3dx9d.lib")
-#pragma comment(lib, "d3dx9d.lib")
-//#pragma comment(lib, "C:\\Program Files\\Autodesk\\FBX\\FBX SDK\\2014.2.1\\lib\\vs2012\\x86\\debug\\libfbxsdk.lib")
-#pragma comment(lib, "libfbxsdk.lib")
-#pragma comment(lib, "fmodL_vc.lib")
-#pragma comment(lib, "fmodstudioL_vc.lib")
 
 #else
-#pragma comment(lib, "d3dx9.lib")
-//#pragma comment(lib, "C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\Lib\\x86\\d3dx9.lib")
-#pragma comment(lib, "libfbxsdk.lib")
-//#pragma comment(lib, "C:\\Program Files\\Autodesk\\FBX\\FBX SDK\\2014.2.1\\lib\\vs2012\\x86\\release\\libfbxsdk.lib")
-#pragma comment(lib, "fmod_vc.lib")
-#pragma comment(lib, "fmodstudio_vc.lib")
+
 
 #endif

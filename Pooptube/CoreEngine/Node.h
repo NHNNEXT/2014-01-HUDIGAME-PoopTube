@@ -11,8 +11,8 @@
 
 #include "Object.h"
 #include "Application.h"
-#include "KeyEventDelegate.h"
-#include "MouseEventDelegate.h"
+//#include "KeyEventDelegate.h"
+//#include "MouseEventDelegate.h"
 
 #define CREATE_FUNC(Class) \
 	static Class* Create() { \
@@ -28,7 +28,7 @@
 
 namespace pooptube {
 
-	class Node : public Object, public KeyEventDelegate, public MouseEventDelegate {
+	class Node : public Object/*, public KeyEventDelegate, public MouseEventDelegate */{
 	public:
 		Node();
 		virtual ~Node();
@@ -48,17 +48,17 @@ namespace pooptube {
 // 		}
 
 		//@brief 무조건 16바이트 alignment로 생성되도록 함
-// 		static void* operator new (std::size_t size) throw(){
-// 			//생성자와 소멸자확인
-// 			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
-// 			return ptr;
-// 		}
+		static void* operator new (std::size_t size) throw(){
+			//생성자와 소멸자확인
+			void* ptr = _aligned_malloc(size, POOPTUBE_ALIGNMENT_SIZE);
+			return ptr;
+		}
 
 		//@brief 일반 delete도 위치지정 delete와 같이 해제되도록 설정
-// 		static void operator delete (void *p) throw() {
-// 			if (p == nullptr) return;
-// 			return _aligned_free(p);
-// 		}
+		static void operator delete (void *p) throw() {
+			if (p == nullptr) return;
+			return _aligned_free(p);
+		}
 
 		static Node *Create();
 
@@ -73,12 +73,12 @@ namespace pooptube {
 
  		virtual void AddChild( Node* pChild );
  		virtual void RemoveChild( Node* pChild );
-
-		virtual void DisableKeyEvent();
-		virtual void DisableMouseEvent();
-
-		virtual void EnableKeyEvent();
-		virtual void EnableMouseEvent();
+// 
+// 		virtual void DisableKeyEvent();
+// 		virtual void DisableMouseEvent();
+// 
+// 		virtual void EnableKeyEvent();
+// 		virtual void EnableMouseEvent();
 
 		//@brief 아래 두개 하는일 같음
 		//좌표축은 항상 물체의 중앙에 고정
@@ -132,8 +132,8 @@ namespace pooptube {
 //		virtual void CollsionFeedBack( Node* target ){};
 
 	private:
-		void _RegistrationToKeyEventDispatcher();
-		void _RegistrationToMouseEventDispatcher();
+// 		void _RegistrationToKeyEventDispatcher();
+// 		void _RegistrationToMouseEventDispatcher();
 		
 	protected:
 		std::vector<std::shared_ptr<Node>> mChildList;

@@ -39,5 +39,6 @@ namespace pooptube {
 		return KeyState::KEY_NOTPRESSED;
 	}
 
+
 	InputManager gInputManager;	
 }

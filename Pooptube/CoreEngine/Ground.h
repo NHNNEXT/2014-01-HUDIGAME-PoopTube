@@ -25,7 +25,7 @@ namespace pooptube {
 
 				printf("\n\n");
 
-				for (int i = 0; i < row*col; ++i)
+				for (UINT i = 0; i < row*col; ++i)
 					data[i] = mapData[i * 3];
 
 				for (int i = 0; i < row*col; ++i)
@@ -39,7 +39,7 @@ namespace pooptube {
 					delete []data;
 			}
 			UCHAR GetHeight(UINT x, UINT z) { return (x >= col || z >= row) ? 0 : data[z * col + x]; }
-			void  SetHeight(UINT x, UINT z, float value) { data[z * col + x] = value / amp; }
+			void  SetHeight(UINT x, UINT z, float value) { data[z * col + x] = (UCHAR)( value / amp); }
 
 		public:
 			UCHAR	*data	= nullptr; // Ground Data

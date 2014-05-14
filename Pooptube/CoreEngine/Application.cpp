@@ -33,9 +33,9 @@ namespace pooptube {
 			return false;
 		}
 
-		if ( _CreateEventDispatcher() == false ) {
-			return false;
-		}
+// 		if ( _CreateEventDispatcher() == false ) {
+// 			return false;
+// 		}
 
 		return true;
 	}
@@ -55,10 +55,10 @@ namespace pooptube {
 		if (_CreateSceneManager() == false) {
 			return false;
 		}
-
-		if (_CreateEventDispatcher() == false) {
-			return false;
-		}
+// 
+// 		if (_CreateEventDispatcher() == false) {
+// 			return false;
+// 		}
 
 		return true;
 	}
@@ -106,10 +106,10 @@ namespace pooptube {
 					break;
 				}
 
-				mKeyEventDispatcher->Dispatch( mKeyEventList );
-				mMouseEventDispatcher->Dispatch( mMouseEventList );
+				//mKeyEventDispatcher->Dispatch( mKeyEventList );
+				//mMouseEventDispatcher->Dispatch( mMouseEventList );
 
-				//gInputManager.GetKey();
+				gInputManager.GetKey();
 
 				mSceneManager->Update( mDeltaTime );
 				mSceneManager->Render();
@@ -166,30 +166,30 @@ namespace pooptube {
 		return true;
 	}
 
-	bool Application::_CreateEventDispatcher() {
-		// Key
-		mKeyEventDispatcher = new KeyEventDispatcher();
-
-		if ( mKeyEventDispatcher->Init() == true ) {
-			ObjectManager::GetInstance()->AddObject( mKeyEventDispatcher );
-		} else {
-			delete mKeyEventDispatcher;
-			mKeyEventDispatcher = nullptr;
-			return false;
-		}
-
-		mMouseEventDispatcher = new MouseEventDispatcher();
-
-		if ( mMouseEventDispatcher->Init() == true ) {
-			ObjectManager::GetInstance()->AddObject( mMouseEventDispatcher );
-		} else {
-			delete mMouseEventDispatcher;
-			mMouseEventDispatcher = nullptr;
-			return false;
-		}
-
-		return true;
-	}
+// 	bool Application::_CreateEventDispatcher() {
+// 		// Key
+// 		mKeyEventDispatcher = new KeyEventDispatcher();
+// 
+// 		if ( mKeyEventDispatcher->Init() == true ) {
+// 			ObjectManager::GetInstance()->AddObject( mKeyEventDispatcher );
+// 		} else {
+// 			delete mKeyEventDispatcher;
+// 			mKeyEventDispatcher = nullptr;
+// 			return false;
+// 		}
+// 
+// 		mMouseEventDispatcher = new MouseEventDispatcher();
+// 
+// 		if ( mMouseEventDispatcher->Init() == true ) {
+// 			ObjectManager::GetInstance()->AddObject( mMouseEventDispatcher );
+// 		} else {
+// 			delete mMouseEventDispatcher;
+// 			mMouseEventDispatcher = nullptr;
+// 			return false;
+// 		}
+// 
+// 		return true;
+// 	}
 
 	bool Application::_UpdateFrame( float& fpsTimer, int& prevTime, int& nowTime, int& frameCount ) {
 		frameCount++;
@@ -270,113 +270,137 @@ namespace pooptube {
 				break;
 			}
 		case WM_MOUSEMOVE: {
-				MouseEvent* pMouseEvent = new MouseEvent();
-				pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_MOVE );
-				pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
-				pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
+// 				MouseEvent* pMouseEvent = new MouseEvent();
+// 				pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_MOVE );
+// 				pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
+// 				pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
+// 
+// 				GetInstance()->mMouseEventList.push_front( pMouseEvent );
 
-				GetInstance()->mMouseEventList.push_front( pMouseEvent );
+				gInputManager.SetX((int)(short)LOWORD(lParam));
+				gInputManager.SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_LBUTTONDOWN:
 			{
-				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_LBUTTON ) == false ) {
-					MouseEvent* pMouseEvent = new MouseEvent();
-					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_LBUTTON_DOWN );
-					pMouseEvent->SetMouseButton( MOUSE_LBUTTON );
-					pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
-					pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
+// 				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_LBUTTON ) == false ) {
+// 					MouseEvent* pMouseEvent = new MouseEvent();
+// 					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_LBUTTON_DOWN );
+// 					pMouseEvent->SetMouseButton( MOUSE_LBUTTON );
+// 					pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
+// 					pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
+// 
+// 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_LBUTTON, true );
+// 				
+// 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
+// 				} 
 
-					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_LBUTTON, true );
-				
-					GetInstance()->mMouseEventList.push_front( pMouseEvent );
-				} 
+				gInputManager.SetX((int)(short)LOWORD(lParam));
+				gInputManager.SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_LBUTTONUP:
 			{
-				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_LBUTTON ) == true ) {
-					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_LBUTTON, false );
-				}
+// 				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_LBUTTON ) == true ) {
+// 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_LBUTTON, false );
+// 				}
+
+				gInputManager.SetX((int)(short)LOWORD(lParam));
+				gInputManager.SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_MBUTTONDOWN:
 			{
-				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_MBUTTON ) == false ) {
-					MouseEvent* pMouseEvent = new MouseEvent();
-					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_MBUTTON_DOWN );
-					pMouseEvent->SetMouseButton( MOUSE_MBUTTON );
+// 				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_MBUTTON ) == false ) {
+// 					MouseEvent* pMouseEvent = new MouseEvent();
+// 					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_MBUTTON_DOWN );
+// 					pMouseEvent->SetMouseButton( MOUSE_MBUTTON );
+// 
+// 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_MBUTTON, true );
+// 					pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
+// 					pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
+// 				
+// 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
+// 				}
 
-					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_MBUTTON, true );
-					pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
-					pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
-				
-					GetInstance()->mMouseEventList.push_front( pMouseEvent );
-				} 
+				gInputManager.SetX((int)(short)LOWORD(lParam));
+				gInputManager.SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_MBUTTONUP:
 			{
-				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_MBUTTON ) == true ) {
-					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_MBUTTON, false );
-				}
+// 				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_MBUTTON ) == true ) {
+// 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_MBUTTON, false );
+// 				}
+
+				gInputManager.SetX((int)(short)LOWORD(lParam));
+				gInputManager.SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_RBUTTONDOWN:
 			{
-				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_RBUTTON ) == false ) {
-					MouseEvent* pMouseEvent = new MouseEvent();
-					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_RBUTTON_DOWN );
-					pMouseEvent->SetMouseButton( MOUSE_RBUTTON );
+// 				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_RBUTTON ) == false ) {
+// 					MouseEvent* pMouseEvent = new MouseEvent();
+// 					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_RBUTTON_DOWN );
+// 					pMouseEvent->SetMouseButton( MOUSE_RBUTTON );
+// 
+// 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_RBUTTON, true );
+// 					pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
+// 					pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
+// 				
+// 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
+// 				} 
 
-					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_RBUTTON, true );
-					pMouseEvent->SetX( (int)(short)LOWORD(lParam) );
-					pMouseEvent->SetY( (int)(short)HIWORD(lParam) );
-				
-					GetInstance()->mMouseEventList.push_front( pMouseEvent );
-				} 
+				gInputManager.SetX((int)(short)LOWORD(lParam));
+				gInputManager.SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_RBUTTONUP:
 			{
-				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_RBUTTON ) == true ) {
-					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_RBUTTON, false );
-				}
+// 				if ( GetInstance()->mMouseEventDispatcher->IsMouseButtonPressed( MOUSE_RBUTTON ) == true ) {
+// 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_RBUTTON, false );
+// 				}
+
+				gInputManager.SetX((int)(short)LOWORD(lParam));
+				gInputManager.SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_MOUSEWHEEL:
 			{
-				if( (SHORT)HIWORD(wParam) > 0 ) {
-					MouseEvent* pMouseEvent = new MouseEvent();
-					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_WHEEL_UP );
-					GetInstance()->mMouseEventList.push_front( pMouseEvent );
-				}
-				else {
-					MouseEvent* pMouseEvent = new MouseEvent();
-					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_WHEEL_DOWN );
-					GetInstance()->mMouseEventList.push_front( pMouseEvent );
-				}
+// 				if( (SHORT)HIWORD(wParam) > 0 ) {
+// 					MouseEvent* pMouseEvent = new MouseEvent();
+// 					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_WHEEL_UP );
+// 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
+// 				}
+// 				else {
+// 					MouseEvent* pMouseEvent = new MouseEvent();
+// 					pMouseEvent->SetMouseEventType( MouseEventType::MOUSE_WHEEL_DOWN );
+// 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
+// 				}
+
+				gInputManager.SetX((int)(short)LOWORD(lParam));
+				gInputManager.SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 
 		case WM_SYSKEYDOWN:
 		case WM_KEYDOWN: {
-				if ( GetInstance()->mKeyEventDispatcher->IsKeyPressed( wParam ) == false ) {
-					KeyEvent* pKeyEvent = new KeyEvent();
-					pKeyEvent->SetKeyEventType( KeyEventType::KEY_DOWN );
-					pKeyEvent->SetKeyCode( wParam );
-
-					GetInstance()->mKeyEventDispatcher->SetKeyPressed( wParam, true );
-				
-					GetInstance()->mKeyEventList.push_front( pKeyEvent );
-				} 
+// 				if ( GetInstance()->mKeyEventDispatcher->IsKeyPressed( wParam ) == false ) {
+// 					KeyEvent* pKeyEvent = new KeyEvent();
+// 					pKeyEvent->SetKeyEventType( KeyEventType::KEY_DOWN );
+// 					pKeyEvent->SetKeyCode( wParam );
+// 
+// 					GetInstance()->mKeyEventDispatcher->SetKeyPressed( wParam, true );
+// 				
+// 					GetInstance()->mKeyEventList.push_front( pKeyEvent );
+// 				} 
 				break;
 			}
 		case WM_SYSKEYUP:
 		case WM_KEYUP: {
-				if ( GetInstance()->mKeyEventDispatcher->IsKeyPressed( wParam ) == true ) {
-					GetInstance()->mKeyEventDispatcher->SetKeyPressed( wParam, false );
-				}
+// 				if ( GetInstance()->mKeyEventDispatcher->IsKeyPressed( wParam ) == true ) {
+// 					GetInstance()->mKeyEventDispatcher->SetKeyPressed( wParam, false );
+// 				}
 
 				break;
 			}

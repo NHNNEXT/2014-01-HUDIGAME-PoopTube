@@ -27,8 +27,8 @@ bool LightOrb::Init(LightOrb *pCreature)
 {
 	Node::Init();
 
-	EnableKeyEvent();
-	EnableMouseEvent();
+// 	EnableKeyEvent();
+// 	EnableMouseEvent();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
