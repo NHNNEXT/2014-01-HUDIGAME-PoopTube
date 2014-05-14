@@ -7,6 +7,7 @@
 #include "Object.h"
 #include "ObjectManager.h"
 #include "StageOne.h"
+#include "IntroScene.h"
 
 int main()
 {
@@ -26,17 +27,19 @@ int main()
 	lr.mPlayerId = 1000;
 	pooptube::NetworkSystem::GetInstance()->Write((char*)&lr, lr.mSize);*/
 
-	StageOne* pStageOne = StageOne::Create();
+	//StageOne* pStageOne = StageOne::Create();
+	IntroScene *pIntroScene = IntroScene::Create();
 
-	if (pStageOne == nullptr) {
-		printf("TestScene Create Error!\n");
-		system("pause");
-		pooptube::Application::GetInstance()->Release();
+// 	if (pStageOne == nullptr) {
+// 		printf("TestScene Create Error!\n");
+// 		system("pause");
+// 		pooptube::Application::GetInstance()->Release();
+// 
+// 		return 1;
+// 	}
 
-		return 1;
-	}
-
-	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);
+	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);
+	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pooptube::TestScene::Create() );
 
 	pooptube::Application::GetInstance()->Run();

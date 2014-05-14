@@ -40,12 +40,13 @@ namespace pooptube {
 		mD3DLight.Diffuse.g = 0.5f;
 		mD3DLight.Diffuse.b = 0.5f;
 
-		SetPosition(D3DXVECTOR3(10.f, 10.f, 10.f));
+		SetPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
 		mD3DLight.Range = 12.f;
-
+		
 		GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
 		//연산량을 줄이기 위해 미리 엠비언트라이트를 먹여버린다.
 		GetDevice()->SetRenderState(D3DRS_AMBIENT, 0x00202020);
+		//GetDevice()->SetRenderState(D3DRS_AMBIENT, 0xffffffff);
 
 		return true;
 	}
@@ -57,6 +58,7 @@ namespace pooptube {
 
 	void Light::Render() {
 		mD3DLight.Position = GetPosition();
+		mD3DLight.Position.y += 2.f;
 		Node::Render();
 		GetDevice()->SetLight(mIndex, &mD3DLight);
 		GetDevice()->LightEnable(mIndex, mLightSwitch);

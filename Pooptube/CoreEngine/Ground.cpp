@@ -34,6 +34,14 @@ namespace pooptube {
 
 	//매번 리셋가능하도록 수정해야함
 	bool Ground::_SetBuffer() {
+
+		for (int i = 0; i < mData->col; ++i)
+		{
+			for (int j = 0; j < mData->row; ++j)
+				printf("%3d ", mData->data[i*mData->col + j]);
+			printf("\n");
+		}
+		getchar();
 		UINT col = mData->col - 1;
 		UINT row = mData->row - 1;
 

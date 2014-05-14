@@ -52,6 +52,9 @@
     <ClInclude Include="LightOrb.h">
       <Filter>Character</Filter>
     </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="LightOrb.cpp">
       <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -93,7 +93,8 @@ bool StageOne::Init() {
 	soundBox->Translation( soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ() );
 	AddChild( soundBox );
 	
-	//this->AddChild(mLight);
+	//this->mCharacter->AddChild(mLight);
+	//mLight->SetRange(4.f);
 	this->AddChild(mSunLight);
 	//this->AddChild(mSkinnedMesh);
 	this->AddChild(mXMesh);
@@ -124,6 +125,8 @@ void StageOne::Render() {
 }
 void StageOne::Update(float dTime) {
 	Node::Update(dTime);
+	
+	//mLight->SetRange(mLight->GetRange() - dTime / 10.f);
 	//2초마다 한번씩
 	if (mTimeForFPS > 2.f) {
 		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());

@@ -198,6 +198,7 @@ namespace pooptube {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 
+			
 			FILE* filePtr;
 			int error;
 			UINT count;
@@ -253,7 +254,40 @@ namespace pooptube {
 				return nullptr;
 			}
 				
-
+			for (int i = 0; i < (row + 1)*(col + 1) * 3; ++i)
+			{
+				if (i % 3 == 0)
+					printf("\n");
+				printf("%3d ", bitmapImage[i]);
+			}
+				
+			printf("\n\n");
+			
+// 			LPDIRECT3DSURFACE9 m_pSurface = nullptr;
+// 			D3DXIMAGE_INFO imageInfo;
+// 			ZeroMemory(&imageInfo, sizeof(D3DXIMAGE_INFO));
+// 
+// 			HRESULT hr = D3DXGetImageInfoFromFile(L"heightmap.bmp", &imageInfo);
+// 
+// 			mDevice->CreateOffscreenPlainSurface(imageInfo.Width, imageInfo.Height, D3DFMT_X8R8G8B8, D3DPOOL_SCRATCH, &m_pSurface, 0);
+// 
+// 			hr = D3DXLoadSurfaceFromFile(m_pSurface, 0, 0, std::wstring(FilePath.begin(), FilePath.end()).c_str(), 0, D3DX_FILTER_NONE, 0, &imageInfo);
+// 
+// 			D3DLOCKED_RECT lockRect;
+// 			ZeroMemory(&lockRect, sizeof(D3DLOCKED_RECT));
+// 
+// 			m_pSurface->LockRect(&lockRect, 0, D3DLOCK_READONLY);
+// 
+// 			int iNumPixels = imageInfo.Width * imageInfo.Height;
+// 			int iPixelsWidth = imageInfo.Width;
+// 			int iPixelsHeight = imageInfo.Height;
+// 
+// 			for (int i = 0; i < iPixelsWidth * iPixelsHeight; ++i)          // HORIZONTAL ROWS
+// 			{
+// 				= lockRect[i]; ? ? ? ? // Get Height from bmp
+// 			}
+// 
+// 			m_pSurface->UnlockRect(
 			Ground::MapData *pMapData(new Ground::MapData(bitmapImage, row + 1, col + 1));
 			mHeightMapTable[FilePath] = pMapData;
 			delete[] bitmapImage;
