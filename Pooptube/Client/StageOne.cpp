@@ -17,6 +17,7 @@
 #include "ResourceManager.h"
 #include "Sprite.h"
 #include "SoundBox.h"
+#include "InputManager.h"
 #include <iostream>
 
 StageOne::StageOne() {
@@ -124,6 +125,9 @@ void StageOne::Render() {
 }
 void StageOne::Update(float dTime) {
 	Node::Update(dTime);
+
+	UpdateInput();
+
 	//2초마다 한번씩
 	if (mTimeForFPS > 2.f) {
 		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
@@ -144,44 +148,46 @@ void StageOne::Update(float dTime) {
 	pooptube::SoundManager::GetInstance()->Update();
 }
 
-void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
-}
+// void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
+// }
+// 
+// void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
+// 
+// 	switch (pKeyEvent->GetKeyCode())
+// 	{
+// 	case 'R' :
+// 		mGround->_SetBuffer();
+// 		break;
+// 	case 'T':
+// 		mCharacter->Move(0.1f, 0.f);
+// 		break;
+// 	case 'G':
+// 		mCharacter->Move(-0.1f, 0.f);
+// 		break;
+// 	case 'F':
+// 		mCharacter->Move(0.f, 0.1f);
+// 		break;
+// 	case 'H':
+// 		mCharacter->Move(0.f, -0.1f);
+// 		break;
+// 	case VK_UP:
+// 		break;
+// 	case VK_DOWN:
+// 		break;
+// 
+// 	case 'Q':
+// 		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+// 		break;
+// 	case 'E':
+// 		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+// 		break;
+// 	}
+// }
+// void StageOne::KeyUp(pooptube::KeyEvent* pKeyEvent) {
+// 
+// }
 
-void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 
-	switch (pKeyEvent->GetKeyCode())
-	{
-	case 'R' :
-		mGround->_SetBuffer();
-		break;
-	case 'T':
-		mCharacter->Move(0.1f, 0.f);
-		break;
-	case 'G':
-		mCharacter->Move(-0.1f, 0.f);
-		break;
-	case 'F':
-		mCharacter->Move(0.f, 0.1f);
-		break;
-	case 'H':
-		mCharacter->Move(0.f, -0.1f);
-		break;
-	case VK_UP:
-		break;
-	case VK_DOWN:
-		break;
-
-	case 'Q':
-		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		break;
-	case 'E':
-		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		break;
-	}
-}
-void StageOne::KeyUp(pooptube::KeyEvent* pKeyEvent) {
-
-}
 void StageOne::PICK(float x, float y)
 {
 	D3DVIEWPORT9 view;
@@ -229,32 +235,33 @@ void StageOne::PICK(float x, float y)
 	if (picked) printf("API ");
 
 }
-void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
-	switch (pMouseEvent->GetMouseEventType())
-	{
-	case pooptube::MouseEventType::MOUSE_LBUTTON_DOWN:
-		//PICK(pMouseEvent->GetX(), pMouseEvent->GetY());
-		mGround->PICKGROUND(pMouseEvent->GetX(), pMouseEvent->GetY(), 0.2f);
 
-		//TEST(pMouseEvent->GetX(), pMouseEvent->GetY());
-		break;
-	case pooptube::MouseEventType::MOUSE_RBUTTON_DOWN :
-		mGround->PICKGROUND(pMouseEvent->GetX(), pMouseEvent->GetY(), -0.2f);
-		break;
-	}
-}
-
-void StageOne::MouseMove(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void StageOne::MouseUp(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void StageOne::MousePressed(pooptube::MouseEvent* pMouseEvent) {
-}
-
-void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
-}
+// void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
+// 	switch (pMouseEvent->GetMouseEventType())
+// 	{
+// 	case pooptube::MouseEventType::MOUSE_LBUTTON_DOWN:
+// 		//PICK(pMouseEvent->GetX(), pMouseEvent->GetY());
+// 		mGround->PICKGROUND(pMouseEvent->GetX(), pMouseEvent->GetY(), 0.2f);
+// 
+// 		//TEST(pMouseEvent->GetX(), pMouseEvent->GetY());
+// 		break;
+// 	case pooptube::MouseEventType::MOUSE_RBUTTON_DOWN :
+// 		mGround->PICKGROUND(pMouseEvent->GetX(), pMouseEvent->GetY(), -0.2f);
+// 		break;
+// 	}
+// }
+// 
+// void StageOne::MouseMove(pooptube::MouseEvent* pMouseEvent) {
+// }
+// 
+// void StageOne::MouseUp(pooptube::MouseEvent* pMouseEvent) {
+// }
+// 
+// void StageOne::MousePressed(pooptube::MouseEvent* pMouseEvent) {
+// }
+// 
+// void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
+// }
 
 void StageOne::MainCharacterJumpUpdate(float dTime) {
 	//캐릭터 점프 알고리즘
@@ -296,4 +303,24 @@ void StageOne::MainCharacterJumpUpdate(float dTime) {
 		
 	}
 	
+}
+
+void StageOne::UpdateInput() {
+	if (pooptube::gInputManager.KeyState('R') == pooptube::KeyState::KEY_PRESSED)
+		mGround->_SetBuffer();
+	if (pooptube::gInputManager.KeyState('T') == pooptube::KeyState::KEY_PRESSED)
+		mCharacter->Move(0.1f, 0.f);
+	if (pooptube::gInputManager.KeyState('G') == pooptube::KeyState::KEY_PRESSED)
+		mCharacter->Move(-0.1f, 0.f);
+	if (pooptube::gInputManager.KeyState('F') == pooptube::KeyState::KEY_PRESSED)
+		mCharacter->Move(0.f, 0.1f);
+	if (pooptube::gInputManager.KeyState('H') == pooptube::KeyState::KEY_PRESSED)
+		mCharacter->Move(0.f, -0.1f);
+
+	
+	if (pooptube::gInputManager.KeyState(VK_LBUTTON) == pooptube::KeyState::KEY_DOWN)
+		mGround->PICKGROUND(pooptube::gInputManager.GetX(), pooptube::gInputManager.GetY(), 0.2f);
+	if (pooptube::gInputManager.KeyState(VK_RBUTTON) == pooptube::KeyState::KEY_DOWN)
+		mGround->PICKGROUND(pooptube::gInputManager.GetX(), pooptube::gInputManager.GetY(), -0.2f);
+
 }

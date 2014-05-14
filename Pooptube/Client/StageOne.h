@@ -34,18 +34,20 @@ public:
 	void Render();
 
 	void Update(float dTime);
+	void UpdateInput();
 
 	//아래 둘을 어디로 옮길지 생각중
 	void MainCharacterJumpUpdate(float dTime);
 
-	void KeyDown(pooptube::KeyEvent* pKeyEvent);
-	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
-	void KeyUp(pooptube::KeyEvent* pKeyEvent);
-	void MouseDown(pooptube::MouseEvent* pMouseEvent);
-	void MouseMove(pooptube::MouseEvent* pMouseEvent);
-	void MouseUp(pooptube::MouseEvent* pMouseEvent);
-	void MousePressed(pooptube::MouseEvent* pMouseEvent);
-	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
+// 	void KeyDown(pooptube::KeyEvent* pKeyEvent);
+// 	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
+// 	void KeyUp(pooptube::KeyEvent* pKeyEvent);
+// 	void MouseDown(pooptube::MouseEvent* pMouseEvent);
+// 	void MouseMove(pooptube::MouseEvent* pMouseEvent);
+// 	void MouseUp(pooptube::MouseEvent* pMouseEvent);
+// 	void MousePressed(pooptube::MouseEvent* pMouseEvent);
+// 	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
+
 	pooptube::Ground *GetGroundModule() const { return mGround; }
 
 	void PICK(float x, float y);
