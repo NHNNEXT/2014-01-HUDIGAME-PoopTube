@@ -33,11 +33,9 @@ namespace pooptube {
 		if( mInstance == nullptr ) {
 			mInstance = new SoundManager();
 
-			void *extraDriverData = nullptr;
-
 			mInstance->mSystem = nullptr;
 			FMOD::Studio::System::create( &mInstance->mSystem );
-			ERRCHECK( mInstance->mSystem->initialize( 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData ) );
+//			ERRCHECK( mInstance->mSystem->initialize( 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0 ) );
 
 			ObjectManager::GetInstance()->AddObject( mInstance );
 		}
@@ -53,7 +51,8 @@ namespace pooptube {
 	void SoundManager::LoadBank( std::string filename )
 	{
 		FMOD::Studio::Bank* tempBank = nullptr;
-		ERRCHECK( mSystem->loadBankFile( filename.c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &tempBank ) );
+//		ERRCHECK( mSystem->loadBankFile( filename.c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &tempBank ) );
+		mSystem->loadBankFile( filename.c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &tempBank );
 		mBankList.push_back( tempBank );
 	}
 
@@ -61,10 +60,12 @@ namespace pooptube {
 	{
 		if( mEventList.find( eventID ) == mEventList.end() ){
 			FMOD::Studio::ID tempID = { 0 };
-			ERRCHECK( mSystem->lookupID( eventID.c_str(), &tempID ) );
+//			ERRCHECK( mSystem->lookupID( eventID.c_str(), &tempID ) );
+			mSystem->lookupID( eventID.c_str(), &tempID );
 			
 			FMOD::Studio::EventDescription* eventDescription = nullptr;
-			ERRCHECK( mSystem->getEvent( &tempID, FMOD_STUDIO_LOAD_BEGIN_NOW, &eventDescription ) );
+//			ERRCHECK( mSystem->getEvent( &tempID, FMOD_STUDIO_LOAD_BEGIN_NOW, &eventDescription ) );
+			mSystem->getEvent( &tempID, FMOD_STUDIO_LOAD_BEGIN_NOW, &eventDescription );
 
 			return eventDescription;
 		}
@@ -76,7 +77,8 @@ namespace pooptube {
 	FMOD::Studio::EventInstance* SoundManager::GetSound( std::string eventID )
 	{
 		FMOD::Studio::EventInstance* tempInstance(nullptr);
-		ERRCHECK( GetEvent( eventID )->createInstance( &tempInstance ) );
+//		ERRCHECK( GetEvent( eventID )->createInstance( &tempInstance ) );
+		GetEvent( eventID )->createInstance( &tempInstance );
 		return tempInstance;
 	}
 
@@ -86,7 +88,8 @@ namespace pooptube {
 // 		ERRCHECK( mSystem->getListenerAttributes( tempListner ) );
 // 
 // 		return tempListner;
-		ERRCHECK( mSystem->setListenerAttributes( listener ) );
+//		ERRCHECK( mSystem->setListenerAttributes( listener ) );
+		mSystem->setListenerAttributes( listener );
 	}
 
 	void SoundManager::DxVecToFmodVec( D3DXVECTOR3& dxVec, FMOD_VECTOR& fmodVec )
