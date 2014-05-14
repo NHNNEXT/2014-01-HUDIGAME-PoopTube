@@ -27,11 +27,11 @@ Creature *Creature::Create()
 bool Creature::Init( Creature *pCreature )
 {
 	Node::Init();
+// 
+// 	EnableKeyEvent();
+// 	EnableMouseEvent();
 
-	EnableKeyEvent();
-	EnableMouseEvent();
-
-	mXMesh = pooptube::XMesh::Create("tiger.x");
+	//mXMesh = pooptube::XMesh::Create("tiger.x");
 	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
 	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );

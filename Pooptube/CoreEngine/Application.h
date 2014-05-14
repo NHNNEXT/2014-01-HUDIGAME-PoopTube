@@ -14,8 +14,8 @@
 #include "Object.h"
 #include "D3D9Renderer.h"
 #include "SceneManager.h"
-#include "KeyEventDispatcher.h"
-#include "MouseEventDispatcher.h"
+//#include "KeyEventDispatcher.h"
+//#include "MouseEventDispatcher.h"
 
 namespace pooptube {
 
@@ -35,17 +35,17 @@ namespace pooptube {
 		bool Run(bool isAsync=false);
 
 	public:
-		inline HWND			 GetHWND() const { return mHwnd; }
-		inline HINSTANCE	 GetHandleInstance() const { return mHInstance; }
-		inline VOID			 SetScreenSize(int Height, int Width) { mScreenHeight = Height; mScreenWidth = Width; }
-		inline D3DXVECTOR2	 GetScreenSize() { return D3DXVECTOR2(mScreenHeight, mScreenWidth); }
+		HWND		 GetHWND() const { return mHwnd; }
+		HINSTANCE	 GetHandleInstance() const { return mHInstance; }
+		VOID		 SetScreenSize(int Height, int Width) { mScreenHeight = Height; mScreenWidth = Width; }
+		D3DXVECTOR2	 GetScreenSize() { return D3DXVECTOR2((float)mScreenHeight, (float)mScreenWidth); }
 
 		// TODO: Getter, Setter
 		// TODO: Pause - Issue: Network?
 
 		SceneManager*			GetSceneManager() { return mSceneManager; }
-		KeyEventDispatcher*		GetKeyEventDispatcher() { return mKeyEventDispatcher; }
-		MouseEventDispatcher*	GetMouseEventDispatcher() { return mMouseEventDispatcher; }
+		//KeyEventDispatcher*		GetKeyEventDispatcher() { return mKeyEventDispatcher; }
+		//MouseEventDispatcher*	GetMouseEventDispatcher() { return mMouseEventDispatcher; }
 
 		float					GetFps() const { return mFps; }
 
@@ -56,7 +56,7 @@ namespace pooptube {
 
 		bool _CreateWindowFrame( wchar_t* title, int width, int height );
 		bool _CreateSceneManager();
-		bool _CreateEventDispatcher();
+		//bool _CreateEventDispatcher();
 
 		bool _UpdateFrame( float& fpsTimer, int& prevTime, int& nowTime, int& frameCount );
 
@@ -78,10 +78,10 @@ namespace pooptube {
 		bool mIsWindowed;
 
 		SceneManager* mSceneManager;
-		KeyEventDispatcher* mKeyEventDispatcher;
-		MouseEventDispatcher* mMouseEventDispatcher;
+		//KeyEventDispatcher* mKeyEventDispatcher;
+		//MouseEventDispatcher* mMouseEventDispatcher;
 
-		std::forward_list<KeyEvent *> mKeyEventList;
-		std::forward_list<MouseEvent *> mMouseEventList;
+		//std::forward_list<KeyEvent *> mKeyEventList;
+		//std::forward_list<MouseEvent *> mMouseEventList;
 	};
 }

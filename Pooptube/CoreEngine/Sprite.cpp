@@ -44,7 +44,7 @@ namespace pooptube {
 	void Sprite::Draw(RECT *prect_screenregion, RECT *prect_textureregion, D3DXVECTOR3 *pCenter, D3DCOLOR color)
 	{
 		RECT *rect = prect_screenregion;
-		Translate(rect->left, rect->top);
+		Translate((float)rect->left, (float)rect->top);
 		Scale((float)(rect->right - rect->left) / (float)m_width_texture,
 			(float)(rect->bottom - rect->top) / (float)m_height_texture);
 		ApplyTransform();

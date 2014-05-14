@@ -43,15 +43,15 @@ StageOne* StageOne::Create() {
 bool StageOne::Init() {
 	//태스트하기위해 설정들을 꾸겨넣었음
 	//똥튜브 먹고싶다.
-	EnableKeyEvent();
-	EnableMouseEvent();
+// 	EnableKeyEvent();
+// 	EnableMouseEvent();
 
 	pooptube::Scene::Init();
 
-	mLight = pooptube::Light::Create();
+	//mLight = pooptube::Light::Create();
 	mSunLight = pooptube::SunLight::Create();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
+	//mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 	mXMesh = pooptube::XMesh::Create("tiger.x");
 
 	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
@@ -65,8 +65,8 @@ bool StageOne::Init() {
 
 	mGround = pooptube::Ground::Create("test.bmp");
 
-	testDummy = pooptube::CollisionBox::Create( mSkinnedMesh );
-	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
+	testDummy = pooptube::CollisionBox::Create( mXMesh );
+	//testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 	testDummy->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
@@ -219,11 +219,12 @@ void StageOne::PICK(float x, float y)
 	std::vector<D3DXVECTOR3> VB = mXMesh->GetVertices();
 	std::vector<D3DXVECTOR3> IB = mXMesh->GetIndices();
 	float minDistance = 9999.f;
-	float mU, mV;
-	int mIdx;
-	for (int i = 0; i < IB.size(); ++i)
+	//float mU, mV;
+	//int mIdx;
+	for (UINT i = 0; i < IB.size(); ++i)
 	{
-		picked = D3DXIntersectTri(&VB[IB[i].x], &VB[IB[i].y], &VB[IB[i].z], &Origin, &Direction, &fBary1, &fBary2, &fDist);
+		//문제가능성이 있는 코드
+		picked = D3DXIntersectTri(&VB[(UINT)IB[i].x], &VB[(UINT)IB[i].y], &VB[(UINT)IB[i].z], &Origin, &Direction, &fBary1, &fBary2, &fDist);
 
 		if (picked)
 		{
@@ -319,8 +320,8 @@ void StageOne::UpdateInput() {
 
 	
 	if (pooptube::gInputManager.KeyState(VK_LBUTTON) == pooptube::KeyState::KEY_DOWN)
-		mGround->PICKGROUND(pooptube::gInputManager.GetX(), pooptube::gInputManager.GetY(), 0.2f);
+		mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), 0.2f);
 	if (pooptube::gInputManager.KeyState(VK_RBUTTON) == pooptube::KeyState::KEY_DOWN)
-		mGround->PICKGROUND(pooptube::gInputManager.GetX(), pooptube::gInputManager.GetY(), -0.2f);
+		mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), -0.2f);
 
 }

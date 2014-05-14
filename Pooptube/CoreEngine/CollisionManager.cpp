@@ -58,6 +58,8 @@ namespace pooptube {
 			if( result != nullptr )
 				return result;
 		}
+
+		return nullptr;
 	}
 	//void CollisionManager::CollisionCheck( CollisionBox* pTarget ) const
 	CollisionBox* CollisionManager::CollisionCheck( CollisionBox* pTarget ) const

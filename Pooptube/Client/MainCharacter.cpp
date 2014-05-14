@@ -26,7 +26,7 @@ MainCharacter *MainCharacter::Create() {
 void MainCharacter::Render() {
 	Node::Render();
 	
-	mSkinnedMesh->Render();
+/*	mSkinnedMesh->Render();*/
 }
 
 void MainCharacter::Update(float dTime) {
@@ -34,9 +34,9 @@ void MainCharacter::Update(float dTime) {
 
 	UpdateInput();
 
-	mSkinnedMesh->SetPosition(Node::GetPosition());
-	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
-	mSkinnedMesh->Update(dTime);
+// 	mSkinnedMesh->SetPosition(Node::GetPosition());
+// 	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
+// 	mSkinnedMesh->Update(dTime);
 
 	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
@@ -54,6 +54,7 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
 	AddChild( collisionBox );
+	AddChild( mSkinnedMesh );
 
 	return true;
 }
