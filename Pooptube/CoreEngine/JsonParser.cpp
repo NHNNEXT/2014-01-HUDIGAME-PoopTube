@@ -2,59 +2,56 @@
 #include "JsonParser.h"
 
 namespace pooptube {
-	JsonParser::JsonParser(char* path) : mJsonFilePath(path)
+	std::string JsonParser::JsonToString( Json::Value& src )
 	{
-	}
-	JsonParser::JsonParser() 
-	{
-	}
-	bool JsonParser::ReadFromFile(const char* filename, char* buffer, int len) 
-	{
-		FILE* r = nullptr; // nullptr? NULL?
-		fopen_s(&r, filename, "r");
-
-		if (NULL == r)
-			return false;;
-
-		fread(buffer, 1, len, r);
-		fclose(r);
-
-		return true;
+		Json::StyledWriter writer;
+		return writer.write( src );
 	}
 
-	void JsonParser::JsonToCString()
+	Json::Value JsonParser::StringToJson( std::string& src )
 	{
-		FILE* jsonfp = nullptr;
-
-		fopen_s(&jsonfp, mJsonFilePath, "r");
-
-		const int BufferLength = 1024;
-		char readBuffer[BufferLength] = { 0, };
-
-		ReadFromFile(mJsonFilePath, readBuffer, BufferLength);
-
-		std::string config_doc = readBuffer;
-
-		Json::Value root;
 		Json::Reader reader;
-
-		bool parsingSuccessful = reader.parse(config_doc, root);
-
-		if (!parsingSuccessful) {
-			std::cout << "Parsing Fail" << std::endl << reader.getFormatedErrorMessages();
-		} 
-		
-		const Json::Value resourceFilePath = root["path"];
-		for (UINT index = 0; index < resourceFilePath.size(); ++index) {
-			strcat_s(mPath, resourceFilePath[index].asCString());
-			strcat_s(mPath, " ");
-		}
-		fclose(jsonfp);
+		Json::Value result;
+		reader.parse( src, result );
+		return result;
 	}
-	
-	JsonParser* JsonParser::GetInstance()
+
+	std::string JsonParser::FileToString( std::string& filename )
 	{
-		JsonParser* pInstance = new JsonParser();
-		return pInstance;
+		FILE *fStream = nullptr;
+		if( fopen_s( &fStream, filename.c_str(), "r+t" ) != 0 )
+			return nullptr;
+		
+		std::string result("");
+		char buffer[20] = { '\0', };
+		while( fread_s( buffer, 20, sizeof(char), 10, fStream ) != 0 ){
+			result += buffer;
+		}
+		fclose( fStream );
+		return result;
 	}
+
+	Json::Value JsonParser::FileToJson( std::string& filename )
+	{
+		std::string jsonStr = FileToString( filename );
+		return StringToJson( jsonStr );
+	}
+
+	bool JsonParser::StringToFile( std::string& src, std::string& filename )
+	{
+		FILE *fStream;
+		if( fopen_s( &fStream, filename.c_str(), "w+t" ) != 0 )
+			return 1;
+
+		fwrite( src.c_str(), src.size(), 1, fStream );
+		fclose( fStream );
+		return 0;
+	}
+
+	bool JsonParser::JsonToFile( Json::Value& src, std::string& filename )
+	{
+		std::string jsonStr = JsonToString( src );
+		return StringToFile( jsonStr, filename );
+	}
+
 }

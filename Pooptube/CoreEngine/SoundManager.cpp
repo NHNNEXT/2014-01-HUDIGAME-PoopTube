@@ -3,19 +3,19 @@
 #include "Node.h"
 
 namespace pooptube {
-	void( *Common_Private_Error )(FMOD_RESULT);
-
-	void ERRCHECK( FMOD_RESULT result )
-	{
-		if( result != FMOD_OK )
-		{
-			if( Common_Private_Error )
-			{
-				Common_Private_Error( result );
-			}
-			printf_s( "FMOD error %d - %s\n", result, FMOD_ErrorString( result ) );
-		}
-	}
+// 	void( *Common_Private_Error )(FMOD_RESULT);
+// 
+// 	void ERRCHECK( FMOD_RESULT result )
+// 	{
+// 		if( result != FMOD_OK )
+// 		{
+// 			if( Common_Private_Error )
+// 			{
+// 				Common_Private_Error( result );
+// 			}
+// 			printf_s( "FMOD error %d - %s\n", result, FMOD_ErrorString( result ) );
+// 		}
+// 	}
 
 	SoundManager* SoundManager::mInstance = nullptr;
 

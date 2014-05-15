@@ -1,25 +1,15 @@
 ﻿#pragma once
 
 #include "stdafx.h"
-#include "../Library/JsonCpp/include/json/json.h"	// agebreak : 경로는 속성에서 넣고, 여기서는 그냥 헤더 파일만 있는게 좋음
+#include "..\Library\JsonCpp\json.h" // 왜인지 아무리 프로젝트 설정을 만져도 제대로 include 경로 참조가 되질 않는다...
 
 namespace pooptube {
-	class JsonParser {
-	public:
-		JsonParser(char* path);
-		JsonParser();
-
-		~JsonParser();
-	public:
-		
-	private:
-		static JsonParser* GetInstance(char* path);
-		static JsonParser* GetInstance();
-		bool ReadFromFile(const char* filename, char* buffer, int len);
-		void JsonToCString();
-
-	private:
-		char* mJsonFilePath;		// agebreak : 과연 이 변수는 안전할까??
-		char mPath[1024];
+	namespace JsonParser {
+		std::string		JsonToString	( Json::Value& src );
+		Json::Value		StringToJson	( std::string& src );
+		std::string		FileToString	( std::string& filename );
+		Json::Value		FileToJson		( std::string& filename );
+		bool			StringToFile	( std::string& src, std::string& filename );
+		bool			JsonToFile		( Json::Value& src, std::string& filename );
 	};
 }
