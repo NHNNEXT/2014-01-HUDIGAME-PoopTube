@@ -111,8 +111,8 @@ namespace pooptube {
 		LPDIRECT3DDEVICE9	GetDevice() const { return mDevice; }
 
 		void				UpdateMatrix();
-		float				GetTurnAngle(D3DXVECTOR3 src, D3DXVECTOR3 dst);
-		bool				Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed);
+		float				GetTurnAngle(D3DXVECTOR3 dst);
+		bool				Turn(D3DXVECTOR3 dst, float speed);
 
 		bool DoRender() const { return mDoRender; }
 		void DoRender(bool val) { mDoRender = val; }
@@ -127,7 +127,7 @@ namespace pooptube {
 		void _RegistrationToMouseEventDispatcher();
 		
 	private:
-		std::vector<std::shared_ptr<Node>> mChildList;
+		std::vector<std::shared_ptr<Node>> mChildList;		// agebreak : child는 게임 시작할때 생성하면서 증가하다가, 중간에 사라질수도 있고, 추가될수도 있다. 이런 경우 vector는 적합하지 않다. (수업시간에 들었지?)
 		
 		bool mIsKeyEventEnabled = false;
 		bool mIsMouseEventEnabled = false;

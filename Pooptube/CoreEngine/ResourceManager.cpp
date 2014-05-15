@@ -194,6 +194,7 @@ namespace pooptube {
 		return pNewMesh;
 	}
 
+	// agebreak : 굳이 비트맵으로 안읽고, 텍스쳐로 읽어서 값을 읽어들이는 방법도 있음. 
 	Ground::MapData *ResourceManager::LoadHeightMap(const std::string& FilePath) {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {

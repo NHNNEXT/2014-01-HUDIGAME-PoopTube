@@ -31,6 +31,7 @@ void MainCharacter::Render() {
 void MainCharacter::Update(float dTime) {
 	Node::Update(dTime);
 
+	// agebreak : CollisionBox도 오브젝로 만들어서 Attach 시키는 구조로 만드는게 좋다.
 	mSkinnedMesh->SetPosition(Node::GetPosition());
 	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
 	mSkinnedMesh->Update(dTime);
@@ -67,7 +68,7 @@ void MainCharacter::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'W':
-		Translation(Node::GetFrontVector()*mSpeed);
+		Translation(Node::GetFrontVector()*mSpeed);	// agebreak : Node에 각 방향 벡터를 가져오는 함수를 만든것은 잘했음. 나중에도 쓸데가 많음.
 		break;
 	case 'S':
 		Translation(Node::GetFrontVector()*mSpeed*-1.f);
@@ -88,6 +89,7 @@ void MainCharacter::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 	}
 }
 
+// agebreak : 점프는 캐릭터 자체 내에서 처리할것!
 void MainCharacter::KeyUp(pooptube::KeyEvent* pKeyEvent) {
 	switch (pKeyEvent->GetKeyCode()) {
 	case VK_SPACE:

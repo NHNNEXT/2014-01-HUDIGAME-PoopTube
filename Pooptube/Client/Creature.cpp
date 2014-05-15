@@ -87,7 +87,10 @@ void Creature::Update(float dTime)
 	}
 
 	D3DXVECTOR3 pos = GetPosition();
-	float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
+	
+	// agebreak : ㅋㅋㅋ 아놔.. 이거 고쳐!! 높이값하나 가져오는데 이게 뭐하는 짓인감.. 높이갚은 다른데도 자주 쓸건데!! 바로 접근해서 가져올 수 있도록 구조 수정할것!! 그리고 인자는 Vector로 받을수 있게!
+	// 아님 차라리 Scene을 받아오고, Height를 받아오는 코드 두줄로 나누던가!!
+	float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);	
 	//float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
 
 	if (height != pos.y) {
@@ -98,10 +101,11 @@ void Creature::Update(float dTime)
 
 CREATURE_STATE Creature::FSM()
 {
-	D3DXVECTOR3 CharacterPosition = pss->GetPosition();
-	D3DXVECTOR3 CreaturePosition = GetPosition();
+	D3DXVECTOR3 CharacterPosition = pss->GetPosition(); // agebreak : 이 두 벡터는 쓰지도 않는데?
+	D3DXVECTOR3 CreaturePosition = GetPosition();		
 	D3DXVECTOR3 distance = pss->GetPosition() - GetPosition();
 
+	// agebreak : D3DXVec3Length는 나누기 연산이 있기 때문에, 부하가 크다.. 한번만 연산해서 결과값을 사용할 것
 	if (mIdleDistance < D3DXVec3Length(&distance)) {
 
 		if (mState != IDLE)
@@ -135,7 +139,7 @@ void Creature::DoIdle(float dTime)
 		D3DXVECTOR3 dir = mInitialPosition - CreaturePosition;
 		D3DXVec3Normalize(&dir, &dir);
 
-		if (Turn(GetPosition(), mInitialPosition, 0.05f) == false)
+		if (Turn(mInitialPosition, 0.05f) == false)
 			SetPosition(CreaturePosition + dir / 10);
 			
 		
@@ -147,7 +151,7 @@ void Creature::DoAngry()
 	D3DXVECTOR3 CharacterPosition = pss->GetPosition();
 	D3DXVECTOR3 CreaturePosition = GetPosition();
 
-	Turn(GetPosition(), CharacterPosition, 0.05f);
+	Turn(CharacterPosition, 0.05f);
 	SetPosition(CreaturePosition + (CharacterPosition - CreaturePosition) / 100);
 }
 

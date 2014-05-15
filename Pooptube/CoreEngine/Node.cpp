@@ -134,6 +134,7 @@ namespace pooptube {
 		mPosition = newPos;
 	}
 
+	// agebreak : 아래 함수들은 자주 호출되는 함수들이다. 외적 계산은 비싼 연산이다. 호출할때마다 계산하지 말고, FrontVector가 업데이트 될때, 한번만 연산하고 저장해 두도록 수정할것.
 	D3DXVECTOR3 Node::GetRightVector() {
 		D3DXVECTOR3 Vec = mFrontVector;
 		D3DXVec3Cross(&Vec, &mUpVec, &Vec);
@@ -173,30 +174,43 @@ namespace pooptube {
 		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 	}
 
-	float Node::GetTurnAngle(D3DXVECTOR3 src, D3DXVECTOR3 dst)
+	float Node::GetTurnAngle( D3DXVECTOR3 dst)
 	{
-		src.y = dst.y = 0.f;
+// 		src.y = dst.y = 0.f;
+// 
+// 		D3DXVECTOR3 dir = dst - src;
+// 		D3DXVECTOR3 Look = GetFrontVector() + src;
+// 		float dot = D3DXVec3Dot(&dir, &mFrontVector);
+// 		float dis = abs((D3DXVec3Length(&dir) * D3DXVec3Length(&mFrontVector)));
+// 		float angle = 0.f;
+// 		float det = ((dst.x - src.x) * (Look.z - src.z) - (dst.z - src.z) * (Look.x - src.x));
+// 
+// 		if (det > 0.f)	det = -1.f; // CW
+// 		else			det = 1.f;	// CCW
+// 
+//  		if (dis != 0.f && ((dot / dis) < 1.f))
+//  			angle = det * acos(dot / dis);
 
-		D3DXVECTOR3 dir = dst - src;
-		D3DXVECTOR3 Look = GetFrontVector() + src;
-		float dot = D3DXVec3Dot(&dir, &mFrontVector);
-		float dis = abs((D3DXVec3Length(&dir) * D3DXVec3Length(&mFrontVector)));
-		float angle = 0.f;
-		float det = ((dst.x - src.x) * (Look.z - src.z) - (dst.z - src.z) * (Look.x - src.x));
+		// agebreak : 위의 이상한 공식은 아래처럼 내적와 외적을 사용해서, 깔끔하게 구현할 수 있음. 				
+		D3DXVECTOR3 dir = dst - GetPosition();
+		D3DXVECTOR3 front = GetFrontVector();
+		dir.y = 0.0f;
+		D3DXVec3Normalize(&dir, &dir);
 
-		if (det > 0.f)	det = -1.f; // CW
-		else			det = 1.f;	// CCW
+		float angle = acos(D3DXVec3Dot(&dir, &front));
+		
+		D3DXVECTOR3 cross;
+		D3DXVec3Cross(&cross, &dir, &front);
 
- 		if (dis != 0.f && ((dot / dis) < 1.f))
- 			angle = det * acos(dot / dis);
-
-		return angle;
+		return (cross.y > 0) ? angle : -angle;				
 	}
 
-	bool Node::Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed)
+	// agebreak : 타겟을 바라보겠다면, 현재 위치와 frontVector가 필요하다.. 그럼 아예 둘다 인자로 받던가, 아님 둘다 인자로 안받아야 한다. 왜 현재 위치는 받으면서 FrontVector는 있는걸 쓰남?
+	//bool Node::Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed)
+	bool Node::Turn(D3DXVECTOR3 dst, float speed)
 	{
 		float precision = 0.05f;
-		float angle = GetTurnAngle(src, dst);
+		float angle = GetTurnAngle(dst);
 
 		if (angle > 0.f)
 			speed *= -1.f;

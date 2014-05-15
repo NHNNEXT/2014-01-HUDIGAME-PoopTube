@@ -37,6 +37,7 @@ namespace pooptube{
 	{
 		Node::Init();
 
+		// agebreak : 텍스쳐를 6번 로딩하는것도 부하가 된다. 
 		mTopTexture = ResourceManager::GetInstance()->LoadTexture(top);
 		mBotTexture = ResourceManager::GetInstance()->LoadTexture(bottom);
 		mFrontTexture = ResourceManager::GetInstance()->LoadTexture(front);
@@ -144,6 +145,7 @@ namespace pooptube{
 		return true;
 	}
 
+	// agebreak : 현재 스카이박스를 렌더링하는데 DP 콜을 6번 하게 되는데. 1번하는 구조로 변경해 보도록. (Hint. 큐브맵)
 	void SkyBox::Render() {
 
 		//행렬의 연산은 node에서 상속받는다.

@@ -48,7 +48,8 @@ bool StageOne::Init() {
 	mLight = pooptube::Light::Create();
 	mSunLight = pooptube::SunLight::Create();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
+	// agebreak : 리소스 폴더로 다 변경 할것
+	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");	// agebreak : 이 SkinnedMesh는 대체 뭔가? 캐릭터인가 적인가.. 왜 있는지도 의문. 캐릭터 안에 로딩하는게 있던데.. 없앨것
 	mXMesh = pooptube::XMesh::Create("tiger.x");
 	mXMesh->DoRender(false);
 
@@ -56,6 +57,7 @@ bool StageOne::Init() {
 
 	mCharacter = MainCharacter::Create();
 	
+	// agebreak : 카메라를 생성할때 타겟을 받지 말고, 생성한 이후에 컴포넌트를 Attach 하는 구조로 만들면 좋다. 
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 
 	mGround = pooptube::Ground::Create("test.bmp");
@@ -63,6 +65,7 @@ bool StageOne::Init() {
 	testDummy = pooptube::CollisionBox::Create( mSkinnedMesh );
 	testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
+
 
 	mSkyBox = pooptube::SkyBox::Create("Top.bmp",
 		"Bottom.bmp",
@@ -120,6 +123,7 @@ void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
 
 void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 
+	// agebreak : 아래 키보드 이동은 왜 있는건가??
 	switch (pKeyEvent->GetKeyCode())
 	{
 	case 'R' :
@@ -421,6 +425,10 @@ void StageOne::MousePressed(pooptube::MouseEvent* pMouseEvent) {
 
 void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
 }
+
+
+// agebreak : 캐릭터 점프가 왜 여기 있는가? 캐릭터 점프는 알아서 캐릭터가 처리해야함. 다른곳에서는 character->Jump() 이런 식으로 호출만 하면 되도록. 
+// 스테이지가 캐릭터 점프를 처리하는것이 이상하지 않나?
 
 void StageOne::MainCharacterJumpUpdate(float dTime) {
 	//캐릭터 점프 알고리즘
