@@ -3,6 +3,7 @@
 #include "SkinnedMesh.h"
 #include "CollisionBox.h"
 #include "CollisionManager.h"
+#include "ResourceDef.h"
 
 LightOrb::LightOrb()
 {
@@ -30,7 +31,7 @@ bool LightOrb::Init(LightOrb *pCreature)
 // 	EnableKeyEvent();
 // 	EnableMouseEvent();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
+	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
 	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	AddChild( collisionBox );

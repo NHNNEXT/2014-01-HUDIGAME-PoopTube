@@ -22,8 +22,8 @@ namespace pooptube{
 
 	private:
 		LPD3DXMESH			mXMesh = nullptr;
-		D3DMATERIAL9*		mMaterial = nullptr;
-		LPDIRECT3DTEXTURE9* mTexture = nullptr;
+// 		D3DMATERIAL9*		mMaterial = nullptr;
+// 		LPDIRECT3DTEXTURE9* mTexture = nullptr;
 
 		std::vector<D3DXVECTOR3> mVertices;
 		std::vector<D3DXVECTOR3> mIndices;

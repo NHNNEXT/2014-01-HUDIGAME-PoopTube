@@ -42,8 +42,8 @@ IntroScene* IntroScene::Create() {
 bool IntroScene::Init() {
 	//태스트하기위해 설정들을 꾸겨넣었음
 	//똥튜브 먹고싶다.
-	EnableKeyEvent();
-	EnableMouseEvent();
+// 	EnableKeyEvent();
+// 	EnableMouseEvent();
 
 	pooptube::Scene::Init();
 
@@ -104,13 +104,13 @@ void IntroScene::Update(float dTime) {
 	mCharacter->SetPosition(CharPos);
 	
 }
+// 
+// void IntroScene::KeyDown(pooptube::KeyEvent* pKeyEvent) {
+// }
 
-void IntroScene::KeyDown(pooptube::KeyEvent* pKeyEvent) {
-}
-
-void IntroScene::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
+// void IntroScene::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
 
 // 	switch (pKeyEvent->GetKeyCode())
 // 	{
 // 	}
-}
+//}

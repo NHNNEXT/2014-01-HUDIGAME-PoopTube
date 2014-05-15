@@ -9,12 +9,12 @@ namespace pooptube {
 
 	XMesh::~XMesh() {
 		mXMesh->Release();
-		for (DWORD i = 0; i < mNumMaterial; ++i) {
-			mTexture[i]->Release();
-		}
+// 		for (DWORD i = 0; i < mNumMaterial; ++i) {
+// 			mTexture[i]->Release();
+// 		}
 		
-		delete[] mMaterial;
-		delete[] mTexture;
+// 		delete[] mMaterial;
+// 		delete[] mTexture;
 
 	}
 
@@ -44,43 +44,43 @@ namespace pooptube {
 			MessageBox(NULL, L"Could not find mesh file", L"ERROR", MB_OK);
 			return false;
 		}
-
-		// 재질정보와 텍스쳐 정보를 따로 뽑아낸다.
-		D3DXMATERIAL* d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();
-		mMaterial = new D3DMATERIAL9[mNumMaterial];			// 재질개수만큼 재질구조체 배열 생성
-		mTexture = new LPDIRECT3DTEXTURE9[mNumMaterial];	// 재질개수만큼 텍스쳐 배열 생성
-
-		for (DWORD j = 0; j<mNumMaterial; j++) {
-			// 재질정보를 복사
-			mMaterial[j] = d3dxMaterials[j].MatD3D;
-
-			// 주변광원정보를 Diffuse정보로
-			mMaterial[j].Ambient = mMaterial[j].Diffuse;
-
-			mTexture[j] = NULL;
-			
-			if (d3dxMaterials[j].pTextureFilename != NULL &&
-				strlen(d3dxMaterials[j].pTextureFilename) > 0)
-			{
-				// 텍스쳐를 파일에서 로드한다
-				// w로 통일할껀지 정해야함
-				std::string FileName = d3dxMaterials[j].pTextureFilename;
-				if (FAILED(D3DXCreateTextureFromFileA(GetDevice(),
-					d3dxMaterials[j].pTextureFilename,
-					&mTexture[j])))
-				{
-					MessageBox(NULL, L"Could not find texture map", L"ERROR", MB_OK);
-
-					for (DWORD i = 0; i < mNumMaterial; ++i)
-						mTexture[i]->Release();
-					delete[] mMaterial;
-					delete[] mTexture;
-					pD3DXMtrlBuffer->Release();
-					return false;
-				}
-			}
-		}
-
+// 
+// 		// 재질정보와 텍스쳐 정보를 따로 뽑아낸다.
+// 		D3DXMATERIAL* d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();
+// 		mMaterial = new D3DMATERIAL9[mNumMaterial];			// 재질개수만큼 재질구조체 배열 생성
+// 		mTexture = new LPDIRECT3DTEXTURE9[mNumMaterial];	// 재질개수만큼 텍스쳐 배열 생성
+// 
+// 		for (DWORD j = 0; j<mNumMaterial; j++) {
+// 			// 재질정보를 복사
+// 			mMaterial[j] = d3dxMaterials[j].MatD3D;
+// 
+// 			// 주변광원정보를 Diffuse정보로
+// 			mMaterial[j].Ambient = mMaterial[j].Diffuse;
+// 
+// 			mTexture[j] = NULL;
+// 			
+// 			if (d3dxMaterials[j].pTextureFilename != NULL &&
+// 				strlen(d3dxMaterials[j].pTextureFilename) > 0)
+// 			{
+// 				// 텍스쳐를 파일에서 로드한다
+// 				// w로 통일할껀지 정해야함
+// 				std::string FileName = d3dxMaterials[j].pTextureFilename;
+// 				if (FAILED(D3DXCreateTextureFromFileA(GetDevice(),
+// 					d3dxMaterials[j].pTextureFilename,
+// 					&mTexture[j])))
+// 				{
+// 					MessageBox(NULL, L"Could not find texture map", L"ERROR", MB_OK);
+// 					
+// 					for (DWORD i = 0; i < mNumMaterial; ++i)
+// 						mTexture[i]->Release();
+// 					delete[] mMaterial;
+// 					delete[] mTexture;
+// 					pD3DXMtrlBuffer->Release();
+// 					return false;
+// 				}
+// 			}
+// 		}
+		
 		//메쉬에 법선백터를 추가하는 부분
 		if (!(mXMesh->GetFVF() & D3DFVF_NORMAL)) {
 			//가지고 있지 않다면 메쉬를 복제하고 D3DFVF_NORMAL을 추가한다.
@@ -136,10 +136,10 @@ namespace pooptube {
 		Node::Render();
 
 		for (DWORD i = 0; i < mNumMaterial; i++) {
-
-			/// 부분집합 메시의 재질과 텍스쳐 설정
-			GetDevice()->SetMaterial(&mMaterial[i]);
-			GetDevice()->SetTexture(0, mTexture[i]);
+// 
+// 			/// 부분집합 메시의 재질과 텍스쳐 설정
+// 			GetDevice()->SetMaterial(&mMaterial[i]);
+// 			GetDevice()->SetTexture(0, mTexture[i]);
 
 			/// 부분집합 메시 출력
 			mXMesh->DrawSubset(i);

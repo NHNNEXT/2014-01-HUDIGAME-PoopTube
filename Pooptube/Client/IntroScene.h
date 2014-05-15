@@ -36,8 +36,8 @@ public:
 
 	//아래 둘을 어디로 옮길지 생각중
 
-	void KeyDown(pooptube::KeyEvent* pKeyEvent);
-	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
+// 	void KeyDown(pooptube::KeyEvent* pKeyEvent);
+// 	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
 	pooptube::Ground *GetGroundModule() const { return mGround; }
 
 protected:

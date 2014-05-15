@@ -6,6 +6,7 @@
 #include "SoundManager.h"
 #include "InputManager.h"
 
+
 MainCharacter::MainCharacter() {
 }
 
@@ -49,7 +50,7 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 // 	EnableKeyEvent();
 // 	EnableMouseEvent();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
+	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pMainCharacter );
 	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );

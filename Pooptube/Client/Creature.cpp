@@ -4,6 +4,7 @@
 #include "CollisionBox.h"
 #include "CollisionManager.h"
 #include "XMesh.h"
+#include "ResourceDef.h"
 
 Creature::Creature()
 {
@@ -32,7 +33,7 @@ bool Creature::Init( Creature *pCreature )
 // 	EnableMouseEvent();
 
 	//mXMesh = pooptube::XMesh::Create("tiger.x");
-	mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
+	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
 	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );

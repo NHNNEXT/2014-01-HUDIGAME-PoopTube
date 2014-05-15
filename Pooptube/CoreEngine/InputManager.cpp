@@ -2,7 +2,6 @@
 #include "stdafx.h"
 #include "InputManager.h"
 
-#include "ObjectManager.h"
 
 namespace pooptube {
 

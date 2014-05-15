@@ -18,7 +18,7 @@
 #include "Sprite.h"
 #include "SoundBox.h"
 #include "InputManager.h"
-#include <iostream>
+#include "ResourceDef.h"
 
 StageOne::StageOne() {
 }
@@ -52,37 +52,37 @@ bool StageOne::Init() {
 	mSunLight = pooptube::SunLight::Create();
 
 	//mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
-	mXMesh = pooptube::XMesh::Create("tiger.x");
+	mXMesh = pooptube::XMesh::Create(PATH_TIGER);
 
 	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
 
-	pooptube::SoundManager::GetInstance()->LoadBank( "Sound\\Master Bank.bank" );
-	pooptube::SoundManager::GetInstance()->LoadBank( "Sound\\Master Bank.strings.bank" );
+	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK );
+	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK_STRING );
 
 	mCharacter = MainCharacter::Create();
 	
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 
-	mGround = pooptube::Ground::Create("test.bmp");
+	mGround = pooptube::Ground::Create(PATH_HEIGHTMAP);
 
 	testDummy = pooptube::CollisionBox::Create( mXMesh );
 	//testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
 	testDummy->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
-	mSkyBox = pooptube::SkyBox::Create("DeepSpaceBlue/upImage.png",
-		"DeepSpaceBlue/downImage.png",
-		"DeepSpaceBlue/frontImage.png",
-		"DeepSpaceBlue/backImage.png",
-		"DeepSpaceBlue/leftImage.png",
-		"DeepSpaceBlue/rightImage.png");
+	mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
+		PATH_SKYBOX_DOWN,
+		PATH_SKYBOX_FRONT,
+		PATH_SKYBOX_BACK,
+		PATH_SKYBOX_LEFT,
+		PATH_SKYBOX_RIGHT);
 
 	mCreature = Creature::Create();
 	mLightOrb = LightOrb::Create();
 	
 	mCreature->pss = mCharacter; // 크리처 테스트 위한 거
 
-	mSprite = pooptube::Sprite::Create(L"right.bmp");
+	mSprite = pooptube::Sprite::Create(L"Model\\DeepSpaceBlue\\rightImage.png");
 
 	FMOD::Studio::EventInstance* eventInstance = pooptube::SoundManager::GetInstance()->GetSound( "event:/Ambience/Predawn" );
 	pooptube::SoundBox* soundBox = pooptube::SoundBox::Create( eventInstance );

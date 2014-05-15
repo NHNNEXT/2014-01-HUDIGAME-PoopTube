@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #include "Node.h"
 #include "StageOne.h"
-#include "..\Library\FMOD\fmod_common.h"
+#include "ResourceDef.h"
 
 namespace pooptube{
 	class SkinnedMesh;

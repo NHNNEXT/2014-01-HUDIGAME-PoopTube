@@ -18,6 +18,9 @@
 #include <forward_list>
 #include <list>
 #include <algorithm>
+#include <iostream>
+
+#include "..\Library\FMOD\fmod_common.h"
 
 
 

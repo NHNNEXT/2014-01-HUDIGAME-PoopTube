@@ -55,6 +55,9 @@
     <ClInclude Include="IntroScene.h">
       <Filter>Stage</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceDef.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,14 +84,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="batman70.fbx" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="test.bmp">
       <Filter>Resource</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="BasicHLSL.fx" />
   </ItemGroup>
 </Project>
