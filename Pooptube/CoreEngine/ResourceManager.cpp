@@ -217,99 +217,108 @@ namespace pooptube {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 
-			
-			FILE* filePtr;
-			int error;
-			UINT count;
-			BITMAPFILEHEADER bitmapFileHeader;
-			BITMAPINFOHEADER bitmapInfoHeader;
-			UINT imageSize;
-			unsigned char*	 bitmapImage;
+			LPDIRECT3DTEXTURE9		HeightMap = NULL; /// Texture 높이맵
 
-			// Open the height map file in binary.
-			error = fopen_s(&filePtr, FilePath.c_str(), "rb");
-			if (error != 0)
+			if (FAILED(D3DXCreateTextureFromFileEx(mDevice, std::wstring(FilePath.begin(), FilePath.end()).c_str(),
+				D3DX_DEFAULT, D3DX_DEFAULT,
+				D3DX_DEFAULT, 0,
+				D3DFMT_X8R8G8B8, D3DPOOL_MANAGED,
+				D3DX_DEFAULT, D3DX_DEFAULT, 0,
+				NULL, NULL, &HeightMap)))
 				return nullptr;
 
-			// Read in the file header.
-			count = fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER), 1, filePtr);
-			if (count != 1)
-				return nullptr;
+			D3DSURFACE_DESC		ddsd;
+			D3DLOCKED_RECT		d3drc;
 
-			// Read in the bitmap info header.
-			count = fread(&bitmapInfoHeader, sizeof(BITMAPINFOHEADER), 1, filePtr);
-			if (count != 1)
-				return nullptr;
+			HeightMap->GetLevelDesc(0, &ddsd);	/// 텍스처의 정보
+			DWORD width = ddsd.Width;				/// 텍스처의 가로크기
+			DWORD height = ddsd.Height;				/// 텍스처의 세로크기
+			UCHAR *bitmapImage = new UCHAR[width * height];
 
-			UINT col, row;
+			/// 텍스처 메모리 락!
+			HeightMap->LockRect(0, &d3drc, NULL, D3DLOCK_READONLY);
 
-			// Save the dimensions of the terrain.
-			col = bitmapInfoHeader.biWidth - 1;
-			row = bitmapInfoHeader.biHeight - 1;
-
-			// Calculate the size of the bitmap image data.
-			imageSize = (col + 1) * (row + 1) * 3;
-
-			// Allocate memory for the bitmap image data.
-			bitmapImage = new unsigned char[imageSize];
-			if (!bitmapImage)
-				return nullptr;
-
-			// Move to the beginning of the bitmap data.
-			fseek(filePtr, bitmapFileHeader.bfOffBits, SEEK_SET);
-
-			// Read in the bitmap image data.
-			// 데이터의 크기와 실제 크기가 다를경우 팅궈버림
-			count = fread(bitmapImage, 1, imageSize, filePtr);
-			if (count != imageSize){
-				delete[] bitmapImage;
-				return nullptr;
-			}
-				
-			// Close the file.
-			error = fclose(filePtr);
-			if (error != 0) {
-				delete[] bitmapImage;
-				return nullptr;
-			}
-				
-			for (int i = 0; i < (row + 1)*(col + 1) * 3; ++i)
+			for (DWORD i = 0; i < height; i++)
 			{
-				if (i % 3 == 0)
-					printf("\n");
-				printf("%3d ", bitmapImage[i]);
+				for (DWORD j = 0; j < width; j++)
+					bitmapImage[i*height + j] = ((UCHAR)(*((LPDWORD)d3drc.pBits + j + i*(d3drc.Pitch / 4)) & 0x000000ff));
+					
 			}
-				
-			printf("\n\n");
-			
-// 			LPDIRECT3DSURFACE9 m_pSurface = nullptr;
-// 			D3DXIMAGE_INFO imageInfo;
-// 			ZeroMemory(&imageInfo, sizeof(D3DXIMAGE_INFO));
-// 
-// 			HRESULT hr = D3DXGetImageInfoFromFile(L"heightmap.bmp", &imageInfo);
-// 
-// 			mDevice->CreateOffscreenPlainSurface(imageInfo.Width, imageInfo.Height, D3DFMT_X8R8G8B8, D3DPOOL_SCRATCH, &m_pSurface, 0);
-// 
-// 			hr = D3DXLoadSurfaceFromFile(m_pSurface, 0, 0, std::wstring(FilePath.begin(), FilePath.end()).c_str(), 0, D3DX_FILTER_NONE, 0, &imageInfo);
-// 
-// 			D3DLOCKED_RECT lockRect;
-// 			ZeroMemory(&lockRect, sizeof(D3DLOCKED_RECT));
-// 
-// 			m_pSurface->LockRect(&lockRect, 0, D3DLOCK_READONLY);
-// 
-// 			int iNumPixels = imageInfo.Width * imageInfo.Height;
-// 			int iPixelsWidth = imageInfo.Width;
-// 			int iPixelsHeight = imageInfo.Height;
-// 
-// 			for (int i = 0; i < iPixelsWidth * iPixelsHeight; ++i)          // HORIZONTAL ROWS
-// 			{
-// 				= lockRect[i]; ? ? ? ? // Get Height from bmp
-// 			}
-// 
-// 			m_pSurface->UnlockRect(
-			Ground::MapData *pMapData(new Ground::MapData(bitmapImage, row + 1, col + 1));
+
+			HeightMap->UnlockRect(0);
+
+			Ground::MapData *pMapData(new Ground::MapData(bitmapImage, height, width));
 			mHeightMapTable[FilePath] = pMapData;
 			delete[] bitmapImage;
+			
+// 			FILE* filePtr;
+// 			int error;
+// 			UINT count;
+// 			BITMAPFILEHEADER bitmapFileHeader;
+// 			BITMAPINFOHEADER bitmapInfoHeader;
+// 			UINT imageSize;
+// 			unsigned char*	 bitmapImage;
+// 
+// 			// Open the height map file in binary.
+// 			error = fopen_s(&filePtr, FilePath.c_str(), "rb");
+// 			if (error != 0)
+// 				return nullptr;
+// 
+// 			// Read in the file header.
+// 			count = fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER), 1, filePtr);
+// 			if (count != 1)
+// 				return nullptr;
+// 
+// 			// Read in the bitmap info header.
+// 			count = fread(&bitmapInfoHeader, sizeof(BITMAPINFOHEADER), 1, filePtr);
+// 			if (count != 1)
+// 				return nullptr;
+// 
+// 			UINT col, row;
+// 
+// 			// Save the dimensions of the terrain.
+// 			col = bitmapInfoHeader.biWidth - 1;
+// 			row = bitmapInfoHeader.biHeight - 1;
+// 
+// 			// Calculate the size of the bitmap image data.
+// 			imageSize = (col + 1) * (row + 1) * 3;
+// 
+// 			// Allocate memory for the bitmap image data.
+// 			bitmapImage = new unsigned char[imageSize];
+// 			if (!bitmapImage)
+// 				return nullptr;
+// 
+// 			// Move to the beginning of the bitmap data.
+// 			fseek(filePtr, bitmapFileHeader.bfOffBits, SEEK_SET);
+// 
+// 			// Read in the bitmap image data.
+// 			// 데이터의 크기와 실제 크기가 다를경우 팅궈버림
+// 			count = fread(bitmapImage, 1, imageSize, filePtr);
+// 			if (count != imageSize){
+// 				delete[] bitmapImage;
+// 				return nullptr;
+// 			}
+// 				
+// 			// Close the file.
+// 			error = fclose(filePtr);
+// 			if (error != 0) {
+// 				delete[] bitmapImage;
+// 				return nullptr;
+// 			}
+// 				
+// 			for (int i = 0; i < (row + 1)*(col + 1) * 3; ++i)
+// 			{
+// 				if (i % 3 == 0)
+// 					printf("\n");
+// 				printf("%3d ", bitmapImage[i]);
+// 			}
+// 				
+// 			printf("\n\n");
+			
+
+			//Ground::MapData *pMapData(new Ground::MapData(bitmapImage, row + 1, col + 1));
+// 			mHeightMapTable[FilePath] = pMapData;
+// 			delete[] bitmapImage;
 		}
 		return mHeightMapTable[FilePath];
 	}

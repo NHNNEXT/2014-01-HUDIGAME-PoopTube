@@ -20,18 +20,8 @@ namespace pooptube {
 				col = _col;
 				data = new UCHAR[row * col];
 
-				for (int i = 0; i < row*col * 3; ++i)
-					printf("%3d ", mapData[i]);
-
-				printf("\n\n");
-
 				for (UINT i = 0; i < row*col; ++i)
-					data[i] = mapData[i * 3];
-
-				for (int i = 0; i < row*col; ++i)
-					printf("%3d ... ... ", data[i]);
-
-				printf("\n");
+					data[i] = mapData[i];
 			}
 			~MapData()
 			{
