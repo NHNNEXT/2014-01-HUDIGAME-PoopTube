@@ -229,4 +229,80 @@ namespace pooptube {
 		return true;
 	}
 
+	void Node::GetRay(float x, float y, D3DXVECTOR3 *Origin, D3DXVECTOR3 *Direction)
+	{
+		D3DVIEWPORT9 view;
+		GetDevice()->GetViewport(&view);
+
+		//getting projection matrix
+		D3DXMATRIX projMat;
+		GetDevice()->GetTransform(D3DTS_PROJECTION, &projMat);
+
+		//calculating.. mouse ray
+		float vx = (+2.0f*x / view.Width - 1.0f) / projMat._11;
+		float vy = (-2.0f*y / view.Height + 1.0f) / projMat._22;
+
+		//Vector is D3DVECTOR
+		Origin->x = 0.0f;
+		Origin->y = 0.0f;
+		Origin->z = 0.0f;
+
+		// I used Z as my UP VECTOR, not sure how it will work for you
+		Direction->x = vx;
+		Direction->y = vy;
+		Direction->z = 1.0f;
+
+		//getting projection matrix
+		D3DXMATRIX viewMat;
+		GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
+
+		//inversing projection matrix
+		D3DXMATRIX iviewMat;
+		D3DXMatrixInverse(&iviewMat, 0, &viewMat);
+		D3DXVec3TransformCoord(Origin, Origin, &iviewMat);
+		D3DXVec3TransformNormal(Direction, Direction, &iviewMat);
+	}
+
+	Node *Node::Pick(float x, float y)
+	{
+		//result->clear();
+		Node *result = nullptr;
+		float minDistance = 9999.f;
+
+
+		D3DXVECTOR3 Origin, Direction;
+		GetRay(x, y, &Origin, &Direction);
+
+		for (auto &iter : mChildList)
+		{
+			std::vector<D3DXVECTOR3> VB = *(iter->GetVertices());
+			std::vector<D3DXVECTOR3> IB = *(iter->GetIndices());
+			DWORD dwFace;
+			FLOAT fBary1, fBary2, fDist;
+			BOOL picked = false;
+			//float mU, mV;
+			//int mIdx;
+
+			for (UINT i = 0; i < IB.size(); ++i)
+			{
+				//문제가능성이 있는 코드
+				picked = D3DXIntersectTri(&VB[(UINT)IB[i].x], &VB[(UINT)IB[i].y], &VB[(UINT)IB[i].z], &Origin, &Direction, &fBary1, &fBary2, &fDist);
+
+				if (picked)
+				{
+					if (minDistance > fDist)
+					{
+						minDistance = fDist;
+						result = &*iter;
+					}
+					//printf("%s\n", iter->GetObjectName().c_str());
+					//result->push_back(&*iter);
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
 }

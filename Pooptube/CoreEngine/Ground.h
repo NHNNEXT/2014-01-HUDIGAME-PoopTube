@@ -76,7 +76,7 @@ namespace pooptube {
 
 		LPDIRECT3DVERTEXBUFFER9 mVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9	mIndexBuffer = nullptr;
-		 
+
 		UINT					mVertexCount = 0;
 		UINT					mIndexCount = 0;
 		float					mGravity = 10.f;

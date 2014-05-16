@@ -189,82 +189,6 @@ void StageOne::Update(float dTime) {
 // }
 
 
-void StageOne::PICK(float x, float y)
-{
-	D3DVIEWPORT9 view;
-	GetDevice()->GetViewport(&view);
-	//getting projection matrix
-	D3DXMATRIX projMat;
-	GetDevice()->GetTransform(D3DTS_PROJECTION, &projMat);
-
-	//calculating.. mouse ray
-	float vx = (+2.0f*x / view.Width - 1.0f) / projMat._11;
-	float vy = (-2.0f*y / view.Height + 1.0f) / projMat._22;
-	//Vector is D3DVECTOR
-	D3DXVECTOR3 Origin(0.0f, 0.0f, 0.0f);
-	// I used Z as my UP VECTOR, not sure how it will work for you
-	D3DXVECTOR3 Direction(vx, vy, 1.0f);
-	//getting projection matrix
-	D3DXMATRIX viewMat;
-	GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
-	//inversing projection matrix
-	D3DXMATRIX iviewMat;
-	D3DXMatrixInverse(&iviewMat, 0, &viewMat);
-	D3DXVec3TransformCoord(&Origin, &Origin, &iviewMat);
-	D3DXVec3TransformNormal(&Direction, &Direction, &iviewMat);
-	//setting variables
-	DWORD dwFace;
-	FLOAT fBary1, fBary2, fDist;
-	BOOL picked = false;
-
-	std::vector<D3DXVECTOR3> VB = mXMesh->GetVertices();
-	std::vector<D3DXVECTOR3> IB = mXMesh->GetIndices();
-	float minDistance = 9999.f;
-	//float mU, mV;
-	//int mIdx;
-	for (UINT i = 0; i < IB.size(); ++i)
-	{
-		//문제가능성이 있는 코드
-		picked = D3DXIntersectTri(&VB[(UINT)IB[i].x], &VB[(UINT)IB[i].y], &VB[(UINT)IB[i].z], &Origin, &Direction, &fBary1, &fBary2, &fDist);
-
-		if (picked)
-		{
-			printf("TRI ");
-			break;
-		}
-	}
-	D3DXIntersect(mXMesh->GetMesh(), &Origin, &Direction, &picked, &dwFace, &fBary1, &fBary2, &fDist, NULL, NULL);
-	if (picked) printf("API ");
-
-}
-
-// void StageOne::MouseDown(pooptube::MouseEvent* pMouseEvent) {
-// 	switch (pMouseEvent->GetMouseEventType())
-// 	{
-// 	case pooptube::MouseEventType::MOUSE_LBUTTON_DOWN:
-// 		//PICK(pMouseEvent->GetX(), pMouseEvent->GetY());
-// 		mGround->PICKGROUND(pMouseEvent->GetX(), pMouseEvent->GetY(), 0.2f);
-// 
-// 		//TEST(pMouseEvent->GetX(), pMouseEvent->GetY());
-// 		break;
-// 	case pooptube::MouseEventType::MOUSE_RBUTTON_DOWN :
-// 		mGround->PICKGROUND(pMouseEvent->GetX(), pMouseEvent->GetY(), -0.2f);
-// 		break;
-// 	}
-// }
-// 
-// void StageOne::MouseMove(pooptube::MouseEvent* pMouseEvent) {
-// }
-// 
-// void StageOne::MouseUp(pooptube::MouseEvent* pMouseEvent) {
-// }
-// 
-// void StageOne::MousePressed(pooptube::MouseEvent* pMouseEvent) {
-// }
-// 
-// void StageOne::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
-// }
-
 void StageOne::MainCharacterJumpUpdate(float dTime) {
 	//캐릭터 점프 알고리즘
 	CHAR_STATE	CharState = mCharacter->GetState();
@@ -321,7 +245,13 @@ void StageOne::UpdateInput() {
 
 	
 	if (pooptube::gInputManager.KeyState(VK_LBUTTON) == pooptube::KeyState::KEY_DOWN)
-		mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), 0.2f);
+	{
+		Node *result = Pick((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY());
+		if (result != nullptr)
+			printf("%s\n", result->GetObjectName().c_str());
+	}
+		
+		//mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), 0.2f);
 	if (pooptube::gInputManager.KeyState(VK_RBUTTON) == pooptube::KeyState::KEY_DOWN)
 		mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), -0.2f);
 

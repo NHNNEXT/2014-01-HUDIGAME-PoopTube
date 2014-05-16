@@ -35,6 +35,9 @@ namespace pooptube {
 	//매번 리셋가능하도록 수정해야함
 	bool Ground::_SetBuffer() {
 
+		mVertices.clear();
+		mIndices.clear();
+
 		UINT col = mData->col - 1;
 		UINT row = mData->row - 1;
 
@@ -55,6 +58,8 @@ namespace pooptube {
 				vertex[nIndex].position.z = mPolygonSize * z;
 				//vertex[nIndex].position.y = (float)bitmapImage[nIndex * 3] * 0.005f;
 				vertex[nIndex].position.y = mData->GetHeight(x, z) * mData->amp;
+
+				mVertices.push_back(vertex[nIndex].position);
 
 				vertex[nIndex].color = D3DCOLOR_RGBA(255, 50, 255, 255);
 			}
@@ -101,11 +106,15 @@ namespace pooptube {
 			for (UINT x = 0; x < col; x++) {
 				Index[nIndex].w2 = UINT(z * (col + 1) + x);
 				Index[nIndex].w1 = UINT((z + 1)*(col + 1) + x + 1);
-				Index[nIndex++].w0 = UINT((z + 1)*(col + 1) + x);
+				Index[nIndex].w0 = UINT((z + 1)*(col + 1) + x);
+				mIndices.push_back(D3DXVECTOR3(Index[nIndex].w0, Index[nIndex].w1, Index[nIndex].w2));
+				++nIndex;
 
 				Index[nIndex].w2 = UINT(z * (col + 1) + x);
 				Index[nIndex].w1 = UINT(z * (col + 1) + x + 1);
-				Index[nIndex++].w0 = UINT((z + 1)*(col + 1) + x + 1);
+				Index[nIndex].w0 = UINT((z + 1)*(col + 1) + x + 1);
+				mIndices.push_back(D3DXVECTOR3(Index[nIndex].w0, Index[nIndex].w1, Index[nIndex].w2));
+				++nIndex;
 			}
 		}
 

@@ -73,6 +73,13 @@ namespace pooptube {
 
  		virtual void AddChild( Node* pChild );
  		virtual void RemoveChild( Node* pChild );
+
+		virtual void GetRay(float x, float y, D3DXVECTOR3 *Origin, D3DXVECTOR3 *Direction);
+		virtual Node *Pick(float x, float y);// , std::vector<Node*> *result);
+		
+		std::vector<D3DXVECTOR3> *GetVertices() { return &mVertices; }
+		std::vector<D3DXVECTOR3> *GetIndices() { return &mIndices; }
+
 // 
 // 		virtual void DisableKeyEvent();
 // 		virtual void DisableMouseEvent();
@@ -139,6 +146,9 @@ namespace pooptube {
 		std::vector<std::shared_ptr<Node>> mChildList;
 		std::string						   mClassName;
 		std::string						   mObjectName;
+
+		std::vector<D3DXVECTOR3> mVertices;
+		std::vector<D3DXVECTOR3> mIndices;
 
 		bool mIsKeyEventEnabled = false;
 		bool mIsMouseEventEnabled = false;

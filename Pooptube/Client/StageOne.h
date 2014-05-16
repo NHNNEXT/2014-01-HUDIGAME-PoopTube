@@ -50,7 +50,6 @@ public:
 
 	pooptube::Ground *GetGroundModule() const { return mGround; }
 
-	void PICK(float x, float y);
 protected:
 
 private:
