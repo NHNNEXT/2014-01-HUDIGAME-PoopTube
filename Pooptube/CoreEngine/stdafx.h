@@ -15,6 +15,7 @@
 #include <windows.h>
 
 #include <d3dx9.h>
+#include <DirectXCollision.h>
 
 #include <memory>
 #include <vector>

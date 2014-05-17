@@ -56,7 +56,7 @@ public:
 	CREATURE_STATE GetState() const { return mState; }
 	void SetState(CREATURE_STATE state) { mState = state; }
 
-	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
+	//pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
 
 private:
 	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
@@ -70,7 +70,7 @@ private:
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 10.f };
 
 	pooptube::XMesh		*mXMesh = nullptr;
-	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
+	//pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
 	FMOD::Studio::EventInstance *mEffectSound = nullptr;
 	FMOD::Studio::EventInstance *mStepSound = nullptr;

@@ -22,6 +22,7 @@ namespace pooptube {
 	class SkinnedMesh;
 	class CollisionBox;
 	class Ground;
+	class XMesh;
 }
 class StageOne;
 
@@ -38,14 +39,16 @@ public:
 	void Render();
 	void Update(float dTime);
 
-	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
+//	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
 
 private:
 	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
 
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 0.f };
 
-	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
+	pooptube::XMesh* mMesh = nullptr;
+
+//	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
 	bool					isRender = true;
 	FMOD::Studio::EventInstance *mEffectSound = nullptr;
