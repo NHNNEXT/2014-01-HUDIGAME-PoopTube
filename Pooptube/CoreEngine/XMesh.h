@@ -2,6 +2,7 @@
 #include "Node.h"
 
 namespace pooptube{
+
 	class XMesh : public Node {
 	public:
 		XMesh();

@@ -4,6 +4,7 @@
 #include "CollisionBox.h"
 #include "CollisionManager.h"
 #include "ResourceDef.h"
+#include "XMesh.h"
 
 LightOrb::LightOrb()
 {
@@ -28,17 +29,14 @@ bool LightOrb::Init(LightOrb *pCreature)
 {
 	Node::Init();
 
-// 	EnableKeyEvent();
-// 	EnableMouseEvent();
+	//mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
+	mMesh = pooptube::XMesh::Create(PATH_TIGER);
+	AddChild(mMesh);
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
-	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	AddChild( collisionBox );
 
 	LightOrb::SetPosition(mInitialPosition);
-
-	AddChild(mSkinnedMesh);
 
 	mEffectSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Okay" );
 
@@ -60,10 +58,6 @@ void LightOrb::Render()
 void LightOrb::Update(float dTime)
 {
 	Node::Update(dTime);
-
-	mSkinnedMesh->SetPosition(Node::GetPosition());
-	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
-	mSkinnedMesh->Update(dTime);
 
 	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 

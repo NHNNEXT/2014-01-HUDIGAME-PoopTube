@@ -32,15 +32,15 @@ bool Creature::Init( Creature *pCreature )
 // 	EnableKeyEvent();
 // 	EnableMouseEvent();
 
-	//mXMesh = pooptube::XMesh::Create("tiger.x");
-	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
+	mXMesh = pooptube::XMesh::Create(PATH_TIGER);
+	//mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
-	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
+//	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 
-	AddChild(mSkinnedMesh);
+	//AddChild(mSkinnedMesh);
 	AddChild( collisionBox );
-	//AddChild(mXMesh.get());
+	AddChild(mXMesh);
 	Creature::SetPosition( mInitialPosition );
 
 	mStepSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Footsteps" );
@@ -59,10 +59,6 @@ void Creature::Render()
 void Creature::Update(float dTime)
 {
 	Node::Update(dTime);
-
-	mSkinnedMesh->SetPosition(Node::GetPosition());
-	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
-	mSkinnedMesh->Update(dTime);
 
 	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 

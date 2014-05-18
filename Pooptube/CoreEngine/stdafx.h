@@ -15,6 +15,7 @@
 #include <windows.h>
 
 #include <d3dx9.h>
+#include <DirectXCollision.h>
 
 #include <memory>
 #include <vector>
@@ -26,6 +27,9 @@
 #include <unordered_map>
 
 #include <fbxsdk.h>
+
+//디버깅용
+#include <assert.h>
 
 #include "ObjectManager.h"
 
