@@ -57,7 +57,6 @@ namespace pooptube {
 
 		CAllocateHierarchy() {
 		}
-		
 		~CAllocateHierarchy() {
 		}
 	};
@@ -78,6 +77,7 @@ namespace pooptube {
 
 		HRESULT SetupBoneMatrixPointersOnMesh(LPD3DXMESHCONTAINER pMeshContainerBase);
 		HRESULT SetupBoneMatrixPointers(LPD3DXFRAME pFrame);
+
 		void ReleaseAttributeTable(LPD3DXFRAME pFrameBase);
 		
 		//동작확인을 위해 이렇게 지정 다른 방법을 모색중

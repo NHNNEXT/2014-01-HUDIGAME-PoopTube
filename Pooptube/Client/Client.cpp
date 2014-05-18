@@ -13,7 +13,7 @@ int main()
 {
 	//#ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(343);
+	//_CrtSetBreakAlloc(348);
 	//#endif
 
 	pooptube::Application::GetInstance()->Init(L"Test", 800, 600, true);
