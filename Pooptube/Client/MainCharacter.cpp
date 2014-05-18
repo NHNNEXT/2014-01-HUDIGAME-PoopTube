@@ -51,7 +51,8 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 // 	EnableMouseEvent();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model\\tiny.x", L"Shader\\SkinnedMesh.fx");
-	mSkinnedMesh->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
+	mSkinnedMesh->SetScale(D3DXVECTOR3(0.005f, 0.005f, 0.005f));
+	mSkinnedMesh->Translation(0.f, 1.f, 0.f);
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pMainCharacter );
 	//collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
