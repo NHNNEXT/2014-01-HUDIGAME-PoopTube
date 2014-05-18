@@ -424,7 +424,14 @@ namespace pooptube {
 	}
 
 	SkinnedMesh::~SkinnedMesh() {
+
 		ReleaseAttributeTable(mFrameRoot);
+		delete[] mBoneMatrices;
+
+		CAllocateHierarchy Alloc;
+		D3DXFrameDestroy(mFrameRoot, &Alloc);
+		SAFE_RELEASE(mEffect);
+		SAFE_RELEASE(mAnimController);
 	}
 
 	SkinnedMesh * SkinnedMesh::Create(const std::wstring& XMeshPath, const std::wstring& EffectPath) {
@@ -460,8 +467,9 @@ namespace pooptube {
 
 		MatWorld = MatScale*MatRotate*MatTrans;
 
-		//mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 
+		//쉐이더 추가시 추가해야함
 		//mEffect->SetMatrix("mViewProj", &g_matProj);
 		DrawFrame(mFrameRoot);
 
