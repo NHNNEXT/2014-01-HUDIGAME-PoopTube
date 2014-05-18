@@ -677,7 +677,6 @@ namespace pooptube {
 			pMeshContainer->pOrigMesh->UnlockVertexBuffer();
 			pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
 
-			GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
 			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++)
 			{
 				mDevice->SetMaterial(&(
@@ -686,7 +685,6 @@ namespace pooptube {
 					pMeshContainer->ppTextures[pMeshContainer->pAttributeTable[iAttrib].AttribId]);
  				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
 			}
-			GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
 			mDevice->SetTexture(0, NULL);
 
 			//HLSL**********************************
