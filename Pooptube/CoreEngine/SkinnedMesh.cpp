@@ -119,27 +119,21 @@ namespace pooptube {
 		pMesh->GetDevice(&pd3dDevice);
 		NumFaces = pMesh->GetNumFaces();
 
-		// if no normals are in the mesh, add them
-		if (!(pMesh->GetFVF() & D3DFVF_NORMAL))
-		{
+		//노멀추가 정상작동 확인
+		if (!(pMesh->GetFVF() & D3DFVF_NORMAL)) {
 			pMeshContainer->MeshData.Type = D3DXMESHTYPE_MESH;
 
-			// clone the mesh to make room for the normals
 			hr = pMesh->CloneMeshFVF(pMesh->GetOptions(),
 				pMesh->GetFVF() | D3DFVF_NORMAL,
 				pd3dDevice, &pMeshContainer->MeshData.pMesh);
 			if (FAILED(hr))
 				goto e_Exit;
 
-			// get the new pMesh pointer back out of the mesh container to use
-			// NOTE: we do not release pMesh because we do not have a reference to it yet
 			pMesh = pMeshContainer->MeshData.pMesh;
 
-			// now generate the normals for the pmesh
 			D3DXComputeNormals(pMesh, NULL);
 		}
-		else  // if no normals, just add a reference to the mesh for the mesh container
-		{
+		else {
 			pMeshContainer->MeshData.pMesh = pMesh;
 			pMeshContainer->MeshData.Type = D3DXMESHTYPE_MESH;
 
@@ -162,12 +156,10 @@ namespace pooptube {
 		memset(pMeshContainer->ppTextures, 0, sizeof(LPDIRECT3DTEXTURE9)* pMeshContainer->NumMaterials);
 
 		// if materials provided, copy them
-		if (NumMaterials > 0)
-		{
+		if (NumMaterials > 0) {
 			memcpy(pMeshContainer->pMaterials, pMaterials, sizeof(D3DXMATERIAL)* NumMaterials);
 
-			for (iMaterial = 0; iMaterial < NumMaterials; iMaterial++)
-			{
+			for (iMaterial = 0; iMaterial < NumMaterials; iMaterial++) {
 				if (pMeshContainer->pMaterials[iMaterial].pTextureFilename != NULL)
 				{
 					WCHAR wszBuf[MAX_PATH];
@@ -175,17 +167,20 @@ namespace pooptube {
 					wszBuf[MAX_PATH - 1] = L'\0';
 
 					//텍스쳐 로딩
-					if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, wszBuf,
+// 					if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, wszBuf,
+// 						&pMeshContainer->ppTextures[iMaterial])))
+// 						pMeshContainer->ppTextures[iMaterial] = NULL;
+
+					//임시로 경로박아둠
+					if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, L"Model\\Tiny_skin.dds",
 						&pMeshContainer->ppTextures[iMaterial])))
 						pMeshContainer->ppTextures[iMaterial] = NULL;
 
-					// don't remember a pointer into the dynamic memory, just forget the name after loading
 					pMeshContainer->pMaterials[iMaterial].pTextureFilename = NULL;
 				}
 			}
 		}
-		else // if no materials provided, use a default one
-		{
+		else {
 			pMeshContainer->pMaterials[0].pTextureFilename = NULL;
 			memset(&pMeshContainer->pMaterials[0].MatD3D, 0, sizeof(D3DMATERIAL9));
 			pMeshContainer->pMaterials[0].MatD3D.Diffuse.r = 0.5f;
@@ -546,8 +541,7 @@ namespace pooptube {
 		D3DXMESHCONTAINER_DERIVED* pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerBase;
 
 		// if there is a skinmesh, then setup the bone matrices
-		if (pMeshContainer->pSkinInfo != NULL)
-		{
+		if (pMeshContainer->pSkinInfo != NULL) {
 			cBones = pMeshContainer->pSkinInfo->GetNumBones();
 
 			pMeshContainer->ppBoneMatrixPtrs = new D3DXMATRIX*[cBones];
@@ -683,15 +677,17 @@ namespace pooptube {
 			pMeshContainer->pOrigMesh->UnlockVertexBuffer();
 			pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
 
+			GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
 			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++)
 			{
 				mDevice->SetMaterial(&(
 					pMeshContainer->pMaterials[pMeshContainer->pAttributeTable[iAttrib].AttribId].MatD3D));
 				mDevice->SetTexture(0,
 					pMeshContainer->ppTextures[pMeshContainer->pAttributeTable[iAttrib].AttribId]);
-				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
+ 				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
 			}
-
+			GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
+			mDevice->SetTexture(0, NULL);
 
 			//HLSL**********************************
 // 			if (pMeshContainer->UseSoftwareVP)
