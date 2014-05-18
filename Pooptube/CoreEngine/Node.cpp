@@ -239,8 +239,11 @@ namespace pooptube {
 		GetDevice()->GetTransform(D3DTS_PROJECTION, &projMat);
 
 		//calculating.. mouse ray
-		float vx = (+2.0f*x / view.Width - 1.0f) / projMat._11;
-		float vy = (-2.0f*y / view.Height + 1.0f) / projMat._22;
+		//float vx = (((((x - view.X) * 2.0f / (float)view.Width) - 1.0f)) - projMat(2, 0)) / projMat(0, 0);
+		//float vy = ((-(((y - view.Y) * 2.0f / (float)view.Height) - 1.0f)) - projMat(2, 1)) / projMat(1, 1);
+
+ 		float vx = (+2.0f*x / view.Width - 1.0f) / projMat._11;
+ 		float vy = (-2.0f*y / view.Height + 1.0f) / projMat._22;
 
 		//Vector is D3DVECTOR
 		Origin->x = 0.0f;
@@ -261,9 +264,24 @@ namespace pooptube {
 		D3DXMatrixInverse(&iviewMat, 0, &viewMat);
 		D3DXVec3TransformCoord(Origin, Origin, &iviewMat);
 		D3DXVec3TransformNormal(Direction, Direction, &iviewMat);
+
+		//printf("INVERSING VIEW MATRIX ============\n");
+		//printf("(%f %f %f)\n", Origin->x, Origin->y, Origin->z);
+		//printf("DIRECT (%f %f %f)\n\n", Direction->x, Direction->y, Direction->z);
+
+		//inversing world matrix
+// 		D3DXMATRIXA16 worldMat;
+// 		GetDevice()->GetTransform(D3DTS_WORLD, &worldMat);
+// 		D3DXMatrixInverse(&worldMat, 0, &worldMat);
+// 
+// 		D3DXVec3TransformCoord(Origin, Origin, &worldMat);
+// 		D3DXVec3TransformNormal(Direction, Direction, &worldMat
+		//printf("INVERSING WORLD MATRIX ============\n");
+		//printf("(%f %f %f)\n\n", Origin->x, Origin->y, Origin->z);
+		//printf("DIRECT (%f %f %f)\n\n", Direction->x, Direction->y, Direction->z);
 	}
 
-	Node *Node::Pick(float x, float y)
+	Node * Node::Pick(float x, float y)
 	{
 		//result->clear();
 		Node *result = nullptr;
@@ -277,6 +295,7 @@ namespace pooptube {
 		{
 			std::vector<D3DXVECTOR3> VB = *(iter->GetVertices());
 			std::vector<D3DXVECTOR3> IB = *(iter->GetIndices());
+			D3DXVECTOR3 pos = iter->GetPosition();
 			DWORD dwFace;
 			FLOAT fBary1, fBary2, fDist;
 			BOOL picked = false;
@@ -285,13 +304,25 @@ namespace pooptube {
 
 			for (UINT i = 0; i < IB.size(); ++i)
 			{
-				//문제가능성이 있는 코드
-				picked = D3DXIntersectTri(&VB[(UINT)IB[i].x], &VB[(UINT)IB[i].y], &VB[(UINT)IB[i].z], &Origin, &Direction, &fBary1, &fBary2, &fDist);
+				// Vertex 정보는 Translate 하기 전인 원점을 기준으로 좌표 설정이 되어있기 때문에
+				// 현재 Object의 Position과 더해준 값이 Vertex의 좌표이다.
+				// 근데 Picking 로직이 상당히 퍼포먼스가 저질인 것 같은데; 임시로 만들어 놓은거라..
+				// 지금은 위치 이동만 반영했고 회전에 따른 Vertex 위치 변화도 만들어야 하는데 나중에 하겠음.
+
+				D3DXVECTOR3 a, b, c;
+				a = VB[(UINT)IB[i].x] + pos;
+				b = VB[(UINT)IB[i].y] + pos;
+				c = VB[(UINT)IB[i].z] + pos;
+				//picked = D3DXIntersectTri(&VB[(UINT)IB[i].x], &VB[(UINT)IB[i].y], &VB[(UINT)IB[i].z], &Origin, &Direction, &fBary1, &fBary2, &fDist);
+				picked = D3DXIntersectTri(&a, &b, &c, &Origin, &Direction, &fBary1, &fBary2, &fDist);
 
 				if (picked)
 				{
 					if (minDistance > fDist)
 					{
+// 						printf("[%s] ", iter->GetObjectName().c_str());
+// 						D3DXVECTOR3 pos = Origin + Direction * fDist;
+// 						printf("%f %f %f \n", pos.x, pos.y, pos.z);
 						minDistance = fDist;
 						result = &*iter;
 					}

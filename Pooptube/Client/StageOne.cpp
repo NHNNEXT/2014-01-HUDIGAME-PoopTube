@@ -53,6 +53,7 @@ bool StageOne::Init() {
 
 	//mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 	mXMesh = pooptube::XMesh::Create(PATH_TIGER);
+	//mXMesh->Translation(2, 2, 2);
 
 	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
 

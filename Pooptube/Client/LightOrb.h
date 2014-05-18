@@ -17,6 +17,7 @@
 #include "Ground.h"
 #include "CollisionManager.h"
 #include "SoundManager.h"
+#include "XMesh.h"
 
 namespace pooptube {
 	class SkinnedMesh;
@@ -38,6 +39,9 @@ public:
 
 	void Render();
 	void Update(float dTime);
+
+	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mMesh->GetVertices(); }
+	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mMesh->GetIndices(); }
 
 //	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
 

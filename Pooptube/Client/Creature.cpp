@@ -5,6 +5,7 @@
 #include "CollisionManager.h"
 #include "XMesh.h"
 #include "ResourceDef.h"
+#include <string>
 
 Creature::Creature()
 {
@@ -28,6 +29,9 @@ Creature *Creature::Create()
 bool Creature::Init( Creature *pCreature )
 {
 	Node::Init();
+
+	mClassName = "Creature";
+	mObjectName = mObjectName = "Creature" + std::to_string(Node::ObjectNum++);
 // 
 // 	EnableKeyEvent();
 // 	EnableMouseEvent();

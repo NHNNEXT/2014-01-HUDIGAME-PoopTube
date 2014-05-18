@@ -17,12 +17,14 @@
 #include "MainCharacter.h"
 #include "StageOne.h"
 #include "Ground.h"
+#include "XMesh.h"
 #include "SoundManager.h"
 
 namespace pooptube {
 	class SkinnedMesh;
 	class CollisionBox;
 	class Ground;
+	class XMesh;
 }
 class StageOne;
 
@@ -55,6 +57,9 @@ public:
 
 	CREATURE_STATE GetState() const { return mState; }
 	void SetState(CREATURE_STATE state) { mState = state; }
+
+	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mXMesh->GetVertices(); }
+	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mXMesh->GetIndices(); }
 
 	//pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
 
