@@ -73,6 +73,7 @@ namespace pooptube {
 
  		virtual void AddChild( Node* pChild );
  		virtual void RemoveChild( Node* pChild );
+		virtual std::vector<std::shared_ptr<Node>> GetChildList() { return mChildList; }
 
 		virtual void GetRay(float x, float y, D3DXVECTOR3 *Origin, D3DXVECTOR3 *Direction);
 		virtual Node *Pick(float x, float y);// , std::vector<Node*> *result);

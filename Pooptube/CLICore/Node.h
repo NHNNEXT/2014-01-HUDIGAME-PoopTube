@@ -1,8 +1,12 @@
 #pragma once
 #pragma comment(lib, "CoreEngine")
+#include <msclr\marshal_cppstd.h>
 #include "..\CoreEngine\Node.h"
+#include <cliext/vector>
+#include <list>
 
 using namespace System;
+using namespace msclr::interop;
 
 #define CREATE(Class) \
 	static Class ^Create() { \
@@ -34,9 +38,25 @@ namespace Core {
 
 		pooptube::Node*			 GetInstance()  { return pInstance; }
 
-		virtual void			 AddChild(Node ^pChild)		{ pInstance->AddChild(pChild->GetInstance()); };
+		virtual void			 AddChild(Node ^pChild)		{ pInstance->AddChild(pChild->GetInstance()); mChildList.push_back(pChild); };
 		virtual void			 RemoveChild(Node ^pChild)	{ pInstance->RemoveChild(pChild->GetInstance()); };
 
+		virtual String^			 GetClassName() { return marshal_as<String^>(pInstance->GetClassName()); }
+		virtual String^			 GetObjectName() { return marshal_as<String^>(pInstance->GetObjectName()); }
+		virtual void			 SetObjectName(String^ value) { return pInstance->SetObjectName(marshal_as<std::string>(value)); }
+
+		virtual Node^		     Pick(float x, float y) 
+		{ 
+			pooptube::Node *SelectedNode = pInstance->Pick(x, y);
+			Node^ result = nullptr;
+
+			for (auto &iter : pInstance->GetChildList())
+			{
+
+			}
+
+			return result;
+		}
 
 		virtual void			 RotationY(float Angle) { pInstance->RotationY(Angle); };
 		virtual void			 RotateFrontVectorY(float angle) { pInstance->RotateFrontVectorY(angle); };
@@ -67,5 +87,8 @@ namespace Core {
 // 		void					UpdateMatrix();
 // 		float					GetTurnAngle(D3DXVECTOR3 src, D3DXVECTOR3 dst);
 // 		bool					Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed);
+
+	protected:
+		//cliext::vector<Node^> mChildList;
 	};
 }
