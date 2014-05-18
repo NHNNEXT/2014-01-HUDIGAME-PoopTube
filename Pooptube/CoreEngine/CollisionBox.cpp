@@ -69,9 +69,9 @@ namespace pooptube {
 	}
 
 
-	void CollisionBox::SetAABBCollisionBoxFromSkinnedMesh(SkinnedMesh *pMesh) {
-		SetAABBCollisionBoxFromVertices(pMesh->GetMeshData()->GetVertices(), pMesh->GetMeshData()->GetVertexCount());
-	}
+// 	void CollisionBox::SetAABBCollisionBoxFromSkinnedMesh(SkinnedMesh *pMesh) {
+// 		SetAABBCollisionBoxFromVertices(pMesh->GetMeshData()->GetVertices(), pMesh->GetMeshData()->GetVertexCount());
+// 	}
 
 	void CollisionBox::Render()
 	{

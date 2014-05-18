@@ -44,7 +44,7 @@ namespace pooptube {
 		virtual void	Update( float dTime );
 
 //		void			SetParent( std::shared_ptr<Node> pNode ){ mParentNode = pNode; }
-		void			SetAABBCollisionBoxFromSkinnedMesh(SkinnedMesh *pMesh);
+//		void			SetAABBCollisionBoxFromSkinnedMesh(SkinnedMesh *pMesh);
 		void			SetAABBCollisionBoxFromVertices(MESH_CUSTOM_VERTEX* vertices, UINT Size);
 		void			SetAxisLenX( float xLen ) { mAxisLen[AXIS_X] = xLen; }
 		void			SetAxisLenY( float yLen ) { mAxisLen[AXIS_Y] = yLen; }

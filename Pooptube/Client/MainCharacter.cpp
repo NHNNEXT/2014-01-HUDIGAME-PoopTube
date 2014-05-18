@@ -50,9 +50,11 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 // 	EnableKeyEvent();
 // 	EnableMouseEvent();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
+	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model\\tiny.x", L"Shader\\SkinnedMesh.fx");
+	mSkinnedMesh->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
+
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pMainCharacter );
-	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
+	//collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
 	AddChild( collisionBox );
 	AddChild( mSkinnedMesh );
