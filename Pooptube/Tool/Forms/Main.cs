@@ -83,16 +83,33 @@ namespace Tool
 
         private void ViewBox_MouseDown(object sender, MouseEventArgs e)
         {
-            float []pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
+            if(e.Button == MouseButtons.Middle)
+            {
+                Core.Node aaaa = Scene.Pick(e.X, e.Y);
+                aaaa.SetObjectName("AA");
+                aaaa.Move(1.0f, 1.0f);
+            }
+            else if(e.Button == MouseButtons.Right)
+            {
+                Core.Node aaaa = Scene.Pick(e.X, e.Y);
+                label1.Text = aaaa.GetObjectName();
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                float[] pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
 
-            label1.Text = pos[0].ToString();
-            label2.Text = pos[1].ToString();
-            label3.Text = pos[2].ToString();
+                //label1.Text = pos[0].ToString();
+                label2.Text = pos[1].ToString();
+                label3.Text = pos[2].ToString();
 
-            Core.Tiger t = Core.Tiger.Create();
-            t.SetPosition(pos[0], pos[1], pos[2]);
+                Core.Tiger t = Core.Tiger.Create();
+                t.SetPosition(pos[0], pos[1], pos[2]);
 
-            Scene.AddChild(t);
+                Scene.AddChild(t);
+            }
+            
+
+            
         }
     }
 }

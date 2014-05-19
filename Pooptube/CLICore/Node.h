@@ -2,8 +2,7 @@
 #pragma comment(lib, "CoreEngine")
 #include <msclr\marshal_cppstd.h>
 #include "..\CoreEngine\Node.h"
-#include <cliext/vector>
-#include <list>
+#include <cliext/list>
 
 using namespace System;
 using namespace msclr::interop;
@@ -39,23 +38,22 @@ namespace Core {
 		pooptube::Node*			 GetInstance()  { return pInstance; }
 
 		virtual void			 AddChild(Node ^pChild)		{ pInstance->AddChild(pChild->GetInstance()); mChildList.push_back(pChild); };
-		virtual void			 RemoveChild(Node ^pChild)	{ pInstance->RemoveChild(pChild->GetInstance()); };
+		virtual void			 RemoveChild(Node ^pChild)	{ pInstance->RemoveChild(pChild->GetInstance()); mChildList.remove(pChild); };
 
 		virtual String^			 GetClassName() { return marshal_as<String^>(pInstance->GetClassName()); }
 		virtual String^			 GetObjectName() { return marshal_as<String^>(pInstance->GetObjectName()); }
 		virtual void			 SetObjectName(String^ value) { return pInstance->SetObjectName(marshal_as<std::string>(value)); }
 
-		virtual Node^		     Pick(float x, float y) 
+		virtual Node		     ^Pick(float x, float y) 
 		{ 
 			pooptube::Node *SelectedNode = pInstance->Pick(x, y);
-			Node^ result = nullptr;
 
-			for (auto &iter : pInstance->GetChildList())
+			for (auto %iter = mChildList.begin(); iter != mChildList.end(); ++iter)
 			{
-
+				if ((%iter)->get_ref()->GetInstance() == SelectedNode)
+					return (%iter)->get_ref();
 			}
-
-			return result;
+			return nullptr;			
 		}
 
 		virtual void			 RotationY(float Angle) { pInstance->RotationY(Angle); };
@@ -89,6 +87,6 @@ namespace Core {
 // 		bool					Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed);
 
 	protected:
-		//cliext::vector<Node^> mChildList;
+		cliext::list<Node^> mChildList;
 	};
 }
