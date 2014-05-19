@@ -41,16 +41,13 @@ StageOne* StageOne::Create() {
 }
 
 bool StageOne::Init() {
-	//태스트하기위해 설정들을 꾸겨넣었음
-	//똥튜브 먹고싶다.
-// 	EnableKeyEvent();
-// 	EnableMouseEvent();
 
 	pooptube::Scene::Init();
 
 	//mLight = pooptube::Light::Create();
 	mSunLight = pooptube::SunLight::Create();
 
+	//xmesh 테스트용 코드
 	//mSkinnedMesh = pooptube::SkinnedMesh::Create("batman70.fbx");
 	mXMesh = pooptube::XMesh::Create("Model//TreeAcaciaA.x");
 	//mXMesh = pooptube::XMesh::Create("Model//sphere.x");
@@ -152,46 +149,6 @@ void StageOne::Update(float dTime) {
 	pooptube::SoundManager::GetInstance()->Update();
 }
 
-// void StageOne::KeyDown(pooptube::KeyEvent* pKeyEvent) {
-// }
-// 
-// void StageOne::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
-// 
-// 	switch (pKeyEvent->GetKeyCode())
-// 	{
-// 	case 'R' :
-// 		mGround->_SetBuffer();
-// 		break;
-// 	case 'T':
-// 		mCharacter->Move(0.1f, 0.f);
-// 		break;
-// 	case 'G':
-// 		mCharacter->Move(-0.1f, 0.f);
-// 		break;
-// 	case 'F':
-// 		mCharacter->Move(0.f, 0.1f);
-// 		break;
-// 	case 'H':
-// 		mCharacter->Move(0.f, -0.1f);
-// 		break;
-// 	case VK_UP:
-// 		break;
-// 	case VK_DOWN:
-// 		break;
-// 
-// 	case 'Q':
-// 		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-// 		break;
-// 	case 'E':
-// 		GetDevice()->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-// 		break;
-// 	}
-// }
-// void StageOne::KeyUp(pooptube::KeyEvent* pKeyEvent) {
-// 
-// }
-
-
 void StageOne::MainCharacterJumpUpdate(float dTime) {
 	//캐릭터 점프 알고리즘
 	CHAR_STATE	CharState = mCharacter->GetState();
@@ -205,14 +162,6 @@ void StageOne::MainCharacterJumpUpdate(float dTime) {
 		float		currentSpeed = CharJumpSpeed - GroundAccel * mTimeForJump;
 
 		mCharacter->Translation( 0.f, currentSpeed * dTime, 0.f );
-// 			if (!mRecordJumpPos) {
-// 			mBeforeJumpYPos = CharPos.y;
-// 			mRecordJumpPos = true;
-// 			
-// 		}
-// 		
-// 			float JumpHeight = CharJumpSpeed * mTimeForJump - 0.5f*GroundAccel*mTimeForJump*mTimeForJump;
-// 		CharPos.y = JumpHeight + mBeforeJumpYPos;
 		
 		if (MapHeight > CharPos.y) {
 			CharPos.y = MapHeight;
@@ -220,11 +169,7 @@ void StageOne::MainCharacterJumpUpdate(float dTime) {
 			mCharacter->SetState( NONE );
 			
 			mTimeForJump = 0.f;
-//			mRecordJumpPos = false;
-			
 		}
-		//mCharacter->SetPosition(CharPos);
-		
 	}
 	else if (CharState == NONE) {
 		CharPos.y = MapHeight;

@@ -19,6 +19,8 @@ namespace pooptube{
 enum CHAR_STATE {
 	NONE,
 	JUMP,
+	MOVE,
+	RUN,
 };
 
 class MainCharacter : public pooptube::Node{
@@ -35,7 +37,6 @@ public:
 	void Update(float dTime);
 
 	void UpdateInput();
-	void JumpUpdate(float dTime);
 
 // 	void KeyDown(pooptube::KeyEvent* pKeyEvent);
 // 	void KeyPressed(pooptube::KeyEvent* pKeyEvent);

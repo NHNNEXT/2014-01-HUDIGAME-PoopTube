@@ -35,19 +35,37 @@ void MainCharacter::Update(float dTime) {
 
 	UpdateInput();
 
+	switch (mState) {
+	case NONE:
+		mSkinnedMesh->SetAnimationTrack(3);
+		break;
+	case MOVE:
+		mSkinnedMesh->SetAnimationTrack(2);
+		break;
+	case RUN:
+		mSkinnedMesh->SetAnimationTrack(1);
+		break;
+	default:
+		break;
+	}
+
 	mSkinnedMesh->SetPosition(GetPosition());
 	mSkinnedMesh->Update(dTime);
 	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
 	pooptube::SoundManager::GetInstance()->SetListener( &mListener );
+
+	if (mState == MOVE) {
+		mState = NONE;
+	}
 }
 bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 	Node::Init();
 
 	//사용하는 메쉬가 이상하게 좌표축이 설정되어있어서 아래처럼 처리했음
 	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model\\tiny_4anim.x", L"Shader\\SkinnedMesh.fx");
-	mSkinnedMesh->SetAnimationTrack(2);
+	mSkinnedMesh->SetAnimationTrack(3);
 	mSkinnedMesh->SetScale(D3DXVECTOR3(0.005f, 0.005f, 0.005f));
 	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0.f, 1.f, 0.f));
 	mSkinnedMesh->SetUpVec(D3DXVECTOR3(0.f, 0.f, -1.f));
@@ -74,14 +92,29 @@ void MainCharacter::_CollsionHandle( pooptube::CollisionBox* collisionResult )
 }
 
 void MainCharacter::UpdateInput() {
-	if (pooptube::gInputManager.KeyState('W') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::gInputManager.KeyState('W') == pooptube::KeyState::KEY_PRESSED) {
 		Translation(Node::GetFrontVector()*mSpeed);
-	if (pooptube::gInputManager.KeyState('S') == pooptube::KeyState::KEY_PRESSED)
+		if (mState != JUMP)
+			mState = MOVE;
+	}
+		
+	if (pooptube::gInputManager.KeyState('S') == pooptube::KeyState::KEY_PRESSED) {
 		Translation(Node::GetFrontVector()*mSpeed*-1.f);
-	if (pooptube::gInputManager.KeyState('A') == pooptube::KeyState::KEY_PRESSED)
+		if (mState != JUMP)
+			mState = MOVE;
+	}
+		
+	if (pooptube::gInputManager.KeyState('A') == pooptube::KeyState::KEY_PRESSED) {
 		Translation(Node::GetLeftVector()*mSpeed);
-	if (pooptube::gInputManager.KeyState('D') == pooptube::KeyState::KEY_PRESSED)
+		if (mState != JUMP)
+			mState = MOVE;
+	}
+		
+	if (pooptube::gInputManager.KeyState('D') == pooptube::KeyState::KEY_PRESSED) {
 		Translation(Node::GetRightVector()*mSpeed);
+		if (mState != JUMP)
+			mState = MOVE;
+	}
 
 	if (pooptube::gInputManager.KeyState(VK_LEFT) == pooptube::KeyState::KEY_PRESSED) {
 		RotationY(-0.1f);
