@@ -37,7 +37,7 @@ namespace pooptube{
 	{
 		Node::Init();
 
-		mObjectName = "SkyBox" + std::to_string(Node::ObjectNum++);
+		mObjectName = "SkyBox" + std::to_string(Node::ObjectNum-1);
 		mClassName = "SkyBox";
 
 		mTopTexture = ResourceManager::GetInstance()->LoadTexture(top);

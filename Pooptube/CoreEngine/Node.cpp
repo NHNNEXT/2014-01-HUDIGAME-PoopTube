@@ -28,6 +28,9 @@ namespace pooptube {
 		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 		UpdateMatrix();
 
+		mObjectName = "Node" + std::to_string(Node::ObjectNum++);
+		mClassName = "Node";
+
 		return true;
 	}
 

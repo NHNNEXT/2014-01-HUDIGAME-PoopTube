@@ -24,6 +24,9 @@ namespace pooptube {
 	bool Light::Init() {
 		Node::Init();
 
+		mObjectName = "Light" + std::to_string(Node::ObjectNum-1);
+		mClassName = "Light";
+
 		mIndex = mCountIndex++;
 
 		//광원의 위치

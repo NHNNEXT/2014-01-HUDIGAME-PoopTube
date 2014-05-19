@@ -19,6 +19,8 @@ namespace Tool
         Core.Ground Ground = null;
         Core.SunLight SunLight = null;
         Core.Camera Camera = null;
+        Core.Node SelectedNode = null;
+        Property PropertyTable = new Property();
 
         public MainForm()
         {
@@ -40,22 +42,15 @@ namespace Tool
 
             Run();
 
-            var settings = new Settings();
-            settings.InitValue(Ground);
-            settings.Position = new Vector3() { x = 0, y = 0, z = 0 };
-            settings.Scale = new Scale() { x = 1, y = 1, z = 1 };
-            settings.FrontVector = new Vector3() { x = 0, y = 0, z = 1 };
-
-            PropertyForm.SelectedObject = settings;
+            PropertyForm.SelectedObject = PropertyTable;
+            ObjectListBox.Items.Clear();
+            ObjectListBox.Items.AddRange(Scene.GetChildNameList().ToArray());
         }
 
         private async void Run()
         {
             while (true)
             {
-//                 PropertyForm.Refresh();
-//                 MyInformation.MyName = i.ToString();
-//                 ++i;
                 Application.Run();
                 await Task.Delay(1);
             }
@@ -64,52 +59,59 @@ namespace Tool
         private void PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             PropertyGrid grid = (PropertyGrid)s;
-            Settings data = (Settings)grid.SelectedObject;
+            Property data = (Property)grid.SelectedObject;
 
-            if (e.ChangedItem.Parent.Label == "Position")
-                data.target.SetPosition(data.Position.x, data.Position.y, data.Position.z);
-
-            else if (e.ChangedItem.Parent.Label == "Scale")
-                data.target.SetScale(data.Scale.x, data.Scale.y, data.Scale.z);
-
+            if (e.ChangedItem.Label == "Name")
+            {
+                Scene.ReplaceObjectName(data.target.GetObjectName(), data.Name);
+                data.target.SetObjectName(data.Name);
+            }
+            else if (e.ChangedItem.Parent.Label == "Position") data.target.SetPosition(data.Position.x, data.Position.y, data.Position.z);
+            else if (e.ChangedItem.Parent.Label == "Scale") data.target.SetScale(data.Scale.x, data.Scale.y, data.Scale.z);
             else if (e.ChangedItem.Parent.Label == "FrontVector")
             {
                 data.target.SetFrontVector(data.FrontVector.x, data.FrontVector.y, data.FrontVector.z);
                 data.FrontVector.Set(data.target.GetFrontVector());
-                
             }
             grid.Refresh();
         }
 
+        private void ChangeSeletedNode()
+        {
+            PropertyTable.InitValue(SelectedNode);
+
+            PropertyForm.Refresh();
+
+            ObjectListBox.Items.Clear();
+            ObjectListBox.Items.AddRange(Scene.GetChildNameList().ToArray());
+            if (SelectedNode == null) ObjectListBox.SelectedItem = null;
+            else ObjectListBox.SelectedItem = SelectedNode.GetObjectName();
+        }
         private void ViewBox_MouseDown(object sender, MouseEventArgs e)
         {
             if(e.Button == MouseButtons.Middle)
             {
-                Core.Node aaaa = Scene.Pick(e.X, e.Y);
-                aaaa.SetObjectName("AA");
-                aaaa.Move(1.0f, 1.0f);
+
             }
             else if(e.Button == MouseButtons.Right)
             {
-                Core.Node aaaa = Scene.Pick(e.X, e.Y);
-                label1.Text = aaaa.GetObjectName();
+                float[] pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
+
+                SelectedNode = Core.Tiger.Create();
+                SelectedNode.SetPosition(pos[0], pos[1], pos[2]);
+
+                Scene.AddChild(SelectedNode);
+
+                ChangeSeletedNode();
+                
             }
             else if (e.Button == MouseButtons.Left)
             {
-                float[] pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
+                SelectedNode = Scene.Pick(e.X, e.Y);
 
-                //label1.Text = pos[0].ToString();
-                label2.Text = pos[1].ToString();
-                label3.Text = pos[2].ToString();
-
-                Core.Tiger t = Core.Tiger.Create();
-                t.SetPosition(pos[0], pos[1], pos[2]);
-
-                Scene.AddChild(t);
+                if(SelectedNode != null)
+                    ChangeSeletedNode();
             }
-            
-
-            
         }
     }
 }

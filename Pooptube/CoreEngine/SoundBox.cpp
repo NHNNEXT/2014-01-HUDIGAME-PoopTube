@@ -29,7 +29,7 @@ namespace pooptube {
 		Node::Init();
 		mSound = soundInstance;
 
-		mObjectName = "SoundBox" + std::to_string(Node::ObjectNum++);
+		mObjectName = "SoundBox" + std::to_string(Node::ObjectNum-1);
 		mClassName = "SoundBox";
 
 		return true;

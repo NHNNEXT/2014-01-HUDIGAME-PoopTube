@@ -298,6 +298,7 @@
             // ObjectListBox
             // 
             this.ObjectListBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ObjectListBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ObjectListBox.FormattingEnabled = true;
             this.ObjectListBox.Location = new System.Drawing.Point(3, 3);
             this.ObjectListBox.Margin = new System.Windows.Forms.Padding(0);

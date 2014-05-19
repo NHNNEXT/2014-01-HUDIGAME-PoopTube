@@ -5,6 +5,7 @@
 #include <cliext/list>
 
 using namespace System;
+using namespace System::Collections::Generic;
 using namespace msclr::interop;
 
 #define CREATE(Class) \
@@ -37,8 +38,13 @@ namespace Core {
 
 		pooptube::Node*			 GetInstance()  { return pInstance; }
 
-		virtual void			 AddChild(Node ^pChild)		{ pInstance->AddChild(pChild->GetInstance()); mChildList.push_back(pChild); };
-		virtual void			 RemoveChild(Node ^pChild)	{ pInstance->RemoveChild(pChild->GetInstance()); mChildList.remove(pChild); };
+		virtual void			 AddChild(Node ^pChild)		{ pInstance->AddChild(pChild->GetInstance()); _AddWrappedChild(pChild); };
+		virtual void			 _AddWrappedChild(Node ^pChild) { mChildList.push_back(pChild); mChildNames.Add(pChild->GetObjectName()); }
+		virtual void			 RemoveChild(Node ^pChild)	{ pInstance->RemoveChild(pChild->GetInstance()); _RemoveWrappedChild(pChild); };
+		virtual void			 _RemoveWrappedChild(Node ^pChild) { mChildList.remove(pChild); mChildNames.Remove(pChild->GetObjectName()); }
+		virtual void			 ReplaceObjectName(String^ origin, String^ replace) { mChildNames.Remove(origin); mChildNames.Add(replace); }
+
+		virtual List<String^>	 ^GetChildNameList() { return %mChildNames; }
 
 		virtual String^			 GetClassName() { return marshal_as<String^>(pInstance->GetClassName()); }
 		virtual String^			 GetObjectName() { return marshal_as<String^>(pInstance->GetObjectName()); }
@@ -47,6 +53,7 @@ namespace Core {
 		virtual Node		     ^Pick(float x, float y) 
 		{ 
 			pooptube::Node *SelectedNode = pInstance->Pick(x, y);
+			//return SelectNodeByName(marshal_as<String^>(SelectedNode->GetObjectName()));
 
 			for (auto %iter = mChildList.begin(); iter != mChildList.end(); ++iter)
 			{
@@ -54,6 +61,15 @@ namespace Core {
 					return (%iter)->get_ref();
 			}
 			return nullptr;			
+		}
+		virtual Node		     ^SelectNodeByName(String ^ObjectName)
+		{
+			for (auto %iter = mChildList.begin(); iter != mChildList.end(); ++iter)
+			{
+				if ((%iter)->get_ref()->GetObjectName() == ObjectName)
+					return (%iter)->get_ref();
+			}
+			return nullptr;
 		}
 
 		virtual void			 RotationY(float Angle) { pInstance->RotationY(Angle); };
@@ -88,5 +104,6 @@ namespace Core {
 
 	protected:
 		cliext::list<Node^> mChildList;
+		List<String^> mChildNames;
 	};
 }
