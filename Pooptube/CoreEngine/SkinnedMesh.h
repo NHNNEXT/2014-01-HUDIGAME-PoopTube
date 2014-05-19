@@ -12,6 +12,8 @@
 
 namespace pooptube {
 
+	class SkinnedMesh;
+
 	HRESULT AllocateName(LPCSTR Name, LPSTR* pNewName);
 
 	struct D3DXFRAME_DERIVED : public D3DXFRAME {
@@ -49,16 +51,11 @@ namespace pooptube {
 		STDMETHOD(DestroyFrame)(THIS_ LPD3DXFRAME pFrameToFree);
 		STDMETHOD(DestroyMeshContainer)(THIS_ LPD3DXMESHCONTAINER pMeshContainerBase);
 
-		HRESULT GenerateSkinnedMesh(IDirect3DDevice9* pd3dDevice, D3DXMESHCONTAINER_DERIVED* pMeshContainer);
-// 
-// 		bool mUseSoftwareVP;
-// 		UINT mNumBoneMatricesMax;
-// 		D3DXMATRIXA16* mBoneMatrices = nullptr;
+		STDMETHOD(SetMA)(THIS_ SkinnedMesh *pMA);
 
-		CAllocateHierarchy() {
-		}
-		~CAllocateHierarchy() {
-		}
+	private:
+
+		SkinnedMesh* mMA;
 	};
 
 	class SkinnedMesh : public Node {
@@ -69,6 +66,7 @@ namespace pooptube {
 		static SkinnedMesh *Create(const std::wstring& XMeshPath, const std::wstring& EffectPath);
 
 		virtual void Render();
+		void SetAnimationTrack(DWORD num);
 		void DrawFrame(LPD3DXFRAME pFrame);
 		void DrawMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase);
 
@@ -79,11 +77,8 @@ namespace pooptube {
 		HRESULT SetupBoneMatrixPointers(LPD3DXFRAME pFrame);
 
 		void ReleaseAttributeTable(LPD3DXFRAME pFrameBase);
-		
-		//동작확인을 위해 이렇게 지정 다른 방법을 모색중
-		static D3DXMATRIXA16*       mBoneMatrices;
-		static UINT                 mNumBoneMatricesMax;
-		static bool                 mUseSoftwareVP;
+
+		HRESULT GenerateSkinnedMesh(IDirect3DDevice9* pd3dDevice, D3DXMESHCONTAINER_DERIVED* pMeshContainer);
 
 	protected:
 
@@ -97,6 +92,10 @@ namespace pooptube {
 		ID3DXAnimationController*   mAnimController = nullptr;
 
 		DWORD			            mBehaviorFlags;
+
+		D3DXMATRIXA16*       mBoneMatrices;
+		UINT                 mNumBoneMatricesMax;
+		bool                 mUseSoftwareVP;
 	};
 
 
