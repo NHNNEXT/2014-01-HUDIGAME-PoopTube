@@ -36,15 +36,19 @@ bool Creature::Init( Creature *pCreature )
 // 	EnableKeyEvent();
 // 	EnableMouseEvent();
 
-	mXMesh = pooptube::XMesh::Create(PATH_TIGER);
+	mMesh = pooptube::SkinnedMesh::Create(L"Model//dragon.x", L"Shader//SkinnedMesh.fx");
+	mMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+
+	//mXMesh = pooptube::XMesh::Create(PATH_TIGER);
 	//mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
 //	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 
+	AddChild(mMesh);
 	//AddChild(mSkinnedMesh);
 	AddChild( collisionBox );
-	AddChild(mXMesh);
+	//AddChild(mXMesh);
 	Creature::SetPosition( mInitialPosition );
 
 	mStepSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Footsteps" );

@@ -328,8 +328,9 @@ namespace pooptube {
 	}
 
 	void SkinnedMesh::Update(float dTime) {
-		mAnimController->AdvanceTime(dTime, NULL);
 
+		if (mAnimController)
+			mAnimController->AdvanceTime(dTime, NULL);
 	}
 
 	bool SkinnedMesh::_Init(const std::wstring& XMeshPath, const std::wstring& EffectPath) {
@@ -357,27 +358,11 @@ namespace pooptube {
 			return false;
 		}
 		
-		//여기서 야매를 씀
-		//포인터변환 사용 버그 가능성있음!
-// 		if (FAILED(GenerateSkinnedMesh(mDevice,
-// 			static_cast<D3DXMESHCONTAINER_DERIVED*>(mFrameRoot->pMeshContainer)))) {
-// 
-// 			MessageBox(NULL, L"GenerateSkinnedMesh function Error!", L"ERROR", MB_OK);
-// 			assert(false);
-// 			return false;
-// 		}
-		
 		if (FAILED(SetupBoneMatrixPointers(mFrameRoot))) {
 			MessageBox(NULL, L"SetupBoneMatrixPointers Error!", L"ERROR", MB_OK);
 			assert(false);
 			return false;
 		}
-		
-// 		if (FAILED(D3DXFrameCalculateBoundingSphere(mFrameRoot, &g_vObjectCenter, &g_fObjectRadius))) {
-// 			MessageBox(NULL, L"SetupBoneMatrixPointers Error!", L"ERROR", MB_OK);
-// 			assert(false);
-// 			return false;
-// 		}
 
 		// Obtain the behavior flags
 		D3DDEVICE_CREATION_PARAMETERS cp;
