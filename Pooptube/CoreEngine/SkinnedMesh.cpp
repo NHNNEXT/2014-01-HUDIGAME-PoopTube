@@ -492,7 +492,7 @@ namespace pooptube {
 			NULL, &mEffect, NULL))) {
 
 			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
-			assert(TRUE);
+			assert(false);
 			return false;
 		}
 		
@@ -500,7 +500,7 @@ namespace pooptube {
 			&mAlloc, NULL, &mFrameRoot, &mAnimController))) {
 
 			MessageBox(NULL, L"Could not find Xmesh file", L"ERROR", MB_OK);
-			assert(TRUE);
+			assert(false);
 			return false;
 		}
 		
@@ -510,19 +510,19 @@ namespace pooptube {
 // 			static_cast<D3DXMESHCONTAINER_DERIVED*>(mFrameRoot->pMeshContainer)))) {
 // 
 // 			MessageBox(NULL, L"GenerateSkinnedMesh function Error!", L"ERROR", MB_OK);
-// 			assert(TRUE);
+// 			assert(false);
 // 			return false;
 // 		}
 		
 		if (FAILED(SetupBoneMatrixPointers(mFrameRoot))) {
 			MessageBox(NULL, L"SetupBoneMatrixPointers Error!", L"ERROR", MB_OK);
-			assert(TRUE);
+			assert(false);
 			return false;
 		}
 		
 // 		if (FAILED(D3DXFrameCalculateBoundingSphere(mFrameRoot, &g_vObjectCenter, &g_fObjectRadius))) {
 // 			MessageBox(NULL, L"SetupBoneMatrixPointers Error!", L"ERROR", MB_OK);
-// 			assert(TRUE);
+// 			assert(false);
 // 			return false;
 // 		}
 
