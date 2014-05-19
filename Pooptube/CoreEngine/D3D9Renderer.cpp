@@ -74,6 +74,14 @@ namespace pooptube {
 		// z버퍼를 사용합니다.
 		mD3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 
+		//뷰변환에서 모든 법선을 정규화시키는 설정
+		//이거 안하면 일부 노멀이 안먹히는 현상이 벌어짐
+		//skinned mesh같은거
+		mD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
+		//디더링 색혼합설정
+		//mD3DDevice->SetRenderState(D3DRS_DITHERENABLE, TRUE);
+		//mD3DDevice->SetRenderState(D3DRS_AMBIENT, 0x33333333);
+
 		return true;
 	}
 	
