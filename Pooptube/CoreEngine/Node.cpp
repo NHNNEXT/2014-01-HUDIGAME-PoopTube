@@ -61,42 +61,32 @@ namespace pooptube {
 		}
 	}
 
-// 	void Node::DisableKeyEvent() {
-// 		if (mIsKeyEventEnabled == true) {
-// 			//this->_RegistrationToKeyEventDispatcher();
-// 			Application::GetInstance()->GetKeyEventDispatcher()->RemoveEventDelegate(this);
-// 			mIsKeyEventEnabled = false;
-// 		}
-// 	}
-// 	void Node::DisableMouseEvent() {
-// 		if (mIsMouseEventEnabled == true) {
-// 			Application::GetInstance()->GetMouseEventDispatcher()->RemoveEventDelegate(this);
-// 			mIsMouseEventEnabled = false;
-// 		}
-// 	}
-// 
-// 	void Node::EnableKeyEvent() {
-// 		if (mIsKeyEventEnabled == false) {
-// 			this->_RegistrationToKeyEventDispatcher();
-// 			mIsKeyEventEnabled = true;
-// 		}
-// 	}
-// 	void Node::EnableMouseEvent() {
-// 		if (mIsMouseEventEnabled == false) {
-// 			this->_RegistrationToMouseEventDispatcher();
-// 			mIsMouseEventEnabled = true;
-// 		}
-// 	}
-// 
-// 	void Node::_RegistrationToKeyEventDispatcher() {
-// 		Application::GetInstance()->GetKeyEventDispatcher()->AddEventDelegate(this);
-// 	}
-// 	void Node::_RegistrationToMouseEventDispatcher() {
-// 		Application::GetInstance()->GetMouseEventDispatcher()->AddEventDelegate(this);
-// 	}
-
 	void Node::RotationY(float Angle) {
 		RotateFrontVectorY(Angle);
+		RotateUpVectorY(Angle);
+
+		for (auto child : mChildList) {
+			child->RotationY(Angle);
+		}
+	}
+
+
+	void Node::RotationZ(float Angle) {
+		RotateFrontVectorZ(Angle);
+		RotateUpVectorZ(Angle);
+
+		for (auto child : mChildList) {
+			child->RotationZ(Angle);
+		}
+	}
+
+	void Node::RotationX(float Angle) {
+		RotateFrontVectorX(Angle);
+		RotateUpVectorX(Angle);
+
+		for (auto child : mChildList) {
+			child->RotationX(Angle);
+		}
 	}
 
 	void Node::RotateFrontVectorY(float angle) {
@@ -109,10 +99,38 @@ namespace pooptube {
 		mFrontVector.x = mFrontVector.x*cosf(angle) + mFrontVector.z*sinf(angle);
 		mFrontVector.z = -mFrontVector.x*sinf(angle) + mFrontVector.z*cosf(angle);
 		D3DXVec3Normalize(&mFrontVector, &mFrontVector);
+	}
 
-		for( auto child : mChildList ) {
-			child->RotateFrontVectorY( angle );
-		}
+
+	void Node::RotateFrontVectorX(float angle) {
+		mFrontVector.z = mFrontVector.z*cosf(angle) + mFrontVector.y*sinf(angle);
+		mFrontVector.y = -mFrontVector.z*sinf(angle) + mFrontVector.y*cosf(angle);
+		D3DXVec3Normalize(&mFrontVector, &mFrontVector);
+	}
+
+	void Node::RotateFrontVectorZ(float angle) {
+		mUpVec.y = mUpVec.y*cosf(angle) + mUpVec.x*sinf(angle);
+		mUpVec.x = -mUpVec.y*sinf(angle) + mUpVec.x*cosf(angle);
+		D3DXVec3Normalize(&mUpVec, &mUpVec);
+	}
+
+	void Node::RotateUpVectorX(float angle) {
+		mUpVec.z = mUpVec.z*cosf(angle) + mUpVec.y*sinf(angle);
+		mUpVec.y = -mUpVec.z*sinf(angle) + mUpVec.y*cosf(angle);
+		D3DXVec3Normalize(&mUpVec, &mUpVec);
+	}
+
+	void Node::RotateUpVectorY(float angle) {
+		mUpVec.x = mUpVec.x*cosf(angle) + mUpVec.z*sinf(angle);
+		mUpVec.z = -mUpVec.x*sinf(angle) + mUpVec.z*cosf(angle);
+		D3DXVec3Normalize(&mUpVec, &mUpVec);
+	}
+
+	void Node::RotateUpVectorZ(float angle) {
+
+		mFrontVector.y = mFrontVector.y*cosf(angle) + mFrontVector.x*sinf(angle);
+		mFrontVector.x = -mFrontVector.y*sinf(angle) + mFrontVector.x*cosf(angle);
+		D3DXVec3Normalize(&mFrontVector, &mFrontVector);
 	}
 
 	void Node::Translation( const D3DXVECTOR3& moveVec ) {
@@ -335,5 +353,4 @@ namespace pooptube {
 
 		return result;
 	}
-
 }

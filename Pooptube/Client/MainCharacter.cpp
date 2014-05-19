@@ -12,6 +12,7 @@ MainCharacter::MainCharacter() {
 
 
 MainCharacter::~MainCharacter() {
+	delete mSkinnedMesh;
 }
 
 MainCharacter *MainCharacter::Create() {
@@ -26,8 +27,7 @@ MainCharacter *MainCharacter::Create() {
 
 void MainCharacter::Render() {
 	Node::Render();
-	
-/*	mSkinnedMesh->Render();*/
+	mSkinnedMesh->Render();
 }
 
 void MainCharacter::Update(float dTime) {
@@ -35,10 +35,8 @@ void MainCharacter::Update(float dTime) {
 
 	UpdateInput();
 
-// 	mSkinnedMesh->SetPosition(Node::GetPosition());
-// 	mSkinnedMesh->SetFrontVector(Node::GetFrontVector());
-// 	mSkinnedMesh->Update(dTime);
-
+	mSkinnedMesh->SetPosition(GetPosition());
+	mSkinnedMesh->Update(dTime);
 	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
@@ -47,49 +45,21 @@ void MainCharacter::Update(float dTime) {
 bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 	Node::Init();
 
-// 	EnableKeyEvent();
-// 	EnableMouseEvent();
-
+	//사용하는 메쉬가 이상하게 좌표축이 설정되어있어서 아래처럼 처리했음
 	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model\\tiny_4anim.x", L"Shader\\SkinnedMesh.fx");
 	mSkinnedMesh->SetAnimationTrack(2);
 	mSkinnedMesh->SetScale(D3DXVECTOR3(0.005f, 0.005f, 0.005f));
-	mSkinnedMesh->Translation(0.f, 1.f, 0.f);
-
+	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0.f, 1.f, 0.f));
+	mSkinnedMesh->SetUpVec(D3DXVECTOR3(0.f, 0.f, -1.f));
+	
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pMainCharacter );
-	//collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
 	AddChild( collisionBox );
-	AddChild( mSkinnedMesh );
+	//AddChild( mSkinnedMesh );
+	
 
 	return true;
 }
-
-// void MainCharacter::KeyDown(pooptube::KeyEvent* pKeyEvent) {
-// }
-// 
-// void MainCharacter::KeyUp(pooptube::KeyEvent* pKeyEvent) {
-// 	switch (pKeyEvent->GetKeyCode()) {
-// 	case VK_SPACE:
-// 		mState = JUMP;
-// 		break;
-// 	}
-// }
-// 
-// void MainCharacter::MouseDown(pooptube::MouseEvent* pMouseEvent) {
-// }
-// 
-// void MainCharacter::MouseMove(pooptube::MouseEvent* pMouseEvent) {
-// }
-// 
-// void MainCharacter::MouseUp(pooptube::MouseEvent* pMouseEvent) {
-// }
-// 
-// void MainCharacter::MousePressed(pooptube::MouseEvent* pMouseEvent) {
-// }
-// 
-// void MainCharacter::MouseWheel(pooptube::MouseEvent* pMouseEvent) {
-// 
-// }
 
 void MainCharacter::_CollsionHandle( pooptube::CollisionBox* collisionResult )
 {
@@ -113,11 +83,16 @@ void MainCharacter::UpdateInput() {
 	if (pooptube::gInputManager.KeyState('D') == pooptube::KeyState::KEY_PRESSED)
 		Translation(Node::GetRightVector()*mSpeed);
 
-	if (pooptube::gInputManager.KeyState(VK_LEFT) == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::gInputManager.KeyState(VK_LEFT) == pooptube::KeyState::KEY_PRESSED) {
 		RotationY(-0.1f);
-	if (pooptube::gInputManager.KeyState(VK_RIGHT) == pooptube::KeyState::KEY_PRESSED)
+		mSkinnedMesh->RotationY(-0.1f);
+	}
+		
+	if (pooptube::gInputManager.KeyState(VK_RIGHT) == pooptube::KeyState::KEY_PRESSED) {
 		RotationY(0.1f);
-
+		mSkinnedMesh->RotationY(0.1f);
+	}
+		
 	if (pooptube::gInputManager.KeyState(VK_SPACE) == pooptube::KeyState::KEY_DOWN)
 		mState = JUMP;
 }

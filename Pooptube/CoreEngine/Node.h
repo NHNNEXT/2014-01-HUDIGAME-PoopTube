@@ -93,8 +93,16 @@ namespace pooptube {
 		//회전변환에도 좌표축은 고정
 		//@todo 현재 업벡터의 영향을 주지않는 변환만 구현
 		//x,z축 변환도 추가해야함
+		virtual void		RotationX(float Angle);
 		virtual void		RotationY(float Angle);
+		virtual void		RotationZ(float Angle);
+
+		virtual void		RotateFrontVectorX(float angle);
 		virtual void		RotateFrontVectorY(float angle);
+		virtual void		RotateFrontVectorZ(float angle);
+		virtual void		RotateUpVectorX(float angle);
+		virtual void		RotateUpVectorY(float angle);
+		virtual void		RotateUpVectorZ(float angle);
 
 		virtual void		SetFrontVector(const D3DXVECTOR3& vec) { D3DXVec3Normalize(&mFrontVector, &vec); }
 		virtual void		SetFrontVector(float x, float y, float z) { SetFrontVector(D3DXVECTOR3(x, y, z)); }
