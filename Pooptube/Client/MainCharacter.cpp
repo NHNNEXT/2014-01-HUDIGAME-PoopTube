@@ -50,7 +50,8 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 // 	EnableKeyEvent();
 // 	EnableMouseEvent();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model\\tiny.x", L"Shader\\SkinnedMesh.fx");
+	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model\\tiny_4anim.x", L"Shader\\SkinnedMesh.fx");
+	mSkinnedMesh->SetAnimationTrack(2);
 	mSkinnedMesh->SetScale(D3DXVECTOR3(0.005f, 0.005f, 0.005f));
 	mSkinnedMesh->Translation(0.f, 1.f, 0.f);
 
