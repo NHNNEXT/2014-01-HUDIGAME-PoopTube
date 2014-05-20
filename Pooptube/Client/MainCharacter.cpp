@@ -28,6 +28,8 @@ MainCharacter *MainCharacter::Create() {
 void MainCharacter::Render() {
 	Node::Render();
 	mSkinnedMesh->Render();
+
+	//printf_s("%f, %f, %f\n", GetPosition().x, GetPosition().y, GetPosition().z);
 }
 
 void MainCharacter::Update(float dTime) {

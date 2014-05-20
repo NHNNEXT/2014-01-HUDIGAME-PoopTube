@@ -92,11 +92,12 @@ namespace pooptube {
 		pMesh = pMeshData->pMesh;
 
 		// this sample does not FVF compatible meshes, so fail when one is found
+		DWORD temp = pMesh->GetFVF();
 		if (pMesh->GetFVF() == 0) {
 			hr = E_FAIL;
 			goto e_Exit;
 		}
-
+		
 		// allocate the overloaded structure to return as a D3DXMESHCONTAINER
 		pMeshContainer = new D3DXMESHCONTAINER_DERIVED;
 		if (pMeshContainer == NULL)
@@ -113,6 +114,17 @@ namespace pooptube {
 
 		pMesh->GetDevice(&pd3dDevice);
 		NumFaces = pMesh->GetNumFaces();
+
+// 		if (pMesh->GetFVF() == 0) {
+// 
+// 			hr = pMesh->CloneMeshFVF(pMesh->GetOptions(),
+// 				pMesh->GetFVF() | 18,
+// 				pd3dDevice, &pMeshContainer->MeshData.pMesh);
+// 			if (FAILED(hr))
+// 				goto e_Exit;
+// 
+// 			pMesh = pMeshContainer->MeshData.pMesh;
+// 		}
 
 		//노멀추가 정상작동 확인
 		if (!(pMesh->GetFVF() & D3DFVF_NORMAL)) {
