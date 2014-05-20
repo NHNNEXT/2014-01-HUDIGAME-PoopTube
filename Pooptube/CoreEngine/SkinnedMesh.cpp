@@ -92,8 +92,7 @@ namespace pooptube {
 		pMesh = pMeshData->pMesh;
 
 		// this sample does not FVF compatible meshes, so fail when one is found
-		if (pMesh->GetFVF() == 0)
-		{
+		if (pMesh->GetFVF() == 0) {
 			hr = E_FAIL;
 			goto e_Exit;
 		}
@@ -156,19 +155,18 @@ namespace pooptube {
 			memcpy(pMeshContainer->pMaterials, pMaterials, sizeof(D3DXMATERIAL)* NumMaterials);
 
 			for (iMaterial = 0; iMaterial < NumMaterials; iMaterial++) {
-				if (pMeshContainer->pMaterials[iMaterial].pTextureFilename != NULL)
-				{
+				if (pMeshContainer->pMaterials[iMaterial].pTextureFilename != NULL) {
 					WCHAR wszBuf[MAX_PATH];
 					MultiByteToWideChar(CP_ACP, 0, pMeshContainer->pMaterials[iMaterial].pTextureFilename, -1, wszBuf, MAX_PATH);
 					wszBuf[MAX_PATH - 1] = L'\0';
 
-					//텍스쳐 로딩
-// 					if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, wszBuf,
-// 						&pMeshContainer->ppTextures[iMaterial])))
-// 						pMeshContainer->ppTextures[iMaterial] = NULL;
+					//작업폴더 설정 추가
+					//코드로 박아넣음 변경 필요
+					std::wstring strBuf = L"Model\\";
+					strBuf += wszBuf;
 
-					//임시로 경로박아둠
-					if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, L"Model\\Tiny_skin.dds",
+					//텍스쳐 로딩
+					if (FAILED(D3DXCreateTextureFromFile(pd3dDevice, strBuf.c_str(),
 						&pMeshContainer->ppTextures[iMaterial])))
 						pMeshContainer->ppTextures[iMaterial] = NULL;
 
@@ -249,10 +247,8 @@ namespace pooptube {
 		SAFE_DELETE_ARRAY(pMeshContainer->pBoneOffsetMatrices);
 
 		// release all the allocated textures
-		if (pMeshContainer->ppTextures != NULL)
-		{
-			for (iMaterial = 0; iMaterial < pMeshContainer->NumMaterials; iMaterial++)
-			{
+		if (pMeshContainer->ppTextures != NULL) {
+			for (iMaterial = 0; iMaterial < pMeshContainer->NumMaterials; iMaterial++) {
 				SAFE_RELEASE(pMeshContainer->ppTextures[iMaterial]);
 			}
 		}
@@ -656,6 +652,8 @@ namespace pooptube {
 					pMeshContainer->pMaterials[pMeshContainer->pAttributeTable[iAttrib].AttribId].MatD3D));
 				mDevice->SetTexture(0,
 					pMeshContainer->ppTextures[pMeshContainer->pAttributeTable[iAttrib].AttribId]);
+
+				//DWORD temp = pMeshContainer->pAttributeTable[iAttrib].AttribId;
  				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
 			}
 			mDevice->SetTexture(0, NULL);
