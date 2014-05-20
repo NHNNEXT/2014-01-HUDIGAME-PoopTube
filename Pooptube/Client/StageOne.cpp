@@ -194,15 +194,15 @@ void StageOne::UpdateInput() {
 		mCharacter->Move(0.f, -0.1f);
 
 	
-	if (pooptube::gInputManager.KeyState(VK_LBUTTON) == pooptube::KeyState::KEY_DOWN)
-	{
-		Node *result = Pick((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY());
-		if (result != nullptr)
-			printf("%s\n", result->GetObjectName().c_str());
-	}
-		
-		//mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), 0.2f);
-	if (pooptube::gInputManager.KeyState(VK_RBUTTON) == pooptube::KeyState::KEY_DOWN)
-		mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), -0.2f);
+// 	if (pooptube::gInputManager.KeyState(VK_LBUTTON) == pooptube::KeyState::KEY_DOWN)
+// 	{
+// 		Node *result = Pick((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY());
+// 		if (result != nullptr)
+// 			printf("%s\n", result->GetObjectName().c_str());
+// 	}
+// 		
+// 		//mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), 0.2f);
+// 	if (pooptube::gInputManager.KeyState(VK_RBUTTON) == pooptube::KeyState::KEY_DOWN)
+// 		mGround->PICKGROUND((float)pooptube::gInputManager.GetX(), (float)pooptube::gInputManager.GetY(), -0.2f);
 
 }
