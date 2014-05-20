@@ -18,7 +18,7 @@ namespace pooptube {
 class MainCharacter;
 class Creature;
 class LightOrb;
-
+class Tree;
 
 class StageOne
 	: public pooptube::Scene
@@ -51,6 +51,7 @@ private:
 	pooptube::Light					*mLight = nullptr;
 	pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
+	Tree							*mTree = nullptr;
 
 	Creature						*mCreature = nullptr; // 크리처
 	LightOrb						*mLightOrb = nullptr; // 환경 물체

@@ -16,7 +16,7 @@ int main()
 	//_CrtSetBreakAlloc(348);
 	//#endif
 
-	pooptube::Application::GetInstance()->Init(L"Test", 800, 600, true);
+	pooptube::Application::GetInstance()->Init(L"Test", 1024, 768, true);
 
 	// test
 	/*pooptube::NetworkManager a;

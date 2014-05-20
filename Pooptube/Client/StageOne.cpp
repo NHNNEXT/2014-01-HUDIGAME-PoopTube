@@ -19,6 +19,7 @@
 #include "SoundBox.h"
 #include "InputManager.h"
 #include "ResourceDef.h"
+#include "Tree.h"
 
 StageOne::StageOne() {
 }
@@ -79,6 +80,9 @@ bool StageOne::Init() {
 	soundBox->Translation( soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ() );
 	AddChild( soundBox );
 	
+	mTree = Tree::Create();
+
+	this->AddChild(mTree);
 	this->AddChild(mSunLight);
 	this->AddChild(mCharacter);
 	this->AddChild(mCamera);

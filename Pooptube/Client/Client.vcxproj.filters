@@ -58,6 +58,9 @@
     <ClInclude Include="ResourceDef.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +84,9 @@
     </ClCompile>
     <ClCompile Include="IntroScene.cpp">
       <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

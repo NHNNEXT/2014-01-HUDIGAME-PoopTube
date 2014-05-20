@@ -36,7 +36,7 @@ bool Creature::Init()
 	mClassName = "Creature";
 	mObjectName = mObjectName = "Creature" + std::to_string(Node::ObjectNum++);
 
-	mMesh = pooptube::SkinnedMesh::Create(L"Model\\new.X");
+	mMesh = pooptube::SkinnedMesh::Create(PATH_NEWDRAGON);
 	mMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	mMesh->SetAnimationTrack(1);
 

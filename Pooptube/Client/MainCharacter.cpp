@@ -18,7 +18,7 @@ MainCharacter::~MainCharacter() {
 MainCharacter *MainCharacter::Create() {
 	MainCharacter *pMainCharacter(new MainCharacter);
 
-	if( pMainCharacter->Init( pMainCharacter ) ){
+	if( pMainCharacter->Init() ){
 		return pMainCharacter;
 	}
 	else
@@ -65,7 +65,7 @@ void MainCharacter::Update(float dTime) {
 		mState = NONE;
 	}
 }
-bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
+bool MainCharacter::Init() {
 	Node::Init();
 
 	//사용하는 메쉬가 이상하게 좌표축이 설정되어있어서 아래처럼 처리했음
@@ -75,7 +75,7 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0.f, 1.f, 0.f));
 	mSkinnedMesh->SetUpVec(D3DXVECTOR3(0.f, 0.f, -1.f));
 	
-	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pMainCharacter );
+	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
 	AddChild( collisionBox );
 	//AddChild( mSkinnedMesh );

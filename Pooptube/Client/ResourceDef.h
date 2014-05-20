@@ -19,6 +19,9 @@
 #define PATH_DRAGON				PATH_MODEL L"Dragon.X"
 #define PATH_SPHERE				PATH_MODEL L"sphere.x"
 #define PATH_TINY				PATH_MODEL L"tiny_4anim.x"
+#define PATH_NEWDRAGON			PATH_MODEL L"new.X"
+#define PATH_TREE				PATH_MODEL L"Tree01.X"
+
 
 //sound path
 #define PATH_SOUND 				"Sound\\"

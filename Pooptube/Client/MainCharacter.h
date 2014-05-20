@@ -32,8 +32,7 @@ public:
 
 	static MainCharacter *Create();
 
-//	bool Init();
-	bool Init( MainCharacter *pMainCharacter );
+	bool Init();
 
 	void Render();
 	void Update(float dTime);
