@@ -36,7 +36,7 @@ bool LightOrb::Init(LightOrb *pCreature)
 	mClassName = "LightOrb";
 	mObjectName = "LightOrb";
 
-	mMesh = pooptube::SkinnedMesh::Create(L"Model//sphere.x");
+	mMesh = pooptube::SkinnedMesh::Create(PATH_SPHERE);
 	mMesh->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
 	AddChild(mMesh);
 

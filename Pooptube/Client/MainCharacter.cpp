@@ -67,7 +67,7 @@ bool MainCharacter::Init( MainCharacter *pMainCharacter ) {
 	Node::Init();
 
 	//사용하는 메쉬가 이상하게 좌표축이 설정되어있어서 아래처럼 처리했음
-	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model\\tiny_4anim.x");
+	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_TINY);
 	mSkinnedMesh->SetAnimationTrack(3);
 	mSkinnedMesh->SetScale(D3DXVECTOR3(0.005f, 0.005f, 0.005f));
 	mSkinnedMesh->SetFrontVector(D3DXVECTOR3(0.f, 1.f, 0.f));

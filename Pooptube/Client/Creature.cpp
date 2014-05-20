@@ -36,7 +36,7 @@ bool Creature::Init()
 	mClassName = "Creature";
 	mObjectName = mObjectName = "Creature" + std::to_string(Node::ObjectNum++);
 
-	mMesh = pooptube::SkinnedMesh::Create(L"Model//dragon.x");
+	mMesh = pooptube::SkinnedMesh::Create(PATH_DRAGON);
 	mMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
