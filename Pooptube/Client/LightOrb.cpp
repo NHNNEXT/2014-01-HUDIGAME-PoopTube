@@ -4,7 +4,11 @@
 #include "CollisionBox.h"
 #include "CollisionManager.h"
 #include "ResourceDef.h"
-#include "XMesh.h"
+#include "SoundManager.h"
+#include "CollisionManager.h"
+#include "Ground.h"
+#include "StageOne.h"
+#include "MainCharacter.h"
 
 LightOrb::LightOrb()
 {
@@ -33,7 +37,8 @@ bool LightOrb::Init(LightOrb *pCreature)
 	mClassName = "LightOrb";
 	mObjectName = "LightOrb";
 
-	mMesh = pooptube::XMesh::Create(PATH_TIGER);
+	mMesh = pooptube::SkinnedMesh::Create(L"Model//sphere.x");
+	mMesh->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
 	AddChild(mMesh);
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );

@@ -44,19 +44,7 @@ bool StageOne::Init() {
 
 	pooptube::Scene::Init();
 
-	//mLight = pooptube::Light::Create();
 	mSunLight = pooptube::SunLight::Create();
-
-	//xmesh 테스트용 코드
-	//mXMesh = pooptube::XMesh::Create("Model//TreeAcaciaA.x");
-	//mXMesh = pooptube::XMesh::Create("Model//sphere.x");
-	//mXMesh->SetScale(D3DXVECTOR3(100.f, 100.f, 100.f));
-	//mXMesh->Translation(2, 2, 2);
-
-	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
-
-	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model//sphere.x", L"Shader//SkinnedMesh.fx");
-	mSkinnedMesh->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
 	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK );
 	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK_STRING );
@@ -66,11 +54,6 @@ bool StageOne::Init() {
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 
 	mGround = pooptube::Ground::Create(PATH_HEIGHTMAP);
-
-	//testDummy = pooptube::CollisionBox::Create( mXMesh );
-	//testDummy->SetAABBCollisionBoxFromSkinnedMesh(mSkinnedMesh);
-	//testDummy->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
-	//testDummy->SetAxisLen(1.f, 1.f, 1.f);
 
 	mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
 		PATH_SKYBOX_DOWN,
@@ -96,15 +79,10 @@ bool StageOne::Init() {
 	soundBox->Translation( soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ() );
 	AddChild( soundBox );
 	
-	//this->mCharacter->AddChild(mLight);
-	//mLight->SetRange(4.f);
 	this->AddChild(mSunLight);
-	this->AddChild(mSkinnedMesh);
-	//this->AddChild(mXMesh);
 	this->AddChild(mCharacter);
 	this->AddChild(mCamera);
 	this->AddChild(mGround);
-	//this->AddChild(testDummy);
 	this->AddChild(mSkyBox);
 	this->AddChild(mCreature);
 	this->AddChild(mLightOrb);

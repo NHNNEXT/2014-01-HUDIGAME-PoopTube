@@ -63,7 +63,7 @@ namespace pooptube {
 		SkinnedMesh();
 		virtual ~SkinnedMesh();
 
-		static SkinnedMesh *Create(const std::wstring& XMeshPath, const std::wstring& EffectPath);
+		static SkinnedMesh *Create(const std::wstring& XMeshPath);
 
 		virtual void Render();
 		void SetAnimationTrack(DWORD num);
@@ -82,7 +82,11 @@ namespace pooptube {
 
 	protected:
 
-		bool _Init(const std::wstring& XMeshPath, const std::wstring& EffectPath);
+		bool _Init(const std::wstring& XMeshPath);
+		//아래 두 함수는 픽킹, 맵툴용 클라에서는 빼야함
+		void InitFrame(LPD3DXFRAME pFrame);
+		void InitMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase);
+
 
 	private:
 

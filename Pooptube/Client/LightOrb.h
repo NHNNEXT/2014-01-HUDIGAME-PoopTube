@@ -12,18 +12,12 @@
 #pragma once
 #include "stdafx.h"
 #include "Node.h"
-#include "MainCharacter.h"
-#include "StageOne.h"
-#include "Ground.h"
-#include "CollisionManager.h"
 #include "SoundManager.h"
-#include "XMesh.h"
+#include "SkinnedMesh.h"
 
 namespace pooptube {
-	class SkinnedMesh;
 	class CollisionBox;
 	class Ground;
-	class XMesh;
 }
 class StageOne;
 
@@ -50,9 +44,8 @@ private:
 
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 0.f };
 
-	pooptube::XMesh* mMesh = nullptr;
+	pooptube::SkinnedMesh	*mMesh = nullptr;
 
-//	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
 	bool					isRender = true;
 	FMOD::Studio::EventInstance *mEffectSound = nullptr;

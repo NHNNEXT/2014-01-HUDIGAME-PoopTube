@@ -46,7 +46,6 @@ protected:
 private:
 	pooptube::ThirdPersonCamera		*mCamera = nullptr;
 	MainCharacter					*mCharacter = nullptr;
-	pooptube::SkinnedMesh			*mSkinnedMesh = nullptr;
 	pooptube::Ground				*mGround = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
 	pooptube::Light					*mLight = nullptr;

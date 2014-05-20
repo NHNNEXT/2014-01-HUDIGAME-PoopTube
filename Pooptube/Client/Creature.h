@@ -14,19 +14,15 @@
 #pragma once
 #include "stdafx.h"
 #include "Node.h"
-#include "MainCharacter.h"
-#include "StageOne.h"
-#include "Ground.h"
-#include "XMesh.h"
 #include "SoundManager.h"
+#include "SkinnedMesh.h"
 
 namespace pooptube {
-	class SkinnedMesh;
 	class CollisionBox;
 	class Ground;
-	class XMesh;
 }
 class StageOne;
+class MainCharacter;
 
 enum CREATURE_STATE : int {
 	IDLE,
@@ -44,7 +40,7 @@ public:
 
 	static Creature *Create();
 
-	bool Init( Creature *pCreature );
+	bool Init();
 
 	void Render();
 	void Update(float dTime);
@@ -58,10 +54,8 @@ public:
 	CREATURE_STATE GetState() const { return mState; }
 	void SetState(CREATURE_STATE state) { mState = state; }
 
-	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mXMesh->GetVertices(); }
-	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mXMesh->GetIndices(); }
-
-	//pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
+	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mMesh->GetVertices(); }
+	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mMesh->GetIndices(); }
 
 private:
 	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
@@ -74,9 +68,8 @@ private:
 	float mDistanceFromMainCharater = 0;
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 10.f };
 
-	pooptube::SkinnedMesh *mMesh;
-	pooptube::XMesh		*mXMesh = nullptr;
-	//pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
+	pooptube::SkinnedMesh	*mMesh = nullptr;
+
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
 	FMOD::Studio::EventInstance *mEffectSound = nullptr;
 	FMOD::Studio::EventInstance *mStepSound = nullptr;

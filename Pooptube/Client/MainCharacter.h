@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "Node.h"
 #include "StageOne.h"
+#include "SoundManager.h"
 #include "ResourceDef.h"
 
 namespace pooptube{
@@ -39,14 +40,6 @@ public:
 
 	void UpdateInput(float dTime);
 
-// 	void KeyDown(pooptube::KeyEvent* pKeyEvent);
-// 	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
-// 	void KeyUp(pooptube::KeyEvent* pKeyEvent);
-// 	void MouseDown(pooptube::MouseEvent* pMouseEvent);
-// 	void MouseMove(pooptube::MouseEvent* pMouseEvent);
-// 	void MouseUp(pooptube::MouseEvent* pMouseEvent);
-// 	void MousePressed(pooptube::MouseEvent* pMouseEvent);
-//	void MouseWheel(pooptube::MouseEvent* pMouseEvent);
 
 	CHAR_STATE	GetState() const { return mState; }
 	void		SetState(CHAR_STATE val) { mState = val; }

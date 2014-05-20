@@ -5,7 +5,10 @@
 #include "CollisionManager.h"
 #include "XMesh.h"
 #include "ResourceDef.h"
-#include <string>
+#include "MainCharacter.h"
+#include "Ground.h"
+#include "StageOne.h"
+
 
 Creature::Creature()
 {
@@ -20,35 +23,28 @@ Creature *Creature::Create()
 {
 	Creature *pCreature( new Creature );
 
-	if( pCreature->Init( pCreature ) )
+	if( pCreature->Init() )
 		return pCreature;
 	else
 		return nullptr;
 }
 
-bool Creature::Init( Creature *pCreature )
+bool Creature::Init()
 {
 	Node::Init();
 
 	mClassName = "Creature";
 	mObjectName = mObjectName = "Creature" + std::to_string(Node::ObjectNum++);
-// 
-// 	EnableKeyEvent();
-// 	EnableMouseEvent();
 
-	mMesh = pooptube::SkinnedMesh::Create(L"Model//dragon.x", L"Shader//SkinnedMesh.fx");
+	mMesh = pooptube::SkinnedMesh::Create(L"Model//dragon.x");
 	mMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 
-	//mXMesh = pooptube::XMesh::Create(PATH_TIGER);
-	//mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
-	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
-//	collisionBox->SetAABBCollisionBoxFromSkinnedMesh( mSkinnedMesh );
+	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
+
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 
 	AddChild(mMesh);
-	//AddChild(mSkinnedMesh);
 	AddChild( collisionBox );
-	//AddChild(mXMesh);
 	Creature::SetPosition( mInitialPosition );
 
 	mStepSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Footsteps" );

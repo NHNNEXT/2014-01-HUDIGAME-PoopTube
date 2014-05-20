@@ -19,6 +19,7 @@
 #include <list>
 #include <algorithm>
 #include <iostream>
+#include <String>
 
 #include "..\Library\FMOD\fmod_common.h"
 

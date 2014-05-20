@@ -281,9 +281,9 @@ namespace pooptube {
 		SAFE_RELEASE(mAnimController);
 	}
 
-	SkinnedMesh * SkinnedMesh::Create(const std::wstring& XMeshPath, const std::wstring& EffectPath) {
+	SkinnedMesh * SkinnedMesh::Create(const std::wstring& XMeshPath) {
 		SkinnedMesh *pMesh = new SkinnedMesh;
-		if (pMesh->_Init(XMeshPath, EffectPath))
+		if (pMesh->_Init(XMeshPath))
 			return pMesh;
 		else
 			return nullptr;
@@ -329,7 +329,7 @@ namespace pooptube {
 			mAnimController->AdvanceTime(dTime, NULL);
 	}
 
-	bool SkinnedMesh::_Init(const std::wstring& XMeshPath, const std::wstring& EffectPath) {
+	bool SkinnedMesh::_Init(const std::wstring& XMeshPath) {
 
 		Node::Init();
 
@@ -338,7 +338,8 @@ namespace pooptube {
 		DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE | D3DXSHADER_DEBUG;
 
 		//여기서 fail이 뜨면 .fx파일의 컴파일 실패일 가능성이 있음
-		if (FAILED(D3DXCreateEffectFromFile(mDevice, EffectPath.c_str(), NULL, NULL, dwShaderFlags,
+		//fx파일 경로를 박아둠 나중에 수정 필요
+		if (FAILED(D3DXCreateEffectFromFile(mDevice, L"Shader\\SkinnedMesh.fx", NULL, NULL, dwShaderFlags,
 			NULL, &mEffect, NULL))) {
 
 			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
@@ -364,6 +365,9 @@ namespace pooptube {
 		D3DDEVICE_CREATION_PARAMETERS cp;
 		mDevice->GetCreationParameters(&cp);
 		mBehaviorFlags = cp.BehaviorFlags;
+
+		//맵툴용 함수 클라에서는 꺼야함
+		InitFrame(mFrameRoot);
 
 		return true;
 	}
@@ -775,6 +779,55 @@ namespace pooptube {
 		mAnimController->ResetTime();
 	}
 
+	void SkinnedMesh::InitFrame(LPD3DXFRAME pFrame) {
+		LPD3DXMESHCONTAINER pMeshContainer;
+
+		pMeshContainer = pFrame->pMeshContainer;
+		while (pMeshContainer != NULL)
+		{
+			InitMeshContainer(pMeshContainer, pFrame);
+
+			pMeshContainer = pMeshContainer->pNextMeshContainer;
+		}
+
+		if (pFrame->pFrameSibling != NULL)
+		{
+			InitFrame(pFrame->pFrameSibling);
+		}
+
+		if (pFrame->pFrameFirstChild != NULL)
+		{
+			InitFrame(pFrame->pFrameFirstChild);
+		}
+	}
+
+	void SkinnedMesh::InitMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase) {
+		D3DXMESHCONTAINER_DERIVED* pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerBase;
+
+		int VerticesNum = pMeshContainer->MeshData.pMesh->GetNumVertices();
+		BYTE* vertexBuffer;
+		DWORD numBytesPerVertex = pMeshContainer->MeshData.pMesh->GetNumBytesPerVertex();
+		unsigned int offset = D3DXGetFVFVertexSize(pMeshContainer->MeshData.pMesh->GetFVF());
+
+		pMeshContainer->MeshData.pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&vertexBuffer);
+		for (WORD i = 0; i < VerticesNum; i++)
+			mVertices.push_back(*((D3DXVECTOR3*)(vertexBuffer + i * offset)));
+		pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
+
+
+		void *pIB;
+		int IndicesNum = pMeshContainer->MeshData.pMesh->GetNumFaces();
+		WORD *indexBuffer = new WORD[IndicesNum * 3];
+
+		pMeshContainer->MeshData.pMesh->LockIndexBuffer(D3DLOCK_READONLY, (void**)&pIB);
+		memcpy(indexBuffer, pIB, sizeof(WORD)*IndicesNum * 3);
+
+		for (int i = 0; i < IndicesNum; ++i)
+			mIndices.push_back(D3DXVECTOR3(indexBuffer[i * 3], indexBuffer[i * 3 + 1], indexBuffer[i * 3 + 2]));
+
+		pMeshContainer->MeshData.pMesh->UnlockIndexBuffer();
+		delete[]indexBuffer;
+	}
 }
 
 
