@@ -45,9 +45,9 @@ namespace pooptube {
 		LPDIRECT3DVERTEXBUFFER9 mVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9	mIndexBuffer = nullptr;
 
-		float				mWidth = 100.f;
-		float				mHeight = 100.f;
-		float				mDepth = 100.f;
+		float				mWidth = 1000.f;
+		float				mHeight = 1000.f;
+		float				mDepth = 1000.f;
 
 	};
 

@@ -48,7 +48,8 @@ namespace pooptube {
 		d3dPresentParameters.BackBufferWidth = width;
 		d3dPresentParameters.BackBufferHeight = height;
 		d3dPresentParameters.BackBufferFormat = D3DFMT_A8R8G8B8;
-		d3dPresentParameters.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;// D3DPRESENT_INTERVAL_IMMEDIATE;
+		//d3dPresentParameters.PresentationInterval = D3DPRESENT_INTERVAL_DEFAULT;
+		d3dPresentParameters.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
 		d3dPresentParameters.hDeviceWindow = hwnd;
 		d3dPresentParameters.Windowed = isWindowed;
 		

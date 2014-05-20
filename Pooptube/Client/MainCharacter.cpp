@@ -33,7 +33,7 @@ void MainCharacter::Render() {
 void MainCharacter::Update(float dTime) {
 	Node::Update(dTime);
 
-	UpdateInput();
+	UpdateInput(dTime);
 
 	switch (mState) {
 	case NONE:
@@ -94,27 +94,27 @@ void MainCharacter::_CollsionHandle( pooptube::CollisionBox* collisionResult )
 	}
 }
 
-void MainCharacter::UpdateInput() {
+void MainCharacter::UpdateInput(float dTime) {
 	if (pooptube::gInputManager.KeyState('W') == pooptube::KeyState::KEY_PRESSED) {
-		Translation(Node::GetFrontVector()*mSpeed);
+		Translation(Node::GetFrontVector()*mSpeed*dTime);
 		if (mState != JUMP)
 			mState = MOVE;
 	}
 		
 	if (pooptube::gInputManager.KeyState('S') == pooptube::KeyState::KEY_PRESSED) {
-		Translation(Node::GetFrontVector()*mSpeed*-1.f);
+		Translation(Node::GetFrontVector()*mSpeed*-1.f*dTime);
 		if (mState != JUMP)
 			mState = MOVE;
 	}
 		
 	if (pooptube::gInputManager.KeyState('A') == pooptube::KeyState::KEY_PRESSED) {
-		Translation(Node::GetLeftVector()*mSpeed);
+		Translation(Node::GetLeftVector()*mSpeed*dTime);
 		if (mState != JUMP)
 			mState = MOVE;
 	}
 		
 	if (pooptube::gInputManager.KeyState('D') == pooptube::KeyState::KEY_PRESSED) {
-		Translation(Node::GetRightVector()*mSpeed);
+		Translation(Node::GetRightVector()*mSpeed*dTime);
 		if (mState != JUMP)
 			mState = MOVE;
 	}
@@ -125,13 +125,13 @@ void MainCharacter::UpdateInput() {
 	}
 
 	if (pooptube::gInputManager.KeyState(VK_LEFT) == pooptube::KeyState::KEY_PRESSED) {
-		RotationY(-0.1f);
-		mSkinnedMesh->RotationY(-0.1f);
+		RotationY(-mRotateSpeed*dTime);
+		mSkinnedMesh->RotationY(-mRotateSpeed*dTime);
 	}
 		
 	if (pooptube::gInputManager.KeyState(VK_RIGHT) == pooptube::KeyState::KEY_PRESSED) {
-		RotationY(0.1f);
-		mSkinnedMesh->RotationY(0.1f);
+		RotationY(mRotateSpeed*dTime);
+		mSkinnedMesh->RotationY(mRotateSpeed*dTime);
 	}
 		
 	if (pooptube::gInputManager.KeyState(VK_SPACE) == pooptube::KeyState::KEY_DOWN)

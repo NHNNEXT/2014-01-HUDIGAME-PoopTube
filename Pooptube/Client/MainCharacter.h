@@ -37,7 +37,7 @@ public:
 	void Render();
 	void Update(float dTime);
 
-	void UpdateInput();
+	void UpdateInput(float dTime);
 
 // 	void KeyDown(pooptube::KeyEvent* pKeyEvent);
 // 	void KeyPressed(pooptube::KeyEvent* pKeyEvent);
@@ -69,7 +69,8 @@ private:
 
 	CHAR_STATE				mState = NONE;
 	
-	float					mSpeed = 0.1f;
+	float					mSpeed = 10.f;
+	float					mRotateSpeed = 10.f;
 	float					mJumpSpeed = 10.f;
 
 	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
