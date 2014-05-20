@@ -21,6 +21,7 @@ enum CHAR_STATE {
 	JUMP,
 	MOVE,
 	RUN,
+	SHAKEHAND,
 };
 
 class MainCharacter : public pooptube::Node{

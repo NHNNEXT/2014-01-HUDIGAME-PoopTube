@@ -55,8 +55,8 @@ bool StageOne::Init() {
 
 	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model//dragon.x", L"Shader//SkinnedMesh.fx");
-	mSkinnedMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	mSkinnedMesh = pooptube::SkinnedMesh::Create(L"Model//sphere.x", L"Shader//SkinnedMesh.fx");
+	mSkinnedMesh->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 
 	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK );
 	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK_STRING );

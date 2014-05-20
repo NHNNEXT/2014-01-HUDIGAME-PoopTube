@@ -45,6 +45,9 @@ void MainCharacter::Update(float dTime) {
 	case RUN:
 		mSkinnedMesh->SetAnimationTrack(1);
 		break;
+	case SHAKEHAND:
+		mSkinnedMesh->SetAnimationTrack(0);
+		break;
 	default:
 		break;
 	}
@@ -114,6 +117,11 @@ void MainCharacter::UpdateInput() {
 		Translation(Node::GetRightVector()*mSpeed);
 		if (mState != JUMP)
 			mState = MOVE;
+	}
+
+	if (pooptube::gInputManager.KeyState('Q') == pooptube::KeyState::KEY_PRESSED) {
+		if (mState != JUMP)
+			mState = SHAKEHAND;
 	}
 
 	if (pooptube::gInputManager.KeyState(VK_LEFT) == pooptube::KeyState::KEY_PRESSED) {
