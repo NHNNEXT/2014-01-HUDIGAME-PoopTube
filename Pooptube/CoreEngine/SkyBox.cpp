@@ -13,12 +13,12 @@ namespace pooptube{
 	}
 
 
-	SkyBox *SkyBox::Create(const std::string& top,
-		const std::string& bottom,
-		const std::string& front,
-		const std::string& back,
-		const std::string& left,
-		const std::string& right)
+	SkyBox *SkyBox::Create(const std::wstring& top,
+		const std::wstring& bottom,
+		const std::wstring& front,
+		const std::wstring& back,
+		const std::wstring& left,
+		const std::wstring& right)
 	{
 		SkyBox *pSkyBox(new SkyBox);
 		if (pSkyBox->_Init(top, bottom, front, back, left, right))
@@ -28,12 +28,12 @@ namespace pooptube{
 	}
 
 
-	bool SkyBox::_Init(const std::string& top,
-		const std::string& bottom,
-		const std::string& front,
-		const std::string& back,
-		const std::string& left,
-		const std::string& right)
+	bool SkyBox::_Init(const std::wstring& top,
+		const std::wstring& bottom,
+		const std::wstring& front,
+		const std::wstring& back,
+		const std::wstring& left,
+		const std::wstring& right)
 	{
 		Node::Init();
 

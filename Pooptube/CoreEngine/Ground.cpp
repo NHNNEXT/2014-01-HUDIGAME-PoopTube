@@ -13,7 +13,7 @@ namespace pooptube {
 	Ground::~Ground() {
 	}
 
-	Ground *Ground::Create(const std::string& FilePath) {
+	Ground *Ground::Create(const std::wstring& FilePath) {
 		Ground *pGround(new Ground);
 		if (pGround->_Init(FilePath))
 			return pGround;
@@ -21,7 +21,7 @@ namespace pooptube {
 			return nullptr;
 	}
 
-	bool Ground::_Init(const std::string& FilePath) {
+	bool Ground::_Init(const std::wstring& FilePath) {
 		Node::Init();
 		mData = ResourceManager::GetInstance()->LoadHeightMap(FilePath);
 		_SetBuffer();

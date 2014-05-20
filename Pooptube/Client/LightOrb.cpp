@@ -33,7 +33,6 @@ bool LightOrb::Init(LightOrb *pCreature)
 {
 	Node::Init();
 
-	//mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_BATMAN);
 	mClassName = "LightOrb";
 	mObjectName = "LightOrb";
 

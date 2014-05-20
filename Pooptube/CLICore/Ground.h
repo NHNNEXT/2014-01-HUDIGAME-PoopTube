@@ -23,7 +23,7 @@ namespace Core {
 		static Ground ^Create()
 		{
 			Ground ^CreateInstance = gcnew Ground();
-			CreateInstance->pInstance = pooptube::Ground::Create("Model/test.bmp");
+			CreateInstance->pInstance = pooptube::Ground::Create(L"Model/test.bmp");
 			return CreateInstance;
 		}
 	};

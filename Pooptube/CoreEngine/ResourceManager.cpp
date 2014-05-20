@@ -34,16 +34,16 @@ namespace pooptube {
 		}
 
 		for (auto iter : mHeightMapTable) {
-			std::pair<std::string, Ground::MapData*> temp = iter;
+			std::pair<std::wstring, Ground::MapData*> temp = iter;
 			delete temp.second;
 		}
 
 		for (auto iter : mTextureTable) {
-			std::pair<std::string, LPDIRECT3DTEXTURE9> temp = iter;
+			std::pair<std::wstring, LPDIRECT3DTEXTURE9> temp = iter;
 			temp.second->Release();
 		}
 		for (auto iter : mHLSLShaderTable) {
-			std::pair<std::string, ID3DXEffect*> temp = iter;
+			std::pair<std::wstring, ID3DXEffect*> temp = iter;
 			temp.second->Release();
 		}
 		
@@ -53,9 +53,9 @@ namespace pooptube {
 
 		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
-		if (_FBXInit() == false)
-			return false;
 
+// 		if (_FBXInit() == false)
+// 			return false;
 		return true;
 	}
 
@@ -213,13 +213,13 @@ namespace pooptube {
 		return pNewMesh;
 	}
 
-	Ground::MapData *ResourceManager::LoadHeightMap(const std::string& FilePath) {
+	Ground::MapData *ResourceManager::LoadHeightMap(const std::wstring& FilePath) {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 
 			LPDIRECT3DTEXTURE9		HeightMap = NULL; /// Texture 높이맵
 
-			if (FAILED(D3DXCreateTextureFromFileEx(mDevice, std::wstring(FilePath.begin(), FilePath.end()).c_str(),
+			if (FAILED(D3DXCreateTextureFromFileEx(mDevice, FilePath.c_str(),
 				D3DX_DEFAULT, D3DX_DEFAULT,
 				D3DX_DEFAULT, 0,
 				D3DFMT_X8R8G8B8, D3DPOOL_MANAGED,
@@ -323,13 +323,13 @@ namespace pooptube {
 		return mHeightMapTable[FilePath];
 	}
 
-	LPDIRECT3DTEXTURE9 ResourceManager::LoadTexture(const std::string& FilePath) {
+	LPDIRECT3DTEXTURE9 ResourceManager::LoadTexture(const std::wstring& FilePath) {
 
 		//map을 사용할 때 조심해야 할 부분
 		if (mTextureTable.find(FilePath) == mTextureTable.end()) {
 			LPDIRECT3DTEXTURE9 D3DTexture;
 
-			if (FAILED(D3DXCreateTextureFromFileA(mDevice, FilePath.c_str(), &D3DTexture)))
+			if (FAILED(D3DXCreateTextureFromFile(mDevice, FilePath.c_str(), &D3DTexture)))
 				return nullptr;
 
 			mTextureTable[FilePath] = D3DTexture;
@@ -338,7 +338,7 @@ namespace pooptube {
 		return mTextureTable[FilePath];
 	}
 
-	ID3DXEffect* ResourceManager::LoadHLSL(const std::string& FilePath) {
+	ID3DXEffect* ResourceManager::LoadHLSL(const std::wstring& FilePath) {
 
 		//map을 사용할 때 조심해야 할 부분
 		if (mHLSLShaderTable.find(FilePath) == mHLSLShaderTable.end()) {
@@ -348,7 +348,7 @@ namespace pooptube {
 			DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE | D3DXSHADER_DEBUG | D3DXSHADER_NO_PRESHADER;
 			ID3DXEffect* pEffect;
 
-			if (FAILED(D3DXCreateEffectFromFileA(mDevice, FilePath.c_str(), NULL, NULL, 
+			if (FAILED(D3DXCreateEffectFromFile(mDevice, FilePath.c_str(), NULL, NULL, 
 				dwShaderFlags, NULL, &pEffect, NULL)))
 				return NULL;
 

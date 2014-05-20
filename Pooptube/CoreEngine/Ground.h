@@ -42,7 +42,7 @@ namespace pooptube {
 		Ground();
 		~Ground();
 
-		static Ground *Create(const std::string& FilePath);
+		static Ground *Create(const std::wstring& FilePath);
 
 		//메시 데이터에 변경이 있을때 아래 함수 호출
 		bool ResetBuffer();
@@ -69,7 +69,7 @@ namespace pooptube {
 		D3DXVECTOR3 PICKGROUND(float x, float y, float value);
 
 	protected:
-		bool _Init(const std::string& FilePath);
+		bool _Init(const std::wstring& FilePath);
 		//bool _SetBuffer();
 
 	private:

@@ -10,29 +10,30 @@ namespace pooptube {
 		float		tu, tv;
 	};
 
+	//todo : dp콜 줄이는 방향으로 변환
 	class SkyBox : public Node{
 	public:
 		SkyBox();
 		virtual ~SkyBox();
 
-		static SkyBox *Create(const std::string& top,
-			const std::string& bottom,
-			const std::string& front,
-			const std::string& back,
-			const std::string& left,
-			const std::string& right);
+		static SkyBox *Create(const std::wstring& top,
+			const std::wstring& bottom,
+			const std::wstring& front,
+			const std::wstring& back,
+			const std::wstring& left,
+			const std::wstring& right);
 
 		void Render();
 		void Update(float dTime);
 
 
 	protected:
-		bool _Init(const std::string& top,
-			const std::string& bottom,
-			const std::string& front,
-			const std::string& back,
-			const std::string& left,
-			const std::string& right);
+		bool _Init(const std::wstring& top,
+			const std::wstring& bottom,
+			const std::wstring& front,
+			const std::wstring& back,
+			const std::wstring& left,
+			const std::wstring& right);
 
 	private:
 		LPDIRECT3DTEXTURE9 mTopTexture = nullptr;

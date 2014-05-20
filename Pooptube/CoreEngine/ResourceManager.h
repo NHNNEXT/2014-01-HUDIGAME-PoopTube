@@ -25,46 +25,37 @@ namespace pooptube {
 
 		static ResourceManager* GetInstance();
 
-		Mesh				*LoadMeshFromFBX(const std::string& FilePath);
-		Ground::MapData		*LoadHeightMap(const std::string& FilePath);
-		LPDIRECT3DTEXTURE9	LoadTexture(const std::string& FilePath);
-		ID3DXEffect*		LoadHLSL(const std::string& FilePath);
+		Ground::MapData		*LoadHeightMap(const std::wstring& FilePath);
+		LPDIRECT3DTEXTURE9	LoadTexture(const std::wstring& FilePath);
+		ID3DXEffect*		LoadHLSL(const std::wstring& FilePath);
+
 
 		//처참한 fbx의 흔적
-		//FbxScene*						LoadFBX(const std::string &FilePath);
+		Mesh				*LoadMeshFromFBX(const std::string& FilePath);
 
 	protected:
 		bool _Init();
+		
+		
+		//안쓰는 넘들
 		bool _FBXInit();
-
 		Mesh	*_LoadFBXFile(const std::string& FilePath);
-
-		//@brief 
-		//임시로 매쉬만 뽑아내도록 만든 함수
-		//머테리얼 정보는 임시로 초록색으로 지정
-		//@todo
-		//fbx파일의 노드를 순회하면서 메쉬, 에니메이션 캐쉬, 텍스쳐 등의 정보를 뽑아
-		//만든 자료형에 보관하는 기능을 구현해야 한다.
-		Mesh *_ReadVerticesFromFBX(FbxScene* pScene);
+		Mesh	*_ReadVerticesFromFBX(FbxScene* pScene);
 
 	private:
 
 		static ResourceManager*			mInstance;
 		LPDIRECT3DDEVICE9				mDevice;
 
-		//@brief
-		//sdk에서 제공하는 FbxManager
-		FbxManager*						mManager = nullptr;
+		std::map<std::wstring, Ground::MapData*>		mHeightMapTable;
+		std::map<std::wstring, LPDIRECT3DTEXTURE9>	mTextureTable;
+		std::map<std::wstring, ID3DXEffect*>		mHLSLShaderTable;
 
-		//@brief
-		//로드된 fbxmesh정보를 쥐고있는 meshtable
-		//아직 특정 data 제거기능을 안넣음
+
+
+		//안쓰는 넘들
+		FbxManager*									mManager = nullptr;
 		std::map<std::string, Mesh*>				mFBXMeshTable;
-		std::map<std::string, Ground::MapData*>		mHeightMapTable;
-		std::map<std::string, LPDIRECT3DTEXTURE9>	mTextureTable;
-		std::map<std::string, ID3DXEffect*>			mHLSLShaderTable;
-
-		//std::map<std::string, FbxScene*>						mFBXTable;
 	};
 
 }
