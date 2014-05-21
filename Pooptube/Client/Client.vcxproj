@@ -21,7 +21,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -134,6 +134,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ResourceDef.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="Client.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
