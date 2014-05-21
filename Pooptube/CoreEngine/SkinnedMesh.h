@@ -13,6 +13,7 @@
 namespace pooptube {
 
 	class SkinnedMesh;
+	class MeshData;
 
 	HRESULT AllocateName(LPCSTR Name, LPSTR* pNewName);
 
@@ -51,14 +52,50 @@ namespace pooptube {
 		STDMETHOD(DestroyFrame)(THIS_ LPD3DXFRAME pFrameToFree);
 		STDMETHOD(DestroyMeshContainer)(THIS_ LPD3DXMESHCONTAINER pMeshContainerBase);
 
-		STDMETHOD(SetMA)(THIS_ SkinnedMesh *pMA);
+		STDMETHOD(SetMA)(THIS_ MeshData *pMA);
 
 	private:
 
-		SkinnedMesh* mMA;
+		MeshData* mMA;
+	};
+
+	class MeshData {
+		friend class SkinnedMesh;
+	
+	public:
+		MeshData();
+		virtual ~MeshData();
+
+		static MeshData *Create(const std::wstring& XMeshPath);
+		bool Init(const std::wstring& XMeshPath);
+
+		ID3DXAnimationController* CloneAnimationController();
+		HRESULT GenerateSkinnedMesh(IDirect3DDevice9* pd3dDevice, D3DXMESHCONTAINER_DERIVED* pMeshContainer);
+
+		HRESULT SetupBoneMatrixPointersOnMesh(LPD3DXMESHCONTAINER pMeshContainerBase);
+		HRESULT SetupBoneMatrixPointers(LPD3DXFRAME pFrame);
+
+		void ReleaseAttributeTable(LPD3DXFRAME pFrameBase);
+
+	private:
+		LPDIRECT3DDEVICE9			mDevice;
+
+		CAllocateHierarchy			mAlloc;
+		ID3DXEffect*				mEffect = nullptr;
+		LPD3DXFRAME					mFrameRoot = nullptr;
+		ID3DXAnimationController*   mAnimController = nullptr;
+
+		DWORD			            mBehaviorFlags;
+
+		D3DXMATRIXA16*				mBoneMatrices;
+		UINT						mNumBoneMatricesMax;
+		bool						mUseSoftwareVP;
+
 	};
 
 	class SkinnedMesh : public Node {
+		friend class MeshData;
+
 	public:
 		SkinnedMesh();
 		virtual ~SkinnedMesh();
@@ -73,13 +110,6 @@ namespace pooptube {
 		virtual void Update(float dTime);
 		void UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParentMatrix);
 
-		HRESULT SetupBoneMatrixPointersOnMesh(LPD3DXMESHCONTAINER pMeshContainerBase);
-		HRESULT SetupBoneMatrixPointers(LPD3DXFRAME pFrame);
-
-		void ReleaseAttributeTable(LPD3DXFRAME pFrameBase);
-
-		HRESULT GenerateSkinnedMesh(IDirect3DDevice9* pd3dDevice, D3DXMESHCONTAINER_DERIVED* pMeshContainer);
-
 	protected:
 
 		bool _Init(const std::wstring& XMeshPath);
@@ -90,16 +120,10 @@ namespace pooptube {
 
 	private:
 
-		CAllocateHierarchy			mAlloc;
-		ID3DXEffect*				mEffect = nullptr;
-		LPD3DXFRAME					mFrameRoot = nullptr;
+		MeshData*					mMeshData = nullptr;
 		ID3DXAnimationController*   mAnimController = nullptr;
 
-		DWORD			            mBehaviorFlags;
-
-		D3DXMATRIXA16*       mBoneMatrices;
-		UINT                 mNumBoneMatricesMax;
-		bool                 mUseSoftwareVP;
+		DWORD						mCurrentTrack;
 	};
 
 

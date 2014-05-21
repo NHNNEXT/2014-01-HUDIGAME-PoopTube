@@ -36,9 +36,15 @@ bool Creature::Init()
 	mClassName = "Creature";
 	mObjectName = mObjectName = "Creature" + std::to_string(Node::ObjectNum++);
 
-	mMesh = pooptube::SkinnedMesh::Create(PATH_NEWDRAGON);
-	mMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	mMesh->SetAnimationTrack(1);
+// 	mMesh = pooptube::SkinnedMesh::Create(PATH_NEWDRAGON);
+// 	mMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+// 	mMesh->SetAnimationTrack(1);
+
+	mMesh = pooptube::SkinnedMesh::Create(PATH_TINY);
+	mMesh->SetAnimationTrack(3);
+	mMesh->SetScale(D3DXVECTOR3(0.005f, 0.005f, 0.005f));
+	mMesh->SetFrontVector(D3DXVECTOR3(0.f, 1.f, 0.f));
+	mMesh->SetUpVec(D3DXVECTOR3(0.f, 0.f, -1.f));
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
 

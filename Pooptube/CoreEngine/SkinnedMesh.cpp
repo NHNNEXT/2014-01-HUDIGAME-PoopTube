@@ -98,6 +98,22 @@ namespace pooptube {
 			goto e_Exit;
 		}
 		
+// 		DWORD dwOldFVF = pMesh->GetFVF();
+// 		DWORD dwNewFVF = (dwOldFVF & D3DFVF_POSITION_MASK) | D3DFVF_NORMAL | D3DFVF_TEX1 | D3DFVF_LASTBETA_UBYTE4;
+// 		if (dwNewFVF != dwOldFVF)
+// 		{
+// 			LPD3DXMESH temp;
+// 			hr = pMesh->CloneMeshFVF(pMesh->GetOptions(),
+// 				dwNewFVF,
+// 				pd3dDevice,
+// 				&temp);
+// 			if (FAILED(hr))
+// 				goto e_Exit;
+// 
+// 			pMesh->Release();
+// 			pMesh = temp;
+// 		}
+
 		// allocate the overloaded structure to return as a D3DXMESHCONTAINER
 		pMeshContainer = new D3DXMESHCONTAINER_DERIVED;
 		if (pMeshContainer == NULL)
@@ -114,17 +130,6 @@ namespace pooptube {
 
 		pMesh->GetDevice(&pd3dDevice);
 		NumFaces = pMesh->GetNumFaces();
-
-// 		if (pMesh->GetFVF() == 0) {
-// 
-// 			hr = pMesh->CloneMeshFVF(pMesh->GetOptions(),
-// 				pMesh->GetFVF() | 18,
-// 				pd3dDevice, &pMeshContainer->MeshData.pMesh);
-// 			if (FAILED(hr))
-// 				goto e_Exit;
-// 
-// 			pMesh = pMeshContainer->MeshData.pMesh;
-// 		}
 
 		//노멀추가 정상작동 확인
 		if (!(pMesh->GetFVF() & D3DFVF_NORMAL)) {
@@ -275,16 +280,15 @@ namespace pooptube {
 		return S_OK;
 	}
 
-	STDMETHODIMP CAllocateHierarchy::SetMA(THIS_ SkinnedMesh *pMA) {
+	STDMETHODIMP CAllocateHierarchy::SetMA(THIS_ MeshData *pMA) {
 		mMA = pMA;
 		return S_OK;
 	}
 
-	SkinnedMesh::SkinnedMesh() {
+	MeshData::MeshData() {
 	}
 
-	SkinnedMesh::~SkinnedMesh() {
-
+	MeshData::~MeshData() {
 		ReleaseAttributeTable(mFrameRoot);
 		delete[] mBoneMatrices;
 
@@ -293,57 +297,16 @@ namespace pooptube {
 		SAFE_RELEASE(mAnimController);
 	}
 
-	SkinnedMesh * SkinnedMesh::Create(const std::wstring& XMeshPath) {
-		SkinnedMesh *pMesh = new SkinnedMesh;
-		if (pMesh->_Init(XMeshPath))
+	MeshData * MeshData::Create(const std::wstring& XMeshPath) {
+		MeshData *pMesh = new MeshData;
+		if (pMesh->Init(XMeshPath))
 			return pMesh;
 		else
 			return nullptr;
 	}
 
-	void SkinnedMesh::Render() {
-
-		// TODO: 행렬 계산
-		D3DXMATRIXA16	MatWorld;
-		D3DXMATRIXA16	MatTrans;
-		D3DXMATRIXA16	MatScale;
-		D3DXMATRIXA16	MatRotate;
-		D3DXVECTOR3		LookPt = mPosition + mFrontVector;
-
-		D3DXMatrixIdentity(&MatWorld);
-
-		//프론트 백터의 값에 따라 회전
-		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &LookPt, &mUpVec);
-		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
-		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
-		//(카메라의 좌표계에 맞춰져있다)
-		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
-		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
-		D3DXMatrixTranspose(&MatRotate, &MatRotate);
-
-		D3DXMatrixTranslation(&MatTrans, mPosition.x, mPosition.y, mPosition.z);
-		D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
-
-		MatWorld = MatScale*MatRotate*MatTrans;
-
-		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
-
-		//쉐이더 추가시 추가해야함
-		//mEffect->SetMatrix("mViewProj", &g_matProj);
-		DrawFrame(mFrameRoot);
-
-		UpdateFrameMatrices(mFrameRoot, &MatWorld);
-	}
-
-	void SkinnedMesh::Update(float dTime) {
-
-		if (mAnimController)
-			mAnimController->AdvanceTime(dTime, NULL);
-	}
-
-	bool SkinnedMesh::_Init(const std::wstring& XMeshPath) {
-
-		Node::Init();
+	bool MeshData::Init(const std::wstring& XMeshPath) {
+		mDevice = Application::GetInstance()->GetSceneManager()->GetRenderer()->GetDevice();
 
 		mAlloc.SetMA(this);
 
@@ -358,7 +321,7 @@ namespace pooptube {
 			assert(false);
 			return false;
 		}
-		
+
 		if (FAILED(D3DXLoadMeshHierarchyFromX(XMeshPath.c_str(), D3DXMESH_MANAGED, mDevice,
 			&mAlloc, NULL, &mFrameRoot, &mAnimController))) {
 
@@ -366,7 +329,7 @@ namespace pooptube {
 			assert(false);
 			return false;
 		}
-		
+
 		if (FAILED(SetupBoneMatrixPointers(mFrameRoot))) {
 			MessageBox(NULL, L"SetupBoneMatrixPointers Error!", L"ERROR", MB_OK);
 			assert(false);
@@ -378,41 +341,10 @@ namespace pooptube {
 		mDevice->GetCreationParameters(&cp);
 		mBehaviorFlags = cp.BehaviorFlags;
 
-		//맵툴용 함수 클라에서는 꺼야함
-		InitFrame(mFrameRoot);
-
 		return true;
 	}
 
-	HRESULT SkinnedMesh::SetupBoneMatrixPointersOnMesh(LPD3DXMESHCONTAINER pMeshContainerBase) {
-		UINT iBone, cBones;
-		D3DXFRAME_DERIVED* pFrame;
-
-		D3DXMESHCONTAINER_DERIVED* pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerBase;
-
-		// if there is a skinmesh, then setup the bone matrices
-		if (pMeshContainer->pSkinInfo != NULL) {
-			cBones = pMeshContainer->pSkinInfo->GetNumBones();
-
-			pMeshContainer->ppBoneMatrixPtrs = new D3DXMATRIX*[cBones];
-			if (pMeshContainer->ppBoneMatrixPtrs == NULL)
-				return E_OUTOFMEMORY;
-
-			for (iBone = 0; iBone < cBones; iBone++)
-			{
-				pFrame = (D3DXFRAME_DERIVED*)D3DXFrameFind(mFrameRoot,
-					pMeshContainer->pSkinInfo->GetBoneName(iBone));
-				if (pFrame == NULL)
-					return E_FAIL;
-
-				pMeshContainer->ppBoneMatrixPtrs[iBone] = &pFrame->CombinedTransformationMatrix;
-			}
-		}
-
-		return S_OK;
-	}
-
-	HRESULT SkinnedMesh::GenerateSkinnedMesh(IDirect3DDevice9* pd3dDevice, D3DXMESHCONTAINER_DERIVED* pMeshContainer) {
+	HRESULT MeshData::GenerateSkinnedMesh(IDirect3DDevice9* pd3dDevice, D3DXMESHCONTAINER_DERIVED* pMeshContainer) {
 		HRESULT hr = S_OK;
 		D3DCAPS9 d3dCaps;
 		pd3dDevice->GetDeviceCaps(&d3dCaps);
@@ -420,7 +352,7 @@ namespace pooptube {
 		if (pMeshContainer->pSkinInfo == NULL)
 			return hr;
 
-		SkinnedMesh::mUseSoftwareVP = false;
+		mUseSoftwareVP = false;
 
 		SAFE_RELEASE(pMeshContainer->MeshData.pMesh);
 		SAFE_RELEASE(pMeshContainer->pBoneCombinationBuf);
@@ -448,14 +380,14 @@ namespace pooptube {
 			goto e_Exit;
 
 		// allocate a buffer for bone matrices, but only if another mesh has not allocated one of the same size or larger
-		if (SkinnedMesh::mNumBoneMatricesMax < pMeshContainer->pSkinInfo->GetNumBones())
+		if (mNumBoneMatricesMax < pMeshContainer->pSkinInfo->GetNumBones())
 		{
-			SkinnedMesh::mNumBoneMatricesMax = pMeshContainer->pSkinInfo->GetNumBones();
+			mNumBoneMatricesMax = pMeshContainer->pSkinInfo->GetNumBones();
 
 			// Allocate space for blend matrices
-			delete[] SkinnedMesh::mBoneMatrices;
-			SkinnedMesh::mBoneMatrices = new D3DXMATRIXA16[SkinnedMesh::mNumBoneMatricesMax];
-			if (SkinnedMesh::mBoneMatrices == NULL)
+			delete[] mBoneMatrices;
+			mBoneMatrices = new D3DXMATRIXA16[mNumBoneMatricesMax];
+			if (mBoneMatrices == NULL)
 			{
 				hr = E_OUTOFMEMORY;
 				goto e_Exit;
@@ -554,7 +486,35 @@ namespace pooptube {
 		return hr;
 	}
 
-	HRESULT SkinnedMesh::SetupBoneMatrixPointers(LPD3DXFRAME pFrame) {
+	HRESULT MeshData::SetupBoneMatrixPointersOnMesh(LPD3DXMESHCONTAINER pMeshContainerBase) {
+		UINT iBone, cBones;
+		D3DXFRAME_DERIVED* pFrame;
+
+		D3DXMESHCONTAINER_DERIVED* pMeshContainer = (D3DXMESHCONTAINER_DERIVED*)pMeshContainerBase;
+
+		// if there is a skinmesh, then setup the bone matrices
+		if (pMeshContainer->pSkinInfo != NULL) {
+			cBones = pMeshContainer->pSkinInfo->GetNumBones();
+
+			pMeshContainer->ppBoneMatrixPtrs = new D3DXMATRIX*[cBones];
+			if (pMeshContainer->ppBoneMatrixPtrs == NULL)
+				return E_OUTOFMEMORY;
+
+			for (iBone = 0; iBone < cBones; iBone++)
+			{
+				pFrame = (D3DXFRAME_DERIVED*)D3DXFrameFind(mFrameRoot,
+					pMeshContainer->pSkinInfo->GetBoneName(iBone));
+				if (pFrame == NULL)
+					return E_FAIL;
+
+				pMeshContainer->ppBoneMatrixPtrs[iBone] = &pFrame->CombinedTransformationMatrix;
+			}
+		}
+
+		return S_OK;
+	}
+
+	HRESULT MeshData::SetupBoneMatrixPointers(LPD3DXFRAME pFrame) {
 		HRESULT hr;
 
 		if (pFrame->pMeshContainer != NULL)
@@ -581,7 +541,7 @@ namespace pooptube {
 		return S_OK;
 	}
 
-	void SkinnedMesh::ReleaseAttributeTable(LPD3DXFRAME pFrameBase) {
+	void MeshData::ReleaseAttributeTable(LPD3DXFRAME pFrameBase) {
 		D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
 		D3DXMESHCONTAINER_DERIVED* pMeshContainer;
 
@@ -603,6 +563,95 @@ namespace pooptube {
 		{
 			ReleaseAttributeTable(pFrame->pFrameFirstChild);
 		}
+	}
+
+	ID3DXAnimationController* MeshData::CloneAnimationController() {
+		ID3DXAnimationController* newController = nullptr;
+
+		if (mAnimController == nullptr)
+			return nullptr;
+
+		if(FAILED(mAnimController->CloneAnimationController(
+			mAnimController->GetMaxNumAnimationOutputs(),
+			mAnimController->GetMaxNumAnimationSets(),
+			mAnimController->GetMaxNumTracks(),
+			mAnimController->GetMaxNumEvents(),
+			&newController))) {
+			
+			MessageBox(NULL, L"Clone Animation Controller Error!", L"ERROR", MB_OK);
+			assert(false);
+			return NULL;
+		}
+
+		return newController;
+	}
+
+	SkinnedMesh::SkinnedMesh() {
+	}
+
+	SkinnedMesh::~SkinnedMesh() {
+/*		delete[] mBoneMatrices;*/
+	}
+
+	SkinnedMesh * SkinnedMesh::Create(const std::wstring& XMeshPath) {
+		SkinnedMesh *pMesh = new SkinnedMesh;
+		if (pMesh->_Init(XMeshPath))
+			return pMesh;
+		else
+			return nullptr;
+	}
+
+	void SkinnedMesh::Render() {
+
+		// TODO: 행렬 계산
+		D3DXMATRIXA16	MatWorld;
+		D3DXMATRIXA16	MatTrans;
+		D3DXMATRIXA16	MatScale;
+		D3DXMATRIXA16	MatRotate;
+		D3DXVECTOR3		LookPt = mPosition + mFrontVector;
+
+		D3DXMatrixIdentity(&MatWorld);
+
+		//프론트 백터의 값에 따라 회전
+		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &LookPt, &mUpVec);
+		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
+		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
+		//(카메라의 좌표계에 맞춰져있다)
+		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
+		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
+		D3DXMatrixTranspose(&MatRotate, &MatRotate);
+
+		D3DXMatrixTranslation(&MatTrans, mPosition.x, mPosition.y, mPosition.z);
+		D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
+
+		MatWorld = MatScale*MatRotate*MatTrans;
+
+		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+
+		//쉐이더 추가시 추가해야함
+		//mEffect->SetMatrix("mViewProj", &g_matProj);
+		DrawFrame(mMeshData->mFrameRoot);
+		UpdateFrameMatrices(mMeshData->mFrameRoot, &MatWorld);
+	}
+
+	void SkinnedMesh::Update(float dTime) {
+
+		if (mAnimController)
+			mAnimController->AdvanceTime(dTime, NULL);
+	}
+
+	bool SkinnedMesh::_Init(const std::wstring& XMeshPath) {
+
+		Node::Init();
+
+		mMeshData = ResourceManager::GetInstance()->LoadSkinnedMesh(XMeshPath);
+
+		mAnimController = mMeshData->CloneAnimationController();
+
+		//맵툴용 함수 클라에서는 꺼야함
+		InitFrame(mMeshData->mFrameRoot);
+
+		return true;
 	}
 
 	void SkinnedMesh::UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParentMatrix) {
@@ -643,7 +692,7 @@ namespace pooptube {
 			for (iBone = 0; iBone < cBones; ++iBone)
 			{
 				D3DXMatrixMultiply (
-					&mBoneMatrices[iBone],                 // output
+					&mMeshData->mBoneMatrices[iBone],                 // output
 					&pMeshContainer->pBoneOffsetMatrices[iBone],
 					pMeshContainer->ppBoneMatrixPtrs[iBone]
 					);
@@ -657,7 +706,7 @@ namespace pooptube {
 			pMeshContainer->MeshData.pMesh->LockVertexBuffer(0, (LPVOID*)&pbVerticesDest);
 
 			// generate skinned mesh
-			pMeshContainer->pSkinInfo->UpdateSkinnedMesh(mBoneMatrices, NULL, pbVerticesSrc, pbVerticesDest);
+			pMeshContainer->pSkinInfo->UpdateSkinnedMesh(mMeshData->mBoneMatrices, NULL, pbVerticesSrc, pbVerticesDest);
 
 			pMeshContainer->pOrigMesh->UnlockVertexBuffer();
 			pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
@@ -783,12 +832,20 @@ namespace pooptube {
 	}
 
 	void SkinnedMesh::SetAnimationTrack(DWORD num) {
+		DWORD dwNewTrack = (mCurrentTrack == 0 ? 1 : 0);
+		LPD3DXANIMATIONSET pAS;
 
-		ID3DXAnimationSet*  Wave = NULL;
-		mAnimController->GetAnimationSet(num, &Wave);
-		mAnimController->SetTrackAnimationSet(0, Wave);
-		mAnimController->SetTrackEnable(0, TRUE);
-		mAnimController->ResetTime();
+		mAnimController->GetAnimationSet(num, &pAS);
+
+		mAnimController->SetTrackAnimationSet(dwNewTrack, pAS);
+		pAS->Release();
+
+		mAnimController->UnkeyAllTrackEvents(mCurrentTrack);
+		mAnimController->UnkeyAllTrackEvents(dwNewTrack);
+
+		mAnimController->SetTrackEnable(dwNewTrack, TRUE);
+
+		mCurrentTrack = dwNewTrack;
 	}
 
 	void SkinnedMesh::InitFrame(LPD3DXFRAME pFrame) {

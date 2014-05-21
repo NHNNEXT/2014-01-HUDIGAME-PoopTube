@@ -17,6 +17,7 @@ namespace pooptube {
 
 	class Mesh;
 	class Ground;
+	class MeshData;
 
 	class ResourceManager : public Object {
 	public:
@@ -25,10 +26,10 @@ namespace pooptube {
 
 		static ResourceManager* GetInstance();
 
-		Ground::MapData		*LoadHeightMap(const std::wstring& FilePath);
+		MeshData*			LoadSkinnedMesh(const std::wstring& FilePath);
+		Ground::MapData*	LoadHeightMap(const std::wstring& FilePath);
 		LPDIRECT3DTEXTURE9	LoadTexture(const std::wstring& FilePath);
 		ID3DXEffect*		LoadHLSL(const std::wstring& FilePath);
-
 
 		//처참한 fbx의 흔적
 		Mesh				*LoadMeshFromFBX(const std::string& FilePath);
@@ -48,9 +49,9 @@ namespace pooptube {
 		LPDIRECT3DDEVICE9				mDevice;
 
 		std::map<std::wstring, Ground::MapData*>		mHeightMapTable;
-		std::map<std::wstring, LPDIRECT3DTEXTURE9>	mTextureTable;
-		std::map<std::wstring, ID3DXEffect*>		mHLSLShaderTable;
-
+		std::map<std::wstring, LPDIRECT3DTEXTURE9>		mTextureTable;
+		std::map<std::wstring, ID3DXEffect*>			mHLSLShaderTable;
+		std::map<std::wstring, MeshData*>				mMeshDataTable;
 
 
 		//안쓰는 넘들

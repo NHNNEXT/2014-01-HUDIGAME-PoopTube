@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "Mesh.h"
 #include "Application.h"
+#include "SkinnedMesh.h"
 
 namespace pooptube {
 
@@ -357,5 +358,15 @@ namespace pooptube {
 
 		return mHLSLShaderTable[FilePath];
 	}
+
+	MeshData* ResourceManager::LoadSkinnedMesh(const std::wstring& FilePath) {
+		if (mMeshDataTable.find(FilePath) == mMeshDataTable.end()) {
+			MeshData* MData = MeshData::Create(FilePath);
+			
+			mMeshDataTable[FilePath] = MData;
+		}
+		return mMeshDataTable[FilePath];
+	}
+
 }
 
