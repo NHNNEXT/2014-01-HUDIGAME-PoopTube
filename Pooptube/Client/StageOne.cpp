@@ -20,6 +20,7 @@
 #include "InputManager.h"
 #include "ResourceDef.h"
 #include "Tree.h"
+#include "BillBoard.h"
 
 StageOne::StageOne() {
 }
@@ -81,6 +82,11 @@ bool StageOne::Init() {
 	AddChild( soundBox );
 	
 	mTree = Tree::Create();
+
+	pooptube::BillBoard* board = pooptube::BillBoard::Create();
+	board->SetPosition( 5.f, 5.f, 7.f );
+	board->SetTexture( L"Model\\Back.bmp" );
+	AddChild( board );
 
 	this->AddChild(mTree);
 	this->AddChild(mSunLight);

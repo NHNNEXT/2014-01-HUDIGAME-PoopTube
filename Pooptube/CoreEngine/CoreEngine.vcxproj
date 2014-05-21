@@ -129,6 +129,9 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="BaseHandler.h" />
+    <ClInclude Include="BillBoard.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="CollisionManager.h">
@@ -192,6 +195,9 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BillBoard.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="CollisionManager.cpp">
