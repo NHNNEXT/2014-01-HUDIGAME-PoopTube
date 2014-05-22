@@ -56,7 +56,7 @@ void MainCharacter::Update(float dTime) {
 
 	mSkinnedMesh->SetPosition(GetPosition());
 	mSkinnedMesh->Update(dTime);
-	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
+	_CollsionHandle( dTime, pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
 	pooptube::SoundManager::GetInstance()->SetListener( &mListener );
@@ -85,14 +85,14 @@ bool MainCharacter::Init() {
 	return true;
 }
 
-void MainCharacter::_CollsionHandle( pooptube::CollisionBox* collisionResult )
+void MainCharacter::_CollsionHandle( float dTime, pooptube::CollisionBox* collisionResult )
 {
 	if( collisionResult == nullptr )
 		return;
 	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::BLOCK ){
 		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetParent()->GetPosition();
 		D3DXVec3Normalize( &dPos, &dPos );
-		dPos *= mSpeed;
+		dPos *= mSpeed * dTime;
 		Translation( dPos );
 	}
 }
