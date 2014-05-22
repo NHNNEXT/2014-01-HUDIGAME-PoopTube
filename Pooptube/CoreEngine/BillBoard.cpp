@@ -39,25 +39,25 @@ namespace pooptube{
 			return false;
 
 		vertexList[0] = {
-			D3DXVECTOR3( -1.f, 1.f, 5.f ),
+			D3DXVECTOR3( -1.f, 1.f, 0.f ),
 			D3DXVECTOR3( 0.f, 0.f, -1.f ),
 			D3DXCOLOR( 1.f, 1.f, 1.f, 1.f ),
 			0.f, 0.f
 		};
 		vertexList[1] = {
-			D3DXVECTOR3( -1.f, -1.f, 5.f ),
+			D3DXVECTOR3( -1.f, -1.f, 0.f ),
 			D3DXVECTOR3( 0.f, 0.f, -1.f ),
 			D3DXCOLOR( 1.f, 1.f, 1.f, 1.f ),
 			0.f, 1.f
 		};
 		vertexList[2] = {
-			D3DXVECTOR3( 1.f, -1.f, 5.f ),
+			D3DXVECTOR3( 1.f, -1.f, 0.f ),
 			D3DXVECTOR3( 0.f, 0.f, -1.f ),
 			D3DXCOLOR( 1.f, 1.f, 1.f, 1.f ),
 			1.f, 1.f
 		};
 		vertexList[3] = {
-			D3DXVECTOR3( 1.f, 1.f, 5.f ),
+			D3DXVECTOR3( 1.f, 1.f, 0.f ),
 			D3DXVECTOR3( 0.f, 0.f, -1.f ),
 			D3DXCOLOR( 1.f, 1.f, 1.f, 1.f ),
 			1.f, 0.f

@@ -12,7 +12,7 @@ namespace pooptube {
 	class SunLight;
 	class XMesh;
 	class Ground;
-	class Sprite;
+	class BillBoard;
 }
 
 class MainCharacter;
@@ -57,7 +57,7 @@ private:
 	pooptube::Light					*mLight3 = nullptr;
 	pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
-	pooptube::Sprite				*mSprite = nullptr;
+	pooptube::BillBoard				*mBoard = nullptr;
 
 	float				mTime = 0.f;
 	float				mTimeForFPS = 0.f;

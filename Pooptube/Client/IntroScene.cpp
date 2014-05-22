@@ -21,6 +21,7 @@
 #include "ResourceDef.h"
 #include "Tree.h"
 #include "SceneManager.h"
+#include "BillBoard.h"
 
 IntroScene::IntroScene() {
 }
@@ -49,9 +50,9 @@ bool IntroScene::Init() {
 	mLight1 = pooptube::Light::Create();
 	mLight2 = pooptube::Light::Create();
 	mLight3 = pooptube::Light::Create();
-	mLight1->SetPosition(64.f, 0.f, 64.f);
-	mLight2->SetPosition(36.f, 0.f, 36.f);
-	mLight3->SetPosition(16.f, 0.f, 16.f);
+	mLight1->SetPosition(64.f, 2.f, 64.f);
+	mLight2->SetPosition(36.f, 2.f, 36.f);
+	mLight3->SetPosition(16.f, 2.f, 16.f);
 	mSunLight = pooptube::SunLight::Create();
 	mSunLight->LightOnOff(true);
 	D3DCOLORVALUE temp;
@@ -64,7 +65,10 @@ bool IntroScene::Init() {
 	temp.b = 0.1f;
 	mSunLight->SetDiffuse(temp);
 
-	mSprite = pooptube::Sprite::Create(L"Model\\logo.jpg");
+	mBoard = pooptube::BillBoard::Create();
+	mBoard->SetTexture( L"Model\\logo.jpg" );
+	mBoard->SetPosition( 66.f, 5.f, 66.f );
+	mBoard->SetScale( 6.4f, 3.6f, 1.f );
 
 	pooptube::SoundManager::GetInstance()->LoadBank(PATH_SOUND_BANK);
 	pooptube::SoundManager::GetInstance()->LoadBank(PATH_SOUND_BANK_STRING);
@@ -105,20 +109,19 @@ bool IntroScene::Init() {
 	}
 
 	FMOD::Studio::EventInstance* eventInstance = pooptube::SoundManager::GetInstance()->GetSound("event:/Ambience/Predawn");
-	//pooptube::SoundBox* soundBox = pooptube::SoundBox::Create(eventInstance);
-	//pooptube::CollisionBox* soundCBox = pooptube::CollisionBox::Create(soundBox);
-	//soundBox->AddChild(soundCBox);
-	//soundCBox->SetAxisLenX(mGround->GetRowSize() * mGround->GetPolygonSize() * 0.5f);
-	//soundCBox->SetAxisLenY(2.f);
-	//soundCBox->SetAxisLenZ(mGround->GetColSize() * mGround->GetPolygonSize() * 0.5f);
-	//soundBox->Translation(soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ());
-	//AddChild(soundBox);
+	pooptube::SoundBox* soundBox = pooptube::SoundBox::Create(eventInstance);
+	pooptube::CollisionBox* soundCBox = pooptube::CollisionBox::Create(soundBox);
+	soundBox->AddChild(soundCBox);
+	soundCBox->SetAxisLenX(mGround->GetRowSize() * mGround->GetPolygonSize() * 0.5f);
+	soundCBox->SetAxisLenY(2.f);
+	soundCBox->SetAxisLenZ(mGround->GetColSize() * mGround->GetPolygonSize() * 0.5f);
+	soundBox->Translation(soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ());
+	AddChild(soundBox);
 
 	this->AddChild(mCharacter);
 	this->AddChild(mLightOrb1);
 	this->AddChild(mLightOrb2);
 	this->AddChild(mLightOrb3);
-	this->AddChild(mSprite);
 	this->AddChild(mCamera);
 	this->AddChild(mGround);
 	this->AddChild(mSunLight);
@@ -135,8 +138,8 @@ void IntroScene::Render() {
 
 	// sprite test
 	//RECT temp = { 10, 10, 20, 20 };
-	if (!mLightOrb1->IsRender() && !mLightOrb2->IsRender() && !mLightOrb3->IsRender())
-		mSprite->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
+	if( !mLightOrb1->IsRender() && !mLightOrb2->IsRender() && !mLightOrb3->IsRender() )
+		mBoard->Render();
 }
 
 void IntroScene::Update(float dTime) {
@@ -157,10 +160,6 @@ void IntroScene::Update(float dTime) {
 	float y = pooptube::Application::GetInstance()->GetScreenSize().y;
 
 	mTime += dTime;
-	mSprite->Translate(x / 2 - 80.f, 20.f);
-	mSprite->Scale(0.2, 0.2);
-	//mSprite->Rotate(D3DX_PI / 4);
-	mSprite->ApplyTransform();
 
 	D3DXVECTOR3 temp1 = mLightOrb1->GetPosition();
 	float tempTheta = mTime * 3.14 / 180.f;
@@ -176,8 +175,6 @@ void IntroScene::Update(float dTime) {
 	mLightOrb3->SetPosition(temp3);
 	//if (!mLightOrb->IsRender())
 	//		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
-
-	//mSprite->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(mTime / 255, 255, 255, 255));
 }
 
 void IntroScene::MainCharacterJumpUpdate(float dTime) {
