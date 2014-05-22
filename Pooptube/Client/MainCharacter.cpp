@@ -77,6 +77,7 @@ bool MainCharacter::Init() {
 	
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
+	collisionBox->SetAxisLenY(2.5f);
 	AddChild( collisionBox );
 	//AddChild( mSkinnedMesh );
 	

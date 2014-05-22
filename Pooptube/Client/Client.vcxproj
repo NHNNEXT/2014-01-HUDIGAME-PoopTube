@@ -122,7 +122,7 @@
   <ItemGroup>
     <ClInclude Include="Creature.h" />
     <ClInclude Include="IntroScene.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="LightOrb.h" />
     <ClInclude Include="LibSet.h" />
@@ -140,7 +140,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="IntroScene.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="LightOrb.cpp" />
     <ClCompile Include="MainCharacter.cpp" />

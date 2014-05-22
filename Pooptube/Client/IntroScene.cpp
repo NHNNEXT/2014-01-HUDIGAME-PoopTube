@@ -17,7 +17,10 @@
 #include "ResourceManager.h"
 #include "Sprite.h"
 #include "SoundBox.h"
-#include <iostream>
+#include "InputManager.h"
+#include "ResourceDef.h"
+#include "Tree.h"
+#include "SceneManager.h"
 
 IntroScene::IntroScene() {
 }
@@ -40,60 +43,107 @@ IntroScene* IntroScene::Create() {
 }
 
 bool IntroScene::Init() {
-	//태스트하기위해 설정들을 꾸겨넣었음
-	//똥튜브 먹고싶다.
-// 	EnableKeyEvent();
-// 	EnableMouseEvent();
 
 	pooptube::Scene::Init();
 
-	mLight = pooptube::Light::Create();
+	mLight1 = pooptube::Light::Create();
+	mLight2 = pooptube::Light::Create();
+	mLight3 = pooptube::Light::Create();
+	mLight1->SetPosition(64.f, 0.f, 64.f);
+	mLight2->SetPosition(36.f, 0.f, 36.f);
+	mLight3->SetPosition(16.f, 0.f, 16.f);
 	mSunLight = pooptube::SunLight::Create();
+	mSunLight->LightOnOff(true);
+	D3DCOLORVALUE temp;
+	temp.r = 0.f;
+	temp.g = 0.f;
+	temp.b = 0.f;
+	mSunLight->SetSpecular(temp);
+	temp.r = 0.1f;
+	temp.g = 0.1f;
+	temp.b = 0.1f;
+	mSunLight->SetDiffuse(temp);
 
-	//mXMesh->SetScale(D3DXVECTOR3(0.04f, 0.04f, 0.04f));
+	mSprite = pooptube::Sprite::Create(L"Model\\logo.jpg");
 
-	pooptube::SoundManager::GetInstance()->LoadBank("Sound\\Master Bank.bank");
-	pooptube::SoundManager::GetInstance()->LoadBank("Sound\\Master Bank.strings.bank");
+	pooptube::SoundManager::GetInstance()->LoadBank(PATH_SOUND_BANK);
+	pooptube::SoundManager::GetInstance()->LoadBank(PATH_SOUND_BANK_STRING);
 
 	mCharacter = MainCharacter::Create();
+	mLightOrb1 = LightOrb::Create();
+	mLightOrb2 = LightOrb::Create();
+	mLightOrb3 = LightOrb::Create();
+	mLightOrb1->SetPosition(64.f, 0.f, 64.f);
+	mLightOrb2->SetPosition(36.f, 0.f, 36.f);
+	mLightOrb3->SetPosition(16.f, 0.f, 16.f);
+
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
-	mGround = pooptube::Ground::Create("IntroMap.bmp");
-	mSkyBox = pooptube::SkyBox::Create("DeepSpaceBlue/upImage.png",
-		"DeepSpaceBlue/downImage.png",
-		"DeepSpaceBlue/frontImage.png",
-		"DeepSpaceBlue/backImage.png",
-		"DeepSpaceBlue/leftImage.png",
-		"DeepSpaceBlue/rightImage.png");
+	mGround = pooptube::Ground::Create(PATH_INTRO_HEIGHTMAP);
+	mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
+		PATH_SKYBOX_DOWN,
+		PATH_SKYBOX_FRONT,
+		PATH_SKYBOX_BACK,
+		PATH_SKYBOX_LEFT,
+		PATH_SKYBOX_RIGHT);
+
+	/*mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
+	PATH_SKYBOX_DOWN,
+	PATH_SKYBOX_FRONT,
+	PATH_SKYBOX_BACK,
+	PATH_SKYBOX_LEFT,
+	PATH_SKYBOX_RIGHT);*/
+
+	for (int i = 0; i < 9; ++i) {
+		for (int j = 0; j < 9; ++j) {
+			mTree[i][j] = nullptr;
+			if (i != j) {
+				mTree[i][j] = Tree::Create();
+				mTree[i][j]->SetPosition(static_cast<float>(i * 8), 0, static_cast<float>(j * 8));
+				this->AddChild(mTree[i][j]);
+			}
+		}
+	}
 
 	FMOD::Studio::EventInstance* eventInstance = pooptube::SoundManager::GetInstance()->GetSound("event:/Ambience/Predawn");
-	pooptube::SoundBox* soundBox = pooptube::SoundBox::Create(eventInstance);
-	pooptube::CollisionBox* soundCBox = pooptube::CollisionBox::Create(soundBox);
-	soundBox->AddChild(soundCBox);
-	soundCBox->SetAxisLenX(mGround->GetRowSize() * mGround->GetPolygonSize() * 0.5f);
-	soundCBox->SetAxisLenY(2.f);
-	soundCBox->SetAxisLenZ(mGround->GetColSize() * mGround->GetPolygonSize() * 0.5f);
-	soundBox->Translation(soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ());
-	AddChild(soundBox);
+	//pooptube::SoundBox* soundBox = pooptube::SoundBox::Create(eventInstance);
+	//pooptube::CollisionBox* soundCBox = pooptube::CollisionBox::Create(soundBox);
+	//soundBox->AddChild(soundCBox);
+	//soundCBox->SetAxisLenX(mGround->GetRowSize() * mGround->GetPolygonSize() * 0.5f);
+	//soundCBox->SetAxisLenY(2.f);
+	//soundCBox->SetAxisLenZ(mGround->GetColSize() * mGround->GetPolygonSize() * 0.5f);
+	//soundBox->Translation(soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ());
+	//AddChild(soundBox);
 
-// 	mCharacter->SetPosition(13.f, 0.f, 2.f);
-// 	mCharacter->SetFrontVector(0.7f, 0.f, 0.7f);
 	this->AddChild(mCharacter);
+	this->AddChild(mLightOrb1);
+	this->AddChild(mLightOrb2);
+	this->AddChild(mLightOrb3);
+	this->AddChild(mSprite);
 	this->AddChild(mCamera);
 	this->AddChild(mGround);
 	this->AddChild(mSunLight);
-	this->mCharacter->AddChild(mLight);
-	//this->AddChild(mSkyBox);
+	this->AddChild(mLight1);
+	this->AddChild(mLight2);
+	this->AddChild(mLight3);
+	this->AddChild(mSkyBox);
 
 	return true;
 }
+
 void IntroScene::Render() {
 	Node::Render();
+
+	// sprite test
+	//RECT temp = { 10, 10, 20, 20 };
+	/*if (mLightOrb1->IsRender() && mLightOrb2->IsRender() && mLightOrb3->IsRender())
+		mSprite->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));*/
 }
+
 void IntroScene::Update(float dTime) {
 	Node::Update(dTime);
 
-	printf("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
-	printf("%f %f %f\n\n", mCharacter->GetFrontVector().x, mCharacter->GetFrontVector().y, mCharacter->GetFrontVector().z);
+	//printf("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
+	//printf("%f %f %f\n\n", mCharacter->GetFrontVector().x, mCharacter->GetFrontVector().y, mCharacter->GetFrontVector().z);
 
 	pooptube::SoundManager::GetInstance()->Update();
 
@@ -102,15 +152,71 @@ void IntroScene::Update(float dTime) {
 
 	CharPos.y = MapHeight;
 	mCharacter->SetPosition(CharPos);
-	
+
+	float x = pooptube::Application::GetInstance()->GetScreenSize().x;
+	float y = pooptube::Application::GetInstance()->GetScreenSize().y;
+
+	mTime += dTime;
+	mSprite->Translate(x / 2 - 80.f, 20.f);
+	mSprite->Scale(0.2, 0.2);
+	//mSprite->Rotate(D3DX_PI / 4);
+	mSprite->ApplyTransform();
+
+	D3DXVECTOR3 temp1 = mLightOrb1->GetPosition();
+	float tempTheta = mTime * 3.14 / 180.f;
+	temp1.y = 2.f + sinf(tempTheta * 100);
+	mLightOrb1->SetPosition(temp1);
+
+	D3DXVECTOR3 temp2 = mLightOrb2->GetPosition();
+	temp2.y = 2.f + cosf(tempTheta * 100);
+	mLightOrb2->SetPosition(temp2);
+
+	D3DXVECTOR3 temp3 = mLightOrb3->GetPosition();
+	temp3.y = 2.f + sinf(tempTheta * 100);
+	mLightOrb3->SetPosition(temp3);
+	//if (!mLightOrb->IsRender())
+	//		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
+
+	//mSprite->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(mTime / 255, 255, 255, 255));
 }
-// 
-// void IntroScene::KeyDown(pooptube::KeyEvent* pKeyEvent) {
-// }
 
-// void IntroScene::KeyPressed(pooptube::KeyEvent* pKeyEvent) {
+void IntroScene::MainCharacterJumpUpdate(float dTime) {
+	//캐릭터 점프 알고리즘
+	CHAR_STATE	CharState = mCharacter->GetState();
+	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
+	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
+	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
+	float		GroundAccel = mGround->GetGravity();
 
-// 	switch (pKeyEvent->GetKeyCode())
-// 	{
-// 	}
-//}
+	if (CharState == JUMP) {
+		mTimeForJump += dTime;
+		float		currentSpeed = CharJumpSpeed - GroundAccel * mTimeForJump;
+
+		mCharacter->Translation(0.f, currentSpeed * dTime, 0.f);
+
+		if (MapHeight > CharPos.y) {
+			CharPos.y = MapHeight;
+			mCharacter->SetPosition(CharPos);
+			mCharacter->SetState(NONE);
+
+			mTimeForJump = 0.f;
+		}
+	}
+	else if (CharState == NONE) {
+		CharPos.y = MapHeight;
+		mCharacter->SetPosition(CharPos);
+	}
+}
+
+void IntroScene::UpdateInput() {
+	if (pooptube::gInputManager.KeyState('R') == pooptube::KeyState::KEY_PRESSED)
+		mGround->_SetBuffer();
+	if (pooptube::gInputManager.KeyState('T') == pooptube::KeyState::KEY_PRESSED)
+		mCharacter->Move(0.1f, 0.f);
+	if (pooptube::gInputManager.KeyState('G') == pooptube::KeyState::KEY_PRESSED)
+		mCharacter->Move(-0.1f, 0.f);
+	if (pooptube::gInputManager.KeyState('F') == pooptube::KeyState::KEY_PRESSED)
+		mCharacter->Move(0.f, 0.1f);
+	if (pooptube::gInputManager.KeyState('H') == pooptube::KeyState::KEY_PRESSED)
+		mCharacter->Move(0.f, -0.1f);
+}
