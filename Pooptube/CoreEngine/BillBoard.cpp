@@ -93,19 +93,7 @@ namespace pooptube{
 		D3DXMATRIXA16	MatView;
 		mDevice->GetTransform( D3DTS_VIEW, &MatView );
 		
-		D3DXVECTOR3 upVec( MatView._12, MatView._22, MatView._32 );
-		D3DXVECTOR3 rightVec( MatView._11, MatView._21, MatView._31 );
-
-		vertexList[0].position = GetPosition() - rightVec + upVec;
-		vertexList[1].position = GetPosition() - rightVec - upVec;
-		vertexList[2].position = GetPosition() + rightVec - upVec;
-		vertexList[3].position = GetPosition() + rightVec + upVec;
-
-		VOID* pVertices;
-		if( mMeshVertexBuffer->Lock( 0, VERTEX_NUM * sizeof(MESH_CUSTOM_VERTEX), (void**)&pVertices, 0 ) < 0 )
-			return;
-		memcpy( pVertices, vertexList.data(), VERTEX_NUM * sizeof(MESH_CUSTOM_VERTEX) );
-		mMeshVertexBuffer->Unlock();
+		SetFrontVector( MatView._13, MatView._23, MatView._33 );
 
 		//디바이스에 버텍스버퍼를 전달
 		mDevice->SetStreamSource( 0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX) );
