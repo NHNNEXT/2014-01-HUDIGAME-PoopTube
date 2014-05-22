@@ -135,8 +135,8 @@ void IntroScene::Render() {
 
 	// sprite test
 	//RECT temp = { 10, 10, 20, 20 };
-	/*if (mLightOrb1->IsRender() && mLightOrb2->IsRender() && mLightOrb3->IsRender())
-		mSprite->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));*/
+	if (!mLightOrb1->IsRender() && !mLightOrb2->IsRender() && !mLightOrb3->IsRender())
+		mSprite->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void IntroScene::Update(float dTime) {
