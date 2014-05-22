@@ -27,7 +27,7 @@ int ClientRun()
 	lr.mPlayerId = 1000;
 	pooptube::NetworkSystem::GetInstance()->Write((char*)&lr, lr.mSize);*/
 
-	//StageOne* pStageOne = StageOne::Create();
+	StageOne* pStageOne = StageOne::Create();
 	IntroScene *pIntroScene = IntroScene::Create();
 
 // 	if (pStageOne == nullptr) {
@@ -38,6 +38,7 @@ int ClientRun()
 // 		return 1;
 // 	}
 
+	
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);
 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pooptube::TestScene::Create() );
