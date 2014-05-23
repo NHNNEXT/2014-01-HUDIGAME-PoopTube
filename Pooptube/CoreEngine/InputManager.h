@@ -14,9 +14,7 @@ namespace pooptube {
 		KEY_NOTPRESSED,
 	};
 	class InputManager : public Object {
-	public:
-		InputManager();
-		~InputManager();
+		friend InputManager& GetInputManager();
 
 	public:
 		void GetKey();
@@ -36,6 +34,9 @@ namespace pooptube {
 		int GetDeltaY() { return mDeltaMouseY; }
 
 	private:
+		InputManager();
+		~InputManager();
+
 		bool mNow[256];
 		bool mPrev[256];
 
@@ -45,6 +46,6 @@ namespace pooptube {
 		int	mDeltaMouseY = 0;
 
 	};
-
-	extern InputManager gInputManager;
+	
+	InputManager& GetInputManager();
 }

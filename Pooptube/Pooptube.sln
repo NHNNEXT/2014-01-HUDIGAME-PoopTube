@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game", "Game", "{82A49110-E789-4DCC-95BC-8FC0C2EECD3E}"
 EndProject
@@ -28,6 +28,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Moon-Ik", "Moon-Ik\Moon-Ik.vcxproj", "{F35D6811-F36F-409F-BE2E-EB8D522E7917}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7DB7E701-526D-4B97-AC27-3F4FD3789FC7} = {7DB7E701-526D-4B97-AC27-3F4FD3789FC7}
+		{5F7C9CC8-07D1-4450-B914-394FFC6687B2} = {5F7C9CC8-07D1-4450-B914-394FFC6687B2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

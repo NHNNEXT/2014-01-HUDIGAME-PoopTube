@@ -206,14 +206,14 @@ void IntroScene::MainCharacterJumpUpdate(float dTime) {
 }
 
 void IntroScene::UpdateInput() {
-	if (pooptube::gInputManager.KeyState('R') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('R') == pooptube::KeyState::KEY_PRESSED)
 		mGround->_SetBuffer();
-	if (pooptube::gInputManager.KeyState('T') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('T') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(0.1f, 0.f);
-	if (pooptube::gInputManager.KeyState('G') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('G') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(-0.1f, 0.f);
-	if (pooptube::gInputManager.KeyState('F') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('F') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(0.f, 0.1f);
-	if (pooptube::gInputManager.KeyState('H') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('H') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(0.f, -0.1f);
 }

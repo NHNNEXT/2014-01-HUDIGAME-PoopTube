@@ -5,6 +5,11 @@
 
 namespace pooptube {
 
+	InputManager& GetInputManager() {
+		static InputManager gInputManager;
+		return gInputManager;
+	}
+
 	InputManager::InputManager() {
 		ZeroMemory( mNow, sizeof(mNow) );
 		ZeroMemory( mPrev, sizeof(mPrev) );
@@ -37,7 +42,4 @@ namespace pooptube {
 
 		return KeyState::KEY_NOTPRESSED;
 	}
-
-
-	InputManager gInputManager;	
 }

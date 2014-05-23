@@ -109,7 +109,7 @@ namespace pooptube {
 				//mKeyEventDispatcher->Dispatch( mKeyEventList );
 				//mMouseEventDispatcher->Dispatch( mMouseEventList );
 
-				gInputManager.GetKey();
+				GetInputManager().GetKey();
 
 				mSceneManager->Update( mDeltaTime );
 				mSceneManager->Render();
@@ -277,8 +277,8 @@ namespace pooptube {
 // 
 // 				GetInstance()->mMouseEventList.push_front( pMouseEvent );
 
-				gInputManager.SetX((int)(short)LOWORD(lParam));
-				gInputManager.SetY((int)(short)HIWORD(lParam));
+				GetInputManager().SetX((int)(short)LOWORD(lParam));
+				GetInputManager().SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_LBUTTONDOWN:
@@ -295,8 +295,8 @@ namespace pooptube {
 // 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 // 				} 
 
-				gInputManager.SetX((int)(short)LOWORD(lParam));
-				gInputManager.SetY((int)(short)HIWORD(lParam));
+				GetInputManager().SetX((int)(short)LOWORD(lParam));
+				GetInputManager().SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_LBUTTONUP:
@@ -305,8 +305,8 @@ namespace pooptube {
 // 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_LBUTTON, false );
 // 				}
 
-				gInputManager.SetX((int)(short)LOWORD(lParam));
-				gInputManager.SetY((int)(short)HIWORD(lParam));
+				GetInputManager().SetX((int)(short)LOWORD(lParam));
+				GetInputManager().SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_MBUTTONDOWN:
@@ -323,8 +323,8 @@ namespace pooptube {
 // 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 // 				}
 
-				gInputManager.SetX((int)(short)LOWORD(lParam));
-				gInputManager.SetY((int)(short)HIWORD(lParam));
+				GetInputManager().SetX((int)(short)LOWORD(lParam));
+				GetInputManager().SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_MBUTTONUP:
@@ -333,8 +333,8 @@ namespace pooptube {
 // 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_MBUTTON, false );
 // 				}
 
-				gInputManager.SetX((int)(short)LOWORD(lParam));
-				gInputManager.SetY((int)(short)HIWORD(lParam));
+				GetInputManager().SetX((int)(short)LOWORD(lParam));
+				GetInputManager().SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_RBUTTONDOWN:
@@ -351,8 +351,8 @@ namespace pooptube {
 // 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 // 				} 
 
-				gInputManager.SetX((int)(short)LOWORD(lParam));
-				gInputManager.SetY((int)(short)HIWORD(lParam));
+				GetInputManager().SetX((int)(short)LOWORD(lParam));
+				GetInputManager().SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_RBUTTONUP:
@@ -361,8 +361,8 @@ namespace pooptube {
 // 					GetInstance()->mMouseEventDispatcher->SetMouseButtonState( MOUSE_RBUTTON, false );
 // 				}
 
-				gInputManager.SetX((int)(short)LOWORD(lParam));
-				gInputManager.SetY((int)(short)HIWORD(lParam));
+				GetInputManager().SetX((int)(short)LOWORD(lParam));
+				GetInputManager().SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 		case WM_MOUSEWHEEL:
@@ -378,8 +378,8 @@ namespace pooptube {
 // 					GetInstance()->mMouseEventList.push_front( pMouseEvent );
 // 				}
 
-				gInputManager.SetX((int)(short)LOWORD(lParam));
-				gInputManager.SetY((int)(short)HIWORD(lParam));
+				GetInputManager().SetX((int)(short)LOWORD(lParam));
+				GetInputManager().SetY((int)(short)HIWORD(lParam));
 				break;
 			}
 
