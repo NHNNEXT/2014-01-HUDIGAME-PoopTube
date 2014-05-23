@@ -46,6 +46,9 @@
     <Filter Include="CoreEngine\Nodes\Ground">
       <UniqueIdentifier>{898897ac-3fdb-435b-9f12-44eb9545b50f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CoreEngine\Nodes\Character">
+      <UniqueIdentifier>{7a5c3e72-ab4b-4e0d-b883-e8cea0ffef0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Stdafx.h">
@@ -78,8 +81,14 @@
     <ClInclude Include="SunLight.h">
       <Filter>CoreEngine\Nodes\Light</Filter>
     </ClInclude>
-    <ClInclude Include="TT.h">
-      <Filter>CoreEngine\Nodes</Filter>
+    <ClInclude Include="WCreature.h">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="WLightOrb.h">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="WTree.h">
+      <Filter>CoreEngine\Nodes\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -113,11 +122,17 @@
     <ClCompile Include="SunLight.cpp">
       <Filter>CoreEngine\Nodes\Light</Filter>
     </ClCompile>
-    <ClCompile Include="TT.cpp">
-      <Filter>CoreEngine\Nodes</Filter>
-    </ClCompile>
     <ClCompile Include="JsonParser.cpp">
       <Filter>CoreEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="WCreature.cpp">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="WLightOrb.cpp">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="WTree.cpp">
+      <Filter>CoreEngine\Nodes\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

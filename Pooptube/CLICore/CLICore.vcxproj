@@ -118,7 +118,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="TT.h" />
+    <ClInclude Include="WCreature.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Node.h" />
@@ -129,6 +129,8 @@
     <ClInclude Include="ThirdPersonCamera.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="WLightOrb.h" />
+    <ClInclude Include="WTree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
@@ -137,7 +139,7 @@
     <ClCompile Include="JsonParser.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="TT.cpp" />
+    <ClCompile Include="WCreature.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -151,6 +153,8 @@
     <ClCompile Include="ThirdPersonCamera.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="WLightOrb.cpp" />
+    <ClCompile Include="WTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />

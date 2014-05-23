@@ -100,7 +100,8 @@ namespace Tool
             {
                 float[] pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
 
-                SelectedNode = Core.Tiger.Create();
+                //SelectedNode = Core.WCreature.Create();
+                SelectedNode = Core.WLightOrb.Create();
                 SelectedNode.SetPosition(pos[0], pos[1], pos[2]);
 
                 Scene.AddChild(SelectedNode);
