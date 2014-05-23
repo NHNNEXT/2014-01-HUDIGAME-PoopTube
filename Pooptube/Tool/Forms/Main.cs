@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tool.Class;
-using System.Web;
+using System.Net.Json;
 
 namespace Tool
 {
@@ -22,6 +22,7 @@ namespace Tool
         Core.SunLight SunLight = null;
         Core.Camera Camera = null;
         Core.Node SelectedNode = null;
+        int SelectedObjectType = 0;
         Property PropertyTable = new Property();
 
         public MainForm()
@@ -92,21 +93,42 @@ namespace Tool
 
         private void ViewBox_MouseDown(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Middle)
+            if(e.Button == MouseButtons.Right)
             {
+                float[] pos = Ground.GetIntersectPosThis(e.X, e.Y);
+                switch(SelectedObjectType)
+                {
+                    case 0 :
+                        SelectedNode = Core.WCreature.Create();
+                        break;
+                    case 1 :
+                        SelectedNode = Core.WLightOrb.Create();
+                        break;
+                    case 2 :
+                        SelectedNode = Core.WTree.Create();
+                        break;
+                    case 3 :
+                        //Ground.AddHeight(e.X, e.Y, 0.2f);
+                        return;
+                    case 4 :
+                        //Ground.AddHeight(e.X, e.Y, -0.2f);
+                        return;
+                }
 
-            }
-            else if(e.Button == MouseButtons.Right)
-            {
-                float[] pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
-
-                //SelectedNode = Core.WCreature.Create();
-                SelectedNode = Core.WLightOrb.Create();
                 SelectedNode.SetPosition(pos[0], pos[1], pos[2]);
-
                 Scene.AddChild(SelectedNode);
-
                 ChangeSeletedNode();
+                 
+                
+//                 float[] pos = Ground.PICKGROUND(e.X, e.Y, 0.2f);
+// 
+//                 //SelectedNode = Core.WCreature.Create();
+//                 SelectedNode = Core.WLightOrb.Create();
+//                 SelectedNode.SetPosition(pos[0], pos[1], pos[2]);
+// 
+//                 Scene.AddChild(SelectedNode);
+// 
+//                 ChangeSeletedNode();
                 
             }
             else if (e.Button == MouseButtons.Left)
@@ -115,6 +137,61 @@ namespace Tool
 
                 if(SelectedNode != null)
                     ChangeSeletedNode();
+            }
+        }
+
+        private void SaveMapFile(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "JSON map files (*.json)|*.json";
+            saveFileDialog1.FilterIndex = 1;
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                String fileName = saveFileDialog1.FileName;
+                
+
+            }
+        }
+
+        private void LoadMapFile(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            openFileDialog1.Filter = "JSON map files (*.json)|*.json";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            openFileDialog1.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                //OpenCSMFile(openFileDialog1.FileName);
+            }
+        }
+
+        private void NewMapFile(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ExitProgram(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void ChangedObjectType(object sender, EventArgs e)
+        {
+            RadioButton target = ((RadioButton)sender);
+            if(target.Checked == true)
+            {
+                if (target.Text == "Creature") SelectedObjectType = 0;
+                else if (target.Text == "Light Object") SelectedObjectType = 1;
+                else if (target.Text == "Tree") SelectedObjectType = 2;
+                else if (target.Text == "Up") SelectedObjectType = 3;
+                else if (target.Text == "Down") SelectedObjectType = 4;
             }
         }
     }

@@ -76,7 +76,8 @@ namespace pooptube {
 		virtual std::vector<std::shared_ptr<Node>> GetChildList() { return mChildList; }
 
 		virtual void GetRay(float x, float y, D3DXVECTOR3 *Origin, D3DXVECTOR3 *Direction);
-		virtual Node * Pick(float x, float y);// , std::vector<Node*> *result);
+		virtual Node * Pick(float x, float y, D3DXVECTOR3 *intersectPos = nullptr);// , std::vector<Node*> *result);
+		virtual bool CheckIntersectThis(float x, float y, D3DXVECTOR3 *intersectPos = nullptr);
 		
 		virtual std::vector<D3DXVECTOR3> *GetVertices() { return &mVertices; }
 		virtual std::vector<D3DXVECTOR3> *GetIndices() { return &mIndices; }

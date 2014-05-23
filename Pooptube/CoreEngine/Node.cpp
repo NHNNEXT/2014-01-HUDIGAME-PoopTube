@@ -302,7 +302,7 @@ namespace pooptube {
 		//printf("DIRECT (%f %f %f)\n\n", Direction->x, Direction->y, Direction->z);
 	}
 
-	Node * Node::Pick(float x, float y)
+	Node * Node::Pick(float x, float y, D3DXVECTOR3 *intersectPos)
 	{
 		//result->clear();
 		Node *result = nullptr;
@@ -353,7 +353,48 @@ namespace pooptube {
 				}
 			}
 		}
+		if (intersectPos != nullptr)
+			*intersectPos = Origin + Direction * minDistance;
 
 		return result;
 	}
+
+	bool Node::CheckIntersectThis(float x, float y, D3DXVECTOR3 *intersectPos)
+	{
+		float minDistance = 9999.f;
+
+		D3DXVECTOR3 Origin, Direction;
+		GetRay(x, y, &Origin, &Direction);
+
+		D3DXVECTOR3 pos = mPosition;
+		DWORD dwFace;
+		FLOAT fBary1, fBary2, fDist;
+		BOOL picked = false;
+
+		for (UINT i = 0; i < mIndices.size(); ++i)
+		{
+			// Vertex 정보는 Translate 하기 전인 원점을 기준으로 좌표 설정이 되어있기 때문에
+			// 현재 Object의 Position과 더해준 값이 Vertex의 좌표이다.
+			// 근데 Picking 로직이 상당히 퍼포먼스가 저질인 것 같은데; 임시로 만들어 놓은거라..
+			// 지금은 위치 이동만 반영했고 회전에 따른 Vertex 위치 변화도 만들어야 하는데 나중에 하겠음.
+
+			D3DXVECTOR3 a, b, c;
+			a = mVertices[(UINT)mIndices[i].x] + pos;
+			b = mVertices[(UINT)mIndices[i].y] + pos;
+			c = mVertices[(UINT)mIndices[i].z] + pos;
+			//picked = D3DXIntersectTri(&VB[(UINT)IB[i].x], &VB[(UINT)IB[i].y], &VB[(UINT)IB[i].z], &Origin, &Direction, &fBary1, &fBary2, &fDist);
+			picked = D3DXIntersectTri(&a, &b, &c, &Origin, &Direction, &fBary1, &fBary2, &fDist);
+
+			if (picked)
+			{
+				if (minDistance > fDist)
+					minDistance = fDist;
+			}
+		}
+		if (intersectPos != nullptr)
+			*intersectPos = Origin + Direction * minDistance;
+
+		return minDistance != 9999.f ? true : false;
+	}
+
 }

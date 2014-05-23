@@ -60,13 +60,22 @@
             this.ObjectListBox = new System.Windows.Forms.ComboBox();
             this.PropertyForm = new System.Windows.Forms.PropertyGrid();
             this.ComponentTab = new System.Windows.Forms.TabPage();
+            this.ActionTab = new System.Windows.Forms.TabPage();
+            this.GroundTUp = new System.Windows.Forms.RadioButton();
+            this.GroundTDown = new System.Windows.Forms.RadioButton();
+            this.ObjectRadioCreature = new System.Windows.Forms.RadioButton();
+            this.ObjectRadioTree = new System.Windows.Forms.RadioButton();
+            this.ObjectRadioLightOrb = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ViewBox)).BeginInit();
             this.MainMenu.SuspendLayout();
             this.OptionTab.SuspendLayout();
             this.PropertyTab.SuspendLayout();
+            this.ActionTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // ViewBox
@@ -118,12 +127,14 @@
             this.NewMapMenu.Name = "NewMapMenu";
             this.NewMapMenu.Size = new System.Drawing.Size(194, 22);
             this.NewMapMenu.Text = "새로 만들기(N)";
+            this.NewMapMenu.Click += new System.EventHandler(this.NewMapFile);
             // 
             // OpenMapMenu
             // 
             this.OpenMapMenu.Name = "OpenMapMenu";
             this.OpenMapMenu.Size = new System.Drawing.Size(194, 22);
             this.OpenMapMenu.Text = "열기(O)";
+            this.OpenMapMenu.Click += new System.EventHandler(this.LoadMapFile);
             // 
             // toolStripSeparator1
             // 
@@ -147,6 +158,7 @@
             this.SaveMapMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.SaveMapMenu.Size = new System.Drawing.Size(194, 22);
             this.SaveMapMenu.Text = "저장(S)";
+            this.SaveMapMenu.Click += new System.EventHandler(this.SaveMapFile);
             // 
             // SaveAsMapMenu
             // 
@@ -165,6 +177,7 @@
             this.ExitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.ExitMenu.Size = new System.Drawing.Size(194, 22);
             this.ExitMenu.Text = "끝내기(X)";
+            this.ExitMenu.Click += new System.EventHandler(this.ExitProgram);
             // 
             // 편집EToolStripMenuItem
             // 
@@ -277,6 +290,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.OptionTab.Controls.Add(this.PropertyTab);
             this.OptionTab.Controls.Add(this.ComponentTab);
+            this.OptionTab.Controls.Add(this.ActionTab);
             this.OptionTab.Location = new System.Drawing.Point(491, 27);
             this.OptionTab.Name = "OptionTab";
             this.OptionTab.SelectedIndex = 0;
@@ -331,6 +345,80 @@
             this.ComponentTab.Text = "Component";
             this.ComponentTab.UseVisualStyleBackColor = true;
             // 
+            // ActionTab
+            // 
+            this.ActionTab.Controls.Add(this.label5);
+            this.ActionTab.Controls.Add(this.label4);
+            this.ActionTab.Controls.Add(this.GroundTUp);
+            this.ActionTab.Controls.Add(this.GroundTDown);
+            this.ActionTab.Controls.Add(this.ObjectRadioCreature);
+            this.ActionTab.Controls.Add(this.ObjectRadioTree);
+            this.ActionTab.Controls.Add(this.ObjectRadioLightOrb);
+            this.ActionTab.Location = new System.Drawing.Point(4, 22);
+            this.ActionTab.Name = "ActionTab";
+            this.ActionTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ActionTab.Size = new System.Drawing.Size(254, 278);
+            this.ActionTab.TabIndex = 2;
+            this.ActionTab.Text = "Action";
+            this.ActionTab.UseVisualStyleBackColor = true;
+            // 
+            // GroundTUp
+            // 
+            this.GroundTUp.AutoSize = true;
+            this.GroundTUp.Location = new System.Drawing.Point(8, 110);
+            this.GroundTUp.Name = "GroundTUp";
+            this.GroundTUp.Size = new System.Drawing.Size(38, 16);
+            this.GroundTUp.TabIndex = 0;
+            this.GroundTUp.Text = "Up";
+            this.GroundTUp.UseVisualStyleBackColor = true;
+            this.GroundTUp.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
+            // 
+            // GroundTDown
+            // 
+            this.GroundTDown.AutoSize = true;
+            this.GroundTDown.Location = new System.Drawing.Point(8, 132);
+            this.GroundTDown.Name = "GroundTDown";
+            this.GroundTDown.Size = new System.Drawing.Size(55, 16);
+            this.GroundTDown.TabIndex = 1;
+            this.GroundTDown.Text = "Down";
+            this.GroundTDown.UseVisualStyleBackColor = true;
+            this.GroundTDown.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
+            // 
+            // ObjectRadioCreature
+            // 
+            this.ObjectRadioCreature.AutoSize = true;
+            this.ObjectRadioCreature.Checked = true;
+            this.ObjectRadioCreature.Location = new System.Drawing.Point(8, 19);
+            this.ObjectRadioCreature.Name = "ObjectRadioCreature";
+            this.ObjectRadioCreature.Size = new System.Drawing.Size(71, 16);
+            this.ObjectRadioCreature.TabIndex = 0;
+            this.ObjectRadioCreature.TabStop = true;
+            this.ObjectRadioCreature.Text = "Creature";
+            this.ObjectRadioCreature.UseVisualStyleBackColor = true;
+            this.ObjectRadioCreature.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
+            // 
+            // ObjectRadioTree
+            // 
+            this.ObjectRadioTree.AutoSize = true;
+            this.ObjectRadioTree.Location = new System.Drawing.Point(8, 63);
+            this.ObjectRadioTree.Name = "ObjectRadioTree";
+            this.ObjectRadioTree.Size = new System.Drawing.Size(49, 16);
+            this.ObjectRadioTree.TabIndex = 2;
+            this.ObjectRadioTree.Text = "Tree";
+            this.ObjectRadioTree.UseVisualStyleBackColor = true;
+            this.ObjectRadioTree.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
+            // 
+            // ObjectRadioLightOrb
+            // 
+            this.ObjectRadioLightOrb.AutoSize = true;
+            this.ObjectRadioLightOrb.Location = new System.Drawing.Point(8, 41);
+            this.ObjectRadioLightOrb.Name = "ObjectRadioLightOrb";
+            this.ObjectRadioLightOrb.Size = new System.Drawing.Size(90, 16);
+            this.ObjectRadioLightOrb.TabIndex = 1;
+            this.ObjectRadioLightOrb.Text = "Light Object";
+            this.ObjectRadioLightOrb.UseVisualStyleBackColor = true;
+            this.ObjectRadioLightOrb.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -358,6 +446,24 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "label3";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 3);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Object";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 95);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(122, 12);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Ground Terraforming";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -379,6 +485,8 @@
             this.MainMenu.PerformLayout();
             this.OptionTab.ResumeLayout(false);
             this.PropertyTab.ResumeLayout(false);
+            this.ActionTab.ResumeLayout(false);
+            this.ActionTab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -421,6 +529,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TabPage ActionTab;
+        private System.Windows.Forms.RadioButton ObjectRadioTree;
+        private System.Windows.Forms.RadioButton ObjectRadioLightOrb;
+        private System.Windows.Forms.RadioButton ObjectRadioCreature;
+        private System.Windows.Forms.RadioButton GroundTUp;
+        private System.Windows.Forms.RadioButton GroundTDown;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
     }
 }
 

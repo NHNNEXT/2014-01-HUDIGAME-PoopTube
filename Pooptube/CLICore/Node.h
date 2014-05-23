@@ -2,7 +2,6 @@
 #pragma comment(lib, "CoreEngine")
 #include <msclr\marshal_cppstd.h>
 #include "..\CoreEngine\Node.h"
-#include <cliext/list>
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -29,7 +28,7 @@ namespace Core {
 	{
 	protected:
 		pooptube::Node *pInstance = nullptr;
-
+		
 	public :
 		Node() { };// pInstance = new pooptube::Node();	};
 		virtual ~Node() {};// override { delete pInstance; };
@@ -39,9 +38,9 @@ namespace Core {
 		pooptube::Node*			 GetInstance()  { return pInstance; }
 
 		virtual void			 AddChild(Node ^pChild)		{ pInstance->AddChild(pChild->GetInstance()); _AddWrappedChild(pChild); };
-		virtual void			 _AddWrappedChild(Node ^pChild) { mChildList.push_back(pChild); mChildNames.Add(pChild->GetObjectName()); }
+		virtual void			 _AddWrappedChild(Node ^pChild) { mChildList.Add(pChild); mChildNames.Add(pChild->GetObjectName()); }
 		virtual void			 RemoveChild(Node ^pChild)	{ pInstance->RemoveChild(pChild->GetInstance()); _RemoveWrappedChild(pChild); };
-		virtual void			 _RemoveWrappedChild(Node ^pChild) { mChildList.remove(pChild); mChildNames.Remove(pChild->GetObjectName()); }
+		virtual void			 _RemoveWrappedChild(Node ^pChild) { mChildList.Remove(pChild); mChildNames.Remove(pChild->GetObjectName()); }
 		virtual void			 ReplaceObjectName(String^ origin, String^ replace) { mChildNames.Remove(origin); mChildNames.Add(replace); }
 
 		virtual List<String^>	 ^GetChildNameList() { return %mChildNames; }
@@ -50,24 +49,36 @@ namespace Core {
 		virtual String^			 GetObjectName() { return marshal_as<String^>(pInstance->GetObjectName()); }
 		virtual void			 SetObjectName(String^ value) { return pInstance->SetObjectName(marshal_as<std::string>(value)); }
 
+		virtual List<Node^>^ GetChildList() { return gcnew List<Node^>(%mChildList); }
+
+		virtual array<System::Single>^	 GetIntersectPosThis(float x, float y) 
+		{
+			D3DXVECTOR3 temp ;
+			if (Instance<pooptube::Node *>(pInstance)->CheckIntersectThis(x, y, &temp) == true)
+			{
+				array<System::Single> ^byte = { temp.x, temp.y, temp.z };
+				return byte;
+			}
+			return nullptr;
+			
+		}
 		virtual Node		     ^Pick(float x, float y) 
 		{ 
 			pooptube::Node *SelectedNode = pInstance->Pick(x, y);
-			//return SelectNodeByName(marshal_as<String^>(SelectedNode->GetObjectName()));
 
-			for (auto %iter = mChildList.begin(); iter != mChildList.end(); ++iter)
+			for each(auto child in mChildList)
 			{
-				if ((%iter)->get_ref()->GetInstance() == SelectedNode)
-					return (%iter)->get_ref();
+				if (child->GetInstance() == SelectedNode)
+					return child;
 			}
-			return nullptr;			
+			return nullptr;	
 		}
 		virtual Node		     ^SelectNodeByName(String ^ObjectName)
 		{
-			for (auto %iter = mChildList.begin(); iter != mChildList.end(); ++iter)
+			for each(auto child in mChildList)
 			{
-				if ((%iter)->get_ref()->GetObjectName() == ObjectName)
-					return (%iter)->get_ref();
+				if (child->GetObjectName() == ObjectName)
+					return child;
 			}
 			return nullptr;
 		}
@@ -103,7 +114,7 @@ namespace Core {
 // 		bool					Turn(D3DXVECTOR3 src, D3DXVECTOR3 dst, float speed);
 
 	protected:
-		cliext::list<Node^> mChildList;
+		List<Node^> mChildList;
 		List<String^> mChildNames;
 	};
 }

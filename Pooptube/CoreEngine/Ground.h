@@ -66,8 +66,6 @@ namespace pooptube {
 
 		bool _SetBuffer();
 
-		D3DXVECTOR3 PICKGROUND(float x, float y, float value);
-
 	protected:
 		bool _Init(const std::wstring& FilePath);
 		//bool _SetBuffer();
