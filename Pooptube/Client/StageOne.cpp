@@ -117,6 +117,8 @@ void StageOne::Render() {
 void StageOne::Update(float dTime) {
 	Node::Update(dTime);
 
+	mSkyBox->Vibrater(dTime);
+
 	UpdateInput();
 
 	//2초마다 한번씩

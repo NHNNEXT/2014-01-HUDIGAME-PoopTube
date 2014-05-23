@@ -26,6 +26,7 @@ namespace pooptube {
 		void Render();
 		void Update(float dTime);
 
+		void Vibrater(float dTime);
 
 	protected:
 		bool _Init(const std::wstring& top,
@@ -50,6 +51,9 @@ namespace pooptube {
 		float				mHeight = 1000.f;
 		float				mDepth = 1000.f;
 
+		bool				mSwitchVibe = true;
+		float				mVibeSpeed = 50.f;
+		float				mVibeCurrentTime = 0.f;
 	};
 
 }
