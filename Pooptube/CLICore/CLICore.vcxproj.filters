@@ -116,6 +116,9 @@
     <ClCompile Include="TT.cpp">
       <Filter>CoreEngine\Nodes</Filter>
     </ClCompile>
+    <ClCompile Include="JsonParser.cpp">
+      <Filter>CoreEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">

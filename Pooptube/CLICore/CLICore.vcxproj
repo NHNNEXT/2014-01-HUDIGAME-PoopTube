@@ -134,6 +134,9 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="JsonParser.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="TT.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Light.cpp" />

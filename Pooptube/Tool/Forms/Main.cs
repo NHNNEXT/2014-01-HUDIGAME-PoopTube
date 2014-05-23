@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tool.Class;
+using System.Web;
 
 namespace Tool
 {
     public partial class MainForm : Form
     {
+        //JavaScriptSerializer
         Core.Application Application = new Core.Application();
 
         Core.Scene Scene = null;
@@ -87,6 +89,7 @@ namespace Tool
             if (SelectedNode == null) ObjectListBox.SelectedItem = null;
             else ObjectListBox.SelectedItem = SelectedNode.GetObjectName();
         }
+
         private void ViewBox_MouseDown(object sender, MouseEventArgs e)
         {
             if(e.Button == MouseButtons.Middle)
