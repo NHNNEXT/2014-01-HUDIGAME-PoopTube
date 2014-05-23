@@ -69,12 +69,12 @@ void LightOrb::Update(float dTime)
 	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	D3DXVECTOR3 pos = GetPosition();
-	float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
+	//float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
 
-	if (height != pos.y) {
-		pos.y = height;
-		SetPosition(pos);
-	}
+	//if (height != pos.y) {
+	//	pos.y = height;
+	//	SetPosition(pos);
+	//}
 }
 
 void LightOrb::_CollsionHandle( pooptube::CollisionBox* collisionResult )

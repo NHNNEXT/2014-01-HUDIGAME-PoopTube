@@ -9,7 +9,7 @@
 #include "StageOne.h"
 #include "IntroScene.h"
 
-int main()
+int ClientRun()
 {
 	//#ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -38,6 +38,7 @@ int main()
 // 		return 1;
 // 	}
 
+	
 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pooptube::TestScene::Create() );

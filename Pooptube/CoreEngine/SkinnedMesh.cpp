@@ -719,7 +719,7 @@ namespace pooptube {
 					pMeshContainer->ppTextures[pMeshContainer->pAttributeTable[iAttrib].AttribId]);
 
 				//DWORD temp = pMeshContainer->pAttributeTable[iAttrib].AttribId;
- 				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
+				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
 			}
 			mDevice->SetTexture(0, NULL);
 

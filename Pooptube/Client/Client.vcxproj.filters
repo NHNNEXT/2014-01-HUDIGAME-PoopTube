@@ -61,6 +61,7 @@
     <ClInclude Include="Tree.h">
       <Filter>Character</Filter>
     </ClInclude>
+    <ClInclude Include="Client.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

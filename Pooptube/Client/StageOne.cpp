@@ -20,6 +20,7 @@
 #include "InputManager.h"
 #include "ResourceDef.h"
 #include "Tree.h"
+#include "BillBoard.h"
 
 StageOne::StageOne() {
 }
@@ -82,6 +83,11 @@ bool StageOne::Init() {
 	
 	mTree = Tree::Create();
 
+	pooptube::BillBoard* board = pooptube::BillBoard::Create();
+	board->SetPosition( 5.f, 5.f, 7.f );
+	board->SetTexture( L"Model\\Back.bmp" );
+	AddChild( board );
+
 	this->AddChild(mTree);
 	this->AddChild(mSunLight);
 	this->AddChild(mCharacter);
@@ -110,6 +116,8 @@ void StageOne::Render() {
 }
 void StageOne::Update(float dTime) {
 	Node::Update(dTime);
+
+	mSkyBox->Vibrater(dTime);
 
 	UpdateInput();
 
@@ -164,15 +172,15 @@ void StageOne::MainCharacterJumpUpdate(float dTime) {
 }
 
 void StageOne::UpdateInput() {
-	if (pooptube::gInputManager.KeyState('R') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('R') == pooptube::KeyState::KEY_PRESSED)
 		mGround->_SetBuffer();
-	if (pooptube::gInputManager.KeyState('T') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('T') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(0.1f, 0.f);
-	if (pooptube::gInputManager.KeyState('G') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('G') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(-0.1f, 0.f);
-	if (pooptube::gInputManager.KeyState('F') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('F') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(0.f, 0.1f);
-	if (pooptube::gInputManager.KeyState('H') == pooptube::KeyState::KEY_PRESSED)
+	if (pooptube::GetInputManager().KeyState('H') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(0.f, -0.1f);
 
 	

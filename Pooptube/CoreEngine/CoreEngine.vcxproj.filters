@@ -269,6 +269,9 @@
       <Filter>Nodes\Sound</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="BillBoard.h">
+      <Filter>Nodes\SkinnedMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -399,6 +402,9 @@
       <Filter>Nodes\Sound</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="BillBoard.cpp">
+      <Filter>Nodes\SkinnedMesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

@@ -20,6 +20,7 @@ namespace pooptube {
 	class Ground;
 }
 class StageOne;
+class IntroScene;
 
 class LightOrb : public pooptube::Node
 {
@@ -33,6 +34,8 @@ public:
 
 	void Render();
 	void Update(float dTime);
+
+	bool IsRender() { return isRender; }
 
 	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mMesh->GetVertices(); }
 	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mMesh->GetIndices(); }

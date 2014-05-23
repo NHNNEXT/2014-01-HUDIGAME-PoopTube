@@ -57,7 +57,7 @@ protected:
 
 
 private:
-	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
+	void _CollsionHandle( float dTime, pooptube::CollisionBox* collisionResult );
 
 	CHAR_STATE				mState = NONE;
 	
