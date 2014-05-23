@@ -61,6 +61,8 @@
             this.PropertyForm = new System.Windows.Forms.PropertyGrid();
             this.ComponentTab = new System.Windows.Forms.TabPage();
             this.ActionTab = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.GroundTUp = new System.Windows.Forms.RadioButton();
             this.GroundTDown = new System.Windows.Forms.RadioButton();
             this.ObjectRadioCreature = new System.Windows.Forms.RadioButton();
@@ -69,12 +71,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.ViewBox)).BeginInit();
             this.MainMenu.SuspendLayout();
             this.OptionTab.SuspendLayout();
             this.PropertyTab.SuspendLayout();
+            this.ComponentTab.SuspendLayout();
             this.ActionTab.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -337,6 +340,7 @@
             // 
             // ComponentTab
             // 
+            this.ComponentTab.Controls.Add(this.richTextBox1);
             this.ComponentTab.Location = new System.Drawing.Point(4, 22);
             this.ComponentTab.Name = "ComponentTab";
             this.ComponentTab.Padding = new System.Windows.Forms.Padding(3);
@@ -361,6 +365,24 @@
             this.ActionTab.TabIndex = 2;
             this.ActionTab.Text = "Action";
             this.ActionTab.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 95);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(122, 12);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Ground Terraforming";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 3);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Object";
             // 
             // GroundTUp
             // 
@@ -446,29 +468,30 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "label3";
             // 
-            // label4
+            // button1
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 3);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 12);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Object";
+            this.button1.Location = new System.Drawing.Point(426, 1);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label5
+            // richTextBox1
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 95);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(122, 12);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Ground Terraforming";
+            this.richTextBox1.Location = new System.Drawing.Point(6, 3);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(242, 248);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(753, 343);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -485,6 +508,7 @@
             this.MainMenu.PerformLayout();
             this.OptionTab.ResumeLayout(false);
             this.PropertyTab.ResumeLayout(false);
+            this.ComponentTab.ResumeLayout(false);
             this.ActionTab.ResumeLayout(false);
             this.ActionTab.PerformLayout();
             this.ResumeLayout(false);
@@ -537,6 +561,8 @@
         private System.Windows.Forms.RadioButton GroundTDown;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }
 

@@ -194,5 +194,98 @@ namespace Tool
                 else if (target.Text == "Down") SelectedObjectType = 4;
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            const string jsonText =
+            "{"+
+            " \"FirstValue\": 1.1,"+
+            " \"SecondValue\": \"some text\"," +
+            " \"TrueValue\": true" +
+            "}";
+
+            // 1. parse sample
+            richTextBox1.AppendText("\n");
+            richTextBox1.AppendText("Source data:\n");
+            richTextBox1.AppendText(jsonText);
+            richTextBox1.AppendText("\n");
+
+            JsonTextParser parser = new JsonTextParser();
+            JsonObject obj = parser.Parse(jsonText);
+
+            richTextBox1.AppendText("\n");
+            richTextBox1.AppendText("Parsed data with indentation in JSON data format:\n");
+            richTextBox1.AppendText(obj.ToString());
+            richTextBox1.AppendText("\n");
+
+            JsonUtility.GenerateIndentedJsonText = false;
+
+            richTextBox1.AppendText("\n");
+            richTextBox1.AppendText("Parsed data without indentation in JSON data format:\n");
+            richTextBox1.AppendText(obj.ToString());
+            richTextBox1.AppendText("\n");
+
+            // enumerate values in json object
+            richTextBox1.AppendText("\n");
+            richTextBox1.AppendText("Parsed object contains these nested fields:\n");
+
+            foreach (JsonObject field in obj as JsonObjectCollection)
+            {
+                string name = field.Name;
+                string value = string.Empty;
+                string type = field.GetValue().GetType().Name;
+
+                // try to get value.
+                switch(type)
+                {
+                    case "String":
+                        value = (string)field.GetValue();
+                        break;
+                    case "Double":
+                        value = field.GetValue().ToString();
+                        break;
+                    case "Boolean":
+                        value = field.GetValue().ToString();
+                        break;
+                    default:
+                        // in this sample we'll not parse nested arrays or objects.
+                        throw new NotSupportedException();
+                }
+                richTextBox1.AppendText(String.Format("{0} {1} {2}",
+                name.PadLeft(15), type.PadLeft(10), value.PadLeft(15)));
+            }
+            richTextBox1.AppendText("\n");
+
+            // 2. generate sample
+            richTextBox1.AppendText("\n");
+
+            // root object
+            JsonObjectCollection collection = new JsonObjectCollection();
+
+            // nested values
+            collection.Add(new JsonStringValue("FirstName", "Pavel"));
+            collection.Add(new JsonStringValue("LastName", "Lazureykis"));
+            collection.Add(new JsonNumericValue("Age", 23));
+            collection.Add(new JsonStringValue("Email", "me@somewhere.com"));
+            collection.Add(new JsonBooleanValue("HideEmail", true));
+
+            richTextBox1.AppendText("Generated object:\n");
+            JsonUtility.GenerateIndentedJsonText = true;
+            richTextBox1.AppendText(collection.ToString());
+            richTextBox1.AppendText("\n");
+            // 3. generate own library for working with own custom json objects
+            /// 
+            /// Note that generator in this pre-release version of library supports
+            /// only JsonObjectCollection in root level ({...}) and only simple
+            /// value types can be nested. Not arrays or other objects.
+            /// Also names of nested values cannot contain spaces or starts with
+            /// numeric symbols. They must comply with C# variable declaration rules.
+            /// 
+//             JsonGenerator generator = new JsonGenerator();
+//             generator.GenerateLibrary("Person", collection, @"C:\");
+            richTextBox1.AppendText("\n");
+
+            System.IO.File.WriteAllText("test.json", collection.ToString());
+        }
     }
 }
