@@ -100,6 +100,8 @@ namespace pooptube {
 		matViewProj *= matProj;
 		MakeFrustumPlanes( &matViewProj );
 
+		mRenderedMeshNum = 0; // 테스트용
+
 		return true;
 	}
 	bool D3D9Renderer::DrawEnd() {

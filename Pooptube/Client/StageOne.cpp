@@ -124,6 +124,7 @@ void StageOne::Update(float dTime) {
 	//2초마다 한번씩
 	if (mTimeForFPS > 2.f) {
 		printf("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
+		printf( "RenderedSkinnedMesh : %d\n", pooptube::Application::GetInstance()->GetSceneManager()->GetRenderer()->mRenderedMeshNum );
 		mTimeForFPS = 0.f;
 	}
 

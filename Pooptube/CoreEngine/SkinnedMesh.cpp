@@ -602,6 +602,8 @@ namespace pooptube {
 	}
 
 	void SkinnedMesh::Render() {
+		if( _CheckFrustum() == false ) return; // 절두체 컬링
+		Application::GetInstance()->GetSceneManager()->GetRenderer()->mRenderedMeshNum++;
 
 		// TODO: 행렬 계산
 		D3DXMATRIXA16	MatWorld;
@@ -650,6 +652,9 @@ namespace pooptube {
 
 		//맵툴용 함수 클라에서는 꺼야함
 		InitFrame(mMeshData->mFrameRoot);
+
+		// 경계구 작성
+		_MakeBoundingSphere( mBoundingSphereCenter, mBoundingSphereRadius );
 
 		return true;
 	}
@@ -896,6 +901,30 @@ namespace pooptube {
 
 		pMeshContainer->MeshData.pMesh->UnlockIndexBuffer();
 		delete[]indexBuffer;
+	}
+	void SkinnedMesh::_MakeBoundingSphere( D3DXVECTOR3& outSphereCenter, float& outSphereRadius )
+	{
+		std::vector<DirectX::XMFLOAT3> vertices;
+
+		// 버텍스 정보 가져오기
+		D3DXVECTOR3 tempVec;
+		for( auto vec : mVertices )
+			vertices.push_back( DirectX::XMFLOAT3( vec.x*mScaleVec.x, vec.y*mScaleVec.y, vec.z*mScaleVec.z ) );
+
+		// 경계구 작성
+		DirectX::BoundingSphere sphere;
+		DirectX::BoundingSphere::CreateFromPoints( sphere, mVertices.size(), &vertices[0], sizeof( DirectX::XMFLOAT3 ) );
+		outSphereCenter = D3DXVECTOR3( sphere.Center.x, sphere.Center.y, sphere.Center.z );
+		outSphereRadius = sphere.Radius;
+	}
+	bool SkinnedMesh::_CheckFrustum()
+	{
+		D3DXVECTOR3 boundingSpherePos = mBoundingSphereCenter + GetPosition();
+		for( auto plane : Application::GetInstance()->GetSceneManager()->GetRenderer()->GetFrustumPlane() ){
+			if( plane.a * boundingSpherePos.x + plane.b * boundingSpherePos.y + plane.c * boundingSpherePos.z + plane.d >= mBoundingSphereRadius )
+				return false;
+		}
+		return true;
 	}
 }
 

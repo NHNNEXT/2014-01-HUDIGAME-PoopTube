@@ -110,6 +110,12 @@ namespace pooptube {
 		virtual void Update(float dTime);
 		void UpdateFrameMatrices(LPD3DXFRAME pFrameBase, LPD3DXMATRIX pParentMatrix);
 
+		virtual void		SetScale( const D3DXVECTOR3& newScale ) {
+			mScaleVec = newScale;
+			_MakeBoundingSphere( mBoundingSphereCenter, mBoundingSphereRadius );
+		}
+		virtual void		SetScale( float x, float y, float z ) { SetScale( D3DXVECTOR3( x, y, z ) ); }
+
 	protected:
 
 		bool _Init(const std::wstring& XMeshPath);
@@ -117,6 +123,8 @@ namespace pooptube {
 		void InitFrame(LPD3DXFRAME pFrame);
 		void InitMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase);
 
+		void _MakeBoundingSphere( D3DXVECTOR3& outSphereCenter, float& outSphereRadius );
+		bool _CheckFrustum();
 
 	private:
 
@@ -124,6 +132,9 @@ namespace pooptube {
 		ID3DXAnimationController*   mAnimController = nullptr;
 
 		DWORD						mCurrentTrack;
+
+		D3DXVECTOR3						mBoundingSphereCenter; // 절두체 컬링용 Bounding Sphere
+		float							mBoundingSphereRadius; // 절두체 컬링용 Bounding Sphere
 	};
 
 
