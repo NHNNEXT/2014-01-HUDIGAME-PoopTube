@@ -9,6 +9,7 @@
 #include "Ground.h"
 #include "StageOne.h"
 #include "MainCharacter.h"
+#include "XMesh.h"
 
 LightOrb::LightOrb()
 {
@@ -39,6 +40,11 @@ bool LightOrb::Init(LightOrb *pCreature)
 	mMesh = pooptube::SkinnedMesh::Create(PATH_SPHERE);
 	mMesh->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
 	AddChild(mMesh);
+
+	//¸ÊÅø¿¡¼­´Â ¹Ø¿¡ Ã³·³
+// 	mXMesh = pooptube::XMesh::Create(PATH_SPHERE);
+// 	mXMesh->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
+// 	AddChild(mXMesh);
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
 	AddChild( collisionBox );

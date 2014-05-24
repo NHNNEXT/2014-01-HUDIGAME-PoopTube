@@ -18,6 +18,7 @@
 namespace pooptube {
 	class CollisionBox;
 	class Ground;
+	class XMesh;
 }
 class StageOne;
 class IntroScene;
@@ -47,7 +48,9 @@ private:
 
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 0.f };
 
+
 	pooptube::SkinnedMesh	*mMesh = nullptr;
+	pooptube::XMesh			*mXMesh = nullptr;
 
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
 	bool					isRender = true;

@@ -20,6 +20,7 @@
 namespace pooptube {
 	class CollisionBox;
 	class Ground;
+	class XMesh;
 }
 class StageOne;
 class MainCharacter;
@@ -69,6 +70,7 @@ private:
 	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 10.f };
 
 	pooptube::SkinnedMesh	*mMesh = nullptr;
+	pooptube::XMesh			*mXMesh = nullptr;
 
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
 	FMOD::Studio::EventInstance *mEffectSound = nullptr;

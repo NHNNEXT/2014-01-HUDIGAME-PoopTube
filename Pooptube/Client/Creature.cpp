@@ -39,18 +39,24 @@ bool Creature::Init()
 	mMesh = pooptube::SkinnedMesh::Create(PATH_NEWDRAGON);
 	mMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	mMesh->SetAnimationTrack(1);
+	AddChild(mMesh);
 
-// 	mMesh = pooptube::SkinnedMesh::Create(PATH_TINY);
-// 	mMesh->SetAnimationTrack(3);
-// 	mMesh->SetScale(D3DXVECTOR3(0.005f, 0.005f, 0.005f));
-// 	mMesh->SetFrontVector(D3DXVECTOR3(0.f, 1.f, 0.f));
-// 	mMesh->SetUpVec(D3DXVECTOR3(0.f, 0.f, -1.f));
+	// 	mMesh = pooptube::SkinnedMesh::Create(PATH_TINY);
+	// 	mMesh->SetAnimationTrack(3);
+	// 	mMesh->SetScale(D3DXVECTOR3(0.005f, 0.005f, 0.005f));
+	// 	mMesh->SetFrontVector(D3DXVECTOR3(0.f, 1.f, 0.f));
+	// 	mMesh->SetUpVec(D3DXVECTOR3(0.f, 0.f, -1.f));
+
+	//맵툴에서는 아래처럼
+// 	mXMesh = pooptube::XMesh::Create(PATH_NEWDRAGON);
+// 	mXMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+// 	AddChild(mXMesh);
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
 
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 
-	AddChild(mMesh);
+	
 	AddChild( collisionBox );
 	Creature::SetPosition( mInitialPosition );
 

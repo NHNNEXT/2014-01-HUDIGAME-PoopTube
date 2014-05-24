@@ -27,6 +27,11 @@ namespace pooptube {
 
 	ResourceManager::~ResourceManager() {
 
+		for (auto iter : mMeshDataTable) {
+			std::pair<std::wstring, MeshData*> temp = iter;
+			delete temp.second;
+		}
+
 		for (auto iter : mHeightMapTable) {
 			std::pair<std::wstring, Ground::MapData*> temp = iter;
 			delete temp.second;

@@ -8,10 +8,10 @@ namespace pooptube{
 		XMesh();
 		virtual ~XMesh();
 
-		static XMesh *Create(const std::string& FilePath);
+		static XMesh *Create(const std::wstring& FilePath);
 
 		//그냥 귀찮아서 리소스 메니져 안거치고 다 때려박음
-		bool Init(const std::string& FilePath);
+		bool Init(const std::wstring& FilePath);
 
 		void Update(float dTime);
 		void Render();
@@ -20,8 +20,8 @@ namespace pooptube{
 
 	private:
 		LPD3DXMESH			mXMesh = nullptr;
-// 		D3DMATERIAL9*		mMaterial = nullptr;
-// 		LPDIRECT3DTEXTURE9* mTexture = nullptr;
+		D3DMATERIAL9*		mMaterial = nullptr;
+		LPDIRECT3DTEXTURE9* mTexture = nullptr;
 
 		DWORD				mNumMaterial = 0;
 	};

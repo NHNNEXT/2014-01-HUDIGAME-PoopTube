@@ -589,6 +589,7 @@ namespace pooptube {
 	}
 
 	SkinnedMesh::~SkinnedMesh() {
+		SAFE_RELEASE(mAnimController);
 /*		delete[] mBoneMatrices;*/
 	}
 
