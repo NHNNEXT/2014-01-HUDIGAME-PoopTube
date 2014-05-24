@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
 #include "ResourceManager.h"
 #include "SkyBox.h"
-#include "Mesh.h"
 
 namespace pooptube{
 

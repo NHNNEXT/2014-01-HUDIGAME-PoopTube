@@ -15,7 +15,6 @@
 
 namespace pooptube {
 
-	class Mesh;
 	class Ground;
 	class MeshData;
 
@@ -31,17 +30,8 @@ namespace pooptube {
 		LPDIRECT3DTEXTURE9	LoadTexture(const std::wstring& FilePath);
 		ID3DXEffect*		LoadHLSL(const std::wstring& FilePath);
 
-		//처참한 fbx의 흔적
-		Mesh				*LoadMeshFromFBX(const std::string& FilePath);
-
 	protected:
 		bool _Init();
-		
-		
-		//안쓰는 넘들
-		bool _FBXInit();
-		Mesh	*_LoadFBXFile(const std::string& FilePath);
-		Mesh	*_ReadVerticesFromFBX(FbxScene* pScene);
 
 	private:
 
@@ -56,7 +46,6 @@ namespace pooptube {
 
 		//안쓰는 넘들
 		FbxManager*									mManager = nullptr;
-		std::map<std::string, Mesh*>				mFBXMeshTable;
 	};
 
 }

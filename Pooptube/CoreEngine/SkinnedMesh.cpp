@@ -2,7 +2,6 @@
 #include "SkinnedMesh.h"
 #include "ObjectManager.h"
 #include "resourcemanager.h"
-#include "Mesh.h"
 #include "Application.h"
 
 namespace pooptube {

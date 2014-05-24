@@ -181,9 +181,6 @@
     <ClInclude Include="SkyBox.h">
       <Filter>Nodes\SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Nodes\SkinnedMesh</Filter>
-    </ClInclude>
     <ClInclude Include="PooMath.h">
       <Filter>Util\Ease</Filter>
     </ClInclude>
@@ -253,9 +250,6 @@
     <ClInclude Include="TextureCube.h">
       <Filter>Resource\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="FBXMesh.h">
-      <Filter>Nodes\SkinnedMesh</Filter>
-    </ClInclude>
     <ClInclude Include="XMesh.h">
       <Filter>Nodes\SkinnedMesh</Filter>
     </ClInclude>
@@ -270,7 +264,7 @@
     </ClInclude>
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="BillBoard.h">
-      <Filter>Nodes\SkinnedMesh</Filter>
+      <Filter>Nodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -335,9 +329,6 @@
     <ClCompile Include="SkyBox.cpp">
       <Filter>Nodes\SkyBox</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Nodes\SkinnedMesh</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>CoreObject</Filter>
     </ClCompile>
@@ -386,9 +377,6 @@
     <ClCompile Include="TextureCube.cpp">
       <Filter>Resource\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="FBXMesh.cpp">
-      <Filter>Nodes\SkinnedMesh</Filter>
-    </ClCompile>
     <ClCompile Include="XMesh.cpp">
       <Filter>Nodes\SkinnedMesh</Filter>
     </ClCompile>
@@ -403,7 +391,7 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="BillBoard.cpp">
-      <Filter>Nodes\SkinnedMesh</Filter>
+      <Filter>Nodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

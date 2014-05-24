@@ -14,19 +14,20 @@
 //#include "KeyEventDelegate.h"
 //#include "MouseEventDelegate.h"
 
-#define CREATE_FUNC(Class) \
-	static Class* Create() { \
-		Class* pInstance = new Class(); \
-		if ( pInstance->Init() ) { \
-			ObjectManager::GetInstance()->AddObject( pInstance ); \
-		} else { \
-			delete pInstance; \
-			pInstance = nullptr; \
-		} \
-		return pInstance; \
-	}
-
 namespace pooptube {
+
+	const int D3DFVF_CUSTOMVERTEX = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1;
+
+	struct MESH_CUSTOM_VERTEX {
+		D3DXVECTOR3	position;
+		D3DXVECTOR3	normal;
+		D3DCOLOR	color;
+		float		tu, tv;
+	};
+
+	struct MESH_CUSTOM_INDEX {
+		UINT w0, w1, w2;
+	};
 
 	class Node : public Object/*, public KeyEventDelegate, public MouseEventDelegate */{
 	public:

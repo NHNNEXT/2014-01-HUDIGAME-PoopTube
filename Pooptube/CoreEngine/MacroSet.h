@@ -12,6 +12,18 @@
 #define WM_SOCKET 104
 #define ALIGNMENT_SIZE 16
 
+#define CREATE_FUNC(Class) \
+	static Class* Create() { \
+		Class* pInstance = new Class(); \
+		if ( pInstance->Init() ) { \
+			ObjectManager::GetInstance()->AddObject( pInstance ); \
+		} else { \
+			delete pInstance; \
+			pInstance = nullptr; \
+		} \
+		return pInstance; \
+	}
+
 template <class T>
 class Singleton
 {

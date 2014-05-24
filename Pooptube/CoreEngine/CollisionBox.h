@@ -7,7 +7,6 @@
 */
 #pragma once
 #include "Node.h"
-#include "Mesh.h"
 
 namespace pooptube {
 

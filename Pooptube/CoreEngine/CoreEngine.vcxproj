@@ -147,11 +147,7 @@
     <ClInclude Include="EventDispatcher.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventProcess.h" />
-    <ClInclude Include="FBXMesh.h" />
     <ClInclude Include="Ground.h" />
-    <ClInclude Include="Mesh.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="FirstPersonCamera.h" />
     <ClInclude Include="JsonParser.h" />
     <ClInclude Include="InputManager.h" />
@@ -212,11 +208,7 @@
     <ClCompile Include="EventDispatcher.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
-    <ClCompile Include="FBXMesh.cpp" />
     <ClCompile Include="Ground.cpp" />
-    <ClCompile Include="Mesh.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="FirstPersonCamera.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JsonParser.cpp" />
