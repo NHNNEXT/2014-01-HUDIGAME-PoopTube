@@ -48,6 +48,8 @@ namespace pooptube {
 		//MouseEventDispatcher*	GetMouseEventDispatcher() { return mMouseEventDispatcher; }
 
 		float					GetFps() const { return mFps; }
+		int						GetCountDPCall() const { return mCountDPCall; }
+		void					UpdateDPCall() { ++mCountDPCall; }
 
 	private:
 		Application() : mTitle(nullptr), mScreenWidth(0), mScreenHeight(0),
@@ -78,6 +80,10 @@ namespace pooptube {
 		bool mIsWindowed;
 
 		SceneManager* mSceneManager;
+
+		int mCountDPCall = 0;
+
+
 		//KeyEventDispatcher* mKeyEventDispatcher;
 		//MouseEventDispatcher* mMouseEventDispatcher;
 

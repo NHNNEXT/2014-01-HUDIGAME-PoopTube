@@ -716,8 +716,8 @@ namespace pooptube {
 			pMeshContainer->pOrigMesh->UnlockVertexBuffer();
 			pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
 
-			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++)
-			{
+			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++) {
+
 				mDevice->SetMaterial(&(
 					pMeshContainer->pMaterials[pMeshContainer->pAttributeTable[iAttrib].AttribId].MatD3D));
 				mDevice->SetTexture(0,
@@ -725,6 +725,8 @@ namespace pooptube {
 
 				//DWORD temp = pMeshContainer->pAttributeTable[iAttrib].AttribId;
 				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
+
+				Application::GetInstance()->UpdateDPCall();
 			}
 			mDevice->SetTexture(0, NULL);
 

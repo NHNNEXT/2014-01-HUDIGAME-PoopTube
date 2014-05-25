@@ -148,6 +148,17 @@ void IntroScene::Update(float dTime) {
 	//printf("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
 	//printf("%f %f %f\n\n", mCharacter->GetFrontVector().x, mCharacter->GetFrontVector().y, mCharacter->GetFrontVector().z);
 
+	//스카이박스 진동
+	mSkyBox->Vibrater(dTime);
+
+	//2초마다 한번씩
+	if (mTimeForFPS > 2.f) {
+		printf_s("FPS : %f\n", pooptube::Application::GetInstance()->GetFps());
+		printf_s("DPCall : %d\n", pooptube::Application::GetInstance()->GetCountDPCall());
+		mTimeForFPS = 0.f;
+	}
+	mTimeForFPS += dTime;
+
 	pooptube::SoundManager::GetInstance()->Update();
 
 	D3DXVECTOR3 CharPos = mCharacter->GetPosition();

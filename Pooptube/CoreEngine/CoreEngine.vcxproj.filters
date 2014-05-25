@@ -266,6 +266,9 @@
     <ClInclude Include="BillBoard.h">
       <Filter>Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="DrawObj.h">
+      <Filter>Nodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -391,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="BillBoard.cpp">
+      <Filter>Nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawObj.cpp">
       <Filter>Nodes</Filter>
     </ClCompile>
   </ItemGroup>

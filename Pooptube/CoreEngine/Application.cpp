@@ -112,6 +112,9 @@ namespace pooptube {
 				GetInputManager().GetKey();
 
 				mSceneManager->Update( mDeltaTime );
+
+				mCountDPCall = 0;
+
 				mSceneManager->Render();
 			}
 		} while (isAsync == false);

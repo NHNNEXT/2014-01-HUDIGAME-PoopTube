@@ -142,6 +142,7 @@
     </ClInclude>
     <ClInclude Include="ConsoleManager.h" />
     <ClInclude Include="D3D9Renderer.h" />
+    <ClInclude Include="DrawObj.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventDelegate.h" />
     <ClInclude Include="EventDispatcher.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="ConsoleManager.cpp" />
     <ClCompile Include="CoreEngine.cpp" />
     <ClCompile Include="D3D9Renderer.cpp" />
+    <ClCompile Include="DrawObj.cpp" />
     <ClCompile Include="EventDispatcher.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventProcess.cpp" />
