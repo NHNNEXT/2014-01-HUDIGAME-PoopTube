@@ -195,7 +195,12 @@ namespace pooptube{
 		mVibeCurrentTime += dTime;
 
 		if (mVibeCurrentTime > 10.f) {
-			mSwitchVibe != mSwitchVibe;
+
+			if (mSwitchVibe)
+				mSwitchVibe = false;
+			else
+				mSwitchVibe = true;
+
 			mVibeCurrentTime = 0.f;
 		}
 		
@@ -203,11 +208,9 @@ namespace pooptube{
 
 		if (mSwitchVibe) {
 			Translation(D3DXVECTOR3(temp, temp, temp));
-			mSwitchVibe = false;
 		} else {
 			temp *= -1.f;
 			Translation(D3DXVECTOR3(temp, temp, temp));
-			mSwitchVibe = true;
 		}
 	}
 

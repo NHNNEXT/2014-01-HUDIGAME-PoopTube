@@ -52,7 +52,7 @@ namespace pooptube {
 		float				mDepth = 1000.f;
 
 		bool				mSwitchVibe = true;
-		float				mVibeSpeed = 50.f;
+		float				mVibeSpeed = 1.f;
 		float				mVibeCurrentTime = 0.f;
 	};
 
