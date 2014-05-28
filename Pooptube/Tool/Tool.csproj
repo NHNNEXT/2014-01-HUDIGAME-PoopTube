@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\PropertyData.cs" />
+    <Compile Include="Class\FileIO.cs" />
     <Compile Include="Forms\InputManager.cs">
       <SubType>Form</SubType>
     </Compile>

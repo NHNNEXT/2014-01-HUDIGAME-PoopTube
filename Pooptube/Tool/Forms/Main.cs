@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tool.Class;
+
 using System.Net.Json;
 
 namespace Tool
@@ -197,72 +198,94 @@ namespace Tool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            const string jsonText =
-            "{"+
-            " \"FirstValue\": 1.1,"+
-            " \"SecondValue\": \"some text\"," +
-            " \"TrueValue\": true" +
-            "}";
+            FileIO.JsonOutput("AA", Scene.GetChildList());
+            return;
+//             const string jsonText =
+//             "{" +
+//             " \"FirstValue\": 1.1," +
+//             " \"SecondValue\": \"some text\"," +
+//             " \"TrueValue\": true" +
+//             "}";
 
-            // 1. parse sample
-            richTextBox1.AppendText("\n");
-            richTextBox1.AppendText("Source data:\n");
-            richTextBox1.AppendText(jsonText);
-            richTextBox1.AppendText("\n");
+//             // 1. parse sample
+//             richTextBox1.AppendText("\n");
+//             richTextBox1.AppendText("Source data:\n");
+//             richTextBox1.AppendText(jsonText);
+//             richTextBox1.AppendText("\n");
+// 
+//              JsonTextParser parser = new JsonTextParser();
+//              JsonObject obj = parser.Parse(jsonText);
+// 
+//             richTextBox1.AppendText("\n");
+//             richTextBox1.AppendText("Parsed data with indentation in JSON data format:\n");
+//             richTextBox1.AppendText(obj.ToString());
+//             richTextBox1.AppendText("\n");
+// 
+//             JsonUtility.GenerateIndentedJsonText = false;
+// 
+//             richTextBox1.AppendText("\n");
+//             richTextBox1.AppendText("Parsed data without indentation in JSON data format:\n");
+//             richTextBox1.AppendText(obj.ToString());
+//             richTextBox1.AppendText("\n");
+// 
+//             // enumerate values in json object
+//             richTextBox1.AppendText("\n");
+//             richTextBox1.AppendText("Parsed object contains these nested fields:\n");
 
-            JsonTextParser parser = new JsonTextParser();
-            JsonObject obj = parser.Parse(jsonText);
-
-            richTextBox1.AppendText("\n");
-            richTextBox1.AppendText("Parsed data with indentation in JSON data format:\n");
-            richTextBox1.AppendText(obj.ToString());
-            richTextBox1.AppendText("\n");
-
-            JsonUtility.GenerateIndentedJsonText = false;
-
-            richTextBox1.AppendText("\n");
-            richTextBox1.AppendText("Parsed data without indentation in JSON data format:\n");
-            richTextBox1.AppendText(obj.ToString());
-            richTextBox1.AppendText("\n");
-
-            // enumerate values in json object
-            richTextBox1.AppendText("\n");
-            richTextBox1.AppendText("Parsed object contains these nested fields:\n");
-
-            foreach (JsonObject field in obj as JsonObjectCollection)
-            {
-                string name = field.Name;
-                string value = string.Empty;
-                string type = field.GetValue().GetType().Name;
-
-                // try to get value.
-                switch(type)
-                {
-                    case "String":
-                        value = (string)field.GetValue();
-                        break;
-                    case "Double":
-                        value = field.GetValue().ToString();
-                        break;
-                    case "Boolean":
-                        value = field.GetValue().ToString();
-                        break;
-                    default:
-                        // in this sample we'll not parse nested arrays or objects.
-                        throw new NotSupportedException();
-                }
-                richTextBox1.AppendText(String.Format("{0} {1} {2}",
-                name.PadLeft(15), type.PadLeft(10), value.PadLeft(15)));
-            }
-            richTextBox1.AppendText("\n");
-
-            // 2. generate sample
-            richTextBox1.AppendText("\n");
+//             foreach (JsonObject field in obj as JsonObjectCollection)
+//             {
+//                 string name = field.Name;
+//                 string value = string.Empty;
+//                 string type = field.GetValue().GetType().Name;
+// 
+//                 // try to get value.
+//                 switch (type)
+//                 {
+//                     case "String":
+//                         value = (string)field.GetValue();
+//                         break;
+//                     case "Double":
+//                         value = field.GetValue().ToString();
+//                         break;
+//                     case "Boolean":
+//                         value = field.GetValue().ToString();
+//                         break;
+//                     default:
+//                         // in this sample we'll not parse nested arrays or objects.
+//                         throw new NotSupportedException();
+//                 }
+//                 richTextBox1.AppendText(String.Format("{0} {1} {2}",
+//                 name.PadLeft(15), type.PadLeft(10), value.PadLeft(15)));
+//             }
+//             richTextBox1.AppendText("\n");
+// 
+//             // 2. generate sample
+//             richTextBox1.AppendText("\n");
 
             // root object
             JsonObjectCollection collection = new JsonObjectCollection();
 
             // nested values
+            //new JsonArrayCollection()
+            JsonArrayCollection aa = new JsonArrayCollection("TEST");
+            aa.Add(new JsonStringValue(null, "a"));
+            aa.Add(new JsonStringValue(null, "b"));
+            aa.Add(new JsonStringValue(null, "c"));
+
+            JsonStringValue[] temp = new JsonStringValue[3];
+            temp[0] = new JsonStringValue("Array", "A");
+            temp[1] = new JsonStringValue("Array", "B");
+            temp[2] = new JsonStringValue("Array", "C");
+
+            JsonStringValue[] temp2 = new JsonStringValue[3];
+            temp2[0] = new JsonStringValue("Object", "1");
+            temp2[1] = new JsonStringValue("Object", "2");
+            temp2[2] = new JsonStringValue("Object", "3");
+
+            
+            collection.Add((aa));
+            collection.Add(new JsonArrayCollection(temp));
+            collection.Add(new JsonObjectCollection(temp2));
             collection.Add(new JsonStringValue("FirstName", "Pavel"));
             collection.Add(new JsonStringValue("LastName", "Lazureykis"));
             collection.Add(new JsonNumericValue("Age", 23));
@@ -281,8 +304,8 @@ namespace Tool
             /// Also names of nested values cannot contain spaces or starts with
             /// numeric symbols. They must comply with C# variable declaration rules.
             /// 
-//             JsonGenerator generator = new JsonGenerator();
-//             generator.GenerateLibrary("Person", collection, @"C:\");
+            //             JsonGenerator generator = new JsonGenerator();
+            //             generator.GenerateLibrary("Person", collection, @"C:\");
             richTextBox1.AppendText("\n");
 
             System.IO.File.WriteAllText("test.json", collection.ToString());
