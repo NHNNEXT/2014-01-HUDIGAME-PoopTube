@@ -25,6 +25,8 @@ namespace pooptube {
 		mData = ResourceManager::GetInstance()->LoadHeightMap(FilePath);
 		_SetBuffer();
 
+		mGroundTexture = ResourceManager::GetInstance()->LoadTexture(L"Model\\GroundTile.tga");
+
 		mObjectName = "Ground" + std::to_string(Node::ObjectNum-1);
 		mClassName = "Ground";
 
@@ -58,9 +60,12 @@ namespace pooptube {
 				//vertex[nIndex].position.y = (float)bitmapImage[nIndex * 3] * 0.005f;
 				vertex[nIndex].position.y = mData->GetHeight(x, z) * mData->amp;
 
+				vertex[nIndex].tu = (float)z/(float)row;
+				vertex[nIndex].tv = (float)x/(float)col;
+
 				mVertices.push_back(vertex[nIndex].position);
 
-				vertex[nIndex].color = D3DCOLOR_RGBA(255, 50, 255, 255);
+				vertex[nIndex].color = D3DCOLOR_RGBA(255, 255, 255, 255);
 			}
 		}
 
@@ -245,6 +250,9 @@ namespace pooptube {
 	void Ground::Render() {
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
 
+		//테스트용
+		//GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
+
 		//행렬의 연산은 node에서 상속받는다.
 		Node::Render();
 
@@ -253,8 +261,12 @@ namespace pooptube {
 
 		//인덱스 설정
 		GetDevice()->SetIndices(mIndexBuffer);
+		if (mGroundTexture)		
+			GetDevice()->SetTexture(0, mGroundTexture);
 
 		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mVertexCount, 0, mIndexCount);
+
+		//GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
 	}
 
 	bool Ground::ResetBuffer() {

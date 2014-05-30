@@ -76,60 +76,60 @@ namespace pooptube {
 	void CollisionBox::Render()
 	{
 #ifdef _DEBUG
-		Node::Render();
-
-		D3DXMATRIX projMat, viewMat;
-		GetDevice()->GetTransform( D3DTS_PROJECTION, &projMat );
-		GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
-		viewMat *= projMat;
-
-		ID3DXLine *Line;
-
-		if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
-			return;
-		Line->SetWidth( 1 );
-		Line->SetAntialias( true );
-
-		D3DXVECTOR3 mXDirVec, mFrontVector, tXDirVec;
-		D3DXVec3Normalize( &mFrontVector, &GetFrontVector() );
-		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &mFrontVector );
-		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontVector() };
-		D3DXVECTOR3 vF[3];
-		for( int i = 0; i < 3; ++i ){
-			vF[i] = mAxisDir[i] * mAxisLen[i];
-		}
-
-		D3DXVECTOR3 centerPos = GetPosition();
-		D3DXCOLOR	lineColor = D3DXCOLOR( 0.0f, 0.5f, 1.0f, 1.0f );
-		D3DXVECTOR3 point[11];
-		point[0] = centerPos - vF[0] + vF[1] + vF[2];
-		point[1] = centerPos + vF[0] + vF[1] + vF[2];
-		point[2] = centerPos + vF[0] + vF[1] - vF[2];
-		point[3] = centerPos - vF[0] + vF[1] - vF[2];
-		point[4] = centerPos - vF[0] + vF[1] + vF[2];
-		point[5] = centerPos - vF[0] - vF[1] + vF[2];
-		point[6] = centerPos + vF[0] - vF[1] + vF[2];
-		point[7] = centerPos + vF[0] - vF[1] - vF[2];
-		point[8] = centerPos - vF[0] - vF[1] - vF[2];
-		point[9] = centerPos - vF[0] - vF[1] + vF[2];
-		Line->Begin();
-		Line->DrawTransform( point, 10, &viewMat, lineColor );
-
-		D3DXVECTOR3 pointT[2];
-		pointT[0] = centerPos - vF[0] - vF[1] - vF[2];
-		pointT[1] = centerPos - vF[0] + vF[1] - vF[2];
-		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
-
-		pointT[0] = centerPos + vF[0] - vF[1] - vF[2];
-		pointT[1] = centerPos + vF[0] + vF[1] - vF[2];
-		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
-
-		pointT[0] = centerPos + vF[0] - vF[1] + vF[2];
-		pointT[1] = centerPos + vF[0] + vF[1] + vF[2];
-		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
-		Line->End();
-
-		Line->Release();
+// 		Node::Render();
+// 
+// 		D3DXMATRIX projMat, viewMat;
+// 		GetDevice()->GetTransform( D3DTS_PROJECTION, &projMat );
+// 		GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
+// 		viewMat *= projMat;
+// 
+// 		ID3DXLine *Line;
+// 
+// 		if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
+// 			return;
+// 		Line->SetWidth( 1 );
+// 		Line->SetAntialias( true );
+// 
+// 		D3DXVECTOR3 mXDirVec, mFrontVector, tXDirVec;
+// 		D3DXVec3Normalize( &mFrontVector, &GetFrontVector() );
+// 		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &mFrontVector );
+// 		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontVector() };
+// 		D3DXVECTOR3 vF[3];
+// 		for( int i = 0; i < 3; ++i ){
+// 			vF[i] = mAxisDir[i] * mAxisLen[i];
+// 		}
+// 
+// 		D3DXVECTOR3 centerPos = GetPosition();
+// 		D3DXCOLOR	lineColor = D3DXCOLOR( 0.0f, 0.5f, 1.0f, 1.0f );
+// 		D3DXVECTOR3 point[11];
+// 		point[0] = centerPos - vF[0] + vF[1] + vF[2];
+// 		point[1] = centerPos + vF[0] + vF[1] + vF[2];
+// 		point[2] = centerPos + vF[0] + vF[1] - vF[2];
+// 		point[3] = centerPos - vF[0] + vF[1] - vF[2];
+// 		point[4] = centerPos - vF[0] + vF[1] + vF[2];
+// 		point[5] = centerPos - vF[0] - vF[1] + vF[2];
+// 		point[6] = centerPos + vF[0] - vF[1] + vF[2];
+// 		point[7] = centerPos + vF[0] - vF[1] - vF[2];
+// 		point[8] = centerPos - vF[0] - vF[1] - vF[2];
+// 		point[9] = centerPos - vF[0] - vF[1] + vF[2];
+// 		Line->Begin();
+// 		Line->DrawTransform( point, 10, &viewMat, lineColor );
+// 
+// 		D3DXVECTOR3 pointT[2];
+// 		pointT[0] = centerPos - vF[0] - vF[1] - vF[2];
+// 		pointT[1] = centerPos - vF[0] + vF[1] - vF[2];
+// 		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
+// 
+// 		pointT[0] = centerPos + vF[0] - vF[1] - vF[2];
+// 		pointT[1] = centerPos + vF[0] + vF[1] - vF[2];
+// 		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
+// 
+// 		pointT[0] = centerPos + vF[0] - vF[1] + vF[2];
+// 		pointT[1] = centerPos + vF[0] + vF[1] + vF[2];
+// 		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
+// 		Line->End();
+// 
+// 		Line->Release();
 #endif // _DEBUG
 	}
 

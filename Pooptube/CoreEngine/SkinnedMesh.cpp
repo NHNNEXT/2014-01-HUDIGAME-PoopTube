@@ -554,6 +554,8 @@ namespace pooptube {
 		if (mAnimController == nullptr)
 			return nullptr;
 
+		mAnimController->AddRef();
+
 		if(FAILED(mAnimController->CloneAnimationController(
 			mAnimController->GetMaxNumAnimationOutputs(),
 			mAnimController->GetMaxNumAnimationSets(),
