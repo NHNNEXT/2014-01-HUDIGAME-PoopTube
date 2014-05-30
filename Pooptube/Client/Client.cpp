@@ -8,9 +8,14 @@
 #include "ObjectManager.h"
 #include "StageOne.h"
 #include "IntroScene.h"
+#include "BugTrapHeader.h"
 
 int ClientRun()
 {
+	SetupExceptionHandler();
+	BT_SetTerminate(); // set_terminate() must be called from every thread
+	BT_InsLogEntry( g_iLogHandle, BTLL_INFO, _T( "Entering ClientRun() function" ) );
+	
 	//#ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(1154);
@@ -45,6 +50,9 @@ int ClientRun()
 
 	pooptube::Application::GetInstance()->Run();
 	pooptube::Application::GetInstance()->Release();
+
+	BT_InsLogEntry( g_iLogHandle, BTLL_INFO, _T( "Leaving ClientRun() function" ) );
+	BT_CloseLogFile( g_iLogHandle );
 
 	return 0;
 }

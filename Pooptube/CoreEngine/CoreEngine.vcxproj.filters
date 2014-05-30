@@ -269,6 +269,9 @@
     <ClInclude Include="DrawObj.h">
       <Filter>Nodes</Filter>
     </ClInclude>
+    <ClInclude Include="BugTrapHeader.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -402,6 +405,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
