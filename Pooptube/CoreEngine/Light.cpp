@@ -44,7 +44,7 @@ namespace pooptube {
 		mD3DLight.Diffuse.b = 0.5f;
 
 		SetPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
-		mD3DLight.Range = 12.f;
+		mD3DLight.Range = mRange;
 		
 		GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
 		//연산량을 줄이기 위해 미리 엠비언트라이트를 먹여버린다.

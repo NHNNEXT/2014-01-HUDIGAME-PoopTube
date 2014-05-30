@@ -5,7 +5,7 @@
 #include "CollisionManager.h"
 #include "SoundManager.h"
 #include "InputManager.h"
-
+#include "Light.h"
 
 MainCharacter::MainCharacter() {
 }
@@ -67,6 +67,9 @@ void MainCharacter::Update(float dTime) {
 }
 bool MainCharacter::Init() {
 	Node::Init();
+
+	mLight = pooptube::Light::Create();
+	AddChild(mLight);
 
 	//사용하는 메쉬가 이상하게 좌표축이 설정되어있어서 아래처럼 처리했음
 	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_TINY);

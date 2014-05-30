@@ -15,6 +15,7 @@
 namespace pooptube{
 	class SkinnedMesh;
 	class CollisionBox;
+	class Light;
 }
 
 enum CHAR_STATE {
@@ -66,6 +67,8 @@ private:
 	float					mJumpSpeed = 10.f;
 
 	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
+	pooptube::Light			*mLight = nullptr;
+
 	FMOD_3D_ATTRIBUTES		mListener;
 };
 

@@ -41,6 +41,7 @@ namespace pooptube {
 
 		DWORD			mIndex = 0;
 		static DWORD	mCountIndex;
+		float			mRange = 7.f;
 
 		bool			mLightSwitch = true;
 	};
