@@ -96,22 +96,6 @@ namespace pooptube {
 			hr = E_FAIL;
 			goto e_Exit;
 		}
-		
-// 		DWORD dwOldFVF = pMesh->GetFVF();
-// 		DWORD dwNewFVF = (dwOldFVF & D3DFVF_POSITION_MASK) | D3DFVF_NORMAL | D3DFVF_TEX1 | D3DFVF_LASTBETA_UBYTE4;
-// 		if (dwNewFVF != dwOldFVF)
-// 		{
-// 			LPD3DXMESH temp;
-// 			hr = pMesh->CloneMeshFVF(pMesh->GetOptions(),
-// 				dwNewFVF,
-// 				pd3dDevice,
-// 				&temp);
-// 			if (FAILED(hr))
-// 				goto e_Exit;
-// 
-// 			pMesh->Release();
-// 			pMesh = temp;
-// 		}
 
 		// allocate the overloaded structure to return as a D3DXMESHCONTAINER
 		pMeshContainer = new D3DXMESHCONTAINER_DERIVED;
@@ -357,30 +341,118 @@ namespace pooptube {
 		SAFE_RELEASE(pMeshContainer->pBoneCombinationBuf);
 
 		//SoftWare***************************************
-		hr = pMeshContainer->pOrigMesh->CloneMeshFVF(D3DXMESH_MANAGED, pMeshContainer->pOrigMesh->GetFVF(),
-			pd3dDevice, &pMeshContainer->MeshData.pMesh);
-		if (FAILED(hr))
-			goto e_Exit;
+// 		hr = pMeshContainer->pOrigMesh->CloneMeshFVF(D3DXMESH_MANAGED, pMeshContainer->pOrigMesh->GetFVF(),
+// 			pd3dDevice, &pMeshContainer->MeshData.pMesh);
+// 		if (FAILED(hr))
+// 			goto e_Exit;
+// 
+// 		hr = pMeshContainer->MeshData.pMesh->GetAttributeTable(NULL, &pMeshContainer->NumAttributeGroups);
+// 		if (FAILED(hr))
+// 			goto e_Exit;
+// 
+// 		delete[] pMeshContainer->pAttributeTable;
+// 		pMeshContainer->pAttributeTable = new D3DXATTRIBUTERANGE[pMeshContainer->NumAttributeGroups];
+// 		if (pMeshContainer->pAttributeTable == NULL)
+// 		{
+// 			hr = E_OUTOFMEMORY;
+// 			goto e_Exit;
+// 		}
+// 
+// 		hr = pMeshContainer->MeshData.pMesh->GetAttributeTable(pMeshContainer->pAttributeTable, NULL);
+// 		if (FAILED(hr))
+// 			goto e_Exit;
+// 
+// 		// allocate a buffer for bone matrices, but only if another mesh has not allocated one of the same size or larger
+// 		if (mNumBoneMatricesMax < pMeshContainer->pSkinInfo->GetNumBones())
+// 		{
+// 			mNumBoneMatricesMax = pMeshContainer->pSkinInfo->GetNumBones();
+// 
+// 			// Allocate space for blend matrices
+// 			delete[] mBoneMatrices;
+// 			mBoneMatrices = new D3DXMATRIXA16[mNumBoneMatricesMax];
+// 			if (mBoneMatrices == NULL)
+// 			{
+// 				hr = E_OUTOFMEMORY;
+// 				goto e_Exit;
+// 			}
+// 		}
 
-		hr = pMeshContainer->MeshData.pMesh->GetAttributeTable(NULL, &pMeshContainer->NumAttributeGroups);
-		if (FAILED(hr))
-			goto e_Exit;
+//HLSL**********************************************************
+// Get palette size
+// First 9 constants are used for other data.  Each 4x3 matrix takes up 3 constants.
+// (96 - 9) /3 i.e. Maximum constant count - used constants 
+		UINT MaxMatrices = 26;
+		pMeshContainer->NumPaletteEntries = min(MaxMatrices, pMeshContainer->pSkinInfo->GetNumBones());
 
-		delete[] pMeshContainer->pAttributeTable;
-		pMeshContainer->pAttributeTable = new D3DXATTRIBUTERANGE[pMeshContainer->NumAttributeGroups];
-		if (pMeshContainer->pAttributeTable == NULL)
+		DWORD Flags = D3DXMESHOPT_VERTEXCACHE;
+		if (d3dCaps.VertexShaderVersion >= D3DVS_VERSION(1, 1))
 		{
-			hr = E_OUTOFMEMORY;
-			goto e_Exit;
+			pMeshContainer->UseSoftwareVP = false;
+			Flags |= D3DXMESH_MANAGED;
+		}
+		else
+		{
+			pMeshContainer->UseSoftwareVP = true;
+			mUseSoftwareVP = true;
+			Flags |= D3DXMESH_SYSTEMMEM;
 		}
 
-		hr = pMeshContainer->MeshData.pMesh->GetAttributeTable(pMeshContainer->pAttributeTable, NULL);
+		SAFE_RELEASE(pMeshContainer->MeshData.pMesh);
+
+		hr = pMeshContainer->pSkinInfo->ConvertToIndexedBlendedMesh
+			(
+			pMeshContainer->pOrigMesh,
+			Flags,
+			pMeshContainer->NumPaletteEntries,
+			pMeshContainer->pAdjacency,
+			NULL, NULL, NULL,
+			&pMeshContainer->NumInfl,
+			&pMeshContainer->NumAttributeGroups,
+			&pMeshContainer->pBoneCombinationBuf,
+			&pMeshContainer->MeshData.pMesh);
+		if (FAILED(hr))
+			goto e_Exit;
+
+
+		// FVF has to match our declarator. Vertex shaders are not as forgiving as FF pipeline
+		DWORD NewFVF = (pMeshContainer->MeshData.pMesh->GetFVF() & D3DFVF_POSITION_MASK) | D3DFVF_NORMAL |
+			D3DFVF_TEX1 | D3DFVF_LASTBETA_UBYTE4;
+		if (NewFVF != pMeshContainer->MeshData.pMesh->GetFVF())
+		{
+			LPD3DXMESH pMesh;
+			hr = pMeshContainer->MeshData.pMesh->CloneMeshFVF(pMeshContainer->MeshData.pMesh->GetOptions(), NewFVF,
+				pd3dDevice, &pMesh);
+			if (!FAILED(hr))
+			{
+				pMeshContainer->MeshData.pMesh->Release();
+				pMeshContainer->MeshData.pMesh = pMesh;
+				pMesh = NULL;
+			}
+		}
+
+		D3DVERTEXELEMENT9 pDecl[MAX_FVF_DECL_SIZE];
+		LPD3DVERTEXELEMENT9 pDeclCur;
+		hr = pMeshContainer->MeshData.pMesh->GetDeclaration(pDecl);
+		if (FAILED(hr))
+			goto e_Exit;
+
+		// the vertex shader is expecting to interpret the UBYTE4 as a D3DCOLOR, so update the type 
+		//   NOTE: this cannot be done with CloneMesh, that would convert the UBYTE4 data to float and then to D3DCOLOR
+		//          this is more of a "cast" operation
+		pDeclCur = pDecl;
+		while (pDeclCur->Stream != 0xff)
+		{
+			if ((pDeclCur->Usage == D3DDECLUSAGE_BLENDINDICES) && (pDeclCur->UsageIndex == 0))
+				pDeclCur->Type = D3DDECLTYPE_D3DCOLOR;
+			pDeclCur++;
+		}
+
+		hr = pMeshContainer->MeshData.pMesh->UpdateSemantics(pDecl);
 		if (FAILED(hr))
 			goto e_Exit;
 
 		// allocate a buffer for bone matrices, but only if another mesh has not allocated one of the same size or larger
-		if (mNumBoneMatricesMax < pMeshContainer->pSkinInfo->GetNumBones())
-		{
+		if (mNumBoneMatricesMax < pMeshContainer->pSkinInfo->GetNumBones()) {
 			mNumBoneMatricesMax = pMeshContainer->pSkinInfo->GetNumBones();
 
 			// Allocate space for blend matrices
@@ -392,94 +464,6 @@ namespace pooptube {
 				goto e_Exit;
 			}
 		}
-
-		//HLSL**********************************************************
-		// Get palette size
-		// First 9 constants are used for other data.  Each 4x3 matrix takes up 3 constants.
-		// (96 - 9) /3 i.e. Maximum constant count - used constants 
-		// 		UINT MaxMatrices = 26;
-		// 		pMeshContainer->NumPaletteEntries = min(MaxMatrices, pMeshContainer->pSkinInfo->GetNumBones());
-		// 
-		// 		DWORD Flags = D3DXMESHOPT_VERTEXCACHE;
-		// 		if (d3dCaps.VertexShaderVersion >= D3DVS_VERSION(1, 1))
-		// 		{
-		// 			pMeshContainer->UseSoftwareVP = false;
-		// 			Flags |= D3DXMESH_MANAGED;
-		// 		}
-		// 		else
-		// 		{
-		// 			pMeshContainer->UseSoftwareVP = true;
-		// 			mUseSoftwareVP = true;
-		// 			Flags |= D3DXMESH_SYSTEMMEM;
-		// 		}
-		// 
-		// 		SAFE_RELEASE(pMeshContainer->MeshData.pMesh);
-		// 
-		// 		hr = pMeshContainer->pSkinInfo->ConvertToIndexedBlendedMesh
-		// 			(
-		// 			pMeshContainer->pOrigMesh,
-		// 			Flags,
-		// 			pMeshContainer->NumPaletteEntries,
-		// 			pMeshContainer->pAdjacency,
-		// 			NULL, NULL, NULL,
-		// 			&pMeshContainer->NumInfl,
-		// 			&pMeshContainer->NumAttributeGroups,
-		// 			&pMeshContainer->pBoneCombinationBuf,
-		// 			&pMeshContainer->MeshData.pMesh);
-		// 		if (FAILED(hr))
-		// 			goto e_Exit;
-		// 
-		// 
-		// 		// FVF has to match our declarator. Vertex shaders are not as forgiving as FF pipeline
-		// 		DWORD NewFVF = (pMeshContainer->MeshData.pMesh->GetFVF() & D3DFVF_POSITION_MASK) | D3DFVF_NORMAL |
-		// 			D3DFVF_TEX1 | D3DFVF_LASTBETA_UBYTE4;
-		// 		if (NewFVF != pMeshContainer->MeshData.pMesh->GetFVF())
-		// 		{
-		// 			LPD3DXMESH pMesh;
-		// 			hr = pMeshContainer->MeshData.pMesh->CloneMeshFVF(pMeshContainer->MeshData.pMesh->GetOptions(), NewFVF,
-		// 				pd3dDevice, &pMesh);
-		// 			if (!FAILED(hr))
-		// 			{
-		// 				pMeshContainer->MeshData.pMesh->Release();
-		// 				pMeshContainer->MeshData.pMesh = pMesh;
-		// 				pMesh = NULL;
-		// 			}
-		// 		}
-		// 
-		// 		D3DVERTEXELEMENT9 pDecl[MAX_FVF_DECL_SIZE];
-		// 		LPD3DVERTEXELEMENT9 pDeclCur;
-		// 		hr = pMeshContainer->MeshData.pMesh->GetDeclaration(pDecl);
-		// 		if (FAILED(hr))
-		// 			goto e_Exit;
-		// 
-		// 		// the vertex shader is expecting to interpret the UBYTE4 as a D3DCOLOR, so update the type 
-		// 		//   NOTE: this cannot be done with CloneMesh, that would convert the UBYTE4 data to float and then to D3DCOLOR
-		// 		//          this is more of a "cast" operation
-		// 		pDeclCur = pDecl;
-		// 		while (pDeclCur->Stream != 0xff)
-		// 		{
-		// 			if ((pDeclCur->Usage == D3DDECLUSAGE_BLENDINDICES) && (pDeclCur->UsageIndex == 0))
-		// 				pDeclCur->Type = D3DDECLTYPE_D3DCOLOR;
-		// 			pDeclCur++;
-		// 		}
-		// 
-		// 		hr = pMeshContainer->MeshData.pMesh->UpdateSemantics(pDecl);
-		// 		if (FAILED(hr))
-		// 			goto e_Exit;
-		// 
-		// 		// allocate a buffer for bone matrices, but only if another mesh has not allocated one of the same size or larger
-		// 		if (mNumBoneMatricesMax < pMeshContainer->pSkinInfo->GetNumBones()) {
-		// 			mNumBoneMatricesMax = pMeshContainer->pSkinInfo->GetNumBones();
-		// 
-		// 			// Allocate space for blend matrices
-		// 			delete[] mBoneMatrices;
-		// 			mBoneMatrices = new D3DXMATRIXA16[mNumBoneMatricesMax];
-		// 			if (mBoneMatrices == NULL)
-		// 			{
-		// 				hr = E_OUTOFMEMORY;
-		// 				goto e_Exit;
-		// 			}
-		// 		}
 
 	e_Exit:
 		return hr;
@@ -630,8 +614,20 @@ namespace pooptube {
 
 		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 
+		D3DXMATRIX g_matProj;
+		D3DXMATRIX matView;
+		D3DLIGHT9 mLight;
+
+		mDevice->GetTransform(D3DTS_VIEW, &matView);
+		mDevice->GetTransform(D3DTS_PROJECTION, &g_matProj);
+		//mDevice->GetLight(0, &mLight);
+
+		D3DXMatrixMultiply(&matView, &matView, &g_matProj);
+		//D3DXVECTOR4 vLightDir(mLight.Direction.x, mLight.Direction.y, mLight.Direction.z, 0.f);
+
 		//쉐이더 추가시 추가해야함
-		//mEffect->SetMatrix("mViewProj", &g_matProj);
+		mMeshData->mEffect->SetMatrix("mViewProj", &matView);
+		//mMeshData->mEffect->SetVector("lhtDir", &vLightDir);
 		DrawFrame(mMeshData->mFrameRoot);
 		UpdateFrameMatrices(mMeshData->mFrameRoot, &MatWorld);
 	}
@@ -679,6 +675,9 @@ namespace pooptube {
 		D3DXFRAME_DERIVED* pFrame = (D3DXFRAME_DERIVED*)pFrameBase;
 		UINT iMaterial;
 		UINT iAttrib;
+		UINT iMatrixIndex;
+		UINT iPaletteEntry;
+		LPD3DXBONECOMBINATION pBoneComb;
 		D3DXMATRIXA16 matTemp;
 		D3DCAPS9 d3dCaps;
 		mDevice->GetDeviceCaps(&d3dCaps);
@@ -692,117 +691,120 @@ namespace pooptube {
 			DWORD iBone;
 			PBYTE pbVerticesSrc;
 			PBYTE pbVerticesDest;
-
-			// set up bone transforms
-			for (iBone = 0; iBone < cBones; ++iBone)
-			{
-				D3DXMatrixMultiply (
-					&mMeshData->mBoneMatrices[iBone],                 // output
-					&pMeshContainer->pBoneOffsetMatrices[iBone],
-					pMeshContainer->ppBoneMatrixPtrs[iBone]
-					);
-			}
-
-			// set world transform
-			D3DXMatrixIdentity(&Identity);
-			mDevice->SetTransform(D3DTS_WORLD, &Identity);
-
-			pMeshContainer->pOrigMesh->LockVertexBuffer(D3DLOCK_READONLY, (LPVOID*)&pbVerticesSrc);
-			pMeshContainer->MeshData.pMesh->LockVertexBuffer(0, (LPVOID*)&pbVerticesDest);
-
-			// generate skinned mesh
-			pMeshContainer->pSkinInfo->UpdateSkinnedMesh(mMeshData->mBoneMatrices, NULL, pbVerticesSrc, pbVerticesDest);
-
-			pMeshContainer->pOrigMesh->UnlockVertexBuffer();
-			pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
-
-			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++) {
-
-				mDevice->SetMaterial(&(
-					pMeshContainer->pMaterials[pMeshContainer->pAttributeTable[iAttrib].AttribId].MatD3D));
-				mDevice->SetTexture(0,
-					pMeshContainer->ppTextures[pMeshContainer->pAttributeTable[iAttrib].AttribId]);
-
-				//DWORD temp = pMeshContainer->pAttributeTable[iAttrib].AttribId;
-				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
-
-				Application::GetInstance()->UpdateDPCall();
-			}
-			mDevice->SetTexture(0, NULL);
+// 
+// 			// set up bone transforms
+// 			for (iBone = 0; iBone < cBones; ++iBone)
+// 			{
+// 				D3DXMatrixMultiply (
+// 					&mMeshData->mBoneMatrices[iBone],                 // output
+// 					&pMeshContainer->pBoneOffsetMatrices[iBone],
+// 					pMeshContainer->ppBoneMatrixPtrs[iBone]
+// 					);
+// 			}
+// 
+// 			// set world transform
+// 			D3DXMatrixIdentity(&Identity);
+// 			mDevice->SetTransform(D3DTS_WORLD, &Identity);
+// 
+// 			pMeshContainer->pOrigMesh->LockVertexBuffer(D3DLOCK_READONLY, (LPVOID*)&pbVerticesSrc);
+// 			pMeshContainer->MeshData.pMesh->LockVertexBuffer(0, (LPVOID*)&pbVerticesDest);
+// 
+// 			// generate skinned mesh
+// 			pMeshContainer->pSkinInfo->UpdateSkinnedMesh(mMeshData->mBoneMatrices, NULL, pbVerticesSrc, pbVerticesDest);
+// 
+// 			pMeshContainer->pOrigMesh->UnlockVertexBuffer();
+// 			pMeshContainer->MeshData.pMesh->UnlockVertexBuffer();
+// 
+// 			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++) {
+// 
+// 				mDevice->SetMaterial(&(
+// 					pMeshContainer->pMaterials[pMeshContainer->pAttributeTable[iAttrib].AttribId].MatD3D));
+// 				mDevice->SetTexture(0,
+// 					pMeshContainer->ppTextures[pMeshContainer->pAttributeTable[iAttrib].AttribId]);
+// 
+// 				//DWORD temp = pMeshContainer->pAttributeTable[iAttrib].AttribId;
+// 				pMeshContainer->MeshData.pMesh->DrawSubset(pMeshContainer->pAttributeTable[iAttrib].AttribId);
+// 
+// 				Application::GetInstance()->UpdateDPCall();
+// 			}
+// 			mDevice->SetTexture(0, NULL);
 
 			//HLSL**********************************
-// 			if (pMeshContainer->UseSoftwareVP)
-// 			{
-// 				// If hw or pure hw vertex processing is forced, we can't render the
-// 				// mesh, so just exit out.  Typical applications should create
-// 				// a device with appropriate vertex processing capability for this
-// 				// skinning method.
+			if (pMeshContainer->UseSoftwareVP)
+			{
+				// If hw or pure hw vertex processing is forced, we can't render the
+				// mesh, so just exit out.  Typical applications should create
+				// a device with appropriate vertex processing capability for this
+				// skinning method.
 // 				if (mBehaviorFlags & D3DCREATE_HARDWARE_VERTEXPROCESSING)
 // 					return;
-// 
-// 				mDevice->SetSoftwareVertexProcessing(TRUE);
-// 			}
-// 
-// 			pBoneComb = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneCombinationBuf->GetBufferPointer
-// 				());
-// 			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++)
-// 			{
-// 				// first calculate all the world matrices
-// 				for (iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry)
-// 				{
-// 					iMatrixIndex = pBoneComb[iAttrib].BoneId[iPaletteEntry];
-// 					if (iMatrixIndex != UINT_MAX) {
-// 
-// // 						D3DXMatrixMultiply(&matTemp, &pMeshContainer->pBoneOffsetMatrices[iMatrixIndex],
-// // 							pMeshContainer->ppBoneMatrixPtrs[iMatrixIndex]);
-// // 						D3DXMatrixMultiply(&mBoneMatrices[iPaletteEntry], &matTemp, &g_matView);
-// 
-// 						D3DXMatrixMultiply(&mBoneMatrices[iPaletteEntry], &pMeshContainer->pBoneOffsetMatrices[iMatrixIndex],
-// 							pMeshContainer->ppBoneMatrixPtrs[iMatrixIndex]);
-// 					}
-// 				}
-// 				mEffect->SetMatrixArray("mWorldMatrixArray", mBoneMatrices,
-// 					pMeshContainer->NumPaletteEntries);
-// 
-// 				// Sum of all ambient and emissive contribution
-// 				D3DXCOLOR color1(pMeshContainer->pMaterials[pBoneComb[iAttrib].AttribId].MatD3D.Ambient);
-// 				D3DXCOLOR color2(.25, .25, .25, 1.0);
-// 				D3DXCOLOR ambEmm;
-// 				D3DXColorModulate(&ambEmm, &color1, &color2);
-// 				ambEmm += D3DXCOLOR(pMeshContainer->pMaterials[pBoneComb[iAttrib].AttribId].MatD3D.Emissive);
-// 
-// 				// set material color properties 
-// 				mEffect->SetVector("MaterialDiffuse",
-// 					(D3DXVECTOR4*)&(
-// 					pMeshContainer->pMaterials[pBoneComb[iAttrib].AttribId].MatD3D.Diffuse));
-// 				mEffect->SetVector("MaterialAmbient", (D3DXVECTOR4*)&ambEmm);
-// 
-// 				// setup the material of the mesh subset - REMEMBER to use the original pre-skinning attribute id to get the correct material id
-// 				mDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneComb[iAttrib].AttribId]);
-// 
-// 				// Set CurNumBones to select the correct vertex shader for the number of bones
-// 				mEffect->SetInt("CurNumBones", pMeshContainer->NumInfl - 1);
-// 
-// 				// Start the effect now all parameters have been updated
-// 				UINT numPasses;
-// 				mEffect->Begin(&numPasses, D3DXFX_DONOTSAVESTATE);
-// 				for (UINT iPass = 0; iPass < numPasses; iPass++) {
-// 					mEffect->BeginPass(iPass);
-// 
-// 					// draw the subset with the current world matrix palette and material state
-// 					pMeshContainer->MeshData.pMesh->DrawSubset(iAttrib);
-// 
-// 					mEffect->EndPass();
-// 				}
-// 
-// 				mEffect->End();
-// 
-// 				mDevice->SetVertexShader(NULL);
-// 			}
-// 
-// 			// remember to reset back to hw vertex processing if software was required
-// 			if (pMeshContainer->UseSoftwareVP)
-// 				mDevice->SetSoftwareVertexProcessing(FALSE);
+
+				mDevice->SetSoftwareVertexProcessing(TRUE);
+			}
+
+			pBoneComb = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneCombinationBuf->GetBufferPointer
+				());
+			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++)
+			{
+				// first calculate all the world matrices
+				for (iPaletteEntry = 0; iPaletteEntry < pMeshContainer->NumPaletteEntries; ++iPaletteEntry)
+				{
+					iMatrixIndex = pBoneComb[iAttrib].BoneId[iPaletteEntry];
+					if (iMatrixIndex != UINT_MAX) {
+
+						D3DXMATRIX g_matView;
+						mDevice->GetTransform(D3DTS_VIEW, &g_matView);
+
+						D3DXMatrixMultiply(&matTemp, &pMeshContainer->pBoneOffsetMatrices[iMatrixIndex],
+							pMeshContainer->ppBoneMatrixPtrs[iMatrixIndex]);
+						D3DXMatrixMultiply(&mMeshData->mBoneMatrices[iPaletteEntry], &matTemp, &g_matView);
+
+						D3DXMatrixMultiply(&mMeshData->mBoneMatrices[iPaletteEntry], &pMeshContainer->pBoneOffsetMatrices[iMatrixIndex],
+							pMeshContainer->ppBoneMatrixPtrs[iMatrixIndex]);
+					}
+				}
+				mMeshData->mEffect->SetMatrixArray("mWorldMatrixArray", mMeshData->mBoneMatrices,
+					pMeshContainer->NumPaletteEntries);
+
+				// Sum of all ambient and emissive contribution
+				D3DXCOLOR color1(pMeshContainer->pMaterials[pBoneComb[iAttrib].AttribId].MatD3D.Ambient);
+				D3DXCOLOR color2(.25, .25, .25, 1.0);
+				D3DXCOLOR ambEmm;
+				D3DXColorModulate(&ambEmm, &color1, &color2);
+				ambEmm += D3DXCOLOR(pMeshContainer->pMaterials[pBoneComb[iAttrib].AttribId].MatD3D.Emissive);
+
+				// set material color properties 
+				mMeshData->mEffect->SetVector("MaterialDiffuse",
+					(D3DXVECTOR4*)&(
+					pMeshContainer->pMaterials[pBoneComb[iAttrib].AttribId].MatD3D.Diffuse));
+				mMeshData->mEffect->SetVector("MaterialAmbient", (D3DXVECTOR4*)&ambEmm);
+
+				// setup the material of the mesh subset - REMEMBER to use the original pre-skinning attribute id to get the correct material id
+				mDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneComb[iAttrib].AttribId]);
+
+				// Set CurNumBones to select the correct vertex shader for the number of bones
+				mMeshData->mEffect->SetInt("CurNumBones", pMeshContainer->NumInfl - 1);
+
+				// Start the effect now all parameters have been updated
+				UINT numPasses;
+				mMeshData->mEffect->Begin(&numPasses, D3DXFX_DONOTSAVESTATE);
+				for (UINT iPass = 0; iPass < numPasses; iPass++) {
+					mMeshData->mEffect->BeginPass(iPass);
+
+					// draw the subset with the current world matrix palette and material state
+					pMeshContainer->MeshData.pMesh->DrawSubset(iAttrib);
+
+					mMeshData->mEffect->EndPass();
+				}
+
+				mMeshData->mEffect->End();
+
+				mDevice->SetVertexShader(NULL);
+			}
+
+			// remember to reset back to hw vertex processing if software was required
+			if (pMeshContainer->UseSoftwareVP)
+				mDevice->SetSoftwareVertexProcessing(FALSE);
 		}
 		else  // standard mesh, just draw it after setting material properties
 		{
@@ -930,120 +932,3 @@ namespace pooptube {
 	}
 }
 
-
-
-
-
-
-// 	SkinnedMesh::SkinnedMesh() {
-// 	}
-// 
-// 	SkinnedMesh::~SkinnedMesh() {
-// 		mMeshVertexBuffer->Release();
-// 		mMeshIndexBuffer->Release();
-// 	}
-// 
-// 	SkinnedMesh *SkinnedMesh::Create(const std::string& MeshFilePath) {
-// 		SkinnedMesh *pMesh(new SkinnedMesh);
-// 		if (pMesh->Init(MeshFilePath))
-// 			return pMesh;
-// 		else
-// 			return nullptr;
-// 	}
-// 
-// 	bool SkinnedMesh::Init(const std::string& MeshFilePath) {
-// 
-// 		if (!Node::Init())
-// 			return false;
-// 
-// 		bool chk = _InitFBX( MeshFilePath );
-// 		
-// 		_MakeBoundingSphere( mBoundingSphereCenter, mBoundingSphereRadius );
-// 		
-// 		return chk;
-// 	}
-// 
-// 	void SkinnedMesh::Render() {
-// 		if( CheckFrustum() == false ) return; // 절두체 컬링
-// 
-// 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX);
-// 
-// 		//행렬의 연산은 node에서 상속받는다.
-// 		Node::Render();
-// 
-// 		//디바이스에 버텍스버퍼를 전달
-// 		GetDevice()->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
-// 
-// 		//인덱스 설정
-// 		GetDevice()->SetIndices(mMeshIndexBuffer);
-// 
-// 		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, mMesh->GetVertexCount(), 0, mMesh->GetPolygonCount());
-// 		//mDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, mMesh->GetPolygonCount());
-// 	}
-// 
-// 	void SkinnedMesh::Update(float dTime) {
-// 	}
-// 
-// 	bool SkinnedMesh::_InitFBX(const std::string& MeshFilePath) {
-// 		mMesh = ResourceManager::GetInstance()->LoadMeshFromFBX(MeshFilePath);
-// 
-// 		if (mMesh == nullptr)
-// 			return false;
-// 
-// 		//버택스 버퍼 생성
-// 		if (GetDevice()->CreateVertexBuffer(mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX),
-// 			0, D3DFVF_CUSTOMVERTEX,
-// 			D3DPOOL_DEFAULT, &mMeshVertexBuffer, NULL) < 0)
-// 		{
-// 			return false;
-// 		}
-// 
-// 		//락과 언락을 최대한 출일 수 있는 방법을 연구해야함
-// 		VOID* pVertices;
-// 		if (mMeshVertexBuffer->Lock(0, mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX), (void**)&pVertices, 0) < 0)
-// 			return false;
-// 		memcpy(pVertices, mMesh->GetVertices(), mMesh->GetVertexCount()*sizeof(MESH_CUSTOM_VERTEX));
-// 		mMeshVertexBuffer->Unlock();
-// 
-// 		//인덱스 버퍼 생성
-// 		if (GetDevice()->CreateIndexBuffer(mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), 0, D3DFMT_INDEX32,
-// 			D3DPOOL_DEFAULT, &mMeshIndexBuffer, NULL) < 0)
-// 		{
-// 			return false;
-// 		}
-// 
-// 		/// 인덱스버퍼를 값으로 채운다. 
-// 		/// 인덱스버퍼의 Lock()함수를 호출하여 포인터를 얻어온다.
-// 		VOID* pIndices;
-// 		if (mMeshIndexBuffer->Lock(0, mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX), (void**)&pIndices, 0) < 0)
-// 			return false;
-// 		memcpy(pIndices, mMesh->GetIndices(), mMesh->GetPolygonCount()*sizeof(MESH_CUSTOM_INDEX));
-// 		mMeshIndexBuffer->Unlock();
-// 
-// 		return true;
-// 	}
-// 
-// 	bool SkinnedMesh::CheckFrustum()
-// 	{
-// 		D3DXVECTOR3 boundingSpherePos = mBoundingSphereCenter + GetPosition();
-// 		for( auto plane : Application::GetInstance()->GetSceneManager()->GetRenderer()->GetFrustumPlane() ){
-// 			if( plane.a * boundingSpherePos.x + plane.b * boundingSpherePos.y + plane.c * boundingSpherePos.z + plane.d >= mBoundingSphereRadius )
-// 				return false;
-// 		}
-// 		return true;
-// 	}
-// 
-// 	void SkinnedMesh::_MakeBoundingSphere( D3DXVECTOR3& outSphereCenter, float& outSphereRadius )
-// 	{
-// 		MESH_CUSTOM_VERTEX* pMeshVertices = mMesh->GetVertices();
-// 		std::vector<DirectX::XMFLOAT3> vertices;
-// 		vertices.reserve( mMesh->GetVertexCount() );
-// 		for( int idx = 0; idx < mMesh->GetVertexCount(); ++idx ){
-// 			vertices.push_back( DirectX::XMFLOAT3( pMeshVertices[idx].position ) );
-// 		}
-// 
-// 		DirectX::BoundingSphere sphere;
-// 		DirectX::BoundingSphere::CreateFromPoints( sphere, mMesh->GetVertexCount(), &vertices[0], sizeof(DirectX::XMFLOAT3) );
-// 		outSphereCenter = D3DXVECTOR3( sphere.Center.x, sphere.Center.y, sphere.Center.z );
-// 		outSphereRadius = sphere.Radius;
-// 	}

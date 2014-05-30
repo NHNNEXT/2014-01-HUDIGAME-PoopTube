@@ -89,6 +89,7 @@ bool IntroScene::Init() {
 		PATH_SKYBOX_BACK,
 		PATH_SKYBOX_LEFT,
 		PATH_SKYBOX_RIGHT);
+	//mSkyBox->SetVisible(false);
 
 	/*mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
 	PATH_SKYBOX_DOWN,
