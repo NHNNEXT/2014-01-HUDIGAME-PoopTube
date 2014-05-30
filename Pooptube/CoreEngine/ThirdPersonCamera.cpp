@@ -38,11 +38,11 @@ namespace pooptube {
 	void ThirdPersonCamera::Update(float dTime) {
 		Camera::Update(dTime);
 
-		D3DXVECTOR3 LookPt = mTarget->GetFrontVector() + mTarget->GetPosition();
-		LookPt.y += 2.f;
+		D3DXVECTOR3 LookPt = mTarget->GetFrontVector()*2.f + mTarget->GetPosition();
+		LookPt.y += 3.f;
 		SetLookAtPt(LookPt);
 
-		D3DXVECTOR3 Pos = mTarget->GetPosition() - mTarget->GetFrontVector() * 8.f;
+		D3DXVECTOR3 Pos = mTarget->GetPosition() - mTarget->GetFrontVector() * 4.f;
 		Pos.y += 5.f;
 		Node::SetPosition(Pos);
 	}

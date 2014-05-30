@@ -49,12 +49,12 @@ namespace pooptube {
 		LPDIRECT3DVERTEXBUFFER9 mVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9	mIndexBuffer = nullptr;
 
-		float				mWidth = 1000.f;
-		float				mHeight = 1000.f;
-		float				mDepth = 1000.f;
+		float				mWidth = 100.f;
+		float				mHeight = 100.f;
+		float				mDepth = 100.f;
 
 		bool				mSwitchVibe = true;
-		float				mVibeSpeed = 1.f;
+		float				mVibeSpeed = 0.01f;
 		float				mVibeCurrentTime = 0.f;
 
 		Node*				mTarget = nullptr;

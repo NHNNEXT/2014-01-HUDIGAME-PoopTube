@@ -7,6 +7,8 @@
 */
 #pragma once
 #include "Node.h"
+#define GROUND_AMP 0.005f
+#define GROUND_POLYGON_SIZE 0.5;
 
 namespace pooptube {
 	class Ground : public Node {
@@ -36,7 +38,7 @@ namespace pooptube {
 			UINT	row		= 0;
 			UINT	col		= 0;
 			UINT	curIdx	= 0;
-			float	amp		= 0.005f * 10;
+			float	amp = GROUND_AMP;
 		};
 
 		Ground();
@@ -79,9 +81,9 @@ namespace pooptube {
 		UINT					mIndexCount = 0;
 		float					mGravity = 10.f;
 
-		MapData			*mData;
+		MapData					*mData;
 
-		float							mPolygonSize = 0.5f;
+		float					mPolygonSize = GROUND_POLYGON_SIZE;
 	};
 
 }

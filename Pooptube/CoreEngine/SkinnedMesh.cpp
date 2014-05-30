@@ -620,7 +620,7 @@ namespace pooptube {
 
 		mDevice->GetTransform(D3DTS_VIEW, &matView);
 		mDevice->GetTransform(D3DTS_PROJECTION, &g_matProj);
-		mDevice->GetLight(3, &mLight);
+		mDevice->GetLight(0, &mLight);
 
 		D3DXMatrixMultiply(&matView, &matView, &g_matProj);
 		D3DXVECTOR4 vLightDir(mLight.Direction.x, mLight.Direction.y, mLight.Direction.z, 0.f);

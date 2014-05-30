@@ -52,9 +52,6 @@ private:
 	pooptube::ThirdPersonCamera		*mCamera = nullptr;
 	pooptube::Ground				*mGround = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
-	pooptube::Light					*mLight1 = nullptr;
-	pooptube::Light					*mLight2 = nullptr;
-	pooptube::Light					*mLight3 = nullptr;
 	pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
 	pooptube::BillBoard				*mBoard = nullptr;

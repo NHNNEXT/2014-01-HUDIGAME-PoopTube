@@ -47,12 +47,6 @@ bool IntroScene::Init() {
 
 	pooptube::Scene::Init();
 
-	mLight1 = pooptube::Light::Create();
-	mLight2 = pooptube::Light::Create();
-	mLight3 = pooptube::Light::Create();
-	mLight1->SetPosition(64.f, 2.f, 64.f);
-	mLight2->SetPosition(36.f, 2.f, 36.f);
-	mLight3->SetPosition(16.f, 2.f, 16.f);
 	mSunLight = pooptube::SunLight::Create();
 	mSunLight->LightOnOff(true);
 	D3DCOLORVALUE temp;
@@ -126,9 +120,6 @@ bool IntroScene::Init() {
 	this->AddChild(mCamera);
 	this->AddChild(mGround);
 	this->AddChild(mSunLight);
-	this->AddChild(mLight1);
-	this->AddChild(mLight2);
-	this->AddChild(mLight3);
 	this->AddChild(mSkyBox);
 
 	return true;

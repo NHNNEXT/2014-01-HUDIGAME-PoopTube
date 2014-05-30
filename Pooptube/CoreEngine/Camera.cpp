@@ -45,7 +45,7 @@ namespace pooptube {
 
 		//프로젝션 설정
 		//perspective프로젝션
-		D3DXMatrixPerspectiveFovLH(&MatProj, D3DX_PI / 2, 1.0f, 1.0f, 10000.0f);
+		D3DXMatrixPerspectiveFovLH(&MatProj, D3DX_PI / 2, 1.0f, 1.0f, 200.0f);
 		//생성한 프로젝션 정보를 디바이스를 통해 설정
 		GetDevice()->SetTransform(D3DTS_PROJECTION, &MatProj);
 	}

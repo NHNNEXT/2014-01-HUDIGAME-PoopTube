@@ -27,7 +27,7 @@ bool Tree::Init() {
 	Node::Init();
 
 	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_TREE);
-	mSkinnedMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
+	//mSkinnedMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	AddChild(mSkinnedMesh);
 
 	//멥툴에서는 아래로 사용하면 될듯
