@@ -89,7 +89,7 @@ bool IntroScene::Init() {
 		PATH_SKYBOX_BACK,
 		PATH_SKYBOX_LEFT,
 		PATH_SKYBOX_RIGHT);
-	//mSkyBox->SetVisible(false);
+	mSkyBox->SetTarget(mCharacter);
 
 	/*mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
 	PATH_SKYBOX_DOWN,
@@ -148,9 +148,6 @@ void IntroScene::Update(float dTime) {
 
 	//printf("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
 	//printf("%f %f %f\n\n", mCharacter->GetFrontVector().x, mCharacter->GetFrontVector().y, mCharacter->GetFrontVector().z);
-
-	//스카이박스 진동
-	mSkyBox->Vibrater(dTime);
 
 	//2초마다 한번씩
 	if (mTimeForFPS > 2.f) {

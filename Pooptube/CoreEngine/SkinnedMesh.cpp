@@ -620,14 +620,14 @@ namespace pooptube {
 
 		mDevice->GetTransform(D3DTS_VIEW, &matView);
 		mDevice->GetTransform(D3DTS_PROJECTION, &g_matProj);
-		//mDevice->GetLight(0, &mLight);
+		mDevice->GetLight(3, &mLight);
 
 		D3DXMatrixMultiply(&matView, &matView, &g_matProj);
-		//D3DXVECTOR4 vLightDir(mLight.Direction.x, mLight.Direction.y, mLight.Direction.z, 0.f);
+		D3DXVECTOR4 vLightDir(mLight.Direction.x, mLight.Direction.y, mLight.Direction.z, 0.f);
 
 		//쉐이더 추가시 추가해야함
 		mMeshData->mEffect->SetMatrix("mViewProj", &matView);
-		//mMeshData->mEffect->SetVector("lhtDir", &vLightDir);
+		mMeshData->mEffect->SetVector("lhtDir", &vLightDir);
 		DrawFrame(mMeshData->mFrameRoot);
 		UpdateFrameMatrices(mMeshData->mFrameRoot, &MatWorld);
 	}
@@ -793,6 +793,7 @@ namespace pooptube {
 
 					// draw the subset with the current world matrix palette and material state
 					pMeshContainer->MeshData.pMesh->DrawSubset(iAttrib);
+					Application::GetInstance()->UpdateDPCall();
 
 					mMeshData->mEffect->EndPass();
 				}

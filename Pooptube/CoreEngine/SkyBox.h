@@ -26,6 +26,8 @@ namespace pooptube {
 		void Render();
 		void Update(float dTime);
 
+		void SetTarget(Node* val) { mTarget = val; }
+
 		void Vibrater(float dTime);
 
 	protected:
@@ -54,6 +56,9 @@ namespace pooptube {
 		bool				mSwitchVibe = true;
 		float				mVibeSpeed = 1.f;
 		float				mVibeCurrentTime = 0.f;
+
+		Node*				mTarget = nullptr;
+
 	};
 
 }

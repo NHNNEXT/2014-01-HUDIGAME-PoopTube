@@ -63,6 +63,7 @@ bool StageOne::Init() {
 		PATH_SKYBOX_BACK,
 		PATH_SKYBOX_LEFT,
 		PATH_SKYBOX_RIGHT);
+	mSkyBox->SetTarget(mCharacter);
 
 	mCreature = Creature::Create();
 	mLightOrb = LightOrb::Create();
@@ -116,8 +117,6 @@ void StageOne::Render() {
 }
 void StageOne::Update(float dTime) {
 	Node::Update(dTime);
-
-	mSkyBox->Vibrater(dTime);
 
 	UpdateInput();
 

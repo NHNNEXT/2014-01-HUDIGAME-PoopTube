@@ -189,30 +189,26 @@ namespace pooptube{
 
 	void SkyBox::Update(float dTime) {
 
+		if (mTarget)
+			SetPosition(mTarget->GetPosition());
+
+		Vibrater(dTime);
 	}
 
 	void SkyBox::Vibrater(float dTime) {
-		mVibeCurrentTime += dTime;
 
-		if (mVibeCurrentTime > 10.f) {
+		if (mSwitchVibe)
+			mVibeCurrentTime += dTime;
+		else
+			mVibeCurrentTime -= dTime;
 
-			if (mSwitchVibe)
-				mSwitchVibe = false;
-			else
-				mSwitchVibe = true;
+		if (mVibeCurrentTime > 10.f)
+			mSwitchVibe = false;
+		else if (mVibeCurrentTime < 0.f)
+			mSwitchVibe = true;
 
-			mVibeCurrentTime = 0.f;
-		}
-		
-		float temp = mVibeSpeed*dTime;
+		float temp = mVibeSpeed*mVibeCurrentTime;
 
-		if (mSwitchVibe) {
-			Translation(D3DXVECTOR3(temp, temp, temp));
-		} else {
-			temp *= -1.f;
-			Translation(D3DXVECTOR3(temp, temp, temp));
-		}
+		Translation(D3DXVECTOR3(temp, temp, temp));
 	}
-
-
 }
