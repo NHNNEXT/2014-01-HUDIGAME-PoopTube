@@ -60,6 +60,7 @@
     <OutDir>..\Bin\</OutDir>
     <LibraryPath>$(DXSDK_DIR)lib\x86;..\Bin;$(VCInstallDir)lib;$(SolutionDir)Library\FMOD;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);C:\Program Files\Autodesk\FBX\FBX SDK\2014.2.1\lib\vs2012\x86\debug</LibraryPath>
     <IncludePath>$(DXSDK_DIR)include;$(VCInstallDir)include;$(SolutionDir)CoreEngine;$(VCInstallDir)atlmfc\include;$(WindowsSDK_IncludePath);C:\Program Files\Autodesk\FBX\FBX SDK\2014.2.1\include</IncludePath>
+    <TargetName>$(ProjectName)_D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -82,7 +83,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Client.lib;CoreEngine.lib;</AdditionalDependencies>
+      <AdditionalDependencies>Client_D.lib;CoreEngine_D.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -93,7 +94,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>CoreEngine.lib;fmod_vc.lib;fmodstudio_vc.lib;d3d9.lib;d3dx9.lib;json.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CoreEngine.lib;fmod_vc.lib;fmodstudio_vc.lib;d3d9.lib;d3dx9.lib;json.lib;winmm.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='CLR|Win32'">
@@ -134,9 +135,6 @@
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="JsonParser.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="WCreature.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Light.cpp" />
