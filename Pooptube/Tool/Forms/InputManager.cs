@@ -40,7 +40,7 @@ namespace Tool
                 ++a;
                 //Camera.RotateFrontVectorY(-0.1f);
                 //Camera.RotationY(-0.1f);
-                Camera.Move(0.1f, 0.0f);
+                Camera.Move(0.3f, 0.0f);
             }
             if (input == 'S') // BACK
             {
@@ -48,16 +48,33 @@ namespace Tool
                 ++b;
                 //Camera.RotateFrontVectorY(0.1f);
                 //Camera.RotationY(0.1f);
-                Camera.Move(-0.1f, 0.0f);
+                Camera.Move(-0.3f, 0.0f);
             }
             if (input == 'A') // LEFT
             {
-                Camera.Move(0.0f, 0.1f);
+                Camera.Move(0.0f, 0.3f);
             }
             if (input == 'D') // RIGHT
             {
-                Camera.Move(0.0f, -0.1f);
+                Camera.Move(0.0f, -0.3f);
             }
+            if (input == 'T') // RIGHT
+            {
+                Camera.RotationX(-0.1f);
+            }
+            if (input == 'G') // RIGHT
+            {
+                Camera.RotationX(0.1f);
+            }
+            if (input == 'F') // RIGHT
+            {
+                Camera.RotationY(-0.1f);
+            }
+            if (input == 'H') // RIGHT
+            {
+                Camera.RotationY(0.1f);
+            }
+
             //else
             e.Handled = false;
         }

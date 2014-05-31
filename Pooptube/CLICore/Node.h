@@ -84,6 +84,7 @@ namespace Core {
 		}
 
 		virtual void			 RotationY(float Angle) { pInstance->RotationY(Angle); };
+		virtual void			 RotationX(float Angle) { pInstance->RotationX(Angle); };
 		virtual void			 RotateFrontVectorY(float angle) { pInstance->RotateFrontVectorY(angle); };
 	
 
@@ -106,7 +107,8 @@ namespace Core {
 
 		virtual void			Translation(float x, float y, float z) { pInstance->Translation(x, y, z); }
 		virtual void			Move(float dForward, float dSide) { pInstance->Move(dForward, dSide); }
-// 
+// 
+
 // 		LPDIRECT3DDEVICE9		GetDevice() const { return mDevice; }
 // 
 // 		void					UpdateMatrix();
