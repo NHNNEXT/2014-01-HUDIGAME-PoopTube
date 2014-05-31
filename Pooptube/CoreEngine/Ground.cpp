@@ -25,7 +25,7 @@ namespace pooptube {
 		mData = ResourceManager::GetInstance()->LoadHeightMap(FilePath);
 		_SetBuffer();
 
-		mGroundTexture = ResourceManager::GetInstance()->LoadTexture(L"Model\\GroundTile.tga");
+		mGroundTexture = ResourceManager::GetInstance()->LoadTexture(L"Model\\kguh.jpg");
 
 		mObjectName = "Ground" + std::to_string(Node::ObjectNum-1);
 		mClassName = "Ground";
