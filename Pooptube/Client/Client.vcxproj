@@ -160,6 +160,14 @@
   <ItemGroup>
     <Image Include="test.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Bin\Shader\SkinnedMesh.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\Shader\MultiAnimation.fx" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -20,6 +20,9 @@
     <Filter Include="NetworkManager">
       <UniqueIdentifier>{fa56346a-c843-478b-ab9b-744c2e856535}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShaderCode">
+      <UniqueIdentifier>{afb71dd6-f718-49ca-9f0d-c6d0a50a3fc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -94,5 +97,15 @@
     <Image Include="test.bmp">
       <Filter>Resource</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\Shader\MultiAnimation.fx">
+      <Filter>ShaderCode</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Bin\Shader\SkinnedMesh.fx">
+      <Filter>ShaderCode</Filter>
+    </None>
   </ItemGroup>
 </Project>
