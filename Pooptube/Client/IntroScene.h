@@ -27,19 +27,14 @@ public:
 	IntroScene();
 	~IntroScene();
 
-	bool Init();
+	virtual bool Init();
 
 	static IntroScene* Create();
 
-	void Render();
+	virtual void Render();
 
-	void Update(float dTime);
-	void UpdateInput();
-
-	void MainCharacterJumpUpdate(float dTime);
-	//아래 둘을 어디로 옮길지 생각중
-
-	pooptube::Ground *GetGroundModule() const { return mGround; }
+	virtual void Update(float dTime);
+	virtual void UpdateInput();
 
 protected:
 
@@ -50,7 +45,6 @@ private:
 	LightOrb						*mLightOrb2 = nullptr;
 	LightOrb						*mLightOrb3 = nullptr;
 	pooptube::ThirdPersonCamera		*mCamera = nullptr;
-	pooptube::Ground				*mGround = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
 	pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;

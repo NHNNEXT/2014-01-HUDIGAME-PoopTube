@@ -11,7 +11,6 @@ namespace pooptube {
 	class Light;
 	class SunLight;
 	class XMesh;
-	class Ground;
 	class Sprite;
 }
 
@@ -27,26 +26,20 @@ public:
 	StageOne();
 	~StageOne();
 
-	bool Init();
+	virtual bool Init();
 
 	static StageOne* Create();
 
-	void Render();
+	virtual void Render();
 
-	void Update(float dTime);
-	void UpdateInput();
-
-	//아래 둘을 어디로 옮길지 생각중
-	void MainCharacterJumpUpdate(float dTime);
-
-	pooptube::Ground *GetGroundModule() const { return mGround; }
+	virtual void Update( float dTime );
+	virtual void UpdateInput();
 
 protected:
 
 private:
 	pooptube::ThirdPersonCamera		*mCamera = nullptr;
 	MainCharacter					*mCharacter = nullptr;
-	pooptube::Ground				*mGround = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
 	pooptube::Light					*mLight = nullptr;
 	pooptube::SunLight				*mSunLight = nullptr;

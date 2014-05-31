@@ -6,6 +6,7 @@
 #include "SoundManager.h"
 #include "InputManager.h"
 #include "Light.h"
+#include "Ground.h"
 
 MainCharacter::MainCharacter() {
 }
@@ -35,6 +36,7 @@ void MainCharacter::Update(float dTime) {
 	Node::Update(dTime);
 
 	UpdateInput(dTime);
+	_JumpUpdate( dTime );
 // 
 // 	switch (mState) {
 // 	case NONE:
@@ -140,6 +142,35 @@ void MainCharacter::UpdateInput(float dTime) {
 		
 	if (pooptube::GetInputManager().KeyState(VK_SPACE) == pooptube::KeyState::KEY_DOWN)
 		mState = JUMP;
+}
+
+void MainCharacter::_JumpUpdate( float dTime ) {
+	//캐릭터 점프 알고리즘
+	static float mTimeForJump = 0.f;
+	pooptube::Ground* ground = pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGroundModule();
+	D3DXVECTOR3 CharPos = GetPosition();
+	float		MapHeight = ground->GetHeight( mPosition.x, CharPos.z );
+	float		GroundAccel = ground->GetGravity();
+
+	if( mState == JUMP ) {
+		mTimeForJump += dTime;
+		float		currentSpeed = mJumpSpeed - GroundAccel * mTimeForJump;
+
+		Translation( 0.f, currentSpeed * dTime, 0.f );
+
+		if( MapHeight > CharPos.y ) {
+			CharPos.y = MapHeight;
+			SetPosition( CharPos );
+			SetState( NONE );
+
+			mTimeForJump = 0.f;
+		}
+	}
+	else if( mState == NONE ) {
+		CharPos.y = MapHeight;
+		SetPosition( CharPos );
+
+	}
 }
 
 //

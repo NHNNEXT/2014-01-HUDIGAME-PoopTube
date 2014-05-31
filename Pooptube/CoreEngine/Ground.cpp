@@ -204,7 +204,6 @@ namespace pooptube {
 		v[2].z = std::floor(z) + 1;
 		v[2].y = (float)mData->GetHeight(UINT(v[2].x), UINT(v[2].z));
 
-		float y;
 		D3DXVECTOR3 cVec;
 		if (x - std::floor(x) < z - std::floor(z)){
 			v[0].x = std::floor(x);
@@ -218,7 +217,7 @@ namespace pooptube {
 		}
 
 		D3DXVec3Cross(&cVec, &(v[1] - v[0]), &(v[2] - v[0]));
-		y = (((v[0].x - x) * cVec.x + (v[0].z - z) * cVec.z) / cVec.y) + v[0].y;
+		float y = (((v[0].x - x) * cVec.x + (v[0].z - z) * cVec.z) / cVec.y) + v[0].y;
 
 	//	printf("%d -> %f\n", mData->GetHeight(x,z), y * mAmp + pos.y);
 		return y * mAmp + pos.y;

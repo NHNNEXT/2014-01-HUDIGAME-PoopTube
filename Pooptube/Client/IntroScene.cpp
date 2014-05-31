@@ -177,34 +177,6 @@ void IntroScene::Update(float dTime) {
 	//		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
 }
 
-void IntroScene::MainCharacterJumpUpdate(float dTime) {
-	//캐릭터 점프 알고리즘
-	CHAR_STATE	CharState = mCharacter->GetState();
-	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
-	float		CharJumpSpeed = mCharacter->GetJumpSpeed();
-	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
-	float		GroundAccel = mGround->GetGravity();
-
-	if (CharState == JUMP) {
-		mTimeForJump += dTime;
-		float		currentSpeed = CharJumpSpeed - GroundAccel * mTimeForJump;
-
-		mCharacter->Translation(0.f, currentSpeed * dTime, 0.f);
-
-		if (MapHeight > CharPos.y) {
-			CharPos.y = MapHeight;
-			mCharacter->SetPosition(CharPos);
-			mCharacter->SetState(NONE);
-
-			mTimeForJump = 0.f;
-		}
-	}
-	else if (CharState == NONE) {
-		CharPos.y = MapHeight;
-		mCharacter->SetPosition(CharPos);
-	}
-}
-
 void IntroScene::UpdateInput() {
 	if (pooptube::GetInputManager().KeyState('R') == pooptube::KeyState::KEY_PRESSED)
 		mGround->_SetBuffer();
