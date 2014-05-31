@@ -112,7 +112,7 @@ namespace pooptube {
 
 		virtual void		SetScale( const D3DXVECTOR3& newScale ) {
 			mScaleVec = newScale;
-			_MakeBoundingSphere( mBoundingSphereCenter, mBoundingSphereRadius );
+			//_MakeBoundingSphere( mBoundingSphereCenter, mBoundingSphereRadius );
 		}
 		virtual void		SetScale( float x, float y, float z ) { SetScale( D3DXVECTOR3( x, y, z ) ); }
 

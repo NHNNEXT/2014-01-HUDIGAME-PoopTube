@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "Application.h"
 #include "SkinnedMesh.h"
+#include "XMesh.h"
 
 namespace pooptube {
 
@@ -45,7 +46,12 @@ namespace pooptube {
 			std::pair<std::wstring, ID3DXEffect*> temp = iter;
 			temp.second->Release();
 		}
-		
+
+		for (auto iter : mXMeshDataTable) {
+			std::pair<std::wstring, XMeshData*> temp = iter;
+			delete temp.second;
+		}
+
 	}
 
 	bool ResourceManager::_Init() {
@@ -207,6 +213,15 @@ namespace pooptube {
 			mMeshDataTable[FilePath] = MData;
 		}
 		return mMeshDataTable[FilePath];
+	}
+
+	XMeshData* ResourceManager::LoadXMesh(const std::wstring& FilePath) {
+		if (mXMeshDataTable.find(FilePath) == mXMeshDataTable.end()) {
+			XMeshData* MData = XMeshData::Create(FilePath);
+
+			mXMeshDataTable[FilePath] = MData;
+		}
+		return mXMeshDataTable[FilePath];
 	}
 
 }

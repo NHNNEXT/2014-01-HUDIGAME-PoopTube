@@ -649,10 +649,10 @@ namespace pooptube {
 		mAnimController = mMeshData->CloneAnimationController();
 
 		//맵툴용 함수 클라에서는 꺼야함
-		InitFrame(mMeshData->mFrameRoot);
+		//InitFrame(mMeshData->mFrameRoot);
 
 		// 경계구 작성
-		_MakeBoundingSphere( mBoundingSphereCenter, mBoundingSphereRadius );
+		//_MakeBoundingSphere( mBoundingSphereCenter, mBoundingSphereRadius );
 
 		return true;
 	}

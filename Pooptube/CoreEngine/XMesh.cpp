@@ -1,22 +1,13 @@
 #include "stdafx.h"
 #include "XMesh.h"
+#include "ResourceManager.h"
 
 namespace pooptube {
 
 	XMesh::XMesh() {
 	}
 
-
 	XMesh::~XMesh() {
-		mXMesh->Release();
-		for (DWORD i = 0; i < mNumMaterial; ++i) {
-			if (mTexture[i])
-				mTexture[i]->Release();
-		}
-		
-		delete[] mMaterial;
-		delete[] mTexture;
-
 	}
 
 	XMesh *XMesh::Create(const std::wstring& FilePath) {
@@ -33,6 +24,56 @@ namespace pooptube {
 		mObjectName = "XMesh" + std::to_string(Node::ObjectNum-1);
 		mClassName = "XMesh";
 
+		mMeshData = ResourceManager::GetInstance()->LoadXMesh(FilePath);
+
+		// 경계구 작성
+		//_MakeBoundingSphere(mBoundingSphereCenter, mBoundingSphereRadius);
+		return true;
+	}
+
+	void XMesh::Update(float dTime) {
+
+	}
+
+	void XMesh::Render() {
+		Node::Render();
+		mMeshData->Render();
+	}
+
+	void XMesh::_MakeBoundingSphere(D3DXVECTOR3& outSphereCenter, float& outSphereRadius)
+	{
+		std::vector<DirectX::XMFLOAT3> vertices;
+
+		// 버텍스 정보 가져오기
+		D3DXVECTOR3 tempVec;
+		for (auto vec : mVertices)
+			vertices.push_back(DirectX::XMFLOAT3(vec.x*mScaleVec.x, vec.y*mScaleVec.y, vec.z*mScaleVec.z));
+
+		// 경계구 작성
+		DirectX::BoundingSphere sphere;
+		DirectX::BoundingSphere::CreateFromPoints(sphere, mVertices.size(), &vertices[0], sizeof(DirectX::XMFLOAT3));
+		outSphereCenter = D3DXVECTOR3(sphere.Center.x, sphere.Center.y, sphere.Center.z);
+		outSphereRadius = sphere.Radius;
+	}
+	bool XMesh::_CheckFrustum()
+	{
+		D3DXVECTOR3 boundingSpherePos = mBoundingSphereCenter + GetPosition();
+		for (auto plane : Application::GetInstance()->GetSceneManager()->GetRenderer()->GetFrustumPlane()){
+			if (plane.a * boundingSpherePos.x + plane.b * boundingSpherePos.y + plane.c * boundingSpherePos.z + plane.d >= mBoundingSphereRadius)
+				return false;
+		}
+		return true;
+	}
+
+	XMeshData * XMeshData::Create(const std::wstring& FilePath) {
+		XMeshData *pMesh(new XMeshData);
+		if (pMesh->Init(FilePath))
+			return pMesh;
+		else
+			return nullptr;
+	}
+
+	bool XMeshData::Init(const std::wstring& FilePath) {
 		// 재질을 임시로 보관할 버퍼선언
 		LPD3DXBUFFER pD3DXMtrlBuffer;
 
@@ -59,7 +100,7 @@ namespace pooptube {
 			mMaterial[j].Ambient = mMaterial[j].Diffuse;
 
 			mTexture[j] = NULL;
-			
+
 			if (d3dxMaterials[j].pTextureFilename != NULL &&
 				strlen(d3dxMaterials[j].pTextureFilename) > 0)
 			{
@@ -79,7 +120,7 @@ namespace pooptube {
 				}
 			}
 		}
-		
+
 		//메쉬에 법선백터를 추가하는 부분
 		if (!(mXMesh->GetFVF() & D3DFVF_NORMAL)) {
 			//가지고 있지 않다면 메쉬를 복제하고 D3DFVF_NORMAL을 추가한다.
@@ -108,7 +149,7 @@ namespace pooptube {
 		for (WORD i = 0; i < VerticesNum; i++)
 			mVertices.push_back(*((D3DXVECTOR3*)(vertexBuffer + i * offset)));
 		mXMesh->UnlockVertexBuffer();
-		
+
 
 		void *pIB;
 		int IndicesNum = mXMesh->GetNumFaces();
@@ -116,35 +157,50 @@ namespace pooptube {
 
 		mXMesh->LockIndexBuffer(D3DLOCK_READONLY, (void**)&pIB);
 		memcpy(indexBuffer, pIB, sizeof(WORD)*IndicesNum * 3);
-		
+
 		for (int i = 0; i < IndicesNum; ++i)
 			mIndices.push_back(D3DXVECTOR3(indexBuffer[i * 3], indexBuffer[i * 3 + 1], indexBuffer[i * 3 + 2]));
 
 		mXMesh->UnlockIndexBuffer();
 		delete[]indexBuffer;
 
-
 		return true;
 	}
 
-	void XMesh::Update(float dTime) {
+
+	void XMeshData::Update(float dTime) {
 
 	}
 
-	void XMesh::Render() {
-		Node::Render();
-
+	void XMeshData::Render() {
 		for (DWORD i = 0; i < mNumMaterial; i++) {
 
 			/// 부분집합 메시의 재질과 텍스쳐 설정
 			GetDevice()->SetMaterial(&mMaterial[i]);
 			GetDevice()->SetTexture(0, mTexture[i]);
 
+			Application::GetInstance()->UpdateDPCall();
+
 			/// 부분집합 메시 출력
 			mXMesh->DrawSubset(i);
 		}
 
 		GetDevice()->SetTexture(0, 0);
+	}
+
+	XMeshData::XMeshData() {
+
+	}
+
+	XMeshData::~XMeshData() {
+		mXMesh->Release();
+		for (DWORD i = 0; i < mNumMaterial; ++i) {
+			if (mTexture[i])
+				mTexture[i]->Release();
+		}
+
+		delete[] mMaterial;
+		delete[] mTexture;
 	}
 
 }
