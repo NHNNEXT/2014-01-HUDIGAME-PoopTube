@@ -47,7 +47,7 @@ public:
 	float		GetJumpSpeed() const { return mJumpSpeed; }
 
 
-	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mSkinnedMesh; }
+	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mMesh; }
 
 //	virtual void CollsionReceive( std::shared_ptr<Node> target );
 //	virtual void CollsionReceive( Node* target );
@@ -66,7 +66,7 @@ private:
 	float					mRotateSpeed = 10.f;
 	float					mJumpSpeed = 10.f;
 
-	pooptube::SkinnedMesh	*mSkinnedMesh = nullptr;
+	pooptube::SkinnedMesh	*mMesh = nullptr;
 	pooptube::Light			*mLight = nullptr;
 
 	FMOD_3D_ATTRIBUTES		mListener;

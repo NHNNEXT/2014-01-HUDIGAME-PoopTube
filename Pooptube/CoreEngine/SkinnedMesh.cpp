@@ -844,20 +844,12 @@ namespace pooptube {
 	}
 
 	void SkinnedMesh::SetAnimationTrack(DWORD num) {
-		DWORD dwNewTrack = (mCurrentTrack == 0 ? 1 : 0);
-		LPD3DXANIMATIONSET pAS;
+		ID3DXAnimationSet*  Wave = NULL;
 
-		mAnimController->GetAnimationSet(num, &pAS);
-
-		mAnimController->SetTrackAnimationSet(dwNewTrack, pAS);
-		pAS->Release();
-
-		mAnimController->UnkeyAllTrackEvents(mCurrentTrack);
-		mAnimController->UnkeyAllTrackEvents(dwNewTrack);
-
-		mAnimController->SetTrackEnable(dwNewTrack, TRUE);
-
-		mCurrentTrack = dwNewTrack;
+		mAnimController->GetAnimationSet(num, &Wave);
+		mAnimController->SetTrackAnimationSet(0, Wave);
+		mAnimController->SetTrackEnable(0, TRUE);
+		mAnimController->ResetTime();
 	}
 
 	void SkinnedMesh::InitFrame(LPD3DXFRAME pFrame) {
