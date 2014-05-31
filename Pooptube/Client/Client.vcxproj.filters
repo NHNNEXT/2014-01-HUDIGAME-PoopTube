@@ -99,12 +99,10 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Bin\Shader\MultiAnimation.fx">
-      <Filter>ShaderCode</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\Bin\Shader\SkinnedMesh.fx">
+      <Filter>ShaderCode</Filter>
+    </None>
+    <None Include="..\Bin\Shader\MultiAnimation.fx">
       <Filter>ShaderCode</Filter>
     </None>
   </ItemGroup>
