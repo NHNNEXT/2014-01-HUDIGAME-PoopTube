@@ -49,6 +49,7 @@ private:
 	pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
 	pooptube::BillBoard				*mBoard = nullptr;
+	Creature						*mCreature = nullptr;
 
 	float				mTime = 0.f;
 	float				mTimeForFPS = 0.f;

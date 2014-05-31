@@ -37,8 +37,8 @@ bool LightOrb::Init(LightOrb *pCreature)
 	mClassName = "LightOrb";
 	mObjectName = "LightOrb";
 
-	mMesh = pooptube::SkinnedMesh::Create(PATH_SPHERE);
-	mMesh->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
+	mMesh = pooptube::SkinnedMesh::Create(PATH_ORB);
+	mMesh->SetScale(D3DXVECTOR3(0.1f, 0.1f, 0.1f));
 	AddChild(mMesh);
 
 	//맵툴에서는 밑에 처럼

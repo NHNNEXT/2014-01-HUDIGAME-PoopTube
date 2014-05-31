@@ -20,7 +20,14 @@
 #define PATH_DRAGON				PATH_MODEL L"Dragon.X"
 #define PATH_SPHERE				PATH_MODEL L"sphere.x"
 #define PATH_NEWDRAGON			PATH_MODEL L"new.X"
-#define PATH_TREE				PATH_MODEL L"Tree01.X"
+#define PATH_BEAR				PATH_MODEL L"bear.X"
+#define PATH_WOLF				PATH_MODEL L"wolf.X"
+#define PATH_ORB					PATH_MODEL L"orb.X"
+
+#define PATH_BUSH				PATH_MODEL L"bush.X"
+#define PATH_TREE_1				PATH_MODEL L"Tree01.X"
+#define PATH_TREE_3				PATH_MODEL L"tree03.X"
+#define PATH_TREE_4				PATH_MODEL L"tree04.X"
 #define PATH_MAINCHAR			PATH_MODEL L"MainCharacter.X"
 
 

@@ -85,6 +85,11 @@ bool IntroScene::Init() {
 		PATH_SKYBOX_RIGHT);
 	mSkyBox->SetTarget(mCharacter);
 
+	mCreature = Creature::Create();
+	mCreature->SetPosition(8.f, 0.f, 8.f);
+	mCreature->pss = mCharacter;
+	AddChild(mCreature);
+
 	/*mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
 	PATH_SKYBOX_DOWN,
 	PATH_SKYBOX_FRONT,

@@ -27,7 +27,8 @@ Tree * Tree::Create() {
 bool Tree::Init() {
 	Node::Init();
 
-	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_TREE);
+	mSkinnedMesh = pooptube::SkinnedMesh::Create(PATH_TREE_1);
+	//mSkinnedMesh->SetScale(0.5f, 0.5f, 0.5f);
 	AddChild(mSkinnedMesh);
 
 	//멥툴에서는 아래로 사용하면 될듯

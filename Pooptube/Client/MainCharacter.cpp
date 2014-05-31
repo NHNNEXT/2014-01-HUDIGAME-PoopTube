@@ -73,7 +73,7 @@ bool MainCharacter::Init() {
 	AddChild(mLight);
 
 	mMesh = pooptube::SkinnedMesh::Create(PATH_MAINCHAR);
-	mMesh->RotateFrontVectorX(-0.3f);
+	//mMesh->RotateFrontVectorX(-0.3f);
 	mMesh->RotateFrontVectorY(3.14f);
 	mMesh->SetAnimationTrack(8);
 	mMesh->SetScale(D3DXVECTOR3(3.f, 3.f, 3.f));

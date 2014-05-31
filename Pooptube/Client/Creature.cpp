@@ -36,9 +36,10 @@ bool Creature::Init()
 	mClassName = "Creature";
 	mObjectName = mObjectName = "Creature" + std::to_string(Node::ObjectNum++);
 
-	mMesh = pooptube::SkinnedMesh::Create(PATH_NEWDRAGON);
-	mMesh->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
-	mMesh->SetAnimationTrack(1);
+	mMesh = pooptube::SkinnedMesh::Create(PATH_WOLF);
+	mMesh->RotateFrontVectorY(3.14f);
+	mMesh->SetScale(2.f, 2.f, 2.f);
+	mMesh->SetAnimationTrack(3);
 	AddChild(mMesh);
 
 	// 	mMesh = pooptube::SkinnedMesh::Create(PATH_TINY);
@@ -93,7 +94,7 @@ void Creature::Update(float dTime)
 	}
 
 	D3DXVECTOR3 pos = GetPosition();
-	float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
+	float height = pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
 	//float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
 
 	if (height != pos.y) {

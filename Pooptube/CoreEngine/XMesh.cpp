@@ -11,7 +11,7 @@ namespace pooptube {
 	}
 
 	XMesh *XMesh::Create(const std::wstring& FilePath) {
-		XMesh *pMesh(new XMesh);
+		XMesh *pMesh = new XMesh;
 		if (pMesh->Init(FilePath))
 			return pMesh;
 		else
@@ -66,7 +66,7 @@ namespace pooptube {
 	}
 
 	XMeshData * XMeshData::Create(const std::wstring& FilePath) {
-		XMeshData *pMesh(new XMeshData);
+		XMeshData *pMesh = new XMeshData;
 		if (pMesh->Init(FilePath))
 			return pMesh;
 		else
@@ -77,7 +77,6 @@ namespace pooptube {
 		// 재질을 임시로 보관할 버퍼선언
 		LPD3DXBUFFER pD3DXMtrlBuffer;
 
-		// Tiger.x파일을 메시로 읽어들인다. 이때 재질정보도 함께 읽는다.
 		if (FAILED(D3DXLoadMeshFromX(FilePath.c_str(), D3DXMESH_SYSTEMMEM,
 			GetDevice(), NULL,
 			&pD3DXMtrlBuffer, NULL, &mNumMaterial,
