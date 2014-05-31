@@ -75,10 +75,15 @@ namespace pooptube {
 		// z버퍼를 사용합니다.
 		mD3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
 
-		mD3DDevice->SetRenderState( D3DRS_ALPHAREF, 0x01 );
+		// 알파 테스팅 사용
+		mD3DDevice->SetRenderState( D3DRS_ALPHAREF, 0x00 );
 		mD3DDevice->SetRenderState( D3DRS_ALPHATESTENABLE, TRUE );
-		mD3DDevice->SetRenderState( D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL );
-// 		mD3DDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
+		mD3DDevice->SetRenderState( D3DRS_ALPHAFUNC, D3DCMP_GREATER );
+
+		// 알파 블랜딩 사용
+		mD3DDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
+		mD3DDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA );
+		mD3DDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA );
 
 		//뷰변환에서 모든 법선을 정규화시키는 설정
 		//이거 안하면 일부 노멀이 안먹히는 현상이 벌어짐

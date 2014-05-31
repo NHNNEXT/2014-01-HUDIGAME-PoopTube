@@ -97,13 +97,13 @@ bool IntroScene::Init() {
 	PATH_SKYBOX_LEFT,
 	PATH_SKYBOX_RIGHT);*/
 
-	for (int i = 0; i < 9; ++i) {
-		for (int j = 0; j < 9; ++j) {
+	for( int i = 0; i < 9; ++i ) {
+		for( int j = 0; j < 9; ++j ) {
 			mTree[i][j] = nullptr;
-			if (i != j) {
+			if( i != j ) {
 				mTree[i][j] = Tree::Create();
-				mTree[i][j]->SetPosition(static_cast<float>(i * 8), 0, static_cast<float>(j * 8));
-				this->AddChild(mTree[i][j]);
+				mTree[i][j]->SetPosition( static_cast<float>(i * 8), 0, static_cast<float>(j * 8) );
+				AddChild( mTree[i][j] );
 			}
 		}
 	}
@@ -118,14 +118,14 @@ bool IntroScene::Init() {
 	soundBox->Translation(soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ());
 	AddChild(soundBox);
 
-	this->AddChild(mCharacter);
-	this->AddChild(mLightOrb1);
-	this->AddChild(mLightOrb2);
-	this->AddChild(mLightOrb3);
-	this->AddChild(mCamera);
-	this->AddChild(mGround);
-	this->AddChild(mSunLight);
-	this->AddChild(mSkyBox);
+	AddChild(mCharacter);
+	AddChild(mCamera);
+	AddChild(mGround);
+	AddChild(mSunLight);
+	AddChild(mSkyBox);
+	AddChild( mLightOrb1 );
+	AddChild( mLightOrb2 );
+	AddChild( mLightOrb3 );
 
 	return true;
 }
