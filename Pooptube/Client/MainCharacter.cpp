@@ -36,7 +36,7 @@ void MainCharacter::Update(float dTime) {
 	Node::Update(dTime);
 
 	UpdateInput(dTime);
-	_JumpUpdate( dTime );
+	//_JumpUpdate( dTime );
 // 
 // 	switch (mState) {
 // 	case NONE:

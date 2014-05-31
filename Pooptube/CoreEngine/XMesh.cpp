@@ -74,6 +74,8 @@ namespace pooptube {
 	}
 
 	bool XMeshData::Init(const std::wstring& FilePath) {
+		Node::Init();
+
 		// 재질을 임시로 보관할 버퍼선언
 		LPD3DXBUFFER pD3DXMtrlBuffer;
 
