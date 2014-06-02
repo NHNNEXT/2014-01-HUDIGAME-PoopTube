@@ -7,12 +7,12 @@ namespace pooptube {
 	class SkinnedMesh;
 }
 
-class Tree : public pooptube::Node{
+class Tree2 : public pooptube::Node{
 public:
-	Tree();
-	virtual ~Tree();
+	Tree2();
+	virtual ~Tree2();
 
-	static Tree *Create();
+	static Tree2 *Create();
 
 	bool Init();
 

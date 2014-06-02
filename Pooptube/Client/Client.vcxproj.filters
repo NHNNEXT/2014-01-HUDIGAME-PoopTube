@@ -61,10 +61,19 @@
     <ClInclude Include="ResourceDef.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
-    <ClInclude Include="Tree.h">
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="Tree2.h">
       <Filter>Character</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h" />
+    <ClInclude Include="Tree1.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree3.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Bush.h">
+      <Filter>Character</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -89,7 +98,16 @@
     <ClCompile Include="IntroScene.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Tree.cpp">
+    <ClCompile Include="Tree2.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree1.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree3.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Bush.cpp">
       <Filter>Character</Filter>
     </ClCompile>
   </ItemGroup>

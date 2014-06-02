@@ -28,8 +28,8 @@
 
 #define PATH_BUSH				PATH_MODEL L"bush.X"
 #define PATH_TREE_1				PATH_MODEL L"Tree01.X"
+#define PATH_TREE_2				PATH_MODEL L"tree02.X"
 #define PATH_TREE_3				PATH_MODEL L"tree03.X"
-#define PATH_TREE_4				PATH_MODEL L"tree04.X"
 #define PATH_MAINCHAR			PATH_MODEL L"MainCharacter.X"
 
 

@@ -122,6 +122,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bush.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="IntroScene.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -135,10 +136,13 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ResourceDef.h" />
-    <ClInclude Include="Tree.h" />
+    <ClInclude Include="Tree1.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Tree2.h" />
+    <ClInclude Include="Tree3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bush.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="IntroScene.cpp">
@@ -155,7 +159,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='CLR|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="Tree1.cpp" />
+    <ClCompile Include="Tree2.cpp" />
+    <ClCompile Include="Tree3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="test.bmp" />

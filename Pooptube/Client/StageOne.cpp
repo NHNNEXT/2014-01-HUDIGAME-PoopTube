@@ -19,7 +19,7 @@
 #include "SoundBox.h"
 #include "InputManager.h"
 #include "ResourceDef.h"
-#include "Tree.h"
+#include "Tree1.h"
 #include "BillBoard.h"
 
 StageOne::StageOne() {
@@ -82,7 +82,7 @@ bool StageOne::Init() {
 	soundBox->Translation( soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ() );
 	AddChild( soundBox );
 	
-	mTree = Tree::Create();
+	mTree = Tree1::Create();
 
 	pooptube::BillBoard* board = pooptube::BillBoard::Create();
 	board->SetPosition( 5.f, 5.f, 7.f );

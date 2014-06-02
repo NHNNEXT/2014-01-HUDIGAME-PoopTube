@@ -19,7 +19,7 @@
 #include "SoundBox.h"
 #include "InputManager.h"
 #include "ResourceDef.h"
-#include "Tree.h"
+#include "Tree3.h"
 #include "SceneManager.h"
 #include "BillBoard.h"
 
@@ -101,7 +101,7 @@ bool IntroScene::Init() {
 		for( int j = 0; j < 9; ++j ) {
 			mTree[i][j] = nullptr;
 			if( i != j ) {
-				mTree[i][j] = Tree::Create();
+				mTree[i][j] = Tree3::Create();
 				mTree[i][j]->SetPosition( static_cast<float>(i * 8), 0, static_cast<float>(j * 8) );
 				AddChild( mTree[i][j] );
 			}

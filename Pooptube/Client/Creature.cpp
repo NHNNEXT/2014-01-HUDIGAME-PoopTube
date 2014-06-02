@@ -137,7 +137,7 @@ void Creature::DoIdle(float dTime)
 	D3DXVECTOR3 CreatureFrontVector = GetFrontVector();
 	mStepSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
 	if (IDLE == GetState() && D3DXVec3Length(&distance) < 0.5f) {
-		RotationY(0.1f);
+		//RotationY(0.1f);
 		SetPosition(mInitialPosition);
 	}
 	else //if (CreaturePosition != initialPosition) 

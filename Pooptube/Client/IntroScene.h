@@ -18,7 +18,7 @@ namespace pooptube {
 class MainCharacter;
 class Creature;
 class LightOrb;
-class Tree;
+class Tree3;
 
 class IntroScene
 	: public pooptube::Scene
@@ -40,7 +40,7 @@ protected:
 
 private:
 	MainCharacter					*mCharacter = nullptr;
-	Tree							*mTree[9][9];
+	Tree3							*mTree[50][50];
 	LightOrb						*mLightOrb1 = nullptr;
 	LightOrb						*mLightOrb2 = nullptr;
 	LightOrb						*mLightOrb3 = nullptr;
