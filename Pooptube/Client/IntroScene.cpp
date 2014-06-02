@@ -83,19 +83,13 @@ bool IntroScene::Init() {
 		PATH_SKYBOX_BACK,
 		PATH_SKYBOX_LEFT,
 		PATH_SKYBOX_RIGHT);
+
 	mSkyBox->SetTarget(mCharacter);
 
 	mCreature = Creature::Create();
 	mCreature->SetPosition(8.f, 0.f, 8.f);
 	mCreature->pss = mCharacter;
 	AddChild(mCreature);
-
-	/*mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
-	PATH_SKYBOX_DOWN,
-	PATH_SKYBOX_FRONT,
-	PATH_SKYBOX_BACK,
-	PATH_SKYBOX_LEFT,
-	PATH_SKYBOX_RIGHT);*/
 
 	for( int i = 0; i < 9; ++i ) {
 		for( int j = 0; j < 9; ++j ) {
@@ -121,11 +115,10 @@ bool IntroScene::Init() {
 	AddChild(mCharacter);
 	AddChild(mCamera);
 	AddChild(mGround);
-	//AddChild(mSunLight);
-	AddChild(mSkyBox);
 	AddChild( mLightOrb1 );
 	AddChild( mLightOrb2 );
 	AddChild( mLightOrb3 );
+	AddChild(mSkyBox);
 
 	return true;
 }

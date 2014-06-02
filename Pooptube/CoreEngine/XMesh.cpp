@@ -36,6 +36,9 @@ namespace pooptube {
 	}
 
 	void XMesh::Render() {
+
+		if (_CheckFrustum() == false) return;
+
 		Node::Render();
 		mMeshData->Render();
 	}

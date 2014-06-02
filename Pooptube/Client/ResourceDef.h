@@ -14,8 +14,6 @@
 #define PATH_SKYBOX_RIGHT 		PATH_SKYBOX L"rightImage.png"
 #define PATH_SKYBOX_LEFT 		PATH_SKYBOX L"leftImage.png"
 
-#define PATH_MIST				PATH_SKYBOX L"Mist.jpg"
-
 //model path
 #define PATH_BATMAN				PATH_MODEL L"batman70.fbx"
 #define PATH_TIGER 				PATH_MODEL L"tiger.x"
@@ -32,6 +30,7 @@
 #define PATH_TREE_3				PATH_MODEL L"tree03.X"
 #define PATH_MAINCHAR			PATH_MODEL L"MainCharacter.X"
 
+#define PATH_MIST				PATH_MODEL L"Mist.jpg"
 
 //sound path
 #define PATH_SOUND 				"Sound\\"
