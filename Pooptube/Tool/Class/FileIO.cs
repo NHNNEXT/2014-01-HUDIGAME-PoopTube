@@ -16,15 +16,17 @@ namespace Tool.Class
 
             foreach (var child in ChildList)
             {
-                JsonObjectCollection obj = new JsonObjectCollection(child.GetClassName());
+                JsonObjectCollection obj = new JsonObjectCollection();
                 JsonArrayCollection array;
                 float[] arrayValue;
 
+                // class Name
+                obj.Add(new JsonStringValue("Class", child.GetClassName()));
                 // Object Name
-                obj.Add(new JsonStringValue("name", child.GetObjectName()));
+                obj.Add(new JsonStringValue("Name", child.GetObjectName()));
 
                 /////////////// Positon ///////////////
-                array = new JsonArrayCollection("position");
+                array = new JsonArrayCollection("Position");
                 arrayValue = child.GetPosition();
                 array.Add(new JsonNumericValue(null, arrayValue[0]));
                 array.Add(new JsonNumericValue(null, arrayValue[1]));
@@ -42,7 +44,7 @@ namespace Tool.Class
                 obj.Add(array);
 
                 ///////////// Front Vector ////////////
-                array = new JsonArrayCollection("frontvector");
+                array = new JsonArrayCollection("FrontVector");
                 arrayValue = child.GetFrontVector();
                 array.Add(new JsonNumericValue(null, arrayValue[0]));
                 array.Add(new JsonNumericValue(null, arrayValue[1]));
@@ -54,7 +56,9 @@ namespace Tool.Class
                 // Add This Object
                 collection.Add(obj);
             }
-            System.IO.File.WriteAllText("test.json", collection.ToString());
+            JsonObjectCollection root = new JsonObjectCollection();
+            root.Add(collection);
+            System.IO.File.WriteAllText("test.json", root.ToString());
 
             return true;
         }

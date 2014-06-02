@@ -9,6 +9,7 @@
 #include "StageOne.h"
 #include "IntroScene.h"
 #include "BugTrapHeader.h"
+#include "Stage.h"
 
 int ClientRun()
 {
@@ -43,6 +44,9 @@ int ClientRun()
 // 		return 1;
 // 	}
 
+	// json로드 스테이지
+// 	Stage* pStage = Stage::Create( "test.json" );
+// 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
 	
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);
 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
