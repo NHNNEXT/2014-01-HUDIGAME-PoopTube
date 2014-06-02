@@ -43,7 +43,7 @@ namespace Tool
             Scene.AddChild(Ground);
             Scene.AddChild(SunLight);
             Scene.AddChild(Camera);
-
+            
             Run();
 
             PropertyForm.SelectedObject = PropertyTable;
@@ -106,12 +106,21 @@ namespace Tool
                         SelectedNode = Core.WLightOrb.Create();
                         break;
                     case 2 :
-                        SelectedNode = Core.WTree.Create();
+                        SelectedNode = Core.WTree1.Create();
                         break;
-                    case 3 :
+                    case 3:
+                        SelectedNode = Core.WTree2.Create();
+                        break;
+                    case 4:
+                        SelectedNode = Core.WTree3.Create();
+                        break;
+                    case 5:
+                        SelectedNode = Core.WBush.Create();
+                        break;
+                    case 6 :
                         //Ground.AddHeight(e.X, e.Y, 0.2f);
                         return;
-                    case 4 :
+                    case 7 :
                         //Ground.AddHeight(e.X, e.Y, -0.2f);
                         return;
                 }
@@ -190,9 +199,12 @@ namespace Tool
             {
                 if (target.Text == "Creature") SelectedObjectType = 0;
                 else if (target.Text == "Light Object") SelectedObjectType = 1;
-                else if (target.Text == "Tree") SelectedObjectType = 2;
-                else if (target.Text == "Up") SelectedObjectType = 3;
-                else if (target.Text == "Down") SelectedObjectType = 4;
+                else if (target.Text == "Tree1") SelectedObjectType = 2;
+                else if (target.Text == "Tree2") SelectedObjectType = 3;
+                else if (target.Text == "Tree3") SelectedObjectType = 4;
+                else if (target.Text == "Bush") SelectedObjectType = 5;
+                else if (target.Text == "Up") SelectedObjectType = 6;
+                else if (target.Text == "Down") SelectedObjectType = 7;
             }
         }
 
@@ -309,6 +321,11 @@ namespace Tool
             richTextBox1.AppendText("\n");
 
             System.IO.File.WriteAllText("test.json", collection.ToString());
+        }
+
+        private void ActionTab_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

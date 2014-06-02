@@ -60,19 +60,22 @@
             this.ObjectListBox = new System.Windows.Forms.ComboBox();
             this.PropertyForm = new System.Windows.Forms.PropertyGrid();
             this.ComponentTab = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.ActionTab = new System.Windows.Forms.TabPage();
+            this.ObjectRadioTree3 = new System.Windows.Forms.RadioButton();
+            this.ObjectRadioTree2 = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.GroundTUp = new System.Windows.Forms.RadioButton();
             this.GroundTDown = new System.Windows.Forms.RadioButton();
             this.ObjectRadioCreature = new System.Windows.Forms.RadioButton();
-            this.ObjectRadioTree = new System.Windows.Forms.RadioButton();
+            this.ObjectRadioTree1 = new System.Windows.Forms.RadioButton();
             this.ObjectRadioLightOrb = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.ObjectRadioBush = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.ViewBox)).BeginInit();
             this.MainMenu.SuspendLayout();
             this.OptionTab.SuspendLayout();
@@ -122,63 +125,63 @@
             this.toolStripSeparator3,
             this.ExitMenu});
             this.파일fToolStripMenuItem.Name = "파일fToolStripMenuItem";
-            this.파일fToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.파일fToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.파일fToolStripMenuItem.Text = "파일(&F)";
             // 
             // NewMapMenu
             // 
             this.NewMapMenu.Name = "NewMapMenu";
-            this.NewMapMenu.Size = new System.Drawing.Size(194, 22);
+            this.NewMapMenu.Size = new System.Drawing.Size(192, 22);
             this.NewMapMenu.Text = "새로 만들기(N)";
             this.NewMapMenu.Click += new System.EventHandler(this.NewMapFile);
             // 
             // OpenMapMenu
             // 
             this.OpenMapMenu.Name = "OpenMapMenu";
-            this.OpenMapMenu.Size = new System.Drawing.Size(194, 22);
+            this.OpenMapMenu.Size = new System.Drawing.Size(192, 22);
             this.OpenMapMenu.Text = "열기(O)";
             this.OpenMapMenu.Click += new System.EventHandler(this.LoadMapFile);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(191, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(189, 6);
             // 
             // CloseMapMenu
             // 
             this.CloseMapMenu.Name = "CloseMapMenu";
-            this.CloseMapMenu.Size = new System.Drawing.Size(194, 22);
+            this.CloseMapMenu.Size = new System.Drawing.Size(192, 22);
             this.CloseMapMenu.Text = "닫기(C)";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(191, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(189, 6);
             // 
             // SaveMapMenu
             // 
             this.SaveMapMenu.Name = "SaveMapMenu";
             this.SaveMapMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveMapMenu.Size = new System.Drawing.Size(194, 22);
+            this.SaveMapMenu.Size = new System.Drawing.Size(192, 22);
             this.SaveMapMenu.Text = "저장(S)";
             this.SaveMapMenu.Click += new System.EventHandler(this.SaveMapFile);
             // 
             // SaveAsMapMenu
             // 
             this.SaveAsMapMenu.Name = "SaveAsMapMenu";
-            this.SaveAsMapMenu.Size = new System.Drawing.Size(194, 22);
+            this.SaveAsMapMenu.Size = new System.Drawing.Size(192, 22);
             this.SaveAsMapMenu.Text = "다른 이름으로 저장(A)";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(191, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(189, 6);
             // 
             // ExitMenu
             // 
             this.ExitMenu.Name = "ExitMenu";
             this.ExitMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.ExitMenu.Size = new System.Drawing.Size(194, 22);
+            this.ExitMenu.Size = new System.Drawing.Size(192, 22);
             this.ExitMenu.Text = "끝내기(X)";
             this.ExitMenu.Click += new System.EventHandler(this.ExitProgram);
             // 
@@ -195,66 +198,66 @@
             this.toolStripSeparator5,
             this.SelectAllMenu});
             this.편집EToolStripMenuItem.Name = "편집EToolStripMenuItem";
-            this.편집EToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.편집EToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.편집EToolStripMenuItem.Text = "편집(&E)";
             // 
             // UndoMenu
             // 
             this.UndoMenu.Name = "UndoMenu";
             this.UndoMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.UndoMenu.Size = new System.Drawing.Size(184, 22);
+            this.UndoMenu.Size = new System.Drawing.Size(178, 22);
             this.UndoMenu.Text = "실행 취소(U)";
             // 
             // RedoMenu
             // 
             this.RedoMenu.Name = "RedoMenu";
             this.RedoMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.RedoMenu.Size = new System.Drawing.Size(184, 22);
+            this.RedoMenu.Size = new System.Drawing.Size(178, 22);
             this.RedoMenu.Text = "다시 실행(R)";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(175, 6);
             // 
             // CutMenu
             // 
             this.CutMenu.Name = "CutMenu";
             this.CutMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.CutMenu.Size = new System.Drawing.Size(184, 22);
+            this.CutMenu.Size = new System.Drawing.Size(178, 22);
             this.CutMenu.Text = "잘라내기(X)";
             // 
             // CopyMenu
             // 
             this.CopyMenu.Name = "CopyMenu";
             this.CopyMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.CopyMenu.Size = new System.Drawing.Size(184, 22);
+            this.CopyMenu.Size = new System.Drawing.Size(178, 22);
             this.CopyMenu.Text = "복사(C)";
             // 
             // PasteMenu
             // 
             this.PasteMenu.Name = "PasteMenu";
             this.PasteMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.PasteMenu.Size = new System.Drawing.Size(184, 22);
+            this.PasteMenu.Size = new System.Drawing.Size(178, 22);
             this.PasteMenu.Text = "붙여넣기(P)";
             // 
             // DeleteMenu
             // 
             this.DeleteMenu.Name = "DeleteMenu";
             this.DeleteMenu.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.DeleteMenu.Size = new System.Drawing.Size(184, 22);
+            this.DeleteMenu.Size = new System.Drawing.Size(178, 22);
             this.DeleteMenu.Text = "삭제(D)";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(181, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(175, 6);
             // 
             // SelectAllMenu
             // 
             this.SelectAllMenu.Name = "SelectAllMenu";
             this.SelectAllMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.SelectAllMenu.Size = new System.Drawing.Size(184, 22);
+            this.SelectAllMenu.Size = new System.Drawing.Size(178, 22);
             this.SelectAllMenu.Text = "모두 선택(A)";
             // 
             // 보기VToolStripMenuItem
@@ -266,25 +269,25 @@
             // 빌드BToolStripMenuItem
             // 
             this.빌드BToolStripMenuItem.Name = "빌드BToolStripMenuItem";
-            this.빌드BToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.빌드BToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.빌드BToolStripMenuItem.Text = "빌드(&B)";
             // 
             // 도구TToolStripMenuItem
             // 
             this.도구TToolStripMenuItem.Name = "도구TToolStripMenuItem";
-            this.도구TToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.도구TToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.도구TToolStripMenuItem.Text = "도구(&T)";
             // 
             // 창WToolStripMenuItem
             // 
             this.창WToolStripMenuItem.Name = "창WToolStripMenuItem";
-            this.창WToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.창WToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.창WToolStripMenuItem.Text = "창(&W)";
             // 
             // 도움말HToolStripMenuItem
             // 
             this.도움말HToolStripMenuItem.Name = "도움말HToolStripMenuItem";
-            this.도움말HToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.도움말HToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.도움말HToolStripMenuItem.Text = "도움말(&H)";
             // 
             // OptionTab
@@ -349,14 +352,25 @@
             this.ComponentTab.Text = "Component";
             this.ComponentTab.UseVisualStyleBackColor = true;
             // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(6, 3);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(242, 248);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
+            // 
             // ActionTab
             // 
+            this.ActionTab.Controls.Add(this.ObjectRadioBush);
+            this.ActionTab.Controls.Add(this.ObjectRadioTree3);
+            this.ActionTab.Controls.Add(this.ObjectRadioTree2);
             this.ActionTab.Controls.Add(this.label5);
             this.ActionTab.Controls.Add(this.label4);
             this.ActionTab.Controls.Add(this.GroundTUp);
             this.ActionTab.Controls.Add(this.GroundTDown);
             this.ActionTab.Controls.Add(this.ObjectRadioCreature);
-            this.ActionTab.Controls.Add(this.ObjectRadioTree);
+            this.ActionTab.Controls.Add(this.ObjectRadioTree1);
             this.ActionTab.Controls.Add(this.ObjectRadioLightOrb);
             this.ActionTab.Location = new System.Drawing.Point(4, 22);
             this.ActionTab.Name = "ActionTab";
@@ -365,11 +379,34 @@
             this.ActionTab.TabIndex = 2;
             this.ActionTab.Text = "Action";
             this.ActionTab.UseVisualStyleBackColor = true;
+            this.ActionTab.Click += new System.EventHandler(this.ActionTab_Click);
+            // 
+            // ObjectRadioTree3
+            // 
+            this.ObjectRadioTree3.AutoSize = true;
+            this.ObjectRadioTree3.Location = new System.Drawing.Point(160, 63);
+            this.ObjectRadioTree3.Name = "ObjectRadioTree3";
+            this.ObjectRadioTree3.Size = new System.Drawing.Size(55, 16);
+            this.ObjectRadioTree3.TabIndex = 6;
+            this.ObjectRadioTree3.Text = "Tree3";
+            this.ObjectRadioTree3.UseVisualStyleBackColor = true;
+            this.ObjectRadioTree3.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
+            // 
+            // ObjectRadioTree2
+            // 
+            this.ObjectRadioTree2.AutoSize = true;
+            this.ObjectRadioTree2.Location = new System.Drawing.Point(82, 63);
+            this.ObjectRadioTree2.Name = "ObjectRadioTree2";
+            this.ObjectRadioTree2.Size = new System.Drawing.Size(55, 16);
+            this.ObjectRadioTree2.TabIndex = 5;
+            this.ObjectRadioTree2.Text = "Tree2";
+            this.ObjectRadioTree2.UseVisualStyleBackColor = true;
+            this.ObjectRadioTree2.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 95);
+            this.label5.Location = new System.Drawing.Point(6, 109);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 12);
             this.label5.TabIndex = 4;
@@ -387,7 +424,7 @@
             // GroundTUp
             // 
             this.GroundTUp.AutoSize = true;
-            this.GroundTUp.Location = new System.Drawing.Point(8, 110);
+            this.GroundTUp.Location = new System.Drawing.Point(8, 124);
             this.GroundTUp.Name = "GroundTUp";
             this.GroundTUp.Size = new System.Drawing.Size(38, 16);
             this.GroundTUp.TabIndex = 0;
@@ -398,7 +435,7 @@
             // GroundTDown
             // 
             this.GroundTDown.AutoSize = true;
-            this.GroundTDown.Location = new System.Drawing.Point(8, 132);
+            this.GroundTDown.Location = new System.Drawing.Point(8, 146);
             this.GroundTDown.Name = "GroundTDown";
             this.GroundTDown.Size = new System.Drawing.Size(55, 16);
             this.GroundTDown.TabIndex = 1;
@@ -419,16 +456,16 @@
             this.ObjectRadioCreature.UseVisualStyleBackColor = true;
             this.ObjectRadioCreature.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
             // 
-            // ObjectRadioTree
+            // ObjectRadioTree1
             // 
-            this.ObjectRadioTree.AutoSize = true;
-            this.ObjectRadioTree.Location = new System.Drawing.Point(8, 63);
-            this.ObjectRadioTree.Name = "ObjectRadioTree";
-            this.ObjectRadioTree.Size = new System.Drawing.Size(49, 16);
-            this.ObjectRadioTree.TabIndex = 2;
-            this.ObjectRadioTree.Text = "Tree";
-            this.ObjectRadioTree.UseVisualStyleBackColor = true;
-            this.ObjectRadioTree.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
+            this.ObjectRadioTree1.AutoSize = true;
+            this.ObjectRadioTree1.Location = new System.Drawing.Point(8, 63);
+            this.ObjectRadioTree1.Name = "ObjectRadioTree1";
+            this.ObjectRadioTree1.Size = new System.Drawing.Size(55, 16);
+            this.ObjectRadioTree1.TabIndex = 2;
+            this.ObjectRadioTree1.Text = "Tree1";
+            this.ObjectRadioTree1.UseVisualStyleBackColor = true;
+            this.ObjectRadioTree1.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
             // 
             // ObjectRadioLightOrb
             // 
@@ -478,13 +515,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // richTextBox1
+            // ObjectRadioBush
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(6, 3);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(242, 248);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
+            this.ObjectRadioBush.AutoSize = true;
+            this.ObjectRadioBush.Location = new System.Drawing.Point(8, 85);
+            this.ObjectRadioBush.Name = "ObjectRadioBush";
+            this.ObjectRadioBush.Size = new System.Drawing.Size(52, 16);
+            this.ObjectRadioBush.TabIndex = 7;
+            this.ObjectRadioBush.Text = "Bush";
+            this.ObjectRadioBush.UseVisualStyleBackColor = true;
+            this.ObjectRadioBush.CheckedChanged += new System.EventHandler(this.ChangedObjectType);
             // 
             // MainForm
             // 
@@ -554,7 +594,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabPage ActionTab;
-        private System.Windows.Forms.RadioButton ObjectRadioTree;
+        private System.Windows.Forms.RadioButton ObjectRadioTree1;
         private System.Windows.Forms.RadioButton ObjectRadioLightOrb;
         private System.Windows.Forms.RadioButton ObjectRadioCreature;
         private System.Windows.Forms.RadioButton GroundTUp;
@@ -563,6 +603,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RadioButton ObjectRadioTree3;
+        private System.Windows.Forms.RadioButton ObjectRadioTree2;
+        private System.Windows.Forms.RadioButton ObjectRadioBush;
     }
 }
 
