@@ -629,7 +629,7 @@ namespace pooptube {
 
 		//쉐이더 추가시 추가해야함
 		mMeshData->mEffect->SetMatrix("mViewProj", &matView);
-		mMeshData->mEffect->SetVector("lhtDir", &vLightDir);
+		//mMeshData->mEffect->SetVector("lhtDir", &vLightDir);
 		DrawFrame(mMeshData->mFrameRoot);
 		UpdateFrameMatrices(mMeshData->mFrameRoot, &MatWorld);
 	}

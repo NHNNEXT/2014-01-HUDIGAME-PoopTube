@@ -47,17 +47,17 @@ bool IntroScene::Init() {
 
 	pooptube::Scene::Init();
 
-	mSunLight = pooptube::SunLight::Create();
-	mSunLight->LightOnOff(true);
-	D3DCOLORVALUE temp;
-	temp.r = 0.f;
-	temp.g = 0.f;
-	temp.b = 0.f;
-	mSunLight->SetSpecular(temp);
-	temp.r = 0.1f;
-	temp.g = 0.1f;
-	temp.b = 0.1f;
-	mSunLight->SetDiffuse(temp);
+// 	mSunLight = pooptube::SunLight::Create();
+// 	mSunLight->LightOnOff(true);
+// 	D3DCOLORVALUE temp;
+// 	temp.r = 0.f;
+// 	temp.g = 0.f;
+// 	temp.b = 0.f;
+// 	mSunLight->SetSpecular(temp);
+// 	temp.r = 0.1f;
+// 	temp.g = 0.1f;
+// 	temp.b = 0.1f;
+// 	mSunLight->SetDiffuse(temp);
 
 	mBoard = pooptube::BillBoard::Create();
 	mBoard->SetTexture( L"Model\\logo.jpg" );
@@ -121,7 +121,7 @@ bool IntroScene::Init() {
 	AddChild(mCharacter);
 	AddChild(mCamera);
 	AddChild(mGround);
-	AddChild(mSunLight);
+	//AddChild(mSunLight);
 	AddChild(mSkyBox);
 	AddChild( mLightOrb1 );
 	AddChild( mLightOrb2 );

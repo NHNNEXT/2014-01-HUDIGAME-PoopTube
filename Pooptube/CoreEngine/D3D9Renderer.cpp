@@ -85,6 +85,10 @@ namespace pooptube {
 		mD3DDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA );
 		mD3DDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA );
 
+		// 텍스쳐 필터링 적용
+		mD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+		mD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+
 		//뷰변환에서 모든 법선을 정규화시키는 설정
 		//이거 안하면 일부 노멀이 안먹히는 현상이 벌어짐
 		//skinned mesh같은거

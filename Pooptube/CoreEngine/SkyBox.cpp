@@ -155,6 +155,9 @@ namespace pooptube{
 		GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX_SKYBOX);
 
+		GetDevice()->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
+		GetDevice()->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+
 		//디바이스에 버텍스버퍼를 전달
 		GetDevice()->SetStreamSource(0, mVertexBuffer, 0, sizeof(SKYBOX_CUSTOM_VERTEX));
 
@@ -183,6 +186,8 @@ namespace pooptube{
 		GetDevice()->SetTexture(0, mRightTexture);
 		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 30, 4);
 		
+		GetDevice()->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+		GetDevice()->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		GetDevice()->SetTexture(0, 0);
 		GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
 	}

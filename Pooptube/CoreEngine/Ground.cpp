@@ -60,8 +60,8 @@ namespace pooptube {
 				//vertex[nIndex].position.y = (float)bitmapImage[nIndex * 3] * 0.005f;
 				vertex[nIndex].position.y = mData->GetHeight(x, z) * mData->amp;
 
-				vertex[nIndex].tu = (float)z/(float)row;
-				vertex[nIndex].tv = (float)x/(float)col;
+				vertex[nIndex].tu = (float)z * 4.0f  /(float)(row - 1);
+				vertex[nIndex].tv = (float)x * 4.0f /(float)(col - 1);
 
 				mVertices.push_back(vertex[nIndex].position);
 
