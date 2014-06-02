@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="WBush.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="WCreature.h" />
     <ClInclude Include="Ground.h" />
@@ -130,11 +131,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="WLightOrb.h" />
-    <ClInclude Include="WTree.h" />
+    <ClInclude Include="WTree1.h" />
+    <ClInclude Include="WTree2.h" />
+    <ClInclude Include="WTree3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="WBush.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="WCreature.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -151,7 +155,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="WLightOrb.cpp" />
-    <ClCompile Include="WTree.cpp" />
+    <ClCompile Include="WTree1.cpp" />
+    <ClCompile Include="WTree2.cpp" />
+    <ClCompile Include="WTree3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />

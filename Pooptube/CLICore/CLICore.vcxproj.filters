@@ -87,7 +87,16 @@
     <ClInclude Include="WLightOrb.h">
       <Filter>CoreEngine\Nodes\Character</Filter>
     </ClInclude>
-    <ClInclude Include="WTree.h">
+    <ClInclude Include="WTree1.h">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="WTree2.h">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="WTree3.h">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="WBush.h">
       <Filter>CoreEngine\Nodes\Character</Filter>
     </ClInclude>
   </ItemGroup>
@@ -128,7 +137,16 @@
     <ClCompile Include="WLightOrb.cpp">
       <Filter>CoreEngine\Nodes\Character</Filter>
     </ClCompile>
-    <ClCompile Include="WTree.cpp">
+    <ClCompile Include="WTree1.cpp">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="WTree2.cpp">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="WTree3.cpp">
+      <Filter>CoreEngine\Nodes\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="WBush.cpp">
       <Filter>CoreEngine\Nodes\Character</Filter>
     </ClCompile>
   </ItemGroup>
