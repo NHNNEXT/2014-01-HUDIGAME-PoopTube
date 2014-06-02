@@ -38,8 +38,6 @@ namespace pooptube {
 		D3DXMATRIXA16	MatView;
 		D3DXMATRIXA16	MatProj;
 
-		mLookAtPt = GetPosition() + GetFrontVector();
-
 		//뷰행렬을 생성
 		D3DXMatrixLookAtLH(&MatView, &Node::GetPosition(), &mLookAtPt, &Node::GetUpVector());
 		//생성된 뷰행렬을 적용
@@ -54,5 +52,7 @@ namespace pooptube {
 
 	void Camera::Update(float dTime) {
 		Node::Update(dTime);
+
+		mLookAtPt = GetPosition() + GetFrontVector();
 	}
 }
