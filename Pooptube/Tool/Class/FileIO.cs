@@ -12,7 +12,7 @@ namespace Tool.Class
         public static bool JsonOutput(string filename, List<Core.Node> ChildList) 
         {
             JsonUtility.GenerateIndentedJsonText = true;
-            JsonObjectCollection collection = new JsonObjectCollection("Map");
+            JsonArrayCollection collection = new JsonArrayCollection("Map");
 
             foreach (var child in ChildList)
             {
