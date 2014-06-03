@@ -57,10 +57,9 @@ bool Stage::Init( std::string filename )
 	AddChild( ThirdPersonCamera::Create( mCharacter ) );
 
 	//파일 로드
-	Json::Value stageData = JsonParser::FileToJson( filename );
-
-	for( auto data : stageData["Map"] ){
-		printf_s( "%s\n", data["Class"] );
+	Json::Value stageData = JsonParser::FileToJson( filename )["Map"];
+	
+	for( auto data : stageData ){
 		if( data["Class"] == "Ground" )
 			_LoadGround( data );
 // 		else if( data["Class"] == "Camera" )
@@ -77,6 +76,7 @@ bool Stage::Init( std::string filename )
 			_LoadTree( data );
 		else if( data["Class"] == "Node" )
 			_LoadNode( data );
+		printf_s( "Load %s\n", data["Class"] );
 	}
 	
 	return true;
@@ -163,17 +163,17 @@ void Stage::_LoadBillBoard( Json::Value& jsonData )
 void Stage::_LoadTree( Json::Value& jsonData )
 {
 	// 나중에 파일 형식을 좀 바꿔야...
-	if( jsonData["class"] == "Tree1" ){
+	if( jsonData["Class"] == "Tree1" ){
 		Tree1 *tTree = Tree1::Create();
 		_SetCommonData( tTree, jsonData );
 		AddChild( tTree );
 	}
-	else if( jsonData["class"] == "Tree2" ){
+	else if( jsonData["Class"] == "Tree2" ){
 		Tree2 *tTree = Tree2::Create();
 		_SetCommonData( tTree, jsonData );
 		AddChild( tTree );
 	}
-	else if( jsonData["class"] == "Tree3" ){
+	else if( jsonData["Class"] == "Tree3" ){
 		Tree3 *tTree = Tree3::Create();
 		_SetCommonData( tTree, jsonData );
 		AddChild( tTree );
@@ -191,7 +191,7 @@ void Stage::_LoadNode( Json::Value& jsonData )
 void Stage::_SetCommonData( Node* target, Json::Value& jsonData )
 {
 	target->SetObjectName( jsonData["Name"].asString() );
-	target->SetPosition( jsonData["Position"][0u].asDouble(), jsonData["position"][1u].asDouble(), jsonData["position"][2u].asDouble() );
+	target->SetPosition( jsonData["Position"][0u].asDouble(), jsonData["Position"][1u].asDouble(), jsonData["Position"][2u].asDouble() );
 	target->SetScale( jsonData["Scale"][0u].asDouble(), jsonData["Scale"][1u].asDouble(), jsonData["Scale"][2u].asDouble() );
 	target->SetFrontVector( jsonData["FrontVector"][0u].asDouble(), jsonData["FrontVector"][1u].asDouble(), jsonData["FrontVector"][2u].asDouble() );
 }
