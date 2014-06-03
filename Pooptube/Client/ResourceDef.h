@@ -4,6 +4,7 @@
 #define PATH_MODEL 				L"Model\\"
 #define PATH_HEIGHTMAP 			PATH_MODEL L"test.bmp"
 #define PATH_INTRO_HEIGHTMAP 	PATH_MODEL L"test512.bmp"
+#define PATH_INTRO_1024Map		PATH_MODEL L"test1024.bmp"
 
 //skybox path
 #define PATH_SKYBOX 				PATH_MODEL L"DeepSpaceBlue\\"

@@ -63,7 +63,7 @@ namespace pooptube {
 				vertex[nIndex].tu = (float)z * 4.0f  /(float)(row - 1);
 				vertex[nIndex].tv = (float)x * 4.0f /(float)(col - 1);
 
-				mVertices.push_back(vertex[nIndex].position);
+				//mVertices.push_back(vertex[nIndex].position);
 
 				vertex[nIndex].color = D3DCOLOR_RGBA(255, 255, 255, 255);
 			}
@@ -111,13 +111,13 @@ namespace pooptube {
 				Index[nIndex].w2 = UINT(z * (col + 1) + x);
 				Index[nIndex].w1 = UINT((z + 1)*(col + 1) + x + 1);
 				Index[nIndex].w0 = UINT((z + 1)*(col + 1) + x);
-				mIndices.push_back(D3DXVECTOR3(Index[nIndex].w0, Index[nIndex].w1, Index[nIndex].w2));
+				//mIndices.push_back(D3DXVECTOR3(Index[nIndex].w0, Index[nIndex].w1, Index[nIndex].w2));
 				++nIndex;
 
 				Index[nIndex].w2 = UINT(z * (col + 1) + x);
 				Index[nIndex].w1 = UINT(z * (col + 1) + x + 1);
 				Index[nIndex].w0 = UINT((z + 1)*(col + 1) + x + 1);
-				mIndices.push_back(D3DXVECTOR3(Index[nIndex].w0, Index[nIndex].w1, Index[nIndex].w2));
+				//mIndices.push_back(D3DXVECTOR3(Index[nIndex].w0, Index[nIndex].w1, Index[nIndex].w2));
 				++nIndex;
 			}
 		}
