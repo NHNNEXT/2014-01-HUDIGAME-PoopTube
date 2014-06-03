@@ -42,7 +42,7 @@ namespace pooptube {
 		LookPt.y += 3.f;
 		SetLookAtPt(LookPt);
 
-		D3DXVECTOR3 Pos = mTarget->GetPosition() - mTarget->GetFrontVector() * 4.f;
+		D3DXVECTOR3 Pos = mTarget->GetPosition() - mTarget->GetFrontVector() * 10.f;
 		Pos.y += 5.f;
 		Node::SetPosition(Pos);
 	}
