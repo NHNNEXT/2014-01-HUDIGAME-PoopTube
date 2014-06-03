@@ -11,6 +11,7 @@
     <AssemblyName>Tool</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>게시\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -61,10 +61,6 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CLICore, Version=1.0.5234.10487, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Bin\CLICore.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -135,6 +131,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CLICore\CLICore.vcxproj">
+      <Project>{06118fdb-c4c4-4366-a5b5-074790cab66e}</Project>
+      <Name>CLICore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
