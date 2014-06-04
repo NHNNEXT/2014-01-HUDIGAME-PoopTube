@@ -100,6 +100,11 @@ void MainCharacter::_CollsionHandle( float dTime, pooptube::CollisionBox* collis
 		dPos *= mSpeed * dTime;
 		Translation( dPos );
 	}
+
+	/*if (collisionResult->GetCollisionType() && pooptube::CollisionBox::COLLISION_TYPE::LIGHTORB) {
+		InCreaseHP(1);
+	}*/
+	
 }
 
 void MainCharacter::UpdateInput(float dTime) {

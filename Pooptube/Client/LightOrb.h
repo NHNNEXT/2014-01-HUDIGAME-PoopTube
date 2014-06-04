@@ -36,7 +36,7 @@ public:
 	void Render();
 	void Update(float dTime);
 
-	bool IsRender() { return isRender; }
+	bool IsRender() { return mIsRender; }
 
 	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mMesh->GetVertices(); }
 	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mMesh->GetIndices(); }
@@ -53,6 +53,9 @@ private:
 	pooptube::XMesh			*mXMesh = nullptr;
 
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
-	bool					isRender = true;
+	bool					mIsRender = true;
 	FMOD::Studio::EventInstance *mEffectSound = nullptr;
+
+	float					mTime = 0.f;
+
 };

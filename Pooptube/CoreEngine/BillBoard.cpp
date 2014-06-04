@@ -86,23 +86,27 @@ namespace pooptube{
 
 	void BillBoard::Render()
 	{
-		Node::Render();
-		
-		mDevice->SetFVF( D3DFVF_CUSTOMVERTEX );
-		
-		D3DXMATRIXA16	MatView;
-		mDevice->GetTransform( D3DTS_VIEW, &MatView );
-		
-		SetFrontVector( MatView._13, MatView._23, MatView._33 );
+		if (mIsVisible == true) {
+			Node::Render();
 
-		//디바이스에 버텍스버퍼를 전달
-		mDevice->SetStreamSource( 0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX) );
+			mDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
 
-		//인덱스 설정
-		mDevice->SetIndices( mMeshIndexBuffer );
+			D3DXMATRIXA16	MatView;
+			mDevice->GetTransform(D3DTS_VIEW, &MatView);
 
-		GetDevice()->SetTexture( 0, mTexture );
-		mDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, VERTEX_NUM, 0, POLYGON_NUM );
+			SetFrontVector(MatView._13, MatView._23, MatView._33);
+
+			//디바이스에 버텍스버퍼를 전달
+			mDevice->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
+
+			//인덱스 설정
+			mDevice->SetIndices(mMeshIndexBuffer);
+
+			GetDevice()->SetTexture(0, mTexture);
+			mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, VERTEX_NUM, 0, POLYGON_NUM);
+		}
+		else
+			return;
 	}
 
 	void BillBoard::SetTexture( std::wstring filename )

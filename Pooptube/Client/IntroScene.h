@@ -13,6 +13,7 @@ namespace pooptube {
 	class XMesh;
 	class Ground;
 	class BillBoard;
+	class Sprite;
 }
 
 class MainCharacter;
@@ -41,22 +42,24 @@ protected:
 private:
 	MainCharacter					*mCharacter = nullptr;
 	Tree3							*mTree[50][50];
-	LightOrb						*mLightOrb1 = nullptr;
-	LightOrb						*mLightOrb2 = nullptr;
-	LightOrb						*mLightOrb3 = nullptr;
+	LightOrb						*mLightOrb[3];
 	pooptube::ThirdPersonCamera		*mCamera = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
 	pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
-	pooptube::BillBoard				*mBoard = nullptr;
+	pooptube::BillBoard				*mBoard[3];
 	Creature						*mCreature = nullptr;
-
-	float				mTime = 0.f;
+ 	pooptube::Sprite				*mClearPoint[3];
+	pooptube::Sprite				*mYellow[3];
+ 	pooptube::Sprite				*mPink[3];
+	
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;
 	float				mBeforeJumpYPos = 0.f;
 	bool				mRecordJumpPos = false;
 	bool				mIsCleared = false;
+	float				mCreatureAttackTime = 0.f;
+	int					mTotalDamage = 0;
 
 	pooptube::CollisionBox	*testDummy;
 };

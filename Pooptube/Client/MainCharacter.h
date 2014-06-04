@@ -44,8 +44,12 @@ public:
 	CHAR_STATE	GetState() const { return mState; }
 	void		SetState(CHAR_STATE val) { mState = val; }
 
-	float		GetJumpSpeed() const { return mJumpSpeed; }
+	int			GetHP() { return mHP; }
+	void        SetHP(int hp) { mHP = hp; }
+	void		DecreaseHP(int damage) { mHP -= damage; }
+	void		InCreaseHP(int point) { mHP += point; }
 
+	float		GetJumpSpeed() const { return mJumpSpeed; }
 
 	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mMesh; }
 
@@ -66,6 +70,7 @@ private:
 	float					mSpeed = 10.f;
 	float					mRotateSpeed = 10.f;
 	float					mJumpSpeed = 10.f;
+	int						mHP = 0;
 
 	pooptube::SkinnedMesh	*mMesh = nullptr;
 	pooptube::Light			*mLight = nullptr;

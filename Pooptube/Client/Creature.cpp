@@ -147,8 +147,6 @@ void Creature::DoIdle(float dTime)
 
 		if (Turn(GetPosition(), mInitialPosition, 0.05f) == false)
 			SetPosition(CreaturePosition + dir / 10);
-			
-		
 	}
 }
 

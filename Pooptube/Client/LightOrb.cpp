@@ -47,6 +47,7 @@ bool LightOrb::Init(LightOrb *pCreature)
 // 	AddChild(mXMesh);
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
+	collisionBox->SetCollisionType(pooptube::CollisionBox::COLLISION_TYPE(pooptube::CollisionBox::COLLISION_TYPE::LIGHTORB | pooptube::CollisionBox::COLLISION_TYPE::NONE));
 	AddChild( collisionBox );
 
 	LightOrb::SetPosition(mInitialPosition);
@@ -66,7 +67,7 @@ void LightOrb::Render()
 	
 	GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
 
-	if (isRender == true)
+	if (mIsRender == true)
 		Node::Render();
 
 	GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
@@ -79,12 +80,20 @@ void LightOrb::Update(float dTime)
 	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	D3DXVECTOR3 pos = GetPosition();
+
+	mTime += dTime;
+
+	D3DXVECTOR3 temp = LightOrb::GetPosition();
+	float tempTheta = mTime * 3.14f / 180.f;
+	temp.y = 2.f + sinf(tempTheta * 100);
+	LightOrb::SetPosition(temp);
 	//float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
 
 	//if (height != pos.y) {
 	//	pos.y = height;
 	//	SetPosition(pos);
 	//}
+
 }
 
 void LightOrb::_CollsionHandle( pooptube::CollisionBox* collisionResult )
@@ -92,7 +101,8 @@ void LightOrb::_CollsionHandle( pooptube::CollisionBox* collisionResult )
 	if( collisionResult == nullptr )
 		return;
 	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::PLAYER ) {
-		isRender = false;
+		mIsRender = false;
+		//LightOrb::RemoveChild(this);
 		if( mEffectSound != nullptr )
 			pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
 	}

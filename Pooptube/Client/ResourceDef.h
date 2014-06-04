@@ -33,8 +33,12 @@
 
 #define PATH_MIST				PATH_MODEL L"Mist.jpg"
 
+//UI path
+#define PATH_RING				PATH_MODEL L"Ring.png"
+#define PATH_PINK				PATH_MODEL L"Pink.png"
+#define PATH_YELLOW				PATH_MODEL L"Yellow.png"
+
 //sound path
 #define PATH_SOUND 				"Sound\\"
 #define PATH_SOUND_BANK 			PATH_SOUND "Master Bank.bank"
 #define PATH_SOUND_BANK_STRING 	PATH_SOUND "Master Bank.strings.bank"
-

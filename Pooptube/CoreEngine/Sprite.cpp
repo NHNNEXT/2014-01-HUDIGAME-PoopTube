@@ -37,18 +37,22 @@ namespace pooptube {
 	}
 	void Sprite::Draw(RECT *prect_textureregion, D3DXVECTOR3 *pCenter, D3DCOLOR color)
 	{
-		m_psprite->Begin(D3DXSPRITE_ALPHABLEND);
-		m_psprite->Draw(m_ptexture, prect_textureregion, pCenter, NULL, color);
-		m_psprite->End();
+		if (Sprite::GetVisible()) {
+			m_psprite->Begin(D3DXSPRITE_ALPHABLEND);
+			m_psprite->Draw(m_ptexture, prect_textureregion, pCenter, NULL, color);
+			m_psprite->End();
+		}
 	}
 	void Sprite::Draw(RECT *prect_screenregion, RECT *prect_textureregion, D3DXVECTOR3 *pCenter, D3DCOLOR color)
 	{
-		RECT *rect = prect_screenregion;
-		Translate((float)rect->left, (float)rect->top);
-		Scale((float)(rect->right - rect->left) / (float)m_width_texture,
-			(float)(rect->bottom - rect->top) / (float)m_height_texture);
-		ApplyTransform();
-		Draw(prect_textureregion, pCenter, color);
+		if (Sprite::GetVisible()) {
+			RECT *rect = prect_screenregion;
+			Translate((float)rect->left, (float)rect->top);
+			Scale((float)(rect->right - rect->left) / (float)m_width_texture,
+				(float)(rect->bottom - rect->top) / (float)m_height_texture);
+			ApplyTransform();
+			Draw(prect_textureregion, pCenter, color);
+		}
 	}
 	void Sprite::Translate(float tx, float ty)
 	{
