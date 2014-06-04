@@ -47,7 +47,6 @@ bool LightOrb::Init(LightOrb *pCreature)
 // 	AddChild(mXMesh);
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
-	collisionBox->SetCollisionType(pooptube::CollisionBox::COLLISION_TYPE(pooptube::CollisionBox::COLLISION_TYPE::LIGHTORB | pooptube::CollisionBox::COLLISION_TYPE::NONE));
 	AddChild( collisionBox );
 
 	LightOrb::SetPosition(mInitialPosition);
