@@ -402,6 +402,9 @@
     <ClCompile Include="DrawObj.cpp">
       <Filter>Nodes</Filter>
     </ClCompile>
+    <ClCompile Include="PooMath.cpp">
+      <Filter>Util\Ease</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

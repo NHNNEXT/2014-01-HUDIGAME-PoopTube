@@ -168,10 +168,7 @@ namespace pooptube {
 	void Node::SetPosition(const D3DXVECTOR3& newPos) {
 		for( auto child : mChildList ){
 			D3DXVECTOR3 dPos = child->mPosition - mPosition;
-			if( dPos != D3DXVECTOR3( 0.f, 0.f, 0.f ) )
-				child->SetPosition( newPos + dPos );
-			else
-				child->SetPosition( newPos );
+			child->SetPosition( newPos + dPos );
 		}
 		mPosition = newPos;
 	}
