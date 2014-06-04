@@ -4,7 +4,9 @@
 
 namespace pooptube {
 	class XMesh;
-	class SkinnedMesh;
+	class BillBoard;
+	// 	class SkinnedMesh;
+	class Scene;
 }
 
 class Tree3 : public pooptube::Node{
@@ -21,11 +23,14 @@ public:
 
 
 private:
+	void _SetBillBoardTexture();
 
-	//맵툴용 매쉬
 	pooptube::XMesh			*mXMesh;
-	//클라용 skinnedmesh
-	pooptube::SkinnedMesh	*mSkinnedMesh;
+	pooptube::BillBoard		*mBillBoard;
 
+	//클라용 skinnedmesh
+	// 	pooptube::SkinnedMesh	*mSkinnedMesh;
+
+	pooptube::Scene			*mScene;
 };
 

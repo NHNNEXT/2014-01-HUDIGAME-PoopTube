@@ -39,8 +39,8 @@ bool Tree1::Init() {
 	mXMesh->SetPosition( 0.f, -0.5f, 0.f );
 	AddChild(mXMesh);
 	mBillBoard = pooptube::BillBoard::Create();
-	mBillBoard->SetScale( 11.f, 12.f, 1.f );
-	mBillBoard->SetPosition( 0.f, 10.5f, 0.f );
+	mBillBoard->SetPosition( 0.f, 12.9f, 0.f );
+	mBillBoard->SetScale( 10.2f, 14.2f, 1.f );
 	AddChild( mBillBoard );
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create(this);

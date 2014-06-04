@@ -96,9 +96,9 @@ void Stage::UpdateInput()
 		mCharacter->Move( 0.f, 0.1f );
 	if( GetInputManager().KeyState( 'H' ) == KeyState::KEY_PRESSED )
 		mCharacter->Move( 0.f, -0.1f );
-	if( GetInputManager().KeyState( '0' ) == KeyState::KEY_UP ){ // 파일 리로드, 테스트용
+	if( GetInputManager().KeyState( 'Q' ) == KeyState::KEY_UP ){ // 파일 리로드, 테스트용
 		mChildList.clear();
-		_LoadFile( mFileName );
+		Init( mFileName );
 	}
 }
 
@@ -170,7 +170,10 @@ void Stage::_LoadBillBoard( Json::Value& jsonData )
 {
 	BillBoard *tBillBoard = BillBoard::Create();
 	_SetCommonData( tBillBoard, jsonData );
-	tBillBoard->SetTexture( L"Model\\logo.jpg" ); // json파일에 파일 정보가 필요하다...
+	std::string texture( jsonData.get( "Texture", "Model\\logo.jpg" ).asString() );
+	std::wstring wStr;
+	wStr.assign( texture.begin(), texture.end() );
+	tBillBoard->SetTexture( wStr );
 	AddChild( tBillBoard );
 }
 
