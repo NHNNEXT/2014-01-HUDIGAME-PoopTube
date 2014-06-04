@@ -7,6 +7,7 @@
 #include "InputManager.h"
 #include "Light.h"
 #include "Ground.h"
+#include "Scene.h"
 
 MainCharacter::MainCharacter() {
 }
@@ -15,10 +16,10 @@ MainCharacter::MainCharacter() {
 MainCharacter::~MainCharacter() {
 }
 
-MainCharacter *MainCharacter::Create() {
+MainCharacter *MainCharacter::Create( pooptube::Scene* scene ) {
 	MainCharacter *pMainCharacter(new MainCharacter);
 
-	if( pMainCharacter->Init() ){
+	if( pMainCharacter->Init( scene ) ){
 		return pMainCharacter;
 	}
 	else
@@ -66,11 +67,13 @@ void MainCharacter::Update(float dTime) {
 		mState = NONE;
 	}
 }
-bool MainCharacter::Init() {
+bool MainCharacter::Init( pooptube::Scene* scene ) {
 	Node::Init();
+	mScene = scene;
 
 	mLight = pooptube::Light::Create();
 	AddChild(mLight);
+	mScene->AddRenderZone( mLight, D3DXVECTOR3( 0.f, 0.f, 0.f ), mLight->GetRange()+15.f ); // Range+여유분 거리
 
 	mMesh = pooptube::SkinnedMesh::Create(PATH_MAINCHAR);
 	//mMesh->RotateFrontVectorX(-0.3f);

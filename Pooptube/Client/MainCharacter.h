@@ -8,7 +8,6 @@
 #pragma once
 #include "stdafx.h"
 #include "Node.h"
-#include "StageOne.h"
 #include "SoundManager.h"
 #include "ResourceDef.h"
 
@@ -16,6 +15,7 @@ namespace pooptube{
 	class SkinnedMesh;
 	class CollisionBox;
 	class Light;
+	class Scene;
 }
 
 enum CHAR_STATE {
@@ -31,9 +31,9 @@ public:
 	MainCharacter();
 	~MainCharacter();
 
-	static MainCharacter *Create();
+	static MainCharacter *Create( pooptube::Scene* scene );
 
-	bool Init();
+	bool Init( pooptube::Scene* scene );
 
 	void Render();
 	void Update(float dTime);
@@ -74,6 +74,7 @@ private:
 
 	pooptube::SkinnedMesh	*mMesh = nullptr;
 	pooptube::Light			*mLight = nullptr;
+	pooptube::Scene			*mScene = nullptr;
 
 	FMOD_3D_ATTRIBUTES		mListener;
 };

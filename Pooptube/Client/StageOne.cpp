@@ -51,7 +51,7 @@ bool StageOne::Init() {
 	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK );
 	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK_STRING );
 
-	mCharacter = MainCharacter::Create();
+	mCharacter = MainCharacter::Create( this );
 	
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 

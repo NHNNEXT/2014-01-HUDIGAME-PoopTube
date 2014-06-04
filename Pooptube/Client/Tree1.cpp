@@ -4,6 +4,9 @@
 #include "SkinnedMesh.h"
 #include "ResourceDef.h"
 #include "CollisionBox.h"
+#include "Scene.h"
+#include "BillBoard.h"
+#include "PooMath.h"
 
 Tree1::Tree1()
 {
@@ -33,7 +36,12 @@ bool Tree1::Init() {
 
 	//멥툴에서는 아래로 사용하면 될듯
 	mXMesh = pooptube::XMesh::Create(PATH_TREE_1);
+	mXMesh->SetPosition( 0.f, -0.5f, 0.f );
 	AddChild(mXMesh);
+	mBillBoard = pooptube::BillBoard::Create();
+	mBillBoard->SetScale( 11.f, 12.f, 1.f );
+	mBillBoard->SetPosition( 0.f, 10.5f, 0.f );
+	AddChild( mBillBoard );
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create(this);
 	collisionBox->Translation(D3DXVECTOR3(0.f, 1.2f, 0.f));
@@ -47,9 +55,55 @@ bool Tree1::Init() {
 }
 
 void Tree1::Render() {
-	Node::Render();
+	if( pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()->CheckRenderZone( GetPosition(), 2.f ) ){
+		mXMesh->SetVisible( true );
+		mBillBoard->SetVisible( false );
+		Node::Render();
+	}
+	else{
+		mXMesh->SetVisible( false );
+		mBillBoard->SetVisible( true );
+		_SetBillBoardTexture();
+		Node::Render();
+	}
 }
 
 void Tree1::Update(float dTime) {
+}
+
+void Tree1::_SetBillBoardTexture()
+{
+	float angle = pooptube::CalculateAngle( GetFrontVector(), mBillBoard->GetFrontVector() );
+	angle /= D3DX_PI;
+	angle *= 4;
+	int dir( angle );
+	dir += 8;
+	dir %= 8;
+	switch( dir ){
+	case 0:
+		mBillBoard->SetTexture( L"Model\\Tree1_0.png" );
+		break;
+	case 1:
+		mBillBoard->SetTexture( L"Model\\Tree1_1.png" );
+		break;
+	case 2:
+		mBillBoard->SetTexture( L"Model\\Tree1_2.png" );
+		break;
+	case 3:
+		mBillBoard->SetTexture( L"Model\\Tree1_3.png" );
+		break;
+	case 4:
+		mBillBoard->SetTexture( L"Model\\Tree1_4.png" );
+		break;
+	case 5:
+		mBillBoard->SetTexture( L"Model\\Tree1_5.png" );
+		break;
+	case 6:
+		mBillBoard->SetTexture( L"Model\\Tree1_6.png" );
+		break;
+	case 7:
+		mBillBoard->SetTexture( L"Model\\Tree1_7.png" );
+		break;
+	}
 }
 
