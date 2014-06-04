@@ -1,5 +1,4 @@
-﻿
-#pragma once
+﻿#pragma once
 
 #include "Node.h"
 
@@ -20,10 +19,18 @@ namespace pooptube {
 
 		Ground *GetGroundModule() const { return mGround; }
 
+		void AddRenderZone( Node* srcNode, D3DXVECTOR3& centerPos, float radius )	{
+			mRenderZone.push_back( std::make_tuple( srcNode, centerPos, radius ) );
+		}
+		void RemoveRenderZone( Node* targetNode );
+// 		std::vector<SPHERE_ZONE>& GetRenderZone(){ return mLightZone; }
+		bool CheckRenderZone( D3DXVECTOR3 pos, float radius );
+
 	protected:
+		std::vector<std::tuple<Node*, D3DXVECTOR3, float>>	mRenderZone;
 		Ground				*mGround = nullptr;
 
 	private :
-		std::vector<Node *> mRenderList;
+// 		std::vector<Node *> mRenderList;
 	};
 }

@@ -1,5 +1,4 @@
-﻿
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "Scene.h"
 #include "Application.h"
 #include "ObjectManager.h"
@@ -38,4 +37,28 @@ namespace pooptube {
 	void Scene::Update( float dTime ) {
 		Node::Update(dTime);
 	}
+
+	void Scene::RemoveRenderZone( Node* targetNode )
+	{
+		for( auto iter = mRenderZone.begin(); iter != mRenderZone.end(); ++iter ){
+			if( targetNode == std::get<0>( *iter ) ){
+				mRenderZone.erase( iter );
+			}
+		}
+	}
+
+	bool Scene::CheckRenderZone( D3DXVECTOR3 pos, float radius )
+	{
+		D3DXVECTOR3 dVec;
+		float dist;
+		for( auto zone : mRenderZone ){
+			dVec = pos - std::get<0>( zone )->GetPosition() - std::get<1>( zone );
+			dist = radius + std::get<2>( zone );
+			if( D3DXVec3Length( &dVec ) <= dist )
+				return true;
+		}
+
+		return false;
+	}
+
 }
