@@ -58,6 +58,7 @@ void MainCharacter::Update(float dTime) {
 // 
 // 	mSkinnedMesh->SetPosition(GetPosition());
 // 	mSkinnedMesh->Update(dTime);
+	SetPosition( mPosition.x, mScene->GetGroundModule()->GetHeight( mPosition.x, mPosition.z ), mPosition.z );
 	_CollsionHandle( dTime, pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
 
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
