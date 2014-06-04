@@ -113,8 +113,8 @@ namespace pooptube {
 		D3DXVECTOR3			GetRightVector();
 		D3DXVECTOR3			GetLeftVector();
 
-		virtual void		SetScale(const D3DXVECTOR3& newScale) { mScaleVec = newScale; }
-		virtual void		SetScale(float x, float y, float z) { mScaleVec = D3DXVECTOR3(x, y, z); }
+		virtual void		SetScale( const D3DXVECTOR3& newScale );
+		virtual void		SetScale( float x, float y, float z ) { SetScale( D3DXVECTOR3( x, y, z ) ); }
 		virtual D3DXVECTOR3	GetScale() { return mScaleVec; }
 
 		virtual D3DXVECTOR3	GetPosition() const { return mPosition; }

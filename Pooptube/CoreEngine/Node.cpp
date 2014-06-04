@@ -185,6 +185,17 @@ namespace pooptube {
 		return Vec;
 	}
 
+	void Node::SetScale( const D3DXVECTOR3& newScale ) {
+		for( auto child : mChildList ){
+			D3DXVECTOR3 dVec;
+			dVec.x = newScale.x * child->mScaleVec.x / mScaleVec.x;
+			dVec.y = newScale.y * child->mScaleVec.y / mScaleVec.y;
+			dVec.z = newScale.z * child->mScaleVec.z / mScaleVec.z;
+			child->SetScale( dVec );
+		}
+		mScaleVec = newScale;
+	}
+
 	void Node::UpdateMatrix() {
 		// TODO: 행렬 계산
 		D3DXMATRIXA16	MatWorld;
