@@ -11,6 +11,24 @@
 #define GROUND_POLYGON_SIZE 1.0f;
 
 namespace pooptube {
+
+	const int D3DFVF_GROUNDCUSTOMVERTEX = D3DFVF_XYZ | D3DFVF_NORMAL |
+		D3DFVF_DIFFUSE | D3DFVF_TEX1 | D3DFVF_TEX2 | D3DFVF_TEX3;
+
+	struct GROUND_CUSTOM_VERTEX {
+		D3DXVECTOR3	position;
+		D3DXVECTOR3	normal;
+		D3DCOLOR	color;
+		float		tu0, tv0;
+		float		tu1, tv1;
+		float		tu2, tv2;
+	};
+
+	struct GROUND_CUSTOM_INDEX {
+		UINT w0, w1, w2;
+	};
+
+
 	class Ground : public Node {
 	public:
 		struct MapData
@@ -78,6 +96,9 @@ namespace pooptube {
 		LPDIRECT3DINDEXBUFFER9	mIndexBuffer = nullptr;
 
 		LPDIRECT3DTEXTURE9		mGroundTexture = nullptr;
+		LPDIRECT3DTEXTURE9		mSandTexture = nullptr;
+		LPDIRECT3DTEXTURE9		mAlphaMap = nullptr;
+		ID3DXEffect*			mEffect = nullptr;
 
 		UINT					mVertexCount = 0;
 		UINT					mIndexCount = 0;

@@ -12,6 +12,41 @@ float4 MaterialDiffuse : MATERIALDIFFUSE = {0.8f, 0.8f, 0.8f, 1.0f};
 static const int MAX_MATRICES = 26;
 float4x3    mWorldMatrixArray[MAX_MATRICES] : WORLDMATRIXARRAY;
 float4x4    mViewProj : VIEWPROJECTION;
+float4x4    mWorld : WORLD;
+
+texture	   mTexture;
+texture	   mTexture2;
+texture	   mAlphaMap;
+
+//--------------------------------------------------------------------------------------
+// Texture samplers
+//--------------------------------------------------------------------------------------
+sampler g_samScene =
+sampler_state
+{
+	Texture = <mTexture>;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Point;
+};
+
+sampler g_samScene3 =
+sampler_state
+{
+	Texture = <mTexture2>;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Point;
+};
+
+sampler g_samScene2 =
+sampler_state
+{
+	Texture = <mAlphaMap>;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Point;
+};
 
 ///////////////////////////////////////////////////////
 struct VS_INPUT
@@ -30,6 +65,50 @@ struct VS_OUTPUT
     float2  Tex0    : TEXCOORD0;
 };
 
+struct VSG_OUTPUT
+{
+	float4  Pos     : POSITION;
+	float4  Diffuse : COLOR;
+	float2  Tex0    : TEXCOORD0;
+	float2  Tex1	   : TEXCOORD1;
+	float2  Tex2	   : TEXCOORD2;
+};
+
+///////////////////////////////////////////////////////
+
+VSG_OUTPUT VertScene(float4 Pos : POSITION,
+	float4 Diffuse : COLOR,
+	float3 Normal : NORMAL,
+	float2 Tex0 : TEXCOORD0,
+	float2 Tex1 : TEXCOORD1,
+	float2 Tex2 : TEXCOORD2)
+{
+	VSG_OUTPUT o;
+
+	o.Pos = mul(Pos, mWorld);
+	o.Pos = mul(o.Pos, mViewProj);
+	o.Tex0 = Tex0;
+	o.Tex1 = Tex1;
+	o.Tex2 = Tex2;
+	float3 N = normalize(mul(Normal, (float3x3)mWorld));
+
+	o.Diffuse = Diffuse;
+
+	return o;
+}
+
+float4 PixScene(	float4 Diffuse : COLOR0,
+				float2 Tex0 : TEXCOORD0,
+				float2 Tex1 : TEXCOORD1,
+				float2 Tex2 : TEXCOORD2) : COLOR0
+{
+	float4 white = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float4 splate1 = tex2D(g_samScene, Tex0) * tex2D(g_samScene2, Tex1);
+	float4 splate2 = tex2D(g_samScene3, Tex2) * (white - tex2D(g_samScene2, Tex1));
+
+	return splate1 + splate2;
+	//return tex2D(g_samScene, Tex0);
+}
 
 float3 Diffuse(float3 Normal)
 {
@@ -105,5 +184,14 @@ technique t0
     {
         VertexShader = (vsArray[CurNumBones]);
     }
+}
+
+technique t1 
+{
+	pass p0 
+	{
+		VertexShader = compile vs_2_0 VertScene();
+		PixelShader = compile ps_2_0 PixScene();
+	}
 }
 

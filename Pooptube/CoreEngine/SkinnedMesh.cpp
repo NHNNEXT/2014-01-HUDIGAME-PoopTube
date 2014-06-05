@@ -744,6 +744,8 @@ namespace pooptube {
 				mDevice->SetSoftwareVertexProcessing(TRUE);
 			}
 
+			mMeshData->mEffect->SetTechnique("t0");
+
 			pBoneComb = reinterpret_cast<LPD3DXBONECOMBINATION>(pMeshContainer->pBoneCombinationBuf->GetBufferPointer
 				());
 			for (iAttrib = 0; iAttrib < pMeshContainer->NumAttributeGroups; iAttrib++)
