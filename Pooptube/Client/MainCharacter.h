@@ -68,7 +68,7 @@ private:
 	CHAR_STATE				mState = NONE;
 	
 	float					mSpeed = 10.f;
-	float					mRotateSpeed = 10.f;
+	float					mRotateSpeed = 3.f;
 	float					mJumpSpeed = 10.f;
 	int						mHP = 0;
 

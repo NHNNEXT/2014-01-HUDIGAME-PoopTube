@@ -112,33 +112,45 @@ void MainCharacter::_CollsionHandle( float dTime, pooptube::CollisionBox* collis
 }
 
 void MainCharacter::UpdateInput(float dTime) {
-	if (pooptube::GetInputManager().KeyState('W') == pooptube::KeyState::KEY_PRESSED) {
+// 	if (pooptube::GetInputManager().KeyState('W') == pooptube::KeyState::KEY_PRESSED) {
+// 		Translation(Node::GetFrontVector()*mSpeed*dTime);
+// 		if (mState != JUMP)
+// 			mState = MOVE;
+// 	}
+// 		
+// 	if (pooptube::GetInputManager().KeyState('S') == pooptube::KeyState::KEY_PRESSED) {
+// 		Translation(Node::GetFrontVector()*mSpeed*-1.f*dTime);
+// 		if (mState != JUMP)
+// 			mState = MOVE;
+// 	}
+// 		
+// 	if (pooptube::GetInputManager().KeyState('A') == pooptube::KeyState::KEY_PRESSED) {
+// 		Translation(Node::GetLeftVector()*mSpeed*dTime);
+// 		if (mState != JUMP)
+// 			mState = MOVE;
+// 	}
+// 		
+// 	if (pooptube::GetInputManager().KeyState('D') == pooptube::KeyState::KEY_PRESSED) {
+// 		Translation(Node::GetRightVector()*mSpeed*dTime);
+// 		if (mState != JUMP)
+// 			mState = MOVE;
+// 	}
+// 
+// 	if (pooptube::GetInputManager().KeyState('Q') == pooptube::KeyState::KEY_PRESSED) {
+// 		if (mState != JUMP)
+// 			mState = SHAKEHAND;
+// 	}
+
+	if (pooptube::GetInputManager().KeyState(VK_UP) == pooptube::KeyState::KEY_PRESSED) {
 		Translation(Node::GetFrontVector()*mSpeed*dTime);
 		if (mState != JUMP)
 			mState = MOVE;
 	}
-		
-	if (pooptube::GetInputManager().KeyState('S') == pooptube::KeyState::KEY_PRESSED) {
+
+	if (pooptube::GetInputManager().KeyState(VK_DOWN) == pooptube::KeyState::KEY_PRESSED) {
 		Translation(Node::GetFrontVector()*mSpeed*-1.f*dTime);
 		if (mState != JUMP)
 			mState = MOVE;
-	}
-		
-	if (pooptube::GetInputManager().KeyState('A') == pooptube::KeyState::KEY_PRESSED) {
-		Translation(Node::GetLeftVector()*mSpeed*dTime);
-		if (mState != JUMP)
-			mState = MOVE;
-	}
-		
-	if (pooptube::GetInputManager().KeyState('D') == pooptube::KeyState::KEY_PRESSED) {
-		Translation(Node::GetRightVector()*mSpeed*dTime);
-		if (mState != JUMP)
-			mState = MOVE;
-	}
-
-	if (pooptube::GetInputManager().KeyState('Q') == pooptube::KeyState::KEY_PRESSED) {
-		if (mState != JUMP)
-			mState = SHAKEHAND;
 	}
 
 	if (pooptube::GetInputManager().KeyState(VK_LEFT) == pooptube::KeyState::KEY_PRESSED) {
