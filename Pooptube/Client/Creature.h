@@ -74,10 +74,10 @@ private:
 	CREATURE_STATE	mState = IDLE;
 
 	float mIdleDistance = 16.0f;
-	float mRageDistance = 4.0f;
+	float mRageDistance = 3.0f;
 	float mSpeed = 0.2f;
 	float mDistanceFromMainCharater = 0;
-	float mAttackRate = 0.5f;
+	float mAttackRate = 1.0f;
 	float mAttackTime = 0.f;
 	int mAttackDamage = 1;
 	int	mTotalDamage = 0;

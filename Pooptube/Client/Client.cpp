@@ -44,11 +44,11 @@ int ClientRun()
 
 	// json로드 스테이지
 
- 	Stage* pStage = Stage::Create( "test.json" );
- 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
+ 	/*Stage* pStage = Stage::Create( "test.json" );
+ 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );*/
 	
-	/*IntroScene *pIntroScene = IntroScene::Create();
-	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);*/
+	IntroScene *pIntroScene = IntroScene::Create();
+	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
 
 	/*EndScene *pEndScene = EndScene::Create();
 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pEndScene);*/

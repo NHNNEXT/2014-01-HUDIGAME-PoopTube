@@ -61,6 +61,16 @@ bool Stage::Init( std::string filename )
 	ThirdPersonCamera* tCamera = ThirdPersonCamera::Create( mCharacter );
 	AddChild( tCamera );
 
+	/*mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
+		PATH_SKYBOX_DOWN,
+		PATH_SKYBOX_FRONT,
+		PATH_SKYBOX_BACK,
+		PATH_SKYBOX_LEFT,
+		PATH_SKYBOX_RIGHT);
+
+	mSkyBox->SetTarget(mCharacter);
+	AddChild(mSkyBox);*/
+
 	//파일 로드
 	mFileName = filename; // 테스트용
 	_LoadFile( filename );
@@ -184,6 +194,7 @@ void Stage::Update( float dTime )
 
 	if (orbCount == mOrbCount)
 	{
+		pooptube::CollisionManager::GetInstance()->ClearCollsionBoxList();
 		EndScene *pEndScene = EndScene::Create();
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pEndScene);
 	}
@@ -225,8 +236,6 @@ void Stage::_LoadFile( std::string filename )
 			_LoadBillBoard( data );
 		else if( data["Class"] == "Creature" )
 			_LoadCreature( data );
-		else if( data["Class"] == "LightOrb" )
-			_LoadLightOrb( data );
 		else if( data["Class"] == "Ground" )
 			_LoadGround( data );
 		else if( data["Class"] == "Camera" )
@@ -235,6 +244,8 @@ void Stage::_LoadFile( std::string filename )
 			_LoadSunLight( data );
 		else if( data["Class"] == "Node" )
 			_LoadNode( data );
+		else if (data["Class"] == "LightOrb")
+			_LoadLightOrb(data);
 		printf_s( "Load %s\n", data["Class"] );
 	}
 }

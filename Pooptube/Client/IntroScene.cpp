@@ -232,7 +232,8 @@ void IntroScene::Update(float dTime) {
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);*/
 
 		// json로드 스테이지
-		Stage* pStage = Stage::Create( "test.json" );
+		pooptube::CollisionManager::GetInstance()->ClearCollsionBoxList();
+		Stage* pStage = Stage::Create("test.json");
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
 	}
 }

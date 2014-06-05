@@ -57,8 +57,6 @@ namespace pooptube {
 			if( D3DXVec3Length( &dVec ) <= dist )
 				return true;
 		}
-
 		return false;
 	}
-
 }

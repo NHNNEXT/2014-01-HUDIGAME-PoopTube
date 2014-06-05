@@ -5,8 +5,8 @@
 using namespace pooptube;
 
 namespace pooptube {
-	
 	class Sprite;
+	class SkyBox;
 }
 
 class MainCharacter;
@@ -53,6 +53,7 @@ private:
 	Sprite				*mYellow[mOrbCount];
 	Sprite				*mPink[mOrbCount];
 	
+	SkyBox	*mSkyBox = nullptr;
 
 	std::list<LightOrb*> mLightOrbList;
 	std::list<Creature*> mCreatureList;

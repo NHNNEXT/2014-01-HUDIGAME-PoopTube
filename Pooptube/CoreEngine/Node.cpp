@@ -10,9 +10,9 @@ namespace pooptube {
 	Node::Node() {
 	}
 	Node::~Node() {
-		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
-			ObjectManager::GetInstance()->RemoveObject((*iter).get());
-		}
+// 		for (auto& iter = mChildList.begin(); iter != mChildList.end(); iter++) {
+// 			ObjectManager::GetInstance()->RemoveObject((*iter).get());
+// 		}
 		mChildList.clear();
 	}
 
