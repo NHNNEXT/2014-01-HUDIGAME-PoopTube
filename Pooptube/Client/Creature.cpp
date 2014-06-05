@@ -89,7 +89,7 @@ void Creature::Update(float dTime)
 		DoAngry();
 		break;
 	case RAGE:
-		DoRage();
+		DoRage(dTime);
 		break;
 	}
 
@@ -145,7 +145,7 @@ void Creature::DoIdle(float dTime)
 		D3DXVECTOR3 dir = mInitialPosition - CreaturePosition;
 		D3DXVec3Normalize(&dir, &dir);
 
-		if (Turn(GetPosition(), mInitialPosition, 0.05f) == false)
+		if (Turn(GetPosition(), mInitialPosition, mSpeed) == false)
 			SetPosition(CreaturePosition + dir / 10);
 	}
 }
@@ -156,26 +156,40 @@ void Creature::DoAngry()
 	D3DXVECTOR3 CreaturePosition = GetPosition();
 	if( mStepSound != nullptr )
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mStepSound );
-	Turn(GetPosition(), CharacterPosition, 0.05f);
+	Turn(GetPosition(), CharacterPosition, mSpeed);
 	SetPosition(CreaturePosition + (CharacterPosition - CreaturePosition) / 100);
 }
 
-void Creature::DoRage()
+bool Creature::DoRage(float dTime)
 {
 	mStepSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
 	if( mEffectSound != nullptr )
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
 	RotationY(0.4f);
+
+	mAttackTime += dTime;
+
+	if (mAttackTime > mAttackRate) {
+		mTotalDamage += mAttackDamage;
+		printf("%d \n", mTotalDamage);
+		mAttackTime = 0.f;
+		return true;
+	}
+	else
+	{
+		//printf("Not Yet\n");
+		return false;
+	}
 }
 
-void Creature::_CollsionHandle( pooptube::CollisionBox* collisionResult )
+void Creature::_CollsionHandle(pooptube::CollisionBox* collisionResult)
 {
-	if( collisionResult == nullptr )
+	if (collisionResult == nullptr)
 		return;
-	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) {
+	if (collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::BLOCK) {
 		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetParent()->GetPosition();
-		D3DXVec3Normalize( &dPos, &dPos );
+		D3DXVec3Normalize(&dPos, &dPos);
 		dPos *= mSpeed;
-		Translation( dPos );
+		Translation(dPos);
 	}
 }

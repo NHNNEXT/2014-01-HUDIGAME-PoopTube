@@ -34,6 +34,8 @@ namespace pooptube {
 		void		SetDirection(D3DXVECTOR3 value) { mD3DLight.Direction = value; }
 		D3DXVECTOR3 GetDirection() { return mD3DLight.Direction; }
 
+		D3DLIGHT9	GetD3DLight() const { return mD3DLight; }
+
 	protected:
 		D3DLIGHT9		mD3DLight;
 

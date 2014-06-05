@@ -124,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="Bush.h" />
     <ClInclude Include="Creature.h" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="IntroScene.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClInclude>
@@ -148,6 +149,7 @@
     <ClCompile Include="Bush.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="IntroScene.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>

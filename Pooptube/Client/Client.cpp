@@ -8,6 +8,7 @@
 #include "ObjectManager.h"
 #include "StageOne.h"
 #include "IntroScene.h"
+#include "EndScene.h"
 #include "BugTrapHeader.h"
 #include "Stage.h"
 
@@ -34,7 +35,11 @@ int ClientRun()
 	pooptube::NetworkSystem::GetInstance()->Write((char*)&lr, lr.mSize);*/
 
 	//StageOne* pStageOne = StageOne::Create();
-// 	IntroScene *pIntroScene = IntroScene::Create();
+
+	//IntroScene *pIntroScene = IntroScene::Create();
+
+	
+
 
 // 	if (pStageOne == nullptr) {
 // 		printf("TestScene Create Error!\n");
@@ -45,17 +50,23 @@ int ClientRun()
 // 	}
 
 	// json로드 스테이지
-	Stage* pStage = Stage::Create( "test.json" );
-	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
+
+ 	Stage* pStage = Stage::Create( "test.json" );
+ 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
 	
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);
-// 	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
+
+	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
+
+	//EndScene *pEndScene = EndScene::Create();
+	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pEndScene);
+
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pooptube::TestScene::Create() );
 
 	pooptube::Application::GetInstance()->Run();
 	pooptube::Application::GetInstance()->Release();
 
-	BT_InsLogEntry( g_iLogHandle, BTLL_INFO, _T( "Leaving ClientRun() function" ) );
+	BT_InsLogEntry( g_iLogHandle, BTLL_INFO, _T( "Leaving ClientRun() function" ));
 	BT_CloseLogFile( g_iLogHandle );
 
 	return 0;

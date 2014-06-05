@@ -24,6 +24,7 @@
 #include "Tree3.h"
 #include "BillBoard.h"
 #include "PooMath.h"
+#include "EndScene.h"
 
 Stage::Stage()
 {
@@ -49,6 +50,9 @@ bool Stage::Init( std::string filename )
 {
 	Scene::Init();
 
+	mLightOrbList.clear();
+	mCreatureList.clear();
+
 	SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK );
 	SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK_STRING );
 
@@ -61,12 +65,68 @@ bool Stage::Init( std::string filename )
 	mFileName = filename; // 테스트용
 	_LoadFile( filename );
 	
+	/*for( auto data : stageData ) {
+		if( data["Class"] == "Ground" )
+			_LoadGround( data );
+		else if( data["Class"] == "Camera" )
+			_LoadCamera( data );
+		else if( data["Class"] == "SunLight" )
+			_LoadSunLight( data );
+		else if( data["Class"] == "Creature" )
+			_LoadCreature( data );
+		else if( data["Class"] == "LightOrb" )
+			_LoadLightOrb( data );
+		else if( data["Class"] == "BillBoard" )
+			_LoadBillBoard( data );
+		else if( data["Class"].asString().find( "Tree" ) != std::string::npos )
+			_LoadTree( data );
+		else if( data["Class"] == "Node" )
+			_LoadNode( data );
+		printf_s( "Load %s\n", data["Class"] );
+	}*/
+
+	// UI 부분(class로 따로 빼야겠음)
+	float x = pooptube::Application::GetInstance()->GetScreenSize().x;
+	float y = pooptube::Application::GetInstance()->GetScreenSize().y;
+
+	for (int i = 0; i < mOrbCount; ++i)
+	{
+		mClearPoint[i] = nullptr;
+		mClearPoint[i] = pooptube::Sprite::Create(PATH_RING);
+		AddChild(mClearPoint[i]);
+
+		mYellow[i] = nullptr;
+		mYellow[i] = pooptube::Sprite::Create(PATH_YELLOW);
+		AddChild(mYellow[i]);
+
+		mPink[i] = nullptr;
+		mPink[i] = pooptube::Sprite::Create(PATH_PINK);
+		AddChild(mPink[i]);
+
+		mClearPoint[i]->Translate(x / 30.f + static_cast<float>(i * 70), y / 30.f);
+		mClearPoint[i]->ApplyTransform();
+		mClearPoint[i]->SetVisible(true);
+
+		mYellow[i]->Translate(x / 30.f + static_cast<float>(i * 70), y / 30.f);
+		mYellow[i]->ApplyTransform();
+		mYellow[i]->SetVisible(false);
+
+		mPink[i]->Translate(x / 30.f + static_cast<float>(i * 70), y / 30.f);
+		mPink[i]->ApplyTransform();
+		mPink[i]->SetVisible(false);
+	}
 	return true;
 }
 
 void Stage::Render()
 {
 	Node::Render();
+
+	for (int i = 0; i < mOrbCount; ++i) {
+		mClearPoint[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
+		mYellow[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
+		mPink[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 }
 
 void Stage::Update( float dTime )
@@ -82,6 +142,55 @@ void Stage::Update( float dTime )
 	mTimeForFPS += dTime;
 
 	SoundManager::GetInstance()->Update();
+
+ 	
+// 	printf("Creature count : %d \n", mCreatureList.size());
+
+	int orbCount = 0;
+
+	// yellow 그리기
+	std::list<LightOrb*>::iterator lightOrbListItor= mLightOrbList.begin();
+	for (; lightOrbListItor != mLightOrbList.end(); ++lightOrbListItor) {
+		if (!((*lightOrbListItor)->IsRender())) {
+			++orbCount;
+			if ((*lightOrbListItor)->IsHealable()) {
+				mCharacter->InCreaseHP(1);
+				(*lightOrbListItor)->SetHealable();
+			}
+		}
+	}
+	for (int i = 0; i < orbCount; ++i) {
+		mYellow[i]->SetVisible(true);
+	}
+	
+	// pink 그리기
+	
+	std::list<Creature*>::iterator creatureListItor = mCreatureList.begin();
+	for (; creatureListItor != mCreatureList.end(); ++creatureListItor) {
+		if ((*creatureListItor)->GetState() == RAGE && (*creatureListItor)->DoRage(dTime)) {
+			//mTotalDamage += (*creatureListItor)->GetTotalDamage();
+			mCharacter->DecreaseHP(1);
+			//printf("HP!!!!!! : %d\n", mCharacter->GetHP());
+		}
+	}
+	//mCharacter->SetHP(orbCount - mTotalDamage);
+
+	for (int i = 0; i < mOrbCount; ++i) {
+		if (i < mCharacter->GetHP())
+			mPink[i]->SetVisible(true);
+		else
+			mPink[i]->SetVisible(false);
+	}
+
+	if (orbCount == mOrbCount)
+	{
+		EndScene *pEndScene = EndScene::Create();
+		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pEndScene);
+	}
+	
+	printf("LightOrb count : %d \n", orbCount);
+	printf("HP : %d\n", mCharacter->GetHP());
+	printf("DMG : %d\n", mTotalDamage);
 }
 
 void Stage::UpdateInput()
@@ -132,7 +241,7 @@ void Stage::_LoadFile( std::string filename )
 
 void Stage::_LoadGround( Json::Value& jsonData )
 {
-	mGround = Ground::Create( PATH_INTRO_HEIGHTMAP ); // json파일에 파일 정보가 필요하다...
+	mGround = Ground::Create(PATH_INTRO_HEIGHTMAP); // json파일에 파일 정보가 필요하다...
 	_SetCommonData( mGround, jsonData );
 	AddChild( mGround );
 }
@@ -157,6 +266,10 @@ void Stage::_LoadCreature( Json::Value& jsonData )
 	_SetCommonData( tCreature, jsonData );
 	tCreature->pss = mCharacter;
 	AddChild( tCreature );
+
+	tCreature->SetInitialPosition(tCreature->GetPosition());
+
+	mCreatureList.push_back(tCreature);
 }
 
 void Stage::_LoadLightOrb( Json::Value& jsonData )
@@ -164,6 +277,9 @@ void Stage::_LoadLightOrb( Json::Value& jsonData )
 	LightOrb *tLightOrb = LightOrb::Create();
 	_SetCommonData( tLightOrb, jsonData );
 	AddChild( tLightOrb );
+
+	//auto iter = mLightOrbList.begin();
+	mLightOrbList.push_back(tLightOrb);
 }
 
 void Stage::_LoadBillBoard( Json::Value& jsonData )

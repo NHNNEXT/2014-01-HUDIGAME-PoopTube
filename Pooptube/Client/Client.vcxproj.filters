@@ -77,6 +77,9 @@
     <ClInclude Include="Stage.h">
       <Filter>Stage</Filter>
     </ClInclude>
+    <ClInclude Include="EndScene.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -114,6 +117,9 @@
       <Filter>Character</Filter>
     </ClCompile>
     <ClCompile Include="Stage.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="EndScene.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
   </ItemGroup>

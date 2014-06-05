@@ -84,7 +84,7 @@ void LightOrb::Update(float dTime)
 
 	D3DXVECTOR3 temp = LightOrb::GetPosition();
 	float tempTheta = mTime * 3.14f / 180.f;
-	temp.y = 2.f + sinf(tempTheta * 100);
+	temp.y = 2.f + sinf(tempTheta * 70);
 	LightOrb::SetPosition(temp);
 	//float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
 
@@ -101,7 +101,7 @@ void LightOrb::_CollsionHandle( pooptube::CollisionBox* collisionResult )
 		return;
 	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::PLAYER ) {
 		mIsRender = false;
-		//LightOrb::RemoveChild(this);
+		//mIsHealable = false;
 		if( mEffectSound != nullptr )
 			pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
 	}

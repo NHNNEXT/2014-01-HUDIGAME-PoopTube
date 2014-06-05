@@ -48,18 +48,6 @@ bool IntroScene::Init() {
 
 	pooptube::Scene::Init();
 
-// 	mSunLight = pooptube::SunLight::Create();
-// 	mSunLight->LightOnOff(true);
-// 	D3DCOLORVALUE temp;
-// 	temp.r = 0.f;
-// 	temp.g = 0.f;
-// 	temp.b = 0.f;
-// 	mSunLight->SetSpecular(temp);
-// 	temp.r = 0.1f;
-// 	temp.g = 0.1f;
-// 	temp.b = 0.1f;
-// 	mSunLight->SetDiffuse(temp);
-
 	float x = pooptube::Application::GetInstance()->GetScreenSize().x;
 	float y = pooptube::Application::GetInstance()->GetScreenSize().y;
 
@@ -169,7 +157,7 @@ void IntroScene::Render() {
 		mClearPoint[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 		mYellow[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 		mPink[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
-		mBoard[i]->Render();
+		//mBoard[i]->Render();
 	}
 }
 
@@ -246,8 +234,8 @@ void IntroScene::Update(float dTime) {
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);*/
 
 		// json로드 스테이지
-		Stage* pStage = Stage::Create( "test2.json" );
-		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
+		//Stage* pStage = Stage::Create( "test2.json" );
+		//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
 	}
 }
 

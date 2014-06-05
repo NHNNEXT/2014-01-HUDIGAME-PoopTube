@@ -50,13 +50,23 @@ public:
 
 	void DoIdle(float dTime);
 	void DoAngry();
-	void DoRage();
+	bool DoRage(float dTime);
 
 	CREATURE_STATE GetState() const { return mState; }
 	void SetState(CREATURE_STATE state) { mState = state; }
 
+	void SetAttackRate(float attackRate) { mAttackRate = attackRate; }
+	float GetAttackRate() { return mAttackRate; }
+
+	int GetTotalDamage() { return mTotalDamage; }
+	float GetSpeed() { return mSpeed; }
+
+	void SetInitialPosition(D3DXVECTOR3 position) { mInitialPosition = position; }
+
 	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mMesh->GetVertices(); }
 	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mMesh->GetIndices(); }
+
+	//void IsAttackable();
 
 private:
 	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
@@ -65,9 +75,17 @@ private:
 
 	float mIdleDistance = 8.f;
 	float mRageDistance = 2.f;
-	float mSpeed = 0.03f;
+	float mSpeed = 0.2f;
 	float mDistanceFromMainCharater = 0;
-	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 10.f };
+	float mAttackRate = 0.5f;
+	float mAttackTime = 0.f;
+	int mAttackDamage = 1;
+	int	mTotalDamage = 0;
+	bool mAttackable = false;
+	
+
+	//float mTime = 0.f;
+	D3DXVECTOR3 mInitialPosition = { 10, 10, 10 };
 
 	pooptube::SkinnedMesh	*mMesh = nullptr;
 	pooptube::XMesh			*mXMesh = nullptr;

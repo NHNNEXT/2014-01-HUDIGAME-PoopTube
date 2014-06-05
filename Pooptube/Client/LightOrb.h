@@ -37,6 +37,8 @@ public:
 	void Update(float dTime);
 
 	bool IsRender() { return mIsRender; }
+	bool IsHealable() { return mIsHealable; }
+	void SetHealable() { mIsHealable = false; }
 
 	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mMesh->GetVertices(); }
 	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mMesh->GetIndices(); }
@@ -54,7 +56,11 @@ private:
 
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
 	bool					mIsRender = true;
+	bool					mIsHealable = true;
+
 	FMOD::Studio::EventInstance *mEffectSound = nullptr;
+
+	
 
 	float					mTime = 0.f;
 

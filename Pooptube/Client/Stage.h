@@ -4,7 +4,14 @@
 
 using namespace pooptube;
 
+namespace pooptube {
+	
+	class Sprite;
+}
+
 class MainCharacter;
+class LightOrb;
+class Creature;
 
 class Stage :
 	public Scene
@@ -38,5 +45,16 @@ private:
 	void				_LoadTree3( Json::Value& jsonData );
 	void				_LoadNode( Json::Value& jsonData );
 	void				_SetCommonData( Node* target, Json::Value& jsonData );
+
+	int					mTotalDamage = 0;
+	float				mCreatureAttackTime= 0.f;
+	enum				{ mOrbCount = 12, };
+	Sprite				*mClearPoint[mOrbCount];
+	Sprite				*mYellow[mOrbCount];
+	Sprite				*mPink[mOrbCount];
+	
+
+	std::list<LightOrb*> mLightOrbList;
+	std::list<Creature*> mCreatureList;
 };
 
