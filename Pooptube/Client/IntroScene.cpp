@@ -164,6 +164,7 @@ void IntroScene::Render() {
 void IntroScene::Update(float dTime) {
 	Node::Update(dTime);
 
+	IntroScene::UpdateInput();
 	//printf("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
 	//printf("%f %f %f\n\n", mCharacter->GetFrontVector().x, mCharacter->GetFrontVector().y, mCharacter->GetFrontVector().z);
 
@@ -249,4 +250,9 @@ void IntroScene::UpdateInput() {
 		mCharacter->Move(0.f, 0.1f);
 	if (pooptube::GetInputManager().KeyState('H') == pooptube::KeyState::KEY_PRESSED)
 		mCharacter->Move(0.f, -0.1f);
+	if (pooptube::GetInputManager().KeyState('K') == pooptube::KeyState::KEY_PRESSED) {// stage skip¿ë
+		pooptube::CollisionManager::GetInstance()->ClearCollsionBoxList();
+		Stage* pStage = Stage::Create("test.json");
+		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStage);
+	}
 }

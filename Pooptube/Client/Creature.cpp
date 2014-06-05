@@ -171,7 +171,7 @@ bool Creature::DoRage(float dTime)
 
 	if (mAttackTime > mAttackRate) {
 		mTotalDamage += mAttackDamage;
-		printf("%d \n", mTotalDamage);
+		//printf("%d \n", mTotalDamage);
 		mAttackTime = 0.f;
 		return true;
 	}

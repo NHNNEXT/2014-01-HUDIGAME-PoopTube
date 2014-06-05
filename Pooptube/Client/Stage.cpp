@@ -174,10 +174,9 @@ void Stage::Update( float dTime )
 	}
 	
 	// pink 그리기
-	
 	std::list<Creature*>::iterator creatureListItor = mCreatureList.begin();
 	for (; creatureListItor != mCreatureList.end(); ++creatureListItor) {
-		if ((*creatureListItor)->GetState() == RAGE && (*creatureListItor)->DoRage(dTime)) {
+		if ((*creatureListItor)->GetState() == RAGE && (*creatureListItor)->DoRage(dTime) && mCharacter->GetHP() >= 0) {
 			//mTotalDamage += (*creatureListItor)->GetTotalDamage();
 			mCharacter->DecreaseHP(1);
 			//printf("HP!!!!!! : %d\n", mCharacter->GetHP());
@@ -219,6 +218,11 @@ void Stage::UpdateInput()
 	if( GetInputManager().KeyState( 'Q' ) == KeyState::KEY_UP ){ // 파일 리로드, 테스트용
 		mChildList.clear();
 		Init( mFileName );
+	}
+	if (GetInputManager().KeyState('K') == KeyState::KEY_PRESSED) {// stage skip용
+		pooptube::CollisionManager::GetInstance()->ClearCollsionBoxList();
+		EndScene *pEndScene = EndScene::Create();
+		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pEndScene);
 	}
 }
 
