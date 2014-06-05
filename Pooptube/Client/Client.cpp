@@ -34,13 +34,6 @@ int ClientRun()
 	lr.mPlayerId = 1000;
 	pooptube::NetworkSystem::GetInstance()->Write((char*)&lr, lr.mSize);*/
 
-	//StageOne* pStageOne = StageOne::Create();
-
-	//IntroScene *pIntroScene = IntroScene::Create();
-
-	
-
-
 // 	if (pStageOne == nullptr) {
 // 		printf("TestScene Create Error!\n");
 // 		system("pause");
@@ -54,12 +47,11 @@ int ClientRun()
  	Stage* pStage = Stage::Create( "test.json" );
  	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
 	
-	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);
+	/*IntroScene *pIntroScene = IntroScene::Create();
+	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);*/
 
-	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pIntroScene);
-
-	//EndScene *pEndScene = EndScene::Create();
-	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pEndScene);
+	/*EndScene *pEndScene = EndScene::Create();
+	pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pEndScene);*/
 
 	//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pooptube::TestScene::Create() );
 

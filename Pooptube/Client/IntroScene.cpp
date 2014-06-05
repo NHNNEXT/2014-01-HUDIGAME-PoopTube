@@ -203,8 +203,6 @@ void IntroScene::Update(float dTime) {
 		}
 	}
 
-	printf("%d \n", mCharacter->GetHP());
-
 	mCharacter->SetHP(lightOrbCount - mTotalDamage);
 
 	for (int i = 0; i < mCharacter->GetHP(); ++i) {
@@ -234,8 +232,8 @@ void IntroScene::Update(float dTime) {
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);*/
 
 		// json로드 스테이지
-		//Stage* pStage = Stage::Create( "test2.json" );
-		//pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
+		Stage* pStage = Stage::Create( "test.json" );
+		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene( pStage );
 	}
 }
 

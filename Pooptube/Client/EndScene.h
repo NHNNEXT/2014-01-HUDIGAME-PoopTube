@@ -9,7 +9,7 @@ namespace pooptube {
 	class CollisionBox;
 	class SkyBox;
 	class Light;
-	class SunLight;
+	//class SunLight;
 	class XMesh;
 	class Ground;
 	class BillBoard;

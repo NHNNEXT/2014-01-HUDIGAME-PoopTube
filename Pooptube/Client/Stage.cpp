@@ -188,9 +188,9 @@ void Stage::Update( float dTime )
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pEndScene);
 	}
 	
-	printf("LightOrb count : %d \n", orbCount);
+	/*printf("LightOrb count : %d \n", orbCount);
 	printf("HP : %d\n", mCharacter->GetHP());
-	printf("DMG : %d\n", mTotalDamage);
+	printf("DMG : %d\n", mTotalDamage);*/
 }
 
 void Stage::UpdateInput()
