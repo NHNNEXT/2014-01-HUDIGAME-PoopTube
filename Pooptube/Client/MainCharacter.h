@@ -52,6 +52,7 @@ public:
 	float		GetJumpSpeed() const { return mJumpSpeed; }
 
 	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mMesh; }
+	pooptube::Light* GetLight() const { return mLight; }
 
 //	virtual void CollsionReceive( std::shared_ptr<Node> target );
 //	virtual void CollsionReceive( Node* target );

@@ -48,6 +48,7 @@ private:
 
 	int					mTotalDamage = 0;
 	float				mCreatureAttackTime= 0.f;
+	float				mLightEnhanceTime = 0.f;
 	enum				{ mOrbCount = 12, };
 	Sprite				*mClearPoint[mOrbCount];
 	Sprite				*mYellow[mOrbCount];

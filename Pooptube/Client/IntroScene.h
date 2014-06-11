@@ -59,6 +59,7 @@ private:
 	bool				mRecordJumpPos = false;
 	bool				mIsCleared = false;
 	float				mCreatureAttackTime = 0.f;
+	float				mLightEnhanceTime = 0.f;
 	int					mTotalDamage = 0;
 
 	pooptube::CollisionBox	*testDummy;

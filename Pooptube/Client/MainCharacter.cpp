@@ -74,7 +74,8 @@ bool MainCharacter::Init( pooptube::Scene* scene ) {
 
 	mLight = pooptube::Light::Create();
 	AddChild(mLight);
-	mScene->AddRenderZone( mLight, D3DXVECTOR3( 0.f, 0.f, 0.f ), mLight->GetRange()+15.f ); // Range+여유분 거리
+	// mScene->AddRenderZone( mLight, D3DXVECTOR3( 0.f, 0.f, 0.f ), mLight->GetRange()+15.f ); // Range+여유분 거리
+	mScene->AddRenderZone(mLight, D3DXVECTOR3(0.f, 0.f, 0.f), mLight->GetRange()); // Range+여유분 거리
 
 	mMesh = pooptube::SkinnedMesh::Create(PATH_MAINCHAR);
 	//mMesh->RotateFrontVectorX(-0.3f);

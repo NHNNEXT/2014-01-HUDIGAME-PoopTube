@@ -206,6 +206,19 @@ void IntroScene::Update(float dTime) {
 
 	mCharacter->SetHP(lightOrbCount - mTotalDamage);
 
+	// HP를 토대로 MainCharacter 빛의 범위를 조정한다.
+	//mCharacter->GetLight()->SetRange(static_cast<float>(mCharacter->GetHP()) * 15.f);
+
+	if (mCharacter->GetLight()->GetRange() <= static_cast<float>(mCharacter->GetHP()) * 5.f) {
+		mLightEnhanceTime += dTime;
+		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
+	}
+	else
+	{
+		mLightEnhanceTime -= dTime;
+		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
+	}
+
 	for (int i = 0; i < mCharacter->GetHP(); ++i) {
 		if (mCharacter->GetHP() >= 1)
 			mPink[mCharacter->GetHP() - 1]->SetVisible(true);
