@@ -276,7 +276,7 @@ namespace pooptube {
 		delete[] mBoneMatrices;
 
 		D3DXFrameDestroy(mFrameRoot, &mAlloc);
-		SAFE_RELEASE(mEffect);
+		//SAFE_RELEASE(mEffect);
 		SAFE_RELEASE(mAnimController);
 	}
 
@@ -297,9 +297,16 @@ namespace pooptube {
 
 		//여기서 fail이 뜨면 .fx파일의 컴파일 실패일 가능성이 있음
 		//fx파일 경로를 박아둠 나중에 수정 필요
-		if (FAILED(D3DXCreateEffectFromFile(mDevice, L"Shader\\SkinnedMesh.fx", NULL, NULL, dwShaderFlags,
-			NULL, &mEffect, NULL))) {
+// 		if (FAILED(D3DXCreateEffectFromFile(mDevice, L"Shader\\SkinnedMesh.fx", NULL, NULL, dwShaderFlags,
+// 			NULL, &mEffect, NULL))) {
+// 
+// 			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
+// 			assert(false);
+// 			return false;
+// 		}
 
+		mEffect = ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx");
+		if (!mEffect) {
 			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
 			assert(false);
 			return false;

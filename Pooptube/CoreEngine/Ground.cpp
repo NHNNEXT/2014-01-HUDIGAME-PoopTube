@@ -29,10 +29,17 @@ namespace pooptube {
 		mAlphaMap = ResourceManager::GetInstance()->LoadTexture(L"Model\\splattingmap1.bmp");
 		mSandTexture = ResourceManager::GetInstance()->LoadTexture(L"Model\\Dirt 00 seamless.jpg");
 
-		DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE | D3DXSHADER_DEBUG;
-		if (FAILED(D3DXCreateEffectFromFile(mDevice, L"Shader\\SkinnedMesh.fx", NULL, NULL, dwShaderFlags,
-			NULL, &mEffect, NULL))) {
+// 		DWORD dwShaderFlags = D3DXFX_NOT_CLONEABLE | D3DXSHADER_DEBUG;
+// 		if (FAILED(D3DXCreateEffectFromFile(mDevice, L"Shader\\SkinnedMesh.fx", NULL, NULL, dwShaderFlags,
+// 			NULL, &mEffect, NULL))) {
+// 
+// 			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
+// 			assert(false);
+// 			return false;
+// 		}
 
+		mEffect = ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx");
+		if (!mEffect) {
 			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
 			assert(false);
 			return false;
@@ -71,14 +78,14 @@ namespace pooptube {
 				//vertex[nIndex].position.y = (float)bitmapImage[nIndex * 3] * 0.005f;
 				vertex[nIndex].position.y = mData->GetHeight(x, z) * mData->amp;
 
-				vertex[nIndex].tu0 = (float)z * 4.0f  /(float)(row - 1);
-				vertex[nIndex].tv0 = (float)x * 4.0f /(float)(col - 1);
+				vertex[nIndex].tu0 = (float)z * 40.0f  /(float)(row - 1);
+				vertex[nIndex].tv0 = (float)x * 40.0f /(float)(col - 1);
 
 				vertex[nIndex].tu1 = (float)z / (float)(row - 1);
 				vertex[nIndex].tv1 = (float)x / (float)(col - 1);
 
-				vertex[nIndex].tu2 = (float)z * 4.0f / (float)(row - 1);
-				vertex[nIndex].tv2 = (float)x * 4.0f / (float)(col - 1);
+				vertex[nIndex].tu2 = (float)z * 40.0f / (float)(row - 1);
+				vertex[nIndex].tv2 = (float)x * 40.0f / (float)(col - 1);
 
 				//mVertices.push_back(vertex[nIndex].position);
 
