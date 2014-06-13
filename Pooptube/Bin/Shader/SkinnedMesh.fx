@@ -3,10 +3,9 @@
 // Copyright (c) 2000-2002 Microsoft Corporation. All rights reserved.
 //
 
-float3 lightPos = { 10.0f, 10.0f, 10.0f };
-float3 lightDir = { 0.0f, 0.0f, -1.0f };    //light Direction 
+float3 lightPos = { 10.0f, 10.0f, 10.0f }; 
 float3 lightDiffuse = { 0.6f, 0.6f, 0.6f }; // Light Diffuse
-float3 lightAmbient = { 0.3f, 0.3f, 0.3f };
+float3 lightAmbient = { 0.1f, 0.1f, 0.1f };
 float3 lightSpecular = { 1.0f, 1.0f, 1.0f };
 float  lightDistance = 100.f;
 float  lightSpecularPower = 25.0f;
@@ -70,8 +69,8 @@ struct VS_OUTPUT_ANI
     float4  Pos     : POSITION;
     float4  Diffuse : COLOR;
     float2  Tex0    : TEXCOORD0;
-	/*float3  Normal  : TEXCOORD1;
-	float3  WorldPos : TEXCOORD2;*/
+	//float3  Normal  : TEXCOORD1;
+	//float3  WorldPos : TEXCOORD2;
 };
 
 struct VS_INPUT_GROUND 
@@ -92,6 +91,22 @@ struct VS_OUTPUT_GROUND
 	float3  Normal  : TEXCOORD3;
 	float3  WorldPos : TEXCOORD4;
 };
+
+struct VS_INPUT_MESH
+{
+	float4 Pos : POSITION;
+	float3 Normal : NORMAL;
+	float2 Tex0 : TEXCOORD0;
+};
+
+struct VS_OUTPUT_MESH
+{
+	float4  Pos     : POSITION;
+	float2  Tex0    : TEXCOORD0;
+	float3  Normal  : TEXCOORD3;
+	float3  WorldPos : TEXCOORD4;
+};
+
 ///////////////////////////////////////////////////////
 
 VS_OUTPUT_GROUND VShadeGround( VS_INPUT_GROUND Input )
@@ -139,43 +154,20 @@ float4 PShadeGround(
 	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
 
 	return float4(saturate(
-		/*TotalAmbient +*/
+		TotalAmbient +
 		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6) +
 		(lightSpecular * specLighting * 0.5)
 		), 1);
-
-	////////////////////////////////////////////////
-	/*
-	float3 NLightDir = normalize(lightDir);
-	float3 NNormal = normalize(Normal);
-	float NDotL = dot(NNormal, NLightDir);
-
-	float diffuseLighting = saturate(dot(NNormal, -NLightDir));
-
-	//카메라 포즈 월드 포즈
-	//하프벡터이용
-	float3 halfv = normalize(normalize(mCamaraPos - WorldPos) - NLightDir);
-	float specLighting = pow(saturate(dot(halfv, NNormal)), lightSpecularPower);
-
-	float4 white = { 1.0f, 1.0f, 1.0f, 1.0f };
-	float4 splate1 = tex2D(g_samScene, Tex0) * tex2D(g_samScene2, Tex1);
-	float4 splate2 = tex2D(g_samScene3, Tex2) * (white - tex2D(g_samScene2, Tex1));
-	float4 BaseColor = splate1 + splate2;
-
-	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
-	float4 TotalDiffuse = float4(lightDiffuse * NDotL * BaseColor, 1.f);
-	//float4 TotalDiffuse = lightDiffuse * diffuseLighting * 0.6 * BaseColor;
-	float4 TotalSpecular = float4(lightSpecular * specLighting * 0.5f, 1.f);
-
-	return(saturate(TotalDiffuse));
-	*/
 }
+
+//////////////////////////////////////////////////////
 
 float3 Diffuse(float3 Normal)
 {
     float CosTheta;
     
     // N.L Clamped
+	float3 lightDir = { 0.0f, 0.0f, -1.0f };
 	CosTheta = max(0.0f, dot(Normal, lightDir.xyz));
        
     // propogate scalar result to vector
@@ -252,7 +244,7 @@ float4 PShadeAni(
 
 	float4 texel = tex2D(samTex01, Tex0);
 
-	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
+	float4 TotalAmbient = float4(lightAmbient * texel, 1.f);
 
 	return float4(saturate(
 		(texel.xyz * lightDiffuse * diffuseLighting * 0.6) +
@@ -267,6 +259,48 @@ VertexShader vsArray[4] = { compile vs_2_0 VShadeAni(1),
 							compile vs_2_0 VShadeAni(4)
                           };
 
+//////////////////////////////////////////////////////
+
+VS_OUTPUT_MESH VShadeMesh(VS_INPUT_MESH Input)
+{
+	VS_OUTPUT_MESH o;
+
+	float4 posWorld = mul(Input.Pos, mWorld);
+	o.Pos = mul(posWorld, mViewProj);
+	o.Normal = mul(Input.Normal, (float3x3)mWorld);
+	o.WorldPos = posWorld;
+
+	o.Tex0 = Input.Tex0;
+
+	return o;
+}
+
+float4 PShadeMesh(
+	float2 Tex0 : TEXCOORD0,
+	float3 Normal : TEXCOORD1,
+	float3 WorldPos : TEXCOORD2) : COLOR0
+{
+	float3 lightDir = normalize(WorldPos - lightPos); // per pixel diffuse lighting
+
+	// Note: Non-uniform scaling not supported
+	float diffuseLighting = saturate(dot(Normal, -lightDir));
+
+	// Introduce fall-off of light intensity
+	diffuseLighting *= (lightDistance / dot(lightPos - WorldPos, lightPos - WorldPos));
+
+	// Using Blinn half angle modification for perofrmance over correctness
+	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
+	float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
+
+	float4 texel = tex2D(samTex01, Tex0);
+
+	float4 TotalAmbient = float4(lightAmbient * texel, 1.f);
+
+	return float4(saturate(
+		(texel.xyz * lightDiffuse * diffuseLighting * 0.6) +
+		(lightSpecular * specLighting * 0.5)
+		), 1);
+}
 
 //////////////////////////////////////
 // Techniques specs follow
@@ -292,3 +326,14 @@ technique t1
 	}
 }
 
+//x매쉬용
+/*
+technique t1
+{
+	pass p0
+	{
+		VertexShader = compile vs_2_0 VShadeMesh();
+		PixelShader = compile ps_2_0 PShadeMesh();
+	}
+}
+*/
