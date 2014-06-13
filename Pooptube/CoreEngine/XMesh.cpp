@@ -124,6 +124,7 @@ namespace pooptube {
 				}
 			}
 		}
+		SAFE_RELEASE( pD3DXMtrlBuffer );
 
 		//메쉬에 법선백터를 추가하는 부분
 		if (!(mXMesh->GetFVF() & D3DFVF_NORMAL)) {
