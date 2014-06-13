@@ -3,8 +3,14 @@
 // Copyright (c) 2000-2002 Microsoft Corporation. All rights reserved.
 //
 
-float4 lhtDir = {0.0f, 0.0f, -1.0f, 1.0f};    //light Direction 
-float4 lightDiffuse = {0.6f, 0.6f, 0.6f, 1.0f}; // Light Diffuse
+float3 lightPos = { 10.0f, 10.0f, 10.0f };
+float3 lightDir = { 0.0f, 0.0f, -1.0f };    //light Direction 
+float3 lightDiffuse = { 0.6f, 0.6f, 0.6f }; // Light Diffuse
+float3 lightAmbient = { 0.3f, 0.3f, 0.3f };
+float3 lightSpecular = { 1.0f, 1.0f, 1.0f };
+float  lightDistance = 100.f;
+float  lightSpecularPower = 25.0f;
+
 float4 MaterialAmbient : MATERIALAMBIENT = {0.1f, 0.1f, 0.1f, 1.0f};
 float4 MaterialDiffuse : MATERIALDIFFUSE = {0.8f, 0.8f, 0.8f, 1.0f};
 
@@ -13,6 +19,7 @@ static const int MAX_MATRICES = 26;
 float4x3    mWorldMatrixArray[MAX_MATRICES] : WORLDMATRIXARRAY;
 float4x4    mViewProj : VIEWPROJECTION;
 float4x4    mWorld : WORLD;
+float3	   mCamaraPos = { 0.0f, 5.0f, 0.0f };
 
 texture	   mTexture;
 texture	   mTexture2;
@@ -21,7 +28,7 @@ texture	   mAlphaMap;
 //--------------------------------------------------------------------------------------
 // Texture samplers
 //--------------------------------------------------------------------------------------
-sampler g_samScene =
+sampler samTex01 =
 sampler_state
 {
 	Texture = <mTexture>;
@@ -30,7 +37,7 @@ sampler_state
 	MipFilter = Point;
 };
 
-sampler g_samScene3 =
+sampler samTex02 =
 sampler_state
 {
 	Texture = <mTexture2>;
@@ -39,7 +46,7 @@ sampler_state
 	MipFilter = Point;
 };
 
-sampler g_samScene2 =
+sampler samAlpha01 =
 sampler_state
 {
 	Texture = <mAlphaMap>;
@@ -49,7 +56,7 @@ sampler_state
 };
 
 ///////////////////////////////////////////////////////
-struct VS_INPUT
+struct VS_INPUT_ANI
 {
     float4  Pos             : POSITION;
     float4  BlendWeights    : BLENDWEIGHT;
@@ -58,56 +65,110 @@ struct VS_INPUT
     float3  Tex0            : TEXCOORD0;
 };
 
-struct VS_OUTPUT
+struct VS_OUTPUT_ANI
 {
     float4  Pos     : POSITION;
     float4  Diffuse : COLOR;
     float2  Tex0    : TEXCOORD0;
+	/*float3  Normal  : TEXCOORD1;
+	float3  WorldPos : TEXCOORD2;*/
 };
 
-struct VSG_OUTPUT
+struct VS_INPUT_GROUND 
+{
+	float4 Pos : POSITION;
+	float3 Normal : NORMAL;
+	float2 Tex0 : TEXCOORD0;
+	float2 Tex1 : TEXCOORD1;
+	float2 Tex2 : TEXCOORD2;
+};
+
+struct VS_OUTPUT_GROUND
 {
 	float4  Pos     : POSITION;
-	float4  Diffuse : COLOR;
 	float2  Tex0    : TEXCOORD0;
 	float2  Tex1	   : TEXCOORD1;
 	float2  Tex2	   : TEXCOORD2;
+	float3  Normal  : TEXCOORD3;
+	float3  WorldPos : TEXCOORD4;
 };
-
 ///////////////////////////////////////////////////////
 
-VSG_OUTPUT VertScene(float4 Pos : POSITION,
-	float4 Diffuse : COLOR,
-	float3 Normal : NORMAL,
-	float2 Tex0 : TEXCOORD0,
-	float2 Tex1 : TEXCOORD1,
-	float2 Tex2 : TEXCOORD2)
+VS_OUTPUT_GROUND VShadeGround( VS_INPUT_GROUND Input )
 {
-	VSG_OUTPUT o;
+	VS_OUTPUT_GROUND o;
 
-	o.Pos = mul(Pos, mWorld);
-	o.Pos = mul(o.Pos, mViewProj);
-	o.Tex0 = Tex0;
-	o.Tex1 = Tex1;
-	o.Tex2 = Tex2;
-	float3 N = normalize(mul(Normal, (float3x3)mWorld));
+	float4 posWorld = mul(Input.Pos, mWorld);
+	o.Pos = mul(posWorld, mViewProj);
+	o.Normal = mul(Input.Normal, (float3x3)mWorld);
+	o.WorldPos = posWorld;
 
-	o.Diffuse = Diffuse;
+	o.Tex0 = Input.Tex0;
+	o.Tex1 = Input.Tex1;
+	o.Tex2 = Input.Tex2;
 
 	return o;
 }
 
-float4 PixScene(	float4 Diffuse : COLOR0,
+float4 PShadeGround(	
 				float2 Tex0 : TEXCOORD0,
 				float2 Tex1 : TEXCOORD1,
-				float2 Tex2 : TEXCOORD2) : COLOR0
+				float2 Tex2 : TEXCOORD2,
+				float3 Normal : TEXCOORD3,
+				float3 WorldPos : TEXCOORD4) : COLOR0
 {
+
+	float3 lightDir = normalize(WorldPos - lightPos); // per pixel diffuse lighting
+
+	// Note: Non-uniform scaling not supported
+	float diffuseLighting = saturate(dot(Normal, -lightDir));
+
+	// Introduce fall-off of light intensity
+	diffuseLighting *= (lightDistance / dot(lightPos - WorldPos, lightPos - WorldPos));
+
+	// Using Blinn half angle modification for perofrmance over correctness
+	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
+	float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
+	
+	float4 white = { 1.0f, 1.0f, 1.0f, 1.0f };
+	float4 splate1 = tex2D(samTex01, Tex0) * tex2D(samAlpha01, Tex1);
+	float4 splate2 = tex2D(samTex02, Tex2) * (white - tex2D(samAlpha01, Tex1));
+	float4 BaseColor = splate1 + splate2;
+	//float4 texel = tex2D(texsampler, input.TexCoords);
+
+	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
+
+	return float4(saturate(
+		/*TotalAmbient +*/
+		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6) +
+		(lightSpecular * specLighting * 0.5)
+		), 1);
+
+	////////////////////////////////////////////////
+	/*
+	float3 NLightDir = normalize(lightDir);
+	float3 NNormal = normalize(Normal);
+	float NDotL = dot(NNormal, NLightDir);
+
+	float diffuseLighting = saturate(dot(NNormal, -NLightDir));
+
+	//카메라 포즈 월드 포즈
+	//하프벡터이용
+	float3 halfv = normalize(normalize(mCamaraPos - WorldPos) - NLightDir);
+	float specLighting = pow(saturate(dot(halfv, NNormal)), lightSpecularPower);
+
 	float4 white = { 1.0f, 1.0f, 1.0f, 1.0f };
 	float4 splate1 = tex2D(g_samScene, Tex0) * tex2D(g_samScene2, Tex1);
 	float4 splate2 = tex2D(g_samScene3, Tex2) * (white - tex2D(g_samScene2, Tex1));
+	float4 BaseColor = splate1 + splate2;
 
-	return splate1 + splate2;
-	//return tex2D(g_samScene, Tex0);
+	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
+	float4 TotalDiffuse = float4(lightDiffuse * NDotL * BaseColor, 1.f);
+	//float4 TotalDiffuse = lightDiffuse * diffuseLighting * 0.6 * BaseColor;
+	float4 TotalSpecular = float4(lightSpecular * specLighting * 0.5f, 1.f);
+
+	return(saturate(TotalDiffuse));
+	*/
 }
 
 float3 Diffuse(float3 Normal)
@@ -115,16 +176,15 @@ float3 Diffuse(float3 Normal)
     float CosTheta;
     
     // N.L Clamped
-    CosTheta = max(0.0f, dot(Normal, lhtDir.xyz));
+	CosTheta = max(0.0f, dot(Normal, lightDir.xyz));
        
     // propogate scalar result to vector
     return (CosTheta);
 }
 
-
-VS_OUTPUT VShade(VS_INPUT i, uniform int NumBones)
+VS_OUTPUT_ANI VShadeAni(VS_INPUT_ANI i, uniform int NumBones)
 {
-    VS_OUTPUT   o;
+	VS_OUTPUT_ANI   o;
     float3      Pos = 0.0f;
     float3      Normal = 0.0f;    
     float       LastWeight = 0.0f;
@@ -156,6 +216,7 @@ VS_OUTPUT VShade(VS_INPUT i, uniform int NumBones)
 
     // normalize normals
     Normal = normalize(Normal);
+	//o.Normal = Normal;
 
     // Shade (Ambient + etc.)
     o.Diffuse.xyz = MaterialAmbient.xyz + Diffuse(Normal) * MaterialDiffuse.xyz;
@@ -164,34 +225,70 @@ VS_OUTPUT VShade(VS_INPUT i, uniform int NumBones)
     // copy the input texture coordinate through
     o.Tex0  = i.Tex0.xy;
 
+	//float4 posWorld = mul(i.Pos, mWorld);
+	//o.WorldPos = posWorld;
+
     return o;
 }
+/*
+float4 PShadeAni(
+	float2 Tex0 : TEXCOORD0,
+	float3 Normal : TEXCOORD1,
+	float3 WorldPos : TEXCOORD2) : COLOR0
+{
+
+	float3 lightDir = normalize(WorldPos - lightPos); // per pixel diffuse lighting
+
+	// Note: Non-uniform scaling not supported
+	float diffuseLighting = saturate(dot(Normal, -lightDir));
+
+	// Introduce fall-off of light intensity
+	diffuseLighting *= (lightDistance / dot(lightPos - WorldPos, lightPos - WorldPos));
+
+	// Using Blinn half angle modification for perofrmance over correctness
+	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
+	float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
+
+
+	float4 texel = tex2D(samTex01, Tex0);
+
+	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
+
+	return float4(saturate(
+		(texel.xyz * lightDiffuse * diffuseLighting * 0.6) +
+		(lightSpecular * specLighting * 0.5)
+		), 1);
+}*/
 
 int CurNumBones = 2;
-VertexShader vsArray[4] = { compile vs_2_0 VShade(1), 
-                            compile vs_2_0 VShade(2),
-                            compile vs_2_0 VShade(3),
-                            compile vs_2_0 VShade(4)
+VertexShader vsArray[4] = { compile vs_2_0 VShadeAni(1),
+                            compile vs_2_0 VShadeAni(2),
+							compile vs_2_0 VShadeAni(3),
+							compile vs_2_0 VShadeAni(4)
                           };
 
 
 //////////////////////////////////////
 // Techniques specs follow
 //////////////////////////////////////
+
+//skinnedmesh용
 technique t0
 {
     pass p0
     {
         VertexShader = (vsArray[CurNumBones]);
+		//PixelShader = compile ps_2_0 PShadeAni();
     }
 }
 
+//그라운드용
 technique t1 
 {
 	pass p0 
 	{
-		VertexShader = compile vs_2_0 VertScene();
-		PixelShader = compile ps_2_0 PixScene();
+		VertexShader = compile vs_2_0 VShadeGround();
+		PixelShader = compile ps_2_0 PShadeGround();
 	}
 }
 
