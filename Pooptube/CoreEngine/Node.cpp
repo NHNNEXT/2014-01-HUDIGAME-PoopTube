@@ -38,13 +38,13 @@ namespace pooptube {
 
 		UpdateMatrix();
 
-		for (auto child : mChildList) {
+		for (auto& child : mChildList) {
 			if (child->GetVisible())
 				child->Render();
 		}
 	}
 	void Node::Update(float dTime) {
-		for (auto child : mChildList) {
+		for (auto& child : mChildList) {
 			if (child->GetUpdatable())
 				child->Update(dTime);
 		}
@@ -68,7 +68,7 @@ namespace pooptube {
 		RotateFrontVectorY(Angle);
 		RotateUpVectorY(Angle);
 
-		for (auto child : mChildList) {
+		for (auto& child : mChildList) {
 			child->RotationY(Angle);
 		}
 	}
@@ -78,7 +78,7 @@ namespace pooptube {
 		RotateFrontVectorZ(Angle);
 		RotateUpVectorZ(Angle);
 
-		for (auto child : mChildList) {
+		for (auto& child : mChildList) {
 			child->RotationZ(Angle);
 		}
 	}
@@ -87,7 +87,7 @@ namespace pooptube {
 		RotateFrontVectorX(Angle);
 		RotateUpVectorX(Angle);
 
-		for (auto child : mChildList) {
+		for (auto& child : mChildList) {
 			child->RotationX(Angle);
 		}
 	}
@@ -139,7 +139,7 @@ namespace pooptube {
 	void Node::Translation( const D3DXVECTOR3& moveVec ) {
 		mPosition += moveVec;
 
-		for( auto child : mChildList ) {
+		for( auto& child : mChildList ) {
 			child->Translation( moveVec );
 		}
 	}
@@ -159,14 +159,14 @@ namespace pooptube {
 
 		mPosition = pos;
 
-		for( auto child : mChildList ) {
+		for( auto& child : mChildList ) {
 			child->Move( dForward, dSide );
 		}
 	}
 
 
 	void Node::SetPosition(const D3DXVECTOR3& newPos) {
-		for( auto child : mChildList ){
+		for( auto& child : mChildList ){
 			D3DXVECTOR3 dPos = child->mPosition - mPosition;
 			child->SetPosition( newPos + dPos );
 		}
@@ -186,7 +186,7 @@ namespace pooptube {
 	}
 
 	void Node::SetScale( const D3DXVECTOR3& newScale ) {
-		for( auto child : mChildList ){
+		for( auto& child : mChildList ){
 			D3DXVECTOR3 dVec;
 			dVec.x = newScale.x * child->mScaleVec.x / mScaleVec.x;
 			dVec.y = newScale.y * child->mScaleVec.y / mScaleVec.y;

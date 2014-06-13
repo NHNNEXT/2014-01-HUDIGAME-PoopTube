@@ -240,7 +240,7 @@ void Stage::UpdateInput()
 void Stage::_LoadFile( std::string filename )
 {
 	Json::Value stageData = JsonParser::FileToJson( filename )["Map"];
-	for( auto data : stageData ){
+	for( auto& data : stageData ){
 		if( data["Class"] == "Tree1" )
 			_LoadTree1( data );
 		else if( data["Class"] == "Tree2" )

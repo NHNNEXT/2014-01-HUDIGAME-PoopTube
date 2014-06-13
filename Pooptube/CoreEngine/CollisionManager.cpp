@@ -28,7 +28,7 @@ namespace pooptube {
 
 	void CollisionManager::RemoveCollisionBox( CollisionBox *pCollisionBox )
 	{
-		for( auto iter = mCollisionBoxList.begin(); iter != mCollisionBoxList.end(); ++iter ) {
+		for( auto& iter = mCollisionBoxList.begin(); iter != mCollisionBoxList.end(); ++iter ) {
 			//if( *iter == pCollisionBox ) {
 			if( iter->second == pCollisionBox ) {
 				mCollisionBoxList.erase( iter );
@@ -39,7 +39,7 @@ namespace pooptube {
 
 	void CollisionManager::RemoveCollisionBoxByNode( Node *pNode )
 	{
-		for( auto iter = mCollisionBoxList.begin(); iter != mCollisionBoxList.end(); ++iter ) {
+		for( auto& iter = mCollisionBoxList.begin(); iter != mCollisionBoxList.end(); ++iter ) {
 			if( iter->first == pNode ) {
 				mCollisionBoxList.erase( iter );
 			}
@@ -52,7 +52,7 @@ namespace pooptube {
 			return nullptr;
 
 		CollisionBox* result = nullptr;
-		for( auto target : mCollisionBoxList ){
+		for( auto& target : mCollisionBoxList ){
 			if( target.first == pTarget )
 				result = CollisionCheck( target.second );
 			if( result != nullptr )
@@ -67,7 +67,7 @@ namespace pooptube {
 		if( pTarget == nullptr )
 			return nullptr;
 
-		for( auto box : mCollisionBoxList ) {
+		for( auto& box : mCollisionBoxList ) {
 			//if( box->CollisionCheck( pTarget ) ) {
 			if( box.second->CollisionCheck( pTarget ) ) {
 				return box.second;

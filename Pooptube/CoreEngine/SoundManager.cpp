@@ -23,7 +23,7 @@ namespace pooptube {
 	}
 
 	SoundManager::~SoundManager(){
-		for( auto bank : mBankList ){
+		for( auto& bank : mBankList ){
 			bank->unload();
 		}
 	}

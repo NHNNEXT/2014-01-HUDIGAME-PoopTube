@@ -7,7 +7,7 @@ namespace pooptube {
 		ZeroMemory( mMouseButtonState, sizeof(mMouseButtonState) );
 	}
 	MouseEventDispatcher::~MouseEventDispatcher() {
-		for (auto handler : mMouseEventHandlerList ) {
+		for (auto& handler : mMouseEventHandlerList ) {
 			//handler.reset();
 			ObjectManager::GetInstance()->RemoveObject( handler );
 		}
@@ -19,7 +19,7 @@ namespace pooptube {
 		mMouseEventHandlerList.push_back( pMouseEventHandler );
 	}
 	void MouseEventDispatcher::RemoveEventDelegate( MouseEventDelegate* pEventDelegate ) {
-		for (auto iter=mMouseEventHandlerList.begin(); iter!=mMouseEventHandlerList.end(); iter++ ) {
+		for (auto& iter=mMouseEventHandlerList.begin(); iter!=mMouseEventHandlerList.end(); iter++ ) {
 			if ( (*iter)->GetEventDelegate() == pEventDelegate ) {
 				//(*iter).reset();
 				ObjectManager::GetInstance()->RemoveObject( (*iter) );
@@ -29,7 +29,7 @@ namespace pooptube {
 		}
 	}
 	void MouseEventDispatcher::RemoveAllEventDelegate() {
-		for (auto handler : mMouseEventHandlerList ) {
+		for (auto& handler : mMouseEventHandlerList ) {
 			//handler.reset();
 			ObjectManager::GetInstance()->RemoveObject( handler );
 		}
@@ -42,7 +42,7 @@ namespace pooptube {
 	void MouseEventDispatcher::Dispatch( std::forward_list<MouseEvent*>& pMouseEventList ) {
 		if ( pMouseEventList.empty() ) return;
 
-		for (auto MouseEvent : pMouseEventList ) {
+		for (auto& MouseEvent : pMouseEventList ) {
 
 			if ( mMouseButtonState[MouseEvent->GetMouseButton()] == false ) {
 				switch (MouseEvent->GetMouseButton()) {
@@ -58,7 +58,7 @@ namespace pooptube {
 				}
 			}
 
-			for (auto handler : mMouseEventHandlerList ) {
+			for (auto& handler : mMouseEventHandlerList ) {
 
 				switch ( MouseEvent->GetMouseEventType() ) {
 				case MouseEventType::MOUSE_LBUTTON_DOWN:

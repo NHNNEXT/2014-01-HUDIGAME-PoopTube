@@ -28,22 +28,22 @@ namespace pooptube {
 
 	ResourceManager::~ResourceManager() {
 
-		for (auto data : mMeshDataTable) {
+		for (auto& data : mMeshDataTable) {
 			delete data.second;
 		}
 
-		for( auto data : mHeightMapTable ) {
+		for( auto& data : mHeightMapTable ) {
 			delete data.second;
 		}
 
-		for( auto data : mTextureTable ) {
+		for( auto& data : mTextureTable ) {
 			data.second->Release();
 		}
-		for( auto data : mHLSLShaderTable ) {
+		for( auto& data : mHLSLShaderTable ) {
 			data.second->Release();
 		}
 
-		for( auto data : mXMeshDataTable ) {
+		for( auto& data : mXMeshDataTable ) {
 			delete data.second;
 		}
 

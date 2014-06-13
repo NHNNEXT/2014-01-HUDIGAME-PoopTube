@@ -40,7 +40,7 @@ namespace pooptube {
 
 	void Scene::RemoveRenderZone( Node* targetNode )
 	{
-		for( auto iter = mRenderZone.begin(); iter != mRenderZone.end(); ++iter ){
+		for( auto& iter = mRenderZone.begin(); iter != mRenderZone.end(); ++iter ){
 			if( targetNode == std::get<0>( *iter ) ){
 				mRenderZone.erase( iter );
 			}
@@ -51,7 +51,7 @@ namespace pooptube {
 	{
 		D3DXVECTOR3 dVec;
 		float dist;
-		for( auto zone : mRenderZone ){
+		for( auto& zone : mRenderZone ){
 			dVec = pos - std::get<0>( zone )->GetPosition() - std::get<1>( zone );
 			dist = radius + std::get<2>( zone );
 			if( D3DXVec3Length( &dVec ) <= dist )

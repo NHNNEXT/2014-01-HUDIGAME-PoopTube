@@ -259,6 +259,9 @@ namespace pooptube {
 		SAFE_RELEASE(pMeshContainer->MeshData.pMesh);
 		SAFE_RELEASE(pMeshContainer->pSkinInfo);
 		SAFE_RELEASE(pMeshContainer->pOrigMesh);
+		SAFE_DELETE( pMeshContainer->pEffects );
+		if( pMeshContainer->pNextMeshContainer != NULL )
+			DestroyMeshContainer( pMeshContainer->pNextMeshContainer );
 		SAFE_DELETE(pMeshContainer);
 		return S_OK;
 	}
@@ -916,7 +919,7 @@ namespace pooptube {
 
 		// 버텍스 정보 가져오기
 		D3DXVECTOR3 tempVec;
-		for( auto vec : mVertices )
+		for( auto& vec : mVertices )
 			vertices.push_back( DirectX::XMFLOAT3( vec.x*mScaleVec.x, vec.y*mScaleVec.y, vec.z*mScaleVec.z ) );
 
 		// 경계구 작성
@@ -928,7 +931,7 @@ namespace pooptube {
 	bool SkinnedMesh::_CheckFrustum()
 	{
 		D3DXVECTOR3 boundingSpherePos = mBoundingSphereCenter + GetPosition();
-		for( auto plane : Application::GetInstance()->GetSceneManager()->GetRenderer()->GetFrustumPlane() ){
+		for( auto& plane : Application::GetInstance()->GetSceneManager()->GetRenderer()->GetFrustumPlane() ){
 			if( plane.a * boundingSpherePos.x + plane.b * boundingSpherePos.y + plane.c * boundingSpherePos.z + plane.d >= mBoundingSphereRadius )
 				return false;
 		}
