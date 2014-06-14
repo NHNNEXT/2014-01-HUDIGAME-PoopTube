@@ -5,9 +5,9 @@
 
 float3 lightPos = { 10.0f, 10.0f, 10.0f }; 
 float3 lightDiffuse = { 0.6f, 0.6f, 0.6f }; // Light Diffuse
-float3 lightAmbient = { 0.1f, 0.1f, 0.1f };
+float3 lightAmbient = { 0.05f, 0.05f, 0.05f };
 float3 lightSpecular = { 1.0f, 1.0f, 1.0f };
-float  lightDistance = 100.f;
+float  lightDistance = 1000.f;
 float  lightSpecularPower = 25.0f;
 
 float4 MaterialAmbient : MATERIALAMBIENT = {0.1f, 0.1f, 0.1f, 1.0f};
@@ -103,8 +103,8 @@ struct VS_OUTPUT_MESH
 {
 	float4  Pos     : POSITION;
 	float2  Tex0    : TEXCOORD0;
-	float3  Normal  : TEXCOORD3;
-	float3  WorldPos : TEXCOORD4;
+	float3  Normal  : TEXCOORD1;
+	float3  WorldPos : TEXCOORD2;
 };
 
 ///////////////////////////////////////////////////////
@@ -296,10 +296,12 @@ float4 PShadeMesh(
 
 	float4 TotalAmbient = float4(lightAmbient * texel, 1.f);
 
+	//return texel;
+
 	return float4(saturate(
 		(texel.xyz * lightDiffuse * diffuseLighting * 0.6) +
 		(lightSpecular * specLighting * 0.5)
-		), 1);
+		), texel.w);
 }
 
 //////////////////////////////////////
@@ -327,8 +329,7 @@ technique t1
 }
 
 //x¸Å½¬¿ë
-/*
-technique t1
+technique t2
 {
 	pass p0
 	{
@@ -336,4 +337,3 @@ technique t1
 		PixelShader = compile ps_2_0 PShadeMesh();
 	}
 }
-*/

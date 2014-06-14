@@ -11,6 +11,8 @@ namespace pooptube{
 		static XMeshData *Create(const std::wstring& FilePath);
 		bool Init(const std::wstring& FilePath);
 
+		ID3DXEffect* GetEffect() const { return mEffect; }
+
 		void Update(float dTime);
 		void Render();
 
@@ -20,6 +22,7 @@ namespace pooptube{
 		LPD3DXMESH			mXMesh = nullptr;
 		D3DMATERIAL9*		mMaterial = nullptr;
 		LPDIRECT3DTEXTURE9* mTexture = nullptr;
+		ID3DXEffect*		mEffect = nullptr;
 
 		DWORD				mNumMaterial = 0;
 	};

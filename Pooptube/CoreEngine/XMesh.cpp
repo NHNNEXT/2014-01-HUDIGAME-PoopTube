@@ -39,7 +39,44 @@ namespace pooptube {
 
 		if (_CheckFrustum() == false) return;
 
-		Node::Render();
+		//Node::Render();
+
+		// TODO: 행렬 계산
+		D3DXMATRIXA16	MatWorld;
+		D3DXMATRIXA16	MatTrans;
+		D3DXMATRIXA16	MatScale;
+		D3DXMATRIXA16	MatRotate;
+		D3DXVECTOR3		LookPt = mPosition + mFrontVector;
+
+		D3DXMatrixIdentity(&MatWorld);
+
+		//프론트 백터의 값에 따라 회전
+		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &LookPt, &mUpVec);
+		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
+		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
+		//(카메라의 좌표계에 맞춰져있다)
+		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
+		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
+		D3DXMatrixTranspose(&MatRotate, &MatRotate);
+
+		D3DXMatrixTranslation(&MatTrans, mPosition.x, mPosition.y, mPosition.z);
+		D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
+
+		MatWorld = MatScale*MatRotate*MatTrans;
+
+		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+
+		D3DXMATRIXA16 g_matProj;
+		D3DXMATRIXA16 matView;
+
+		mDevice->GetTransform(D3DTS_VIEW, &matView);
+		mDevice->GetTransform(D3DTS_PROJECTION, &g_matProj);
+		D3DXMatrixMultiply(&matView, &matView, &g_matProj);
+
+		mMeshData->GetEffect()->SetTechnique("t2");
+		mMeshData->GetEffect()->SetMatrix("mWorld", &MatWorld);
+		mMeshData->GetEffect()->SetMatrix("mViewProj", &matView);
+
 		mMeshData->Render();
 	}
 
@@ -81,6 +118,13 @@ namespace pooptube {
 
 		// 재질을 임시로 보관할 버퍼선언
 		LPD3DXBUFFER pD3DXMtrlBuffer;
+
+		mEffect = ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx");
+		if (!mEffect) {
+			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
+			assert(false);
+			return false;
+		}
 
 		if (FAILED(D3DXLoadMeshFromX(FilePath.c_str(), D3DXMESH_SYSTEMMEM,
 			GetDevice(), NULL,
@@ -178,19 +222,24 @@ namespace pooptube {
 	}
 
 	void XMeshData::Render() {
+
 		for (DWORD i = 0; i < mNumMaterial; i++) {
 
-			/// 부분집합 메시의 재질과 텍스쳐 설정
-			GetDevice()->SetMaterial(&mMaterial[i]);
-			GetDevice()->SetTexture(0, mTexture[i]);
+			mEffect->SetTexture("mTexture", mTexture[i]);
 
-			Application::GetInstance()->UpdateDPCall();
+			UINT cPasses;
+			mEffect->Begin(&cPasses, 0);
+			for (UINT p = 0; p < cPasses; ++p) {
+				mEffect->BeginPass(p);
 
-			/// 부분집합 메시 출력
-			mXMesh->DrawSubset(i);
+				Application::GetInstance()->UpdateDPCall();
+				/// 부분집합 메시 출력
+				mXMesh->DrawSubset(i);
+
+				mEffect->EndPass();
+			}
+			mEffect->End();
 		}
-
-		GetDevice()->SetTexture(0, 0);
 	}
 
 	XMeshData::XMeshData() {
