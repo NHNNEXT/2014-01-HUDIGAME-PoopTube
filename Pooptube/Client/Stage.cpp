@@ -192,15 +192,15 @@ void Stage::Update( float dTime )
 	}
 
 	// HP에 따른 메인케릭터 빛의 범위 변화
-	if (mCharacter->GetLight()->GetRange() <= static_cast<float>(mCharacter->GetHP()) * 5.f) {
-		mLightEnhanceTime += dTime;
-		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
-	}
-	else
-	{
-		mLightEnhanceTime -= dTime;
-		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
-	}
+// 	if (mCharacter->GetLight()->GetRange() <= static_cast<float>(mCharacter->GetHP()) * 5.f) {
+// 		mLightEnhanceTime += dTime;
+// 		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
+// 	}
+// 	else
+// 	{
+// 		mLightEnhanceTime -= dTime;
+// 		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
+// 	}
 
 	if (orbCount == mOrbCount)
 	{

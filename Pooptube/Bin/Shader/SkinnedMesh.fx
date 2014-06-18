@@ -4,10 +4,10 @@
 //
 
 float3 lightPos = { 10.0f, 10.0f, 10.0f }; 
-float3 lightDiffuse = { 0.6f, 0.6f, 0.6f }; // Light Diffuse
+float3 lightDiffuse = { 0.5f, 0.5f, 0.5f }; // Light Diffuse
 float3 lightAmbient = { 0.05f, 0.05f, 0.05f };
 float3 lightSpecular = { 1.0f, 1.0f, 1.0f };
-float  lightDistance = 1000.f;
+float  lightDistance = 100.f;
 float  lightSpecularPower = 25.0f;
 
 float4 MaterialAmbient : MATERIALAMBIENT = {0.1f, 0.1f, 0.1f, 1.0f};
@@ -153,11 +153,18 @@ float4 PShadeGround(
 
 	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
 
+	/*
 	return float4(saturate(
 		TotalAmbient +
 		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6) +
 		(lightSpecular * specLighting * 0.5)
 		), 1);
+		*/
+
+	return float4(saturate(
+		TotalAmbient +
+		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)), 1);
+		
 }
 
 //////////////////////////////////////////////////////
@@ -222,35 +229,6 @@ VS_OUTPUT_ANI VShadeAni(VS_INPUT_ANI i, uniform int NumBones)
 
     return o;
 }
-/*
-float4 PShadeAni(
-	float2 Tex0 : TEXCOORD0,
-	float3 Normal : TEXCOORD1,
-	float3 WorldPos : TEXCOORD2) : COLOR0
-{
-
-	float3 lightDir = normalize(WorldPos - lightPos); // per pixel diffuse lighting
-
-	// Note: Non-uniform scaling not supported
-	float diffuseLighting = saturate(dot(Normal, -lightDir));
-
-	// Introduce fall-off of light intensity
-	diffuseLighting *= (lightDistance / dot(lightPos - WorldPos, lightPos - WorldPos));
-
-	// Using Blinn half angle modification for perofrmance over correctness
-	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
-	float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
-
-
-	float4 texel = tex2D(samTex01, Tex0);
-
-	float4 TotalAmbient = float4(lightAmbient * texel, 1.f);
-
-	return float4(saturate(
-		(texel.xyz * lightDiffuse * diffuseLighting * 0.6) +
-		(lightSpecular * specLighting * 0.5)
-		), 1);
-}*/
 
 int CurNumBones = 2;
 VertexShader vsArray[4] = { compile vs_2_0 VShadeAni(1),

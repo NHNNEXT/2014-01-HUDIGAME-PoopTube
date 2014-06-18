@@ -14,7 +14,7 @@
 namespace pooptube{
 	class SkinnedMesh;
 	class CollisionBox;
-	class Light;
+	//class Light;
 	class Scene;
 }
 
@@ -52,7 +52,7 @@ public:
 	float		GetJumpSpeed() const { return mJumpSpeed; }
 
 	pooptube::SkinnedMesh *GetSkinnedMesh() const { return mMesh; }
-	pooptube::Light* GetLight() const { return mLight; }
+	//pooptube::Light* GetLight() const { return mLight; }
 
 //	virtual void CollsionReceive( std::shared_ptr<Node> target );
 //	virtual void CollsionReceive( Node* target );
@@ -74,7 +74,7 @@ private:
 	int						mHP = 0;
 
 	pooptube::SkinnedMesh	*mMesh = nullptr;
-	pooptube::Light			*mLight = nullptr;
+	//pooptube::Light			*mLight = nullptr;
 	pooptube::Scene			*mScene = nullptr;
 
 	FMOD_3D_ATTRIBUTES		mListener;

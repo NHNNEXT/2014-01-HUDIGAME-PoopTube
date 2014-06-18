@@ -151,7 +151,21 @@ bool IntroScene::Init() {
 
 void IntroScene::Render() {
 	Node::Render();
-	
+
+	float lightPos[3];
+	float cameraPos[3];
+	D3DXVECTOR3 charPos =  mCharacter->GetPosition();
+	lightPos[0] = charPos.x;
+	lightPos[1] = charPos.y + 3.f;
+	lightPos[2] = charPos.z;
+	D3DXVECTOR3 cPos = mCamera->GetPosition();
+	cameraPos[0] = cPos.x;
+	cameraPos[1] = cPos.y;
+	cameraPos[2] = cPos.z;
+
+	ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("lightPos", lightPos, 3);
+	ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("lightPos", lightPos, 3);
+
 	for (int i = 0; i < 3; ++i)
 	{
 		mClearPoint[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
@@ -209,15 +223,15 @@ void IntroScene::Update(float dTime) {
 	// HP를 토대로 MainCharacter 빛의 범위를 조정한다.
 	//mCharacter->GetLight()->SetRange(static_cast<float>(mCharacter->GetHP()) * 15.f);
 
-	if (mCharacter->GetLight()->GetRange() <= static_cast<float>(mCharacter->GetHP()) * 5.f) {
-		mLightEnhanceTime += dTime;
-		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
-	}
-	else
-	{
-		mLightEnhanceTime -= dTime;
-		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
-	}
+// 	if (mCharacter->GetLight()->GetRange() <= static_cast<float>(mCharacter->GetHP()) * 5.f) {
+// 		mLightEnhanceTime += dTime;
+// 		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
+// 	}
+// 	else
+// 	{
+// 		mLightEnhanceTime -= dTime;
+// 		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
+// 	}
 
 	for (int i = 0; i < mCharacter->GetHP(); ++i) {
 		if (mCharacter->GetHP() >= 1)
