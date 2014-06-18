@@ -152,19 +152,13 @@ bool IntroScene::Init() {
 void IntroScene::Render() {
 	Node::Render();
 
-	float lightPos[3];
 	float cameraPos[3];
-	D3DXVECTOR3 charPos =  mCharacter->GetPosition();
-	lightPos[0] = charPos.x;
-	lightPos[1] = charPos.y + 3.f;
-	lightPos[2] = charPos.z;
 	D3DXVECTOR3 cPos = mCamera->GetPosition();
 	cameraPos[0] = cPos.x;
 	cameraPos[1] = cPos.y;
 	cameraPos[2] = cPos.z;
 
-	ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("lightPos", lightPos, 3);
-	ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("lightPos", lightPos, 3);
+	ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("mCamaraPos", cameraPos, 3);
 
 	for (int i = 0; i < 3; ++i)
 	{

@@ -3,8 +3,10 @@
 // Copyright (c) 2000-2002 Microsoft Corporation. All rights reserved.
 //
 
-float3 lightPos = { 10.0f, 10.0f, 10.0f }; 
-float3 lightDiffuse = { 0.5f, 0.5f, 0.5f }; // Light Diffuse
+float3 lightPos = { 10.0f, 10.0f, 10.0f };
+float3 lightObjPos = { 10.0f, 0.0f, 10.0f };
+
+float3 lightDiffuse = { 0.2f, 0.2f, 0.2f }; // Light Diffuse
 float3 lightAmbient = { 0.05f, 0.05f, 0.05f };
 float3 lightSpecular = { 1.0f, 1.0f, 1.0f };
 float  lightDistance = 100.f;
@@ -153,6 +155,22 @@ float4 PShadeGround(
 
 	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
 
+
+	/*
+	//lightobj
+	float3 lightDir2 = normalize(WorldPos - lightObjPos); // per pixel diffuse lighting
+
+	// Note: Non-uniform scaling not supported
+	float diffuseLighting2 = saturate(dot(Normal, -lightDir2));
+
+	// Introduce fall-off of light intensity
+	diffuseLighting2 *= (lightDistance / dot(lightObjPos - WorldPos, lightObjPos - WorldPos));
+
+	// Using Blinn half angle modification for perofrmance over correctness
+	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
+		float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
+		*/
+
 	/*
 	return float4(saturate(
 		TotalAmbient +
@@ -161,9 +179,10 @@ float4 PShadeGround(
 		), 1);
 		*/
 
-	return float4(saturate(
-		TotalAmbient +
-		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)), 1);
+	float4 totalColor = float4(saturate( TotalAmbient +
+		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)), 1.f);
+
+	return totalColor;
 		
 }
 

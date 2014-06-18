@@ -8,6 +8,7 @@
 #include "Light.h"
 #include "Ground.h"
 #include "Scene.h"
+#include "ResourceManager.h"
 
 MainCharacter::MainCharacter() {
 }
@@ -35,6 +36,17 @@ void MainCharacter::Render() {
 
 void MainCharacter::Update(float dTime) {
 	Node::Update(dTime);
+
+	float lightPos[3];
+	D3DXVECTOR3 charPos = GetPosition();
+	D3DXVECTOR3 charFront = GetFrontVector();
+	D3DXVec3Normalize(&charFront, &charFront);
+	charPos += charFront;
+	lightPos[0] = charPos.x;
+	lightPos[1] = charPos.y + 2.f;
+	lightPos[2] = charPos.z;
+
+	pooptube::ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("lightPos", lightPos, 3);
 
 	UpdateInput(dTime);
 	//_JumpUpdate( dTime );
