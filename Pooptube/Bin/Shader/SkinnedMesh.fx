@@ -4,7 +4,8 @@
 //
 
 float3 lightPos = { 10.0f, 10.0f, 10.0f };
-float3 lightObjPos = { 10.0f, 0.0f, 10.0f };
+//배열로 만들어야함
+float3 lightObjPos = { 10.0f, 2.0f, 10.0f };
 
 float3 lightDiffuse = { 0.2f, 0.2f, 0.2f }; // Light Diffuse
 float3 lightAmbient = { 0.05f, 0.05f, 0.05f };
@@ -155,8 +156,7 @@ float4 PShadeGround(
 
 	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
 
-
-	/*
+	
 	//lightobj
 	float3 lightDir2 = normalize(WorldPos - lightObjPos); // per pixel diffuse lighting
 
@@ -167,9 +167,9 @@ float4 PShadeGround(
 	diffuseLighting2 *= (lightDistance / dot(lightObjPos - WorldPos, lightObjPos - WorldPos));
 
 	// Using Blinn half angle modification for perofrmance over correctness
-	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
-		float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
-		*/
+	float3 h2 = normalize(normalize(mCamaraPos - WorldPos) - lightDir2);
+	float specLighting2 = pow(saturate(dot(h2, Normal)), lightSpecularPower);
+	
 
 	/*
 	return float4(saturate(
@@ -179,8 +179,11 @@ float4 PShadeGround(
 		), 1);
 		*/
 
-	float4 totalColor = float4(saturate( TotalAmbient +
-		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)), 1.f);
+	float4 totalColor = float4(saturate(TotalAmbient +
+		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)
+		+ (BaseColor.xyz * lightDiffuse * diffuseLighting2 * 0.6)/* +
+		(lightSpecular * specLighting2 * 0.5)*/), 1.f);
+		
 
 	return totalColor;
 		
@@ -249,6 +252,13 @@ VS_OUTPUT_ANI VShadeAni(VS_INPUT_ANI i, uniform int NumBones)
     return o;
 }
 
+float4 PShadeAni(VS_OUTPUT_ANI Input) : COLOR0
+{
+	float4 texel = tex2D(samTex01, Input.Tex0);
+
+	return texel;
+}
+
 int CurNumBones = 2;
 VertexShader vsArray[4] = { compile vs_2_0 VShadeAni(1),
                             compile vs_2_0 VShadeAni(2),
@@ -311,7 +321,7 @@ technique t0
     pass p0
     {
         VertexShader = (vsArray[CurNumBones]);
-		//PixelShader = compile ps_2_0 PShadeAni();
+		PixelShader = compile ps_2_0 PShadeAni();
     }
 }
 

@@ -794,7 +794,8 @@ namespace pooptube {
 				mMeshData->mEffect->SetVector("MaterialAmbient", (D3DXVECTOR4*)&ambEmm);
 
 				// setup the material of the mesh subset - REMEMBER to use the original pre-skinning attribute id to get the correct material id
-				mDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneComb[iAttrib].AttribId]);
+				//mDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneComb[iAttrib].AttribId]);
+				mMeshData->mEffect->SetTexture("mTexture", pMeshContainer->ppTextures[pBoneComb[iAttrib].AttribId]);
 
 				// Set CurNumBones to select the correct vertex shader for the number of bones
 				mMeshData->mEffect->SetInt("CurNumBones", pMeshContainer->NumInfl - 1);
