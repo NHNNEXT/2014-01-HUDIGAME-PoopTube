@@ -13,9 +13,6 @@ float3 lightSpecular = { 1.0f, 1.0f, 1.0f };
 float  lightDistance = 100.f;
 float  lightSpecularPower = 25.0f;
 
-float4 MaterialAmbient : MATERIALAMBIENT = {0.1f, 0.1f, 0.1f, 1.0f};
-float4 MaterialDiffuse : MATERIALDIFFUSE = {0.8f, 0.8f, 0.8f, 1.0f};
-
 // Matrix Pallette
 static const int MAX_MATRICES = 26;
 float4x3    mWorldMatrixArray[MAX_MATRICES] : WORLDMATRIXARRAY;
@@ -70,7 +67,6 @@ struct VS_INPUT_ANI
 struct VS_OUTPUT_ANI
 {
     float4  Pos     : POSITION;
-    float4  Diffuse : COLOR;
     float2  Tex0    : TEXCOORD0;
 	float3  Normal  : TEXCOORD1;
 	float3  WorldPos : TEXCOORD2;
@@ -191,18 +187,6 @@ float4 PShadeGround(
 
 //////////////////////////////////////////////////////
 
-float3 Diffuse(float3 Normal)
-{
-    float CosTheta;
-    
-    // N.L Clamped
-	float3 lightDir = { 0.0f, 0.0f, -1.0f };
-	CosTheta = max(0.0f, dot(Normal, lightDir.xyz));
-       
-    // propogate scalar result to vector
-    return (CosTheta);
-}
-
 VS_OUTPUT_ANI VShadeAni(VS_INPUT_ANI i, uniform int NumBones)
 {
 	VS_OUTPUT_ANI   o;
@@ -239,10 +223,6 @@ VS_OUTPUT_ANI VShadeAni(VS_INPUT_ANI i, uniform int NumBones)
     Normal = normalize(Normal);
 	o.Normal = Normal.xyz;
 
-    // Shade (Ambient + etc.)
-    o.Diffuse.xyz = MaterialAmbient.xyz + Diffuse(Normal) * MaterialDiffuse.xyz;
-    o.Diffuse.w = 1.0f;
-
     // copy the input texture coordinate through
     o.Tex0  = i.Tex0.xy;
 
@@ -254,7 +234,6 @@ VS_OUTPUT_ANI VShadeAni(VS_INPUT_ANI i, uniform int NumBones)
 }
 
 float4 PShadeAni(float4  Pos     : POSITION,
-				float4  Diffuse : COLOR,
 				float2  Tex0    : TEXCOORD0,
 				float3  Normal  : TEXCOORD1,
 				float3  WorldPos : TEXCOORD2) : COLOR0

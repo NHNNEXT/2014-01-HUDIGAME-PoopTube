@@ -48,12 +48,12 @@ bool EndScene::Init() {
 
 	pooptube::Scene::Init();
 
-	mSpotLight = pooptube::Light::Create();
-	mSpotLight->SetPosition(30.f, 2.f, 30.f);
-	mSpotLight->SetRange(0.f);
-	mSpotLight->LightOnOff(false);
+	//mSpotLight = pooptube::Light::Create();
+	//mSpotLight->SetPosition(30.f, 2.f, 30.f);
+	//mSpotLight->SetRange(0.f);
+	//mSpotLight->LightOnOff(false);
 
-	AddChild(mSpotLight);
+	//AddChild(mSpotLight);
 
 	D3DCOLORVALUE temp;
 	temp.r = 0.f;
@@ -160,9 +160,9 @@ void EndScene::Update(float dTime) {
 	if (!mLightOrb[3]->IsRender())
 	{
 		mBoard->SetVisible(true);
-		mSpotLight->LightOnOff(true);
+		//mSpotLight->LightOnOff(true);
 		lightEnhanceTime += dTime;
-		mSpotLight->SetRange(lightEnhanceTime * 5);
+		//mSpotLight->SetRange(lightEnhanceTime * 5);
 		if (lightEnhanceTime < 10)
 			mBoard->SetPosition(35.f, -5.f + lightEnhanceTime, 35.f);
 	}

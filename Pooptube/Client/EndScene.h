@@ -45,7 +45,7 @@ private:
 	LightOrb						*mLightOrb[4];
 	pooptube::ThirdPersonCamera		*mCamera = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
-	pooptube::Light					*mSpotLight = nullptr;
+	//pooptube::Light					*mSpotLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
 	pooptube::BillBoard				*mBoard;
 	pooptube::Sprite				*mSprite = nullptr;

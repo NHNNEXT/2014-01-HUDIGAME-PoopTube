@@ -46,7 +46,7 @@ bool StageOne::Init() {
 
 	pooptube::Scene::Init();
 
-	mSunLight = pooptube::SunLight::Create();
+	//mSunLight = pooptube::SunLight::Create();
 
 	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK );
 	pooptube::SoundManager::GetInstance()->LoadBank( PATH_SOUND_BANK_STRING );
@@ -90,7 +90,7 @@ bool StageOne::Init() {
 	AddChild( board );
 
 	this->AddChild(mTree);
-	this->AddChild(mSunLight);
+	//this->AddChild(mSunLight);
 	this->AddChild(mCharacter);
 	this->AddChild(mCamera);
 	this->AddChild(mGround);

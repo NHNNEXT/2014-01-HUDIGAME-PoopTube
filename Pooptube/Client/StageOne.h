@@ -41,8 +41,8 @@ private:
 	pooptube::ThirdPersonCamera		*mCamera = nullptr;
 	MainCharacter					*mCharacter = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
-	pooptube::Light					*mLight = nullptr;
-	pooptube::SunLight				*mSunLight = nullptr;
+	//pooptube::Light					*mLight = nullptr;
+	//pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
 	Tree1							*mTree = nullptr;
 
