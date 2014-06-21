@@ -70,6 +70,9 @@ namespace pooptube {
 			return false;
 		}
 
+		//빛을끈다.
+		mD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+
 		// 컬링을 설정합니다.
 		mD3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 		// z버퍼를 사용합니다.

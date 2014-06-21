@@ -625,15 +625,14 @@ namespace pooptube {
 		MatWorld = MatScale*MatRotate*MatTrans;
 
 		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+		mMeshData->mEffect->SetMatrix("mWorld", &MatWorld);
 
 		D3DXMATRIX matProj;
 		D3DXMATRIX matView;
-		D3DXMATRIX matWorld;
 		D3DLIGHT9 mLight;
 
 		mDevice->GetTransform(D3DTS_VIEW, &matView);
 		mDevice->GetTransform(D3DTS_PROJECTION, &matProj);
-		mDevice->GetTransform(D3DTS_WORLD, &matWorld);
 		mDevice->GetLight(0, &mLight);
 
 		D3DXMatrixMultiply(&matView, &matView, &matProj);
@@ -641,7 +640,6 @@ namespace pooptube {
 
 		//쉐이더 추가시 추가해야함
 		mMeshData->mEffect->SetMatrix("mViewProj", &matView);
-		mMeshData->mEffect->SetMatrix("mWorld", &matWorld);
 		
 		DrawFrame(mMeshData->mFrameRoot);
 		UpdateFrameMatrices(mMeshData->mFrameRoot, &MatWorld);
@@ -791,10 +789,12 @@ namespace pooptube {
 				ambEmm += D3DXCOLOR(pMeshContainer->pMaterials[pBoneComb[iAttrib].AttribId].MatD3D.Emissive);
 
 				// set material color properties 
+				/*
 				mMeshData->mEffect->SetVector("MaterialDiffuse",
 					(D3DXVECTOR4*)&(
 					pMeshContainer->pMaterials[pBoneComb[iAttrib].AttribId].MatD3D.Diffuse));
 				mMeshData->mEffect->SetVector("MaterialAmbient", (D3DXVECTOR4*)&ambEmm);
+				*/
 
 				// setup the material of the mesh subset - REMEMBER to use the original pre-skinning attribute id to get the correct material id
 				//mDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneComb[iAttrib].AttribId]);

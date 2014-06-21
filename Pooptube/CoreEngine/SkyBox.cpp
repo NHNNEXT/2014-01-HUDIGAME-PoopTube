@@ -36,6 +36,13 @@ namespace pooptube{
 	{
 		Node::Init();
 
+		mEffect = ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx");
+		if (!mEffect) {
+			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
+			assert(false);
+			return false;
+		}
+
 		mObjectName = "SkyBox" + std::to_string(Node::ObjectNum-1);
 		mClassName = "SkyBox";
 
@@ -148,11 +155,36 @@ namespace pooptube{
 
 	void SkyBox::Render() {
 
-		//행렬의 연산은 node에서 상속받는다.
-		Node::Render();
+		// TODO: 행렬 계산
+		D3DXMATRIXA16	MatWorld;
+		D3DXMATRIXA16	MatTrans;
+		D3DXMATRIXA16	MatScale;
+		D3DXMATRIXA16	MatRotate;
+		D3DXVECTOR3		LookPt = mPosition + mFrontVector;
+
+		D3DXMatrixIdentity(&MatWorld);
+
+		//프론트 백터의 값에 따라 회전
+		D3DXMatrixLookAtLH(&MatRotate, &mPosition, &LookPt, &mUpVec);
+		//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
+		//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
+		//(카메라의 좌표계에 맞춰져있다)
+		//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
+		MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
+		D3DXMatrixTranspose(&MatRotate, &MatRotate);
+
+		D3DXMatrixTranslation(&MatTrans, mPosition.x, mPosition.y, mPosition.z);
+		D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
+
+		MatWorld = MatScale*MatRotate*MatTrans;
+
+		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+
+		mEffect->SetTechnique("t3");
+		mEffect->SetMatrix("mWorld", &MatWorld);
 
 		//빛을끈다.
-		GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
+		//GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
 		GetDevice()->SetFVF(D3DFVF_CUSTOMVERTEX_SKYBOX);
 
 		GetDevice()->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_NONE);
@@ -164,32 +196,91 @@ namespace pooptube{
 		//인덱스 설정
 		GetDevice()->SetIndices(mIndexBuffer);
 
-		GetDevice()->SetTexture(0, mBackTexture);
-		// 		GetDevice()->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-		// 		GetDevice()->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-		// 		GetDevice()->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
-		// 		GetDevice()->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
-		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 4);
+		//GetDevice()->SetTexture(0, mBackTexture);
+		mEffect->SetTexture("mTexture", mBackTexture);
+		UINT cPasses;
+		mEffect->Begin(&cPasses, 0);
+		for (UINT p = 0; p < cPasses; ++p) {
+			mEffect->BeginPass(p);
 
-		GetDevice()->SetTexture(0, mFrontTexture);
-		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 6, 4);
+			Application::GetInstance()->UpdateDPCall();
+			GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 0, 4);
 
-		GetDevice()->SetTexture(0, mBotTexture);
-		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 12, 4);
+			mEffect->EndPass();
+		}
+		mEffect->End();
+		
+		//GetDevice()->SetTexture(0, mFrontTexture);
+		mEffect->SetTexture("mTexture", mFrontTexture);
+		mEffect->Begin(&cPasses, 0);
+		for (UINT p = 0; p < cPasses; ++p) {
+			mEffect->BeginPass(p);
 
-		GetDevice()->SetTexture(0, mTopTexture);
-		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 18, 4);
+			Application::GetInstance()->UpdateDPCall();
+			GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 6, 4);
 
-		GetDevice()->SetTexture(0, mLeftTexture);
-		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 24, 4);
+			mEffect->EndPass();
+		}
+		mEffect->End();
+		
+		//GetDevice()->SetTexture(0, mBotTexture);
+		mEffect->SetTexture("mTexture", mBotTexture);
+		mEffect->Begin(&cPasses, 0);
+		for (UINT p = 0; p < cPasses; ++p) {
+			mEffect->BeginPass(p);
 
-		GetDevice()->SetTexture(0, mRightTexture);
-		GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 30, 4);
+			Application::GetInstance()->UpdateDPCall();
+			GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 12, 4);
+
+			mEffect->EndPass();
+		}
+		mEffect->End();
+		
+		//GetDevice()->SetTexture(0, mTopTexture);
+		mEffect->SetTexture("mTexture", mTopTexture);
+		mEffect->Begin(&cPasses, 0);
+		for (UINT p = 0; p < cPasses; ++p) {
+			mEffect->BeginPass(p);
+
+			Application::GetInstance()->UpdateDPCall();
+			GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 18, 4);
+
+			mEffect->EndPass();
+		}
+		mEffect->End();
+		
+
+		//GetDevice()->SetTexture(0, mLeftTexture);
+		mEffect->SetTexture("mTexture", mLeftTexture);
+		mEffect->Begin(&cPasses, 0);
+		for (UINT p = 0; p < cPasses; ++p) {
+			mEffect->BeginPass(p);
+
+			Application::GetInstance()->UpdateDPCall();
+			GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 24, 4);
+
+			mEffect->EndPass();
+		}
+		mEffect->End();
+		
+
+		//GetDevice()->SetTexture(0, mRightTexture);
+		mEffect->SetTexture("mTexture", mRightTexture);
+		mEffect->Begin(&cPasses, 0);
+		for (UINT p = 0; p < cPasses; ++p) {
+			mEffect->BeginPass(p);
+
+			Application::GetInstance()->UpdateDPCall();
+			GetDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 24, 30, 4);
+
+			mEffect->EndPass();
+		}
+		mEffect->End();
 		
 		GetDevice()->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		GetDevice()->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		GetDevice()->SetTexture(0, 0);
-		GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
+		//GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
 	}
 
 	void SkyBox::Update(float dTime) {

@@ -46,6 +46,8 @@ namespace pooptube {
 		LPDIRECT3DTEXTURE9 mLeftTexture = nullptr;
 		LPDIRECT3DTEXTURE9 mRightTexture = nullptr;
 
+		ID3DXEffect*	   mEffect = nullptr;
+
 		LPDIRECT3DVERTEXBUFFER9 mVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9	mIndexBuffer = nullptr;
 

@@ -27,6 +27,12 @@ texture	   mAlphaMap;
 //--------------------------------------------------------------------------------------
 // Texture samplers
 //--------------------------------------------------------------------------------------
+sampler samSkyBox = 
+sampler_state
+{
+	Texture = <mTexture>;
+};
+
 sampler samTex01 =
 sampler_state
 {
@@ -309,10 +315,33 @@ float4 PShadeMesh(
 
 	return float4(saturate(
 		TotalAmbient +
-		(texel.xyz * lightDiffuse * diffuseLighting * 0.6) +
-		(lightSpecular * specLighting * 0.5)
+		(texel.xyz * lightDiffuse * diffuseLighting * 0.6)/* +
+		(lightSpecular * specLighting * 0.5)*/
 		), texel.w);
 }
+
+//////////////////////////////////////////////////////
+
+VS_OUTPUT_MESH VShadeSkyBox(VS_INPUT_MESH Input) 
+{
+	VS_OUTPUT_MESH o;
+
+	float4 posWorld = mul(Input.Pos, mWorld);
+	o.Pos = mul(posWorld, mViewProj);
+	o.Normal = mul(Input.Normal, (float3x3)mWorld);
+	o.WorldPos = posWorld;
+
+	o.Tex0 = Input.Tex0;
+
+	return o;
+}
+
+float4 PShadeSkyBox(
+		float2 Tex0 : TEXCOORD0) : COLOR0
+{
+	return tex2D(samSkyBox, Tex0);
+}
+
 
 //////////////////////////////////////
 // Techniques specs follow
@@ -353,6 +382,7 @@ technique t3
 {
 	pass p0
 	{
-
+		VertexShader = compile vs_2_0 VShadeSkyBox();
+		PixelShader = compile ps_2_0 PShadeSkyBox();
 	}
 }
