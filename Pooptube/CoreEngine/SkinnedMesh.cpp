@@ -626,20 +626,23 @@ namespace pooptube {
 
 		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 
-		D3DXMATRIX g_matProj;
+		D3DXMATRIX matProj;
 		D3DXMATRIX matView;
+		D3DXMATRIX matWorld;
 		D3DLIGHT9 mLight;
 
 		mDevice->GetTransform(D3DTS_VIEW, &matView);
-		mDevice->GetTransform(D3DTS_PROJECTION, &g_matProj);
+		mDevice->GetTransform(D3DTS_PROJECTION, &matProj);
+		mDevice->GetTransform(D3DTS_WORLD, &matWorld);
 		mDevice->GetLight(0, &mLight);
 
-		D3DXMatrixMultiply(&matView, &matView, &g_matProj);
+		D3DXMatrixMultiply(&matView, &matView, &matProj);
 		D3DXVECTOR4 vLightDir(mLight.Direction.x, mLight.Direction.y, mLight.Direction.z, 0.f);
 
 		//쉐이더 추가시 추가해야함
 		mMeshData->mEffect->SetMatrix("mViewProj", &matView);
-		//mMeshData->mEffect->SetVector("lhtDir", &vLightDir);
+		mMeshData->mEffect->SetMatrix("mWorld", &matWorld);
+		
 		DrawFrame(mMeshData->mFrameRoot);
 		UpdateFrameMatrices(mMeshData->mFrameRoot, &MatWorld);
 	}
@@ -796,7 +799,7 @@ namespace pooptube {
 				// setup the material of the mesh subset - REMEMBER to use the original pre-skinning attribute id to get the correct material id
 				//mDevice->SetTexture(0, pMeshContainer->ppTextures[pBoneComb[iAttrib].AttribId]);
 				mMeshData->mEffect->SetTexture("mTexture", pMeshContainer->ppTextures[pBoneComb[iAttrib].AttribId]);
-
+				
 				// Set CurNumBones to select the correct vertex shader for the number of bones
 				mMeshData->mEffect->SetInt("CurNumBones", pMeshContainer->NumInfl - 1);
 

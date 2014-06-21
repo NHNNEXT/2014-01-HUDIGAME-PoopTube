@@ -72,8 +72,8 @@ struct VS_OUTPUT_ANI
     float4  Pos     : POSITION;
     float4  Diffuse : COLOR;
     float2  Tex0    : TEXCOORD0;
-	//float3  Normal  : TEXCOORD1;
-	//float3  WorldPos : TEXCOORD2;
+	float3  Normal  : TEXCOORD1;
+	float3  WorldPos : TEXCOORD2;
 };
 
 struct VS_INPUT_GROUND 
@@ -237,7 +237,7 @@ VS_OUTPUT_ANI VShadeAni(VS_INPUT_ANI i, uniform int NumBones)
 
     // normalize normals
     Normal = normalize(Normal);
-	//o.Normal = Normal;
+	o.Normal = Normal.xyz;
 
     // Shade (Ambient + etc.)
     o.Diffuse.xyz = MaterialAmbient.xyz + Diffuse(Normal) * MaterialDiffuse.xyz;
@@ -246,17 +246,40 @@ VS_OUTPUT_ANI VShadeAni(VS_INPUT_ANI i, uniform int NumBones)
     // copy the input texture coordinate through
     o.Tex0  = i.Tex0.xy;
 
-	//float4 posWorld = mul(i.Pos, mWorld);
-	//o.WorldPos = posWorld;
+	//float4x4 World = mWorldMatrixArray[IndexArray[NumBones - 1]];
+	float4 posWorld = mul(i.Pos, mWorld);
+	o.WorldPos = posWorld.xyz;
 
     return o;
 }
 
-float4 PShadeAni(VS_OUTPUT_ANI Input) : COLOR0
+float4 PShadeAni(float4  Pos     : POSITION,
+				float4  Diffuse : COLOR,
+				float2  Tex0    : TEXCOORD0,
+				float3  Normal  : TEXCOORD1,
+				float3  WorldPos : TEXCOORD2) : COLOR0
 {
-	float4 texel = tex2D(samTex01, Input.Tex0);
+	float3 lightDir = normalize(WorldPos - lightPos); // per pixel diffuse lighting
 
-	return texel;
+	// Note: Non-uniform scaling not supported
+	float diffuseLighting = saturate(dot(Normal, -lightDir));
+
+	// Introduce fall-off of light intensity
+	diffuseLighting *= (lightDistance / dot(lightPos - WorldPos, lightPos - WorldPos));
+
+	// Using Blinn half angle modification for perofrmance over correctness
+	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
+		float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
+
+	float4 texel = tex2D(samTex01, Tex0);
+
+	float4 TotalAmbient = float4(lightAmbient * texel, 1.f);
+
+	return float4(saturate(
+		TotalAmbient +
+		(texel.xyz * lightDiffuse * diffuseLighting * 0.6)/* +
+		(lightSpecular * specLighting * 0.5)*/
+		), texel.w);
 }
 
 int CurNumBones = 2;
@@ -306,6 +329,7 @@ float4 PShadeMesh(
 	//return texel;
 
 	return float4(saturate(
+		TotalAmbient +
 		(texel.xyz * lightDiffuse * diffuseLighting * 0.6) +
 		(lightSpecular * specLighting * 0.5)
 		), texel.w);
@@ -342,5 +366,14 @@ technique t2
 	{
 		VertexShader = compile vs_2_0 VShadeMesh();
 		PixelShader = compile ps_2_0 PShadeMesh();
+	}
+}
+
+//스카이박스용
+technique t3
+{
+	pass p0
+	{
+
 	}
 }
