@@ -33,6 +33,9 @@ namespace pooptube {
 		mAxisLen[AXIS_Z] = 0.5f;
 		mParentNode = pNode;
 
+		InitVB();
+		InitIB();
+
 		mObjectName = "CollisionBox" + std::to_string(Node::ObjectNum-1);
 		mClassName = "CollisionBox";
 
@@ -75,62 +78,26 @@ namespace pooptube {
 
 	void CollisionBox::Render()
 	{
-#ifdef _DEBUG
-// 		Node::Render();
-// 
-// 		D3DXMATRIX projMat, viewMat;
-// 		GetDevice()->GetTransform( D3DTS_PROJECTION, &projMat );
-// 		GetDevice()->GetTransform(D3DTS_VIEW, &viewMat);
-// 		viewMat *= projMat;
-// 
-// 		ID3DXLine *Line;
-// 
-// 		if (D3DXCreateLine(GetDevice(), &Line) != D3D_OK)
-// 			return;
-// 		Line->SetWidth( 1 );
-// 		Line->SetAntialias( true );
-// 
-// 		D3DXVECTOR3 mXDirVec, mFrontVector, tXDirVec;
-// 		D3DXVec3Normalize( &mFrontVector, &GetFrontVector() );
-// 		D3DXVec3Cross( &mXDirVec, &GetUpVector(), &mFrontVector );
-// 		D3DXVECTOR3 mAxisDir[3] = { mXDirVec, GetUpVector(), GetFrontVector() };
-// 		D3DXVECTOR3 vF[3];
-// 		for( int i = 0; i < 3; ++i ){
-// 			vF[i] = mAxisDir[i] * mAxisLen[i];
-// 		}
-// 
-// 		D3DXVECTOR3 centerPos = GetPosition();
-// 		D3DXCOLOR	lineColor = D3DXCOLOR( 0.0f, 0.5f, 1.0f, 1.0f );
-// 		D3DXVECTOR3 point[11];
-// 		point[0] = centerPos - vF[0] + vF[1] + vF[2];
-// 		point[1] = centerPos + vF[0] + vF[1] + vF[2];
-// 		point[2] = centerPos + vF[0] + vF[1] - vF[2];
-// 		point[3] = centerPos - vF[0] + vF[1] - vF[2];
-// 		point[4] = centerPos - vF[0] + vF[1] + vF[2];
-// 		point[5] = centerPos - vF[0] - vF[1] + vF[2];
-// 		point[6] = centerPos + vF[0] - vF[1] + vF[2];
-// 		point[7] = centerPos + vF[0] - vF[1] - vF[2];
-// 		point[8] = centerPos - vF[0] - vF[1] - vF[2];
-// 		point[9] = centerPos - vF[0] - vF[1] + vF[2];
-// 		Line->Begin();
-// 		Line->DrawTransform( point, 10, &viewMat, lineColor );
-// 
-// 		D3DXVECTOR3 pointT[2];
-// 		pointT[0] = centerPos - vF[0] - vF[1] - vF[2];
-// 		pointT[1] = centerPos - vF[0] + vF[1] - vF[2];
-// 		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
-// 
-// 		pointT[0] = centerPos + vF[0] - vF[1] - vF[2];
-// 		pointT[1] = centerPos + vF[0] + vF[1] - vF[2];
-// 		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
-// 
-// 		pointT[0] = centerPos + vF[0] - vF[1] + vF[2];
-// 		pointT[1] = centerPos + vF[0] + vF[1] + vF[2];
-// 		Line->DrawTransform( pointT, 2, &viewMat, lineColor );
-// 		Line->End();
-// 
-// 		Line->Release();
-#endif // _DEBUG
+		Node::Render();
+
+		DWORD BeforeRenderState;
+		DWORD BeforeLightState;
+
+		mDevice->GetRenderState(D3DRS_LIGHTING, &BeforeLightState);
+		mDevice->GetRenderState(D3DRS_FILLMODE, &BeforeRenderState);
+		mDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+		mDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+		mDevice->SetFVF(D3DFVF_CUSTOMVERTEX_COLLISIONBOX);
+		//디바이스에 버텍스버퍼를 전달
+		mDevice->SetStreamSource(0, mVertexBuffer, 0, sizeof(COLLISION_CUSTOM_VERTEX));
+
+		//인덱스 설정
+		mDevice->SetIndices(mIndexBuffer);
+		mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+
+		mDevice->SetRenderState(D3DRS_LIGHTING, BeforeLightState);
+		mDevice->SetRenderState(D3DRS_FILLMODE, BeforeRenderState);
 	}
 
 	void CollisionBox::Update( float dTime ) {
@@ -253,4 +220,73 @@ namespace pooptube {
 
 		return true;
 	}
+
+	int CollisionBox::InitVB() {
+		/// 상자(cube)를 렌더링하기위해 8개의 정점을 선언
+		COLLISION_CUSTOM_VERTEX vertices[] =
+		{
+			{ -mAxisLen[0], mAxisLen[1], mAxisLen[2], 0xFFFF0000 },	/// v0
+			{ mAxisLen[0], mAxisLen[1], mAxisLen[2], 0xFFFF0000 },	/// v1
+			{ mAxisLen[0], mAxisLen[1], -mAxisLen[2], 0xFFFF0000 },	/// v2
+			{ -mAxisLen[0], mAxisLen[1], -mAxisLen[2], 0xFFFF0000 },	 /// v3
+
+			{ -mAxisLen[0], -mAxisLen[1], mAxisLen[2], 0xFFFF0000 },	 /// v4
+			{ mAxisLen[0], -mAxisLen[1], mAxisLen[2], 0xFFFF0000 },	/// v5
+			{ mAxisLen[0], -mAxisLen[1], -mAxisLen[2], 0xFFFF0000 },	 /// v6
+			{ -mAxisLen[0], -mAxisLen[1], -mAxisLen[2], 0xFFFF0000 }, /// v7
+		};
+
+		/// 정점버퍼 생성
+		/// 8개의 사용자정점을 보관할 메모리를 할당한다.
+		/// FVF를 지정하여 보관할 데이터의 형식을 지정한다.
+		if (FAILED(mDevice->CreateVertexBuffer(8 * sizeof(COLLISION_CUSTOM_VERTEX),
+			0, D3DFVF_CUSTOMVERTEX_COLLISIONBOX,
+			D3DPOOL_DEFAULT, &mVertexBuffer, NULL)))
+		{
+			return E_FAIL;
+		}
+
+		/// 정점버퍼를 값으로 채운다. 
+		/// 정점버퍼의 Lock()함수를 호출하여 포인터를 얻어온다.
+		VOID* pVertices;
+		if (FAILED(mVertexBuffer->Lock(0, sizeof(vertices), (void**)&pVertices, 0)))
+			return E_FAIL;
+
+		memcpy(pVertices, vertices, sizeof(vertices));
+		mVertexBuffer->Unlock();
+
+		return S_OK;
+	}
+
+	int CollisionBox::InitIB() {
+		/// 상자(cube)를 렌더링하기위해 12개의 면을 선언
+		COLLISION_CUSTOM_INDEX	indices[] =
+		{
+			{ 0, 1, 2 }, { 0, 2, 3 },	/// 윗면
+			{ 4, 6, 5 }, { 4, 7, 6 },	/// 아랫면
+			{ 0, 3, 7 }, { 0, 7, 4 },	/// 왼면
+			{ 1, 5, 6 }, { 1, 6, 2 },	/// 오른면
+			{ 3, 2, 6 }, { 3, 6, 7 },	/// 앞면
+			{ 0, 4, 5 }, { 0, 5, 1 }	/// 뒷면
+		};
+
+		/// 인덱스버퍼 생성
+		/// D3DFMT_INDEX16은 인덱스의 단위가 16비트 라는 것이다.
+		/// 우리는 MYINDEX 구조체에서 WORD형으로 선언했으므로 D3DFMT_INDEX16을 사용한다.
+		if (FAILED(mDevice->CreateIndexBuffer(12 * sizeof(COLLISION_CUSTOM_INDEX), 0, D3DFMT_INDEX16, D3DPOOL_DEFAULT, &mIndexBuffer, NULL)))
+		{
+			return E_FAIL;
+		}
+
+		/// 인덱스버퍼를 값으로 채운다. 
+		/// 인덱스버퍼의 Lock()함수를 호출하여 포인터를 얻어온다.
+		VOID* pIndices;
+		if (FAILED(mIndexBuffer->Lock(0, sizeof(indices), (void**)&pIndices, 0)))
+			return E_FAIL;
+		memcpy(pIndices, indices, sizeof(indices));
+		mIndexBuffer->Unlock();
+
+		return S_OK;
+	}
+
 }

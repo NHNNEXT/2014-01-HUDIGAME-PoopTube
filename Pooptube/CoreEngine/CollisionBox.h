@@ -10,6 +10,17 @@
 
 namespace pooptube {
 
+	const int D3DFVF_CUSTOMVERTEX_COLLISIONBOX = D3DFVF_XYZ | D3DFVF_DIFFUSE;
+
+	struct COLLISION_CUSTOM_VERTEX {
+		float x, y, z;
+		DWORD color;
+	};
+
+	struct COLLISION_CUSTOM_INDEX {
+		WORD w0, w1, w2;
+	};
+
 	class SkinnedMesh;
 
 	class CollisionBox : public Node {
@@ -59,10 +70,17 @@ namespace pooptube {
 		Node*			GetParent( ) const { return mParentNode; }
 		COLLISION_TYPE	GetCollisionType() { return mCollisionType; }
 
+		int InitVB();
+		int	InitIB();
+
 	private:
 		float			mAxisLen[AXIS_NUM];
+
 //		std::shared_ptr<Node>	mParentNode;
 		Node*			mParentNode;
 		COLLISION_TYPE	mCollisionType = COLLISION_TYPE::NONE;
+
+		LPDIRECT3DVERTEXBUFFER9 mVertexBuffer = nullptr;
+		LPDIRECT3DINDEXBUFFER9 mIndexBuffer = nullptr;
 	};
 }
