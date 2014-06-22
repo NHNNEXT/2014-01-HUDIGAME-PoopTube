@@ -272,31 +272,20 @@ float4 PShadeAni(float4  Pos     : POSITION,
 		), texel.w);
 }
 
-float4 PShadeLightObj(	float4  Pos     : POSITION,
-						float2  Tex0 : TEXCOORD0,
-						float3  Normal : TEXCOORD1,
+float4 PShadeLightObj(	float2  Tex0 : TEXCOORD0,
 						float3  WorldPos : TEXCOORD2) : COLOR0
 {
-	float3 lightDir = normalize(WorldPos - lightPos); // per pixel diffuse lighting
-
-	// Note: Non-uniform scaling not supported
-	float diffuseLighting = saturate(dot(Normal, -lightDir));
-
-	// Introduce fall-off of light intensity
-	diffuseLighting *= (lightDistance / dot(lightPos - WorldPos, lightPos - WorldPos));
-
-	// Using Blinn half angle modification for perofrmance over correctness
-	//float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
-	//float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
-
 	float4 texel = tex2D(samTex01, Tex0);
 
-		float4 TotalAmbient = float4(lightAmbient * texel, 1.f);
+	float ViewpointDistance = length(mCamaraPos - WorldPos.xyz);
+	//선형안개
+	float fogFactor = saturate((fogEnd - ViewpointDistance) / (fogEnd - fogStart));
 
-		return float4(saturate(
-		TotalAmbient +
-		(texel.xyz * lightDiffuse * diffuseLighting * 0.6)
-		), texel.w);
+	float3 fogColorFactor = fogColor*(1.0f - fogFactor);
+	//마지막에 안개공식을 적용
+	float4 finalColor = float4(saturate(texel*fogFactor + fogColorFactor), texel.w);
+
+	return finalColor;
 }
 
 int CurNumBones = 2;
