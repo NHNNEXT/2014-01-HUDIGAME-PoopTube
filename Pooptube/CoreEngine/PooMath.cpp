@@ -22,11 +22,20 @@ namespace pooptube{
 		float dot = D3DXVec3Dot( &srcN, &dstN );
 		float angle = acos( dot );
 
+		return angle;
+	}
+
+	float CalculateAngleSignedByY( D3DXVECTOR3& src, D3DXVECTOR3& dst )
+	{
+		float angle = CalculateAngle(src, dst);
+
 		// 방향 판단 y축 기준
-		D3DXVec3Cross( &dstN, &srcN, &dstN );
-		if( dstN.y > 0 )
-			angle *= -1; // 시계 방향
+		D3DXVECTOR3 dir;
+		D3DXVec3Cross( &dir, &src, &dst );
+		if( dir.y > 0 )
+			angle *= -1; // 반시계 방향
 
 		return angle;
 	}
+
 }

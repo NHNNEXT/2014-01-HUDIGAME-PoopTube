@@ -17,6 +17,18 @@
 				0,
 				0,
 				1
+			],
+			"HeightMapFile": "Model\\test512.bmp",
+			"HeightAmp": 0.05,
+			"MinArea": [
+				5,
+				0,
+				5
+			],
+			"MaxArea": [
+				507,
+				20,
+				507
 			]
 		},
 		{

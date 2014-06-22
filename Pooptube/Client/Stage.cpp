@@ -264,6 +264,18 @@ void Stage::_LoadGround( Json::Value& jsonData )
 	wStr.assign( str.begin(), str.end() );
 	float amp = static_cast<float>(jsonData.get( "HeightAmp", 0.05f ).asDouble());
 	mGround = Ground::Create( wStr, amp );
+	D3DXVECTOR3 minArea(
+		static_cast<float>(jsonData["MinArea"].get( 0u, 0.f ).asDouble()),
+		static_cast<float>(jsonData["MinArea"].get( 1u, 0.f ).asDouble()),
+		static_cast<float>(jsonData["MinArea"].get( 2u, 0.f ).asDouble())
+		);
+	D3DXVECTOR3 maxArea(
+		static_cast<float>(jsonData["MaxArea"].get( 0u, 0.f ).asDouble()),
+		static_cast<float>(jsonData["MaxArea"].get( 1u, 0.f ).asDouble()),
+		static_cast<float>(jsonData["MaxArea"].get( 2u, 0.f ).asDouble())
+		);
+	mGround->SetValidArea( minArea, maxArea );
+
 	_SetCommonData( mGround, jsonData );
 	AddChild( mGround );
 }
@@ -400,7 +412,7 @@ void Stage::_SetCommonData( Node* target, Json::Value& jsonData )
 	tmpVec = jsonVec;
 	tmpVec.y = 0.f;
 	if( tmpVec != zeroVec ){
-		angle = CalculateAngle( zVec, tmpVec );
+		angle = CalculateAngleSignedByY( zVec, tmpVec );
 		target->RotationY( angle );
 	}
 // 	tmpVec = jsonVec;

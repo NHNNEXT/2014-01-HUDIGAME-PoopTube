@@ -337,4 +337,21 @@ namespace pooptube {
 
 		return _SetBuffer();
 	}
+
+	D3DXVECTOR3 Ground::GetValidPosition( const D3DXVECTOR3& pos )
+	{
+		D3DXVECTOR3 posOut(pos);
+		if( mMinArea != mMaxArea ){
+			posOut.x = __min( pos.x, mMaxArea.x );
+// 			posOut.y = __min( posIn.y, mMaxArea.y );
+			posOut.z = __min( pos.z, mMaxArea.z );
+			posOut.x = __max( pos.x, mMinArea.x );
+// 			posOut.y = __max( posIn.y, mMinArea.y );
+			posOut.z = __max( pos.z, mMinArea.z );
+		}
+		posOut.y = GetHeight( posOut.x, posOut.z );
+
+		return posOut;
+	}
+
 }

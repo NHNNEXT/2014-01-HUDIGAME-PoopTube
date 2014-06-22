@@ -70,6 +70,7 @@ namespace pooptube {
 
 		//메시 데이터에 변경이 있을때 아래 함수 호출
 		bool ResetBuffer();
+		D3DXVECTOR3 GetValidPosition( const D3DXVECTOR3& pos );
 		float GetVertexHeight(float x, float z);
 		float GetHeight(float x, float z) const;
 		void SetHeight(float x, float z, float value);
@@ -82,6 +83,10 @@ namespace pooptube {
 
 		float GetPolygonSize() const { return mPolygonSize; }
 		void SetPolygonSize(float val) { mPolygonSize = val; }
+		void SetValidArea( D3DXVECTOR3& min, D3DXVECTOR3& max ){
+			mMinArea = min;
+			mMaxArea = max;
+		}
 
 		LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer() { return mVertexBuffer; }
 		LPDIRECT3DINDEXBUFFER9 GetIndexBuffer() { return mIndexBuffer; }
@@ -111,6 +116,7 @@ namespace pooptube {
 		MapData					*mData;
 
 		float					mPolygonSize = GROUND_POLYGON_SIZE;
+		D3DXVECTOR3				mMinArea, mMaxArea;
 	};
 
 }

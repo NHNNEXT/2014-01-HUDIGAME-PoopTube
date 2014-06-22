@@ -9,6 +9,7 @@
 #include "Ground.h"
 #include "Scene.h"
 #include "ResourceManager.h"
+#include "PooMath.h"
 
 MainCharacter::MainCharacter() {
 }
@@ -68,9 +69,10 @@ void MainCharacter::Update(float dTime) {
  
 // 	mSkinnedMesh->SetPosition(GetPosition());
 // 	mSkinnedMesh->Update(dTime);
-	SetPosition( mPosition.x, mScene->GetGroundModule()->GetHeight( mPosition.x, mPosition.z ), mPosition.z );
-	_CollsionHandle( dTime, pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
-
+	_CollsionHandle( pooptube::CollisionManager::GetInstance()->CollisionCheckNode( this ) );
+// 	SetPosition( mPosition.x, mScene->GetGroundModule()->GetHeight( mPosition.x, mPosition.z ), mPosition.z );
+	SetPosition( mScene->GetGroundModule()->GetValidPosition( mPosition ) );
+	
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
 	pooptube::SoundManager::GetInstance()->SetListener( &mListener );
 }
@@ -92,20 +94,55 @@ bool MainCharacter::Init( pooptube::Scene* scene ) {
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
 	collisionBox->Translation(D3DXVECTOR3(0.f, 1.2f, 0.f));
 	AddChild( collisionBox );
+	mCollisionBox = collisionBox;
 	
 
 	return true;
 }
 
-void MainCharacter::_CollsionHandle( float dTime, pooptube::CollisionBox* collisionResult )
+void MainCharacter::_CollsionHandle( pooptube::CollisionBox* collisionResult )
 {
 	if( collisionResult == nullptr )
 		return;
 	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::BLOCK ){
-		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetParent()->GetPosition();
+// 		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetParent()->GetPosition();
+		D3DXVECTOR3 dPos = mCollisionBox->GetPosition() - collisionResult->GetPosition();
+		float dLen = D3DXVec3Length( &dPos );
+		
+		// 두 충돌 박스가 겹친 길이 구하기
+		D3DXVECTOR3 resLenVec, resLenVecTmp( collisionResult->GetAxisLenX(), collisionResult->GetAxisLenY(), collisionResult->GetAxisLenZ() );
+		D3DXVECTOR3 thisLenVec, thisLenVecTmp( mCollisionBox->GetAxisLenX(), mCollisionBox->GetAxisLenY(), mCollisionBox->GetAxisLenZ() );
+		float dPos_resLenVec_angle(D3DX_PI), dPos_thisLenVec_angle(0.f);
+		float dPos_resLenVec_angleTmp, dPos_thisLenVec_angleTmp;
+		for( int xIdx = 1; xIdx > -2; xIdx -= 2 ){
+			resLenVecTmp.x *= xIdx;
+			thisLenVecTmp.x *= xIdx;
+			for( int yIdx = 1; yIdx > -2; yIdx -= 2 ){
+				resLenVecTmp.y *= yIdx;
+				thisLenVecTmp.y *= yIdx;
+				for( int zIdx = 1; zIdx > -2; zIdx -= 2 ){
+					resLenVecTmp.z *= zIdx;
+					thisLenVecTmp.z *= zIdx;
+
+					dPos_resLenVec_angleTmp = pooptube::CalculateAngle( dPos, resLenVecTmp );
+					dPos_thisLenVec_angleTmp = pooptube::CalculateAngle( dPos, thisLenVecTmp );
+
+					if( dPos_resLenVec_angle > dPos_resLenVec_angleTmp ){
+						dPos_resLenVec_angle = dPos_resLenVec_angleTmp;
+						resLenVec = resLenVecTmp;
+					}
+					if( dPos_thisLenVec_angle < dPos_thisLenVec_angleTmp ){
+						dPos_thisLenVec_angle = dPos_thisLenVec_angleTmp;
+						thisLenVec = thisLenVecTmp;
+					}
+				}
+			}
+		}
+
 		D3DXVec3Normalize( &dPos, &dPos );
-		dPos *= mSpeed * dTime;
-		Translation( dPos );
+		dLen = D3DXVec3Dot( &dPos, &resLenVec ) - D3DXVec3Dot( &dPos, &thisLenVec ) - dLen;
+
+		Translation( dPos * dLen );
 	}
 
 	/*if (collisionResult->GetCollisionType() && pooptube::CollisionBox::COLLISION_TYPE::LIGHTORB) {

@@ -63,7 +63,7 @@ protected:
 
 
 private:
-	void _CollsionHandle( float dTime, pooptube::CollisionBox* collisionResult );
+	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
 	void _JumpUpdate( float dTime );
 
 	CHAR_STATE				mState = NONE;
@@ -76,6 +76,7 @@ private:
 	pooptube::SkinnedMesh	*mMesh = nullptr;
 	//pooptube::Light			*mLight = nullptr;
 	pooptube::Scene			*mScene = nullptr;
+	pooptube::CollisionBox	*mCollisionBox = nullptr;
 
 	FMOD_3D_ATTRIBUTES		mListener;
 };
