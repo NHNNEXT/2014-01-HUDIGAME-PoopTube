@@ -53,6 +53,7 @@ private:
 	enum				{ mOrbCount = 12, };
 	Sprite				*mClearPoint[mOrbCount];
 	Sprite				*mYellow[mOrbCount];
+	Sprite				*mGameover;
 	//Sprite				*mPink[mOrbCount];
 	pooptube::Camera*	mCamera;
 	

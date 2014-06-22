@@ -25,6 +25,7 @@
 #include "BillBoard.h"
 #include "PooMath.h"
 #include "EndScene.h"
+#include "GameoverScene.h"
 
 Stage::Stage()
 {
@@ -107,6 +108,9 @@ bool Stage::Init( std::string filename )
 		mPink[i]->ApplyTransform();
 		mPink[i]->SetVisible(false);*/
 	}
+	
+	
+
 	return true;
 }
 
@@ -191,6 +195,20 @@ void Stage::Update( float dTime )
 // 		mLightEnhanceTime -= dTime;
 // 		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
 // 	}
+
+	std::list<Creature*>::iterator creatureListItor = mCreatureList.begin();
+	for (; creatureListItor != mCreatureList.end(); ++creatureListItor) {
+		if ((*creatureListItor)->GetState() == RAGE && (*creatureListItor)->DoRage(dTime)) {
+			//mTotalDamage += (*creatureListItor)->GetTotalDamage();
+			printf("AAAAAAAAAAAAAAAAAA");
+			mCharacter->DecreaseHP(1);
+		}
+	}
+
+	if (mCharacter->GetHP() < 0) {
+		GameoverScene* pGameoverScene = GameoverScene::Create();
+		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pGameoverScene);
+	}
 
 	if (orbCount == mOrbCount)
 	{

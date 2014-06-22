@@ -40,6 +40,7 @@
 #define PATH_RING				PATH_MODEL L"Ring.png"
 #define PATH_PINK				PATH_MODEL L"Pink.png"
 #define PATH_YELLOW				PATH_MODEL L"Yellow.png"
+#define PATH_GAMEOVER			PATH_MODEL L"Gameover.png"
 
 //sound path
 #define PATH_SOUND 				"Sound\\"
