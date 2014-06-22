@@ -54,7 +54,7 @@ namespace pooptube {
 		for( auto& zone : mRenderZone ){
 			dVec = pos - std::get<0>( zone )->GetPosition() - std::get<1>( zone );
 			dist = radius + std::get<2>( zone );
-			if( D3DXVec3Length( &dVec ) <= dist )
+			if( D3DXVec3LengthSq( &dVec ) <= dist * dist )
 				return true;
 		}
 		return false;

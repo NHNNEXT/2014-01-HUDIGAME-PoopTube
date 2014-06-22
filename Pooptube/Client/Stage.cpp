@@ -342,10 +342,23 @@ void Stage::_LoadNode( Json::Value& jsonData )
 void Stage::_SetCommonData( Node* target, Json::Value& jsonData )
 {
 	target->SetObjectName( jsonData["Name"].asString() );
-	target->SetPosition( jsonData["Position"][0u].asDouble(), jsonData["Position"][1u].asDouble(), jsonData["Position"][2u].asDouble() );
-	target->SetScale( jsonData["Scale"][0u].asDouble(), jsonData["Scale"][1u].asDouble(), jsonData["Scale"][2u].asDouble() );
+	target->SetPosition(
+		static_cast<float>(jsonData["Position"][0u].asDouble()),
+		static_cast<float>(jsonData["Position"][1u].asDouble()),
+		static_cast<float>(jsonData["Position"][2u].asDouble())
+		);
+	target->SetScale(
+		static_cast<float>(jsonData["Scale"][0u].asDouble()),
+		static_cast<float>(jsonData["Scale"][1u].asDouble()),
+		static_cast<float>(jsonData["Scale"][2u].asDouble())
+		);
 
-	D3DXVECTOR3 zVec( 0.f, 0.f, 1.f ), jsonVec( jsonData["FrontVector"][0u].asDouble(), jsonData["FrontVector"][1u].asDouble(), jsonData["FrontVector"][2u].asDouble() );
+	D3DXVECTOR3 jsonVec(
+		static_cast<float>(jsonData["FrontVector"][0u].asDouble()),
+		static_cast<float>(jsonData["FrontVector"][1u].asDouble()),
+		static_cast<float>(jsonData["FrontVector"][2u].asDouble())
+		);
+	D3DXVECTOR3 zVec( 0.f, 0.f, 1.f );
 	D3DXVECTOR3 tmpVec, zeroVec(0.f, 0.f, 0.f);
 	target->SetFrontVector( zVec );
 	if( jsonVec == zVec ) return;

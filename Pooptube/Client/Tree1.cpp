@@ -76,7 +76,7 @@ void Tree1::_SetBillBoardTexture()
 	float angle = pooptube::CalculateAngle( GetFrontVector(), mBillBoard->GetFrontVector() );
 	angle /= D3DX_PI;
 	angle *= 4;
-	int dir( angle );
+	int dir( static_cast<int>(angle) );
 	dir += 8;
 	dir %= 8;
 	switch( dir ){

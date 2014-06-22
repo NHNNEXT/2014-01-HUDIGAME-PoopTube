@@ -113,8 +113,8 @@ namespace pooptube {
 
 		//Check By Sphere
 		//속도 문제 개선 필요 여기 내용들은 매번 업데이트마다 순회함
-		if( D3DXVec3Length( &D ) > D3DXVec3Length( &D3DXVECTOR3( mAxisLen[0], mAxisLen[1], mAxisLen[2] ) )
-			+ D3DXVec3Length( &D3DXVECTOR3( target->mAxisLen[0], target->mAxisLen[1], target->mAxisLen[2] ) )
+		if( D3DXVec3LengthSq( &D ) > D3DXVec3LengthSq( &D3DXVECTOR3( mAxisLen[0], mAxisLen[1], mAxisLen[2] ) )
+			+ D3DXVec3LengthSq( &D3DXVECTOR3( target->mAxisLen[0], target->mAxisLen[1], target->mAxisLen[2] ) )
 			)
 		{
 			return false;

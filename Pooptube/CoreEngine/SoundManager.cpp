@@ -36,6 +36,7 @@ namespace pooptube {
 			mInstance->mSystem = nullptr;
 			FMOD::Studio::System::create( &mInstance->mSystem );
 //			ERRCHECK( mInstance->mSystem->initialize( 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0 ) );
+// 			mInstance->mSystem->initialize( 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0 );
 
 			ObjectManager::GetInstance()->AddObject( mInstance );
 		}

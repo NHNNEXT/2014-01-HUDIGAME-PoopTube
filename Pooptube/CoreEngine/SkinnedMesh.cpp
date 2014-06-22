@@ -704,11 +704,11 @@ namespace pooptube {
 		if (pMeshContainer->pSkinInfo != NULL) {
 
 			//SoftWare**************************************
-			D3DXMATRIX Identity;
-			DWORD cBones = pMeshContainer->pSkinInfo->GetNumBones();
-			DWORD iBone;
-			PBYTE pbVerticesSrc;
-			PBYTE pbVerticesDest;
+// 			D3DXMATRIX Identity;
+// 			DWORD cBones = pMeshContainer->pSkinInfo->GetNumBones();
+// 			DWORD iBone;
+// 			PBYTE pbVerticesSrc;
+// 			PBYTE pbVerticesDest;
 // 
 // 			// set up bone transforms
 // 			for (iBone = 0; iBone < cBones; ++iBone)

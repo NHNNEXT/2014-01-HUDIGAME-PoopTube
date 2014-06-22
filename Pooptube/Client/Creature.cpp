@@ -114,17 +114,19 @@ CREATURE_STATE Creature::FSM()
 	D3DXVECTOR3 CreaturePosition = GetPosition();
 	D3DXVECTOR3 distance = pss->GetPosition() - GetPosition();
 
-	if (mIdleDistance < D3DXVec3Length(&distance)) {
+	if (mIdleDistance * mIdleDistance < D3DXVec3LengthSq(&distance)) {
 
 		if (mState != IDLE)
 
 		SetState(CREATURE_STATE::IDLE);
 
 		//printf("idle\n");
-	} else if (mIdleDistance >= D3DXVec3Length(&distance) && D3DXVec3Length(&distance) >= mRageDistance) {
+	}
+	else if( mIdleDistance * mIdleDistance >= D3DXVec3LengthSq( &distance ) && D3DXVec3LengthSq( &distance ) >= mRageDistance * mRageDistance ) {
 		SetState(ANGRY);
 		//printf("angry\n");
-	} else if (mRageDistance > D3DXVec3Length(&distance)) {
+	}
+	else if( mRageDistance * mRageDistance > D3DXVec3LengthSq( &distance ) ) {
 		SetState(RAGE);
 		//printf("rage\n");
 	}
@@ -138,7 +140,7 @@ void Creature::DoIdle(float dTime)
 	D3DXVECTOR3 distance = mInitialPosition - GetPosition();
 	D3DXVECTOR3 CreatureFrontVector = GetFrontVector();
 	mStepSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
-	if (IDLE == GetState() && D3DXVec3Length(&distance) < 0.5f) {
+	if (IDLE == GetState() && D3DXVec3LengthSq(&distance) < 0.25f) {
 		//RotationY(0.1f);
 		SetPosition(mInitialPosition);
 	}

@@ -325,7 +325,7 @@ namespace pooptube {
 			std::vector<D3DXVECTOR3> VB = *(iter->GetVertices());
 			std::vector<D3DXVECTOR3> IB = *(iter->GetIndices());
 			D3DXVECTOR3 pos = iter->GetPosition();
-			DWORD dwFace;
+// 			DWORD dwFace;
 			FLOAT fBary1, fBary2, fDist;
 			BOOL picked = false;
 			//float mU, mV;
@@ -375,7 +375,7 @@ namespace pooptube {
 		GetRay(x, y, &Origin, &Direction);
 
 		D3DXVECTOR3 pos = mPosition;
-		DWORD dwFace;
+// 		DWORD dwFace;
 		FLOAT fBary1, fBary2, fDist;
 		BOOL picked = false;
 
