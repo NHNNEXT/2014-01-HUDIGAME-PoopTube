@@ -86,6 +86,10 @@ bool IntroScene::Init() {
 
 	mCamera = pooptube::ThirdPersonCamera::Create(mCharacter);
 	mGround = pooptube::Ground::Create(PATH_INTRO_HEIGHTMAP);
+	mGround->SetValidArea(
+		D3DXVECTOR3( 5.f, 0.f, 5.f ),
+		D3DXVECTOR3( mGround->GetRowSize() * mGround->GetPolygonSize(), 20.f, mGround->GetColSize() * mGround->GetPolygonSize() )
+		);
 	mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
 		PATH_SKYBOX_DOWN,
 		PATH_SKYBOX_FRONT,
