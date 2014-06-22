@@ -136,13 +136,18 @@ bool IntroScene::Init() {
 	for (int i = 0; i < 3; ++i)
 	{
 		mBoard[i] = pooptube::BillBoard::Create();
-		mBoard[i]->SetTexture(L"Model\\logo.jpg");
+		mBoard[i]->SetTexture(L"Model\\BringToLight.png");
 		mBoard[i]->SetPosition(mLightOrb[i]->GetPosition().x, mLightOrb[i]->GetPosition().y, mLightOrb[i]->GetPosition().z);
 		mBoard[i]->SetScale(6.4f, 3.6f, 1.f);
 		mBoard[i]->SetVisible(false);
 		AddChild(mBoard[i]);
 	}
 
+
+	mBoard1 = pooptube::BillBoard::Create();
+	mBoard1->SetTexture(L"Model\\BringToLight.png");
+	mBoard1->SetPosition(10.f, 10.f, 10.f);
+	AddChild(mBoard1);
 // 	AddChild(mPink);
 // 	AddChild(mYellow);
 
@@ -187,10 +192,10 @@ void IntroScene::Update(float dTime) {
 	pooptube::SoundManager::GetInstance()->Update();
 
 	D3DXVECTOR3 CharPos = mCharacter->GetPosition();
-	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
-
-	CharPos.y = MapHeight;
-	mCharacter->SetPosition(CharPos);
+// 	float		MapHeight = mGround->GetHeight(CharPos.x, CharPos.z);
+// 
+// 	CharPos.y = MapHeight;
+// 	mCharacter->SetPosition(CharPos);
 
 	int lightOrbCount = 0;
 

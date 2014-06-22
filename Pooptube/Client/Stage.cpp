@@ -162,7 +162,7 @@ void Stage::Update( float dTime )
 	for (int i = 0; i < orbCount; ++i) {
 		mYellow[i]->SetVisible(true);
 	}
-	
+
 	// pink ±×¸®±â
 	std::list<Creature*>::iterator creatureListItor = mCreatureList.begin();
 	for (; creatureListItor != mCreatureList.end(); ++creatureListItor) {
@@ -202,6 +202,8 @@ void Stage::Update( float dTime )
 	/*printf("LightOrb count : %d \n", orbCount);
 	printf("HP : %d\n", mCharacter->GetHP());
 	printf("DMG : %d\n", mTotalDamage);*/
+
+
 }
 
 void Stage::UpdateInput()
@@ -257,7 +259,7 @@ void Stage::_LoadFile( std::string filename )
 
 void Stage::_LoadGround( Json::Value& jsonData )
 {
-	std::string str( jsonData.get( "HeightMapFile", "MODEL\\test512.bmp" ).asString() );
+	std::string str( jsonData.get( "HeightMapFile", "MODEL\\splattingmap1.bmp" ).asString() );
 	std::wstring wStr;
 	wStr.assign( str.begin(), str.end() );
 	float amp = static_cast<float>(jsonData.get( "HeightAmp", 0.05f ).asDouble());
@@ -296,7 +298,13 @@ void Stage::_LoadLightOrb( Json::Value& jsonData )
 {
 	LightOrb *tLightOrb = LightOrb::Create();
 	_SetCommonData( tLightOrb, jsonData );
-	AddChild( tLightOrb );
+
+	D3DXVECTOR3 LightOrbPos = tLightOrb->GetPosition();
+	float		MapHeight = mGround->GetHeight(LightOrbPos.x, LightOrbPos.z);
+	LightOrbPos.y = MapHeight + 1.5f;
+	tLightOrb->SetPosition(LightOrbPos);
+
+	AddChild(tLightOrb);
 
 	//auto iter = mLightOrbList.begin();
 	mLightOrbList.push_back(tLightOrb);
@@ -317,19 +325,37 @@ void Stage::_LoadBillBoard( Json::Value& jsonData )
 void Stage::_LoadTree1( Json::Value& jsonData )
 {
 	Tree1 *tTree = Tree1::Create();
-	_SetCommonData( tTree, jsonData );
+	_SetCommonData( tTree, jsonData ); 
+
+	D3DXVECTOR3 TreePos = tTree->GetPosition();
+	float		MapHeight = mGround->GetHeight(TreePos.x, TreePos.z);
+	TreePos.y = MapHeight;
+	tTree->SetPosition(TreePos);
+
 	AddChild( tTree );
 }
 void Stage::_LoadTree2( Json::Value& jsonData )
 {
 	Tree2 *tTree = Tree2::Create();
 	_SetCommonData( tTree, jsonData );
+
+	D3DXVECTOR3 TreePos = tTree->GetPosition();
+	float		MapHeight = mGround->GetHeight(TreePos.x, TreePos.z);
+	TreePos.y = MapHeight;
+	tTree->SetPosition(TreePos);
+
 	AddChild( tTree );
 }
 void Stage::_LoadTree3( Json::Value& jsonData )
 {
 	Tree3 *tTree = Tree3::Create();
 	_SetCommonData( tTree, jsonData );
+
+	D3DXVECTOR3 TreePos = tTree->GetPosition();
+	float		MapHeight = mGround->GetHeight(TreePos.x, TreePos.z);
+	TreePos.y = MapHeight;
+	tTree->SetPosition(TreePos);
+
 	AddChild( tTree );
 }
 

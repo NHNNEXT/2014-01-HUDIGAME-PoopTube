@@ -49,7 +49,7 @@ bool LightOrb::Init(LightOrb *pCreature)
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( pCreature );
 	AddChild( collisionBox );
 
-	LightOrb::SetPosition(mInitialPosition);
+	//LightOrb::SetPosition(mInitialPosition);
 
 	mEffectSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Okay" );
 
@@ -84,10 +84,10 @@ void LightOrb::Update(float dTime)
 
 	mTime += dTime;
 
-	D3DXVECTOR3 temp = LightOrb::GetPosition();
+	/*D3DXVECTOR3 temp = LightOrb::GetPosition();
 	float tempTheta = mTime * 3.14f / 180.f;
 	temp.y = 2.f + sinf(tempTheta * 50);
-	LightOrb::SetPosition(temp);
+	LightOrb::SetPosition(temp);*/
 	//float height = (dynamic_cast<StageOne*>(pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()))->GetGroundModule()->GetHeight(GetPosition().x, GetPosition().z);
 
 	//if (height != pos.y) {

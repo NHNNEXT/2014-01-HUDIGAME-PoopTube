@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "BillBoard.h"
 #include "PooMath.h"
+#include "Ground.h"
 
 Tree1::Tree1()
 {

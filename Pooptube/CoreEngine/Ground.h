@@ -7,7 +7,7 @@
 */
 #pragma once
 #include "Node.h"
-#define GROUND_AMP 0.05f
+#define GROUND_AMP 0.2f
 #define GROUND_POLYGON_SIZE 1.0f;
 
 namespace pooptube {

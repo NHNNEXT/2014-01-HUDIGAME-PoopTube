@@ -48,7 +48,7 @@ public:
 private:
 	void _CollsionHandle( pooptube::CollisionBox* collisionResult );
 
-	D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 0.f };
+	//D3DXVECTOR3 mInitialPosition = { 10.f, 0.f, 0.f };
 
 
 	pooptube::SkinnedMesh	*mMesh = nullptr;

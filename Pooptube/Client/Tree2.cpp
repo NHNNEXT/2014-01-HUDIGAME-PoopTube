@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "BillBoard.h"
 #include "PooMath.h"
+#include "Ground.h"
 
 Tree2::Tree2()
 {
@@ -18,10 +19,10 @@ Tree2::~Tree2()
 }
 
 Tree2 * Tree2::Create() {
-	Tree2 *pTree1(new Tree2);
+	Tree2 *pTree2(new Tree2);
 
-	if (pTree1->Init()){
-		return pTree1;
+	if (pTree2->Init()){
+		return pTree2;
 	}
 	else
 		return nullptr;

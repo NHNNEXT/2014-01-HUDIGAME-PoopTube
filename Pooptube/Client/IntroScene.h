@@ -52,6 +52,8 @@ private:
  	pooptube::Sprite				*mClearPoint[3];
 	pooptube::Sprite				*mYellow[3];
  	pooptube::Sprite				*mPink[3];
+
+	pooptube::BillBoard				*mBoard1;
 	
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;

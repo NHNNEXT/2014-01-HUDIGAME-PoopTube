@@ -15,7 +15,7 @@ Creature::Creature()
 }
 
 
-Creature::~Creature()
+Creature::~Creature()	
 {
 }
 
@@ -169,7 +169,7 @@ bool Creature::DoRage(float dTime)
 	mStepSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
 	if( mEffectSound != nullptr )
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
-	RotationY(0.4f);
+	//RotationY(0.4f);
 
 	mAttackTime += dTime;
 
