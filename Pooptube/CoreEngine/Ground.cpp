@@ -342,12 +342,12 @@ namespace pooptube {
 	{
 		D3DXVECTOR3 posOut(pos);
 		if( mMinArea != mMaxArea ){
-			posOut.x = __min( pos.x, mMaxArea.x );
-// 			posOut.y = __min( posIn.y, mMaxArea.y );
-			posOut.z = __min( pos.z, mMaxArea.z );
-			posOut.x = __max( pos.x, mMinArea.x );
-// 			posOut.y = __max( posIn.y, mMinArea.y );
-			posOut.z = __max( pos.z, mMinArea.z );
+			posOut.x = __min( posOut.x, mMaxArea.x );
+// 			posOut.y = __min( posOut.y, mMaxArea.y );
+			posOut.z = __min( posOut.z, mMaxArea.z );
+			posOut.x = __max( posOut.x, mMinArea.x );
+// 			posOut.y = __max( posOut.y, mMinArea.y );
+			posOut.z = __max( posOut.z, mMinArea.z );
 		}
 		posOut.y = GetHeight( posOut.x, posOut.z );
 

@@ -88,7 +88,7 @@ bool IntroScene::Init() {
 	mGround = pooptube::Ground::Create(PATH_INTRO_HEIGHTMAP);
 	mGround->SetValidArea(
 		D3DXVECTOR3( 5.f, 0.f, 5.f ),
-		D3DXVECTOR3( mGround->GetRowSize() * mGround->GetPolygonSize(), 20.f, mGround->GetColSize() * mGround->GetPolygonSize() )
+		D3DXVECTOR3( mGround->GetRowSize() * mGround->GetPolygonSize() - 5.f, 20.f, mGround->GetColSize() * mGround->GetPolygonSize() - 5.f )
 		);
 	mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
 		PATH_SKYBOX_DOWN,
