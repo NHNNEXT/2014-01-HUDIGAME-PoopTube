@@ -39,7 +39,15 @@ bool Creature::Init()
 	mMesh = pooptube::SkinnedMesh::Create(PATH_WOLF);
 	mMesh->RotateFrontVectorY(3.14f);
 	mMesh->SetScale(2.f, 2.f, 2.f);
+	mMesh->SetAnimationTrack(3);
+	mMesh->SetVisible(false);
 	AddChild(mMesh);
+
+	mMesh2 = pooptube::SkinnedMesh::Create(PATH_WOLF2);
+	mMesh2->RotateFrontVectorY(3.14f);
+	mMesh2->SetScale(2.f, 2.f, 2.f);
+	mMesh2->SetAnimationTrack(1);
+	AddChild(mMesh2);
 
 	// 	mMesh = pooptube::SkinnedMesh::Create(PATH_TINY);
 	// 	mMesh->SetAnimationTrack(3);
@@ -68,20 +76,20 @@ bool Creature::Init()
 	mEffectSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Okay" );
 
 	return true;
-
 }
 
 void Creature::Render()
 {
 	switch (mState) {
 	case IDLE:
-		mMesh->SetAnimationTrack(3);
+		mMesh2->SetVisible(true);
+		mMesh->SetVisible(false);
 		break;
 	case ANGRY:
-		mMesh->SetAnimationTrack(3);
+		mMesh2->SetVisible(false);
+		mMesh->SetVisible(true);
 		break;
 	case RAGE:
-		mMesh->SetAnimationTrack(3);
 		break;
 	default:
 		break;

@@ -88,7 +88,8 @@ private:
 	D3DXVECTOR3 mInitialPosition = { 10, 10, 10 };
 
 	pooptube::SkinnedMesh	*mMesh = nullptr;
-	pooptube::XMesh			*mXMesh = nullptr;
+	pooptube::SkinnedMesh	*mMesh2 = nullptr;
+	//pooptube::XMesh			*mXMesh = nullptr;
 
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
 	FMOD::Studio::EventInstance *mEffectSound = nullptr;

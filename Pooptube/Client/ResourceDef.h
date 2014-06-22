@@ -25,6 +25,7 @@
 #define PATH_NEWDRAGON			PATH_MODEL L"new.X"
 #define PATH_BEAR				PATH_MODEL L"bear.X"
 #define PATH_WOLF				PATH_MODEL L"wolf.X"
+#define PATH_WOLF2				PATH_MODEL L"wolf2.X"
 #define PATH_ORB					PATH_MODEL L"orb.X"
 
 #define PATH_BUSH				PATH_MODEL L"bush.X"

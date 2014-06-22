@@ -80,6 +80,7 @@ namespace pooptube {
 	{
 		Node::Render();
 
+		/*
 		DWORD BeforeRenderState;
 		DWORD BeforeLightState;
 
@@ -98,6 +99,7 @@ namespace pooptube {
 
 		mDevice->SetRenderState(D3DRS_LIGHTING, BeforeLightState);
 		mDevice->SetRenderState(D3DRS_FILLMODE, BeforeRenderState);
+		*/
 	}
 
 	void CollisionBox::Update( float dTime ) {
