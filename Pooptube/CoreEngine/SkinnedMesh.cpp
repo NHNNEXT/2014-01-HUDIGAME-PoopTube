@@ -644,8 +644,8 @@ namespace pooptube {
 		//쉐이더 추가시 추가해야함
 		mMeshData->mEffect->SetMatrix("mViewProj", &matView);
 		
-		DrawFrame(mMeshData->mFrameRoot);
 		UpdateFrameMatrices(mMeshData->mFrameRoot, &MatWorld);
+		DrawFrame(mMeshData->mFrameRoot);
 
 		mDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	}
