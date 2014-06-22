@@ -47,9 +47,10 @@ bool Tree3::Init() {
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create(this);
 	collisionBox->Translation(D3DXVECTOR3(0.f, 1.2f, 0.f));
 	collisionBox->SetCollisionType(pooptube::CollisionBox::BLOCK);
-	collisionBox->SetAxisLenY(1.2f);
+	collisionBox->SetAxisLenY(2.0f);
 	collisionBox->SetAxisLenX(1.2f);
 	collisionBox->SetAxisLenZ(1.2f);
+	collisionBox->SetScale(1.2f, 2.0f, 1.2f);
 	AddChild(collisionBox);
 
 	return true;

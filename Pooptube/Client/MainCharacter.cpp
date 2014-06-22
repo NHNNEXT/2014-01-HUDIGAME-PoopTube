@@ -91,7 +91,6 @@ bool MainCharacter::Init( pooptube::Scene* scene ) {
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE( pooptube::CollisionBox::COLLISION_TYPE::PLAYER | pooptube::CollisionBox::COLLISION_TYPE::BLOCK ) );
 	collisionBox->Translation(D3DXVECTOR3(0.f, 1.2f, 0.f));
-	collisionBox->SetAxisLenY(1.2f);
 	AddChild( collisionBox );
 	
 

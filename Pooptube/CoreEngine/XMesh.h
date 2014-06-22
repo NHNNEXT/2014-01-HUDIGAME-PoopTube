@@ -49,7 +49,7 @@ namespace pooptube{
 		XMeshData* mMeshData = nullptr;
 
 		D3DXVECTOR3						mBoundingSphereCenter; // 절두체 컬링용 Bounding Sphere
-		float							mBoundingSphereRadius; // 절두체 컬링용 Bounding Sphere
+		float							mBoundingSphereRadius = 5.f; // 절두체 컬링용 Bounding Sphere
 
 	};
 }

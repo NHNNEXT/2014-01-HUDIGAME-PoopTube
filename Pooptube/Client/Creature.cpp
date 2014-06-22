@@ -55,8 +55,10 @@ bool Creature::Init()
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
 	collisionBox->Translation(0.f, 1.f, 0.f);
+	collisionBox->SetAxisLenY(1.0f);
+	collisionBox->SetAxisLenX(1.0f);
+	collisionBox->SetAxisLenZ(2.0f);
 	collisionBox->SetScale(1.f, 1.f, 2.f);
-
 	
 	AddChild( collisionBox );
 	Creature::SetPosition( mInitialPosition );
