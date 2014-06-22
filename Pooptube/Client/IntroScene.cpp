@@ -27,7 +27,6 @@
 IntroScene::IntroScene() {
 }
 
-
 IntroScene::~IntroScene() {
 }
 
@@ -63,9 +62,9 @@ bool IntroScene::Init() {
 		mYellow[i] = pooptube::Sprite::Create(PATH_YELLOW);
 		AddChild(mYellow[i]);
 
-		mPink[i] = nullptr;
+		/*mPink[i] = nullptr;
 		mPink[i] = pooptube::Sprite::Create(PATH_PINK);
-		AddChild(mPink[i]);
+		AddChild(mPink[i]);*/
 
 		mClearPoint[i]->Translate(x / 30.f + static_cast<float>(i* 70), y / 30.f);
 		mClearPoint[i]->ApplyTransform();
@@ -74,9 +73,9 @@ bool IntroScene::Init() {
 		mYellow[i]->ApplyTransform();
 		mYellow[i]->SetVisible(false);
 
-		mPink[i]->Translate(x / 30.f + static_cast<float>(i * 70), y / 30.f);
+		/*mPink[i]->Translate(x / 30.f + static_cast<float>(i * 70), y / 30.f);
 		mPink[i]->ApplyTransform();
-		mPink[i]->SetVisible(false);
+		mPink[i]->SetVisible(false);*/
 	}
 
 	pooptube::SoundManager::GetInstance()->LoadBank(PATH_SOUND_BANK);
@@ -156,10 +155,6 @@ bool IntroScene::Init() {
 	mBoard->SetVisible(true);
 	AddChild(mBoard);
 
-	
-// 	AddChild(mPink);
-// 	AddChild(mYellow);
-
 	return true;
 }
 
@@ -188,8 +183,6 @@ void IntroScene::Update(float dTime) {
 	Node::Update(dTime);
 
 	IntroScene::UpdateInput();
-	//printf("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
-	//printf("%f %f %f\n\n", mCharacter->GetFrontVector().x, mCharacter->GetFrontVector().y, mCharacter->GetFrontVector().z);
 
 	//2초마다 한번씩
 	if (mTimeForFPS > 2.f) {
@@ -227,7 +220,7 @@ void IntroScene::Update(float dTime) {
 		}
 	}
 
-	mCharacter->SetHP(lightOrbCount - mTotalDamage);
+	//mCharacter->SetHP(lightOrbCount - mTotalDamage);
 
 	// HP를 토대로 MainCharacter 빛의 범위를 조정한다.
 	//mCharacter->GetLight()->SetRange(static_cast<float>(mCharacter->GetHP()) * 15.f);

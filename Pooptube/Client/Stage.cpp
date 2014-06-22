@@ -91,9 +91,9 @@ bool Stage::Init( std::string filename )
 		mYellow[i] = pooptube::Sprite::Create(PATH_YELLOW);
 		AddChild(mYellow[i]);
 
-		mPink[i] = nullptr;
+		/*mPink[i] = nullptr;
 		mPink[i] = pooptube::Sprite::Create(PATH_PINK);
-		AddChild(mPink[i]);
+		AddChild(mPink[i]);*/
 
 		mClearPoint[i]->Translate(x / 30.f + static_cast<float>(i * 70), y / 30.f);
 		mClearPoint[i]->ApplyTransform();
@@ -103,9 +103,9 @@ bool Stage::Init( std::string filename )
 		mYellow[i]->ApplyTransform();
 		mYellow[i]->SetVisible(false);
 
-		mPink[i]->Translate(x / 30.f + static_cast<float>(i * 70), y / 30.f);
+		/*mPink[i]->Translate(x / 30.f + static_cast<float>(i * 70), y / 30.f);
 		mPink[i]->ApplyTransform();
-		mPink[i]->SetVisible(false);
+		mPink[i]->SetVisible(false);*/
 	}
 	return true;
 }
@@ -125,7 +125,7 @@ void Stage::Render()
 	for (int i = 0; i < mOrbCount; ++i) {
 		mClearPoint[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 		mYellow[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
-		mPink[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
+		//mPink[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 }
 
@@ -164,22 +164,22 @@ void Stage::Update( float dTime )
 	}
 
 	// pink 그리기
-	std::list<Creature*>::iterator creatureListItor = mCreatureList.begin();
-	for (; creatureListItor != mCreatureList.end(); ++creatureListItor) {
-		if ((*creatureListItor)->GetState() == RAGE && (*creatureListItor)->DoRage(dTime) && mCharacter->GetHP() >= 0) {
-			//mTotalDamage += (*creatureListItor)->GetTotalDamage();
-			mCharacter->DecreaseHP(1);
-			//printf("HP!!!!!! : %d\n", mCharacter->GetHP());
-		}
-	}
+	//std::list<Creature*>::iterator creatureListItor = mCreatureList.begin();
+	//for (; creatureListItor != mCreatureList.end(); ++creatureListItor) {
+	//	if ((*creatureListItor)->GetState() == RAGE && (*creatureListItor)->DoRage(dTime) && mCharacter->GetHP() >= 0) {
+	//		//mTotalDamage += (*creatureListItor)->GetTotalDamage();
+	//		mCharacter->DecreaseHP(1);
+	//		//printf("HP!!!!!! : %d\n", mCharacter->GetHP());
+	//	}
+	//}
 	//mCharacter->SetHP(orbCount - mTotalDamage);
 
-	for (int i = 0; i < mOrbCount; ++i) {
+	/*for (int i = 0; i < mOrbCount; ++i) {
 		if (i < mCharacter->GetHP())
-			mPink[i]->SetVisible(true);
+		mPink[i]->SetVisible(true);
 		else
-			mPink[i]->SetVisible(false);
-	}
+		mPink[i]->SetVisible(false);
+		}*/
 
 	// HP에 따른 메인케릭터 빛의 범위 변화
 // 	if (mCharacter->GetLight()->GetRange() <= static_cast<float>(mCharacter->GetHP()) * 5.f) {
@@ -262,7 +262,7 @@ void Stage::_LoadGround( Json::Value& jsonData )
 	std::string str( jsonData.get( "HeightMapFile", "MODEL\\splattingmap1.bmp" ).asString() );
 	std::wstring wStr;
 	wStr.assign( str.begin(), str.end() );
-	float amp = static_cast<float>(jsonData.get( "HeightAmp", 0.05f ).asDouble());
+	float amp = static_cast<float>(jsonData.get( "HeightAmp", 0.1f ).asDouble());
 	mGround = Ground::Create( wStr, amp );
 	D3DXVECTOR3 minArea(
 		static_cast<float>(jsonData["MinArea"].get( 0u, 0.f ).asDouble()),

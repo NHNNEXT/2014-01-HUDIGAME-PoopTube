@@ -53,7 +53,7 @@ private:
 	enum				{ mOrbCount = 12, };
 	Sprite				*mClearPoint[mOrbCount];
 	Sprite				*mYellow[mOrbCount];
-	Sprite				*mPink[mOrbCount];
+	//Sprite				*mPink[mOrbCount];
 	pooptube::Camera*	mCamera;
 	
 	SkyBox	*mSkyBox = nullptr;

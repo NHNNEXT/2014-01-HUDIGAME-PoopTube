@@ -51,7 +51,7 @@ private:
 	//Creature						*mCreature = nullptr;
  	pooptube::Sprite				*mClearPoint[4];
 	pooptube::Sprite				*mYellow[4];
- 	pooptube::Sprite				*mPink[4];
+ 	//pooptube::Sprite				*mPink[4];
 
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;
