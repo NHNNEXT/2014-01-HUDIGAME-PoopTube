@@ -76,26 +76,6 @@ bool Stage::Init( std::string filename )
 	mFileName = filename; // 테스트용
 	_LoadFile( filename );
 	
-	/*for( auto data : stageData ) {
-		if( data["Class"] == "Ground" )
-			_LoadGround( data );
-		else if( data["Class"] == "Camera" )
-			_LoadCamera( data );
-		else if( data["Class"] == "SunLight" )
-			_LoadSunLight( data );
-		else if( data["Class"] == "Creature" )
-			_LoadCreature( data );
-		else if( data["Class"] == "LightOrb" )
-			_LoadLightOrb( data );
-		else if( data["Class"] == "BillBoard" )
-			_LoadBillBoard( data );
-		else if( data["Class"].asString().find( "Tree" ) != std::string::npos )
-			_LoadTree( data );
-		else if( data["Class"] == "Node" )
-			_LoadNode( data );
-		printf_s( "Load %s\n", data["Class"] );
-	}*/
-
 	// UI 부분(class로 따로 빼야겠음)
 	float x = pooptube::Application::GetInstance()->GetScreenSize().x;
 	float y = pooptube::Application::GetInstance()->GetScreenSize().y;
@@ -276,7 +256,11 @@ void Stage::_LoadFile( std::string filename )
 
 void Stage::_LoadGround( Json::Value& jsonData )
 {
-	mGround = Ground::Create(PATH_INTRO_HEIGHTMAP); // json파일에 파일 정보가 필요하다...
+	std::string str( jsonData.get( "HeightMapFile", "MODEL\\test512.bmp" ).asString() );
+	std::wstring wStr;
+	wStr.assign( str.begin(), str.end() );
+	float amp = static_cast<float>(jsonData.get( "HeightAmp", 0.05f ).asDouble());
+	mGround = Ground::Create( wStr, amp );
 	_SetCommonData( mGround, jsonData );
 	AddChild( mGround );
 }
