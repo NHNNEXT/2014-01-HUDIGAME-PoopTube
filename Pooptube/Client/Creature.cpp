@@ -54,8 +54,9 @@ bool Creature::Init()
 // 	AddChild(mXMesh);
 
 	pooptube::CollisionBox* collisionBox = pooptube::CollisionBox::Create( this );
-
 	collisionBox->SetCollisionType( pooptube::CollisionBox::COLLISION_TYPE::BLOCK );
+	collisionBox->Translation(0.f, 1.f, 0.f);
+	collisionBox->SetScale(1.f, 1.f, 2.f);
 
 	
 	AddChild( collisionBox );
