@@ -373,9 +373,21 @@ VS_OUTPUT_MESH VShadeBillBord(VS_INPUT_MESH Input)
 }
 
 float4 PShadeBillBord(
-	float2 Tex0 : TEXCOORD0) : COLOR0
+	float2 Tex0 : TEXCOORD0,
+	float3 WorldPos : TEXCOORD2) : COLOR0
 {
-	return tex2D(samSkyBox, Tex0);
+	float4 texel = tex2D(samSkyBox, Tex0);
+	float4 TotalAmbient = float4(lightAmbient * texel, texel.w);
+
+	float ViewpointDistance = length(mCamaraPos - WorldPos.xyz);
+	//선형안개
+	float fogFactor = saturate((fogEnd - ViewpointDistance) / (fogEnd - fogStart));
+
+	float3 fogColor = float3(0.5f, 0.5f, 0.5f)*(1.0f - fogFactor);
+	//마지막에 안개공식을 적용
+	float4 finalColor = float4(saturate(TotalAmbient*fogFactor + fogColor), TotalAmbient.w);
+
+	return finalColor;
 }
 
 //////////////////////////////////////

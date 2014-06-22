@@ -27,6 +27,13 @@ namespace pooptube{
 	{
 		Node::Init();
 
+		mEffect = ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx");
+		if (!mEffect) {
+			MessageBox(NULL, L"Could not HLSL file", L"ERROR", MB_OK);
+			assert(false);
+			return false;
+		}
+
 		D3DXMatrixIdentity( &mMatIdentity );
 		D3DXMatrixIdentity( &mMatrix );
 
@@ -76,14 +83,41 @@ namespace pooptube{
 	void BillBoard::Render()
 	{
 		if (mIsVisible == true) {
-			Node::Render();
-
-			mDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
 
 			D3DXMATRIXA16	MatView;
 			mDevice->GetTransform(D3DTS_VIEW, &MatView);
 
 			SetFrontVector(MatView._13, MatView._23, MatView._33);
+
+			// TODO: 행렬 계산
+			D3DXMATRIXA16	MatWorld;
+			D3DXMATRIXA16	MatTrans;
+			D3DXMATRIXA16	MatScale;
+			D3DXMATRIXA16	MatRotate;
+			D3DXVECTOR3		LookPt = mPosition + mFrontVector;
+
+			D3DXMatrixIdentity(&MatWorld);
+
+			//프론트 백터의 값에 따라 회전
+			D3DXMatrixLookAtLH(&MatRotate, &mPosition, &LookPt, &mUpVec);
+			//뷰행렬을 가져왔기 때문에 로테이션한 것처럼 행렬을 변환할 필요가 있다.
+			//뷰행렬은 자신이 움직이는 것이 아닌 자신을 제외한 모든 좌표들이 움직이도록 되어있는 행렬이다.
+			//(카메라의 좌표계에 맞춰져있다)
+			//뷰행렬의 역행렬은 transpose해준 형태와 동일하다.
+			MatRotate._41 = MatRotate._42 = MatRotate._43 = 0.f;
+			D3DXMatrixTranspose(&MatRotate, &MatRotate);
+
+			D3DXMatrixTranslation(&MatTrans, mPosition.x, mPosition.y, mPosition.z);
+			D3DXMatrixScaling(&MatScale, mScaleVec.x, mScaleVec.y, mScaleVec.z);
+
+			MatWorld = MatScale*MatRotate*MatTrans;
+
+			mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+
+			mEffect->SetTechnique("t4");
+			mEffect->SetMatrix("mWorld", &MatWorld);
+
+			mDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
 
 			//디바이스에 버텍스버퍼를 전달
 			mDevice->SetStreamSource(0, mMeshVertexBuffer, 0, sizeof(MESH_CUSTOM_VERTEX));
@@ -91,13 +125,24 @@ namespace pooptube{
 			//인덱스 설정
 			mDevice->SetIndices(mMeshIndexBuffer);
 
-			mDevice->SetTextureStageState( 0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2 );
-			mDevice->SetTransform( D3DTS_TEXTURE0, &mMatrix );
-
-			GetDevice()->SetTexture( 0, mTexture );
+			//mDevice->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+			//mDevice->SetTransform(D3DTS_TEXTURE0, &mMatrix);
 			
-			mDevice->DrawIndexedPrimitive( D3DPT_TRIANGLELIST, 0, 0, BILLBOARD_VERTEX_NUM, 0, BILLBOARD_VERTEX_NUM );
-			mDevice->SetTransform( D3DTS_TEXTURE0, &mMatIdentity );
+			//mDevice->SetTexture(0, mTexture);
+			mEffect->SetTexture("mTexture", mTexture);
+			UINT cPasses;
+			mEffect->Begin(&cPasses, 0);
+			for (UINT p = 0; p < cPasses; ++p) {
+				mEffect->BeginPass(p);
+
+				Application::GetInstance()->UpdateDPCall();
+				mDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, BILLBOARD_VERTEX_NUM, 0, BILLBOARD_VERTEX_NUM);
+
+				mEffect->EndPass();
+			}
+			mEffect->End();
+
+			//mDevice->SetTransform( D3DTS_TEXTURE0, &mMatIdentity );
 		}
 	}
 

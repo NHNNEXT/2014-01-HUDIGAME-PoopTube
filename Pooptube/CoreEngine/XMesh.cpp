@@ -64,7 +64,7 @@ namespace pooptube {
 
 		MatWorld = MatScale*MatRotate*MatTrans;
 
-		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+		//mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 
 		D3DXMATRIXA16 g_matProj;
 		D3DXMATRIXA16 matView;

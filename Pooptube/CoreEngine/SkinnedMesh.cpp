@@ -624,7 +624,7 @@ namespace pooptube {
 
 		MatWorld = MatScale*MatRotate*MatTrans;
 
-		mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
+		//mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 		mMeshData->mEffect->SetMatrix("mWorld", &MatWorld);
 
 		D3DXMATRIX matProj;
