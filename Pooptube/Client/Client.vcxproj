@@ -172,9 +172,6 @@
     <ClCompile Include="Tree3.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="test.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\Bin\Shader\SkinnedMesh.fx">
       <FileType>Document</FileType>
     </None>

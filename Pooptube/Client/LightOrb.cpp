@@ -64,12 +64,14 @@ void LightOrb::Render()
 //		isRender = true;
 		//printf("%s :: %s\n", typeid(dynamic_cast<MainCharacter*>(pooptube::CollisionManager::GetInstance()->CollisionCheck(&*mCollisionBox))).name(), typeid(MainCharacter *).name());
 	
-	GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
+	//GetDevice()->SetRenderState(D3DRS_LIGHTING, false);
+
+	mMesh->GetMeshData()->GetEffect()->SetTechnique("t5");
 
 	if (mIsRender == true)
 		Node::Render();
 
-	GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
+	//GetDevice()->SetRenderState(D3DRS_LIGHTING, true);
 }
 
 void LightOrb::Update(float dTime)

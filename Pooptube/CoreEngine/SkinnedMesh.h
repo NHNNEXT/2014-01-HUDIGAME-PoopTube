@@ -77,11 +77,14 @@ namespace pooptube {
 
 		void ReleaseAttributeTable(LPD3DXFRAME pFrameBase);
 
+		ID3DXEffect* GetEffect() const { return mEffect; }
+
 	private:
 		LPDIRECT3DDEVICE9			mDevice;
 
 		CAllocateHierarchy			mAlloc;
 		ID3DXEffect*				mEffect = nullptr;
+
 		LPD3DXFRAME					mFrameRoot = nullptr;
 		ID3DXAnimationController*   mAnimController = nullptr;
 
@@ -115,6 +118,8 @@ namespace pooptube {
 			//_MakeBoundingSphere( mBoundingSphereCenter, mBoundingSphereRadius );
 		}
 		virtual void		SetScale( float x, float y, float z ) { SetScale( D3DXVECTOR3( x, y, z ) ); }
+
+		MeshData*			GetMeshData() const { return mMeshData; }
 
 	protected:
 

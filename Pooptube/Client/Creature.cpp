@@ -71,6 +71,7 @@ bool Creature::Init()
 
 void Creature::Render()
 {
+	mMesh->GetMeshData()->GetEffect()->SetTechnique("t0");
 	Node::Render();	
 }
 
