@@ -7,6 +7,7 @@ using namespace pooptube;
 namespace pooptube {
 	class Sprite;
 	class SkyBox;
+	class Camera;
 }
 
 class MainCharacter;
@@ -53,6 +54,7 @@ private:
 	Sprite				*mClearPoint[mOrbCount];
 	Sprite				*mYellow[mOrbCount];
 	Sprite				*mPink[mOrbCount];
+	pooptube::Camera*	mCamera;
 	
 	SkyBox	*mSkyBox = nullptr;
 

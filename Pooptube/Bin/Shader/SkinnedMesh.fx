@@ -20,6 +20,9 @@ float4x4    mViewProj : VIEWPROJECTION;
 float4x4    mWorld : WORLD;
 float3	   mCamaraPos = { 0.0f, 5.0f, 0.0f };
 
+float fogStart = 0.f;
+float fogEnd = 200.f;
+
 texture	   mTexture;
 texture	   mTexture2;
 texture	   mAlphaMap;
@@ -147,8 +150,8 @@ float4 PShadeGround(
 	diffuseLighting *= (lightDistance / dot(lightPos - WorldPos, lightPos - WorldPos));
 
 	// Using Blinn half angle modification for perofrmance over correctness
-	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
-	float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
+	//float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
+	//float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
 	
 	float4 white = { 1.0f, 1.0f, 1.0f, 1.0f };
 	float4 splate1 = tex2D(samTex01, Tex0) * tex2D(samAlpha01, Tex1);
@@ -169,26 +172,28 @@ float4 PShadeGround(
 	diffuseLighting2 *= (lightDistance / dot(lightObjPos - WorldPos, lightObjPos - WorldPos));
 
 	// Using Blinn half angle modification for perofrmance over correctness
-	float3 h2 = normalize(normalize(mCamaraPos - WorldPos) - lightDir2);
-	float specLighting2 = pow(saturate(dot(h2, Normal)), lightSpecularPower);
+	//float3 h2 = normalize(normalize(mCamaraPos - WorldPos) - lightDir2);
+	//float specLighting2 = pow(saturate(dot(h2, Normal)), lightSpecularPower);
 	
-
 	/*
-	return float4(saturate(
-		TotalAmbient +
-		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6) +
-		(lightSpecular * specLighting * 0.5)
-		), 1);
-		*/
-
 	float4 totalColor = float4(saturate(TotalAmbient +
 		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)
-		+ (BaseColor.xyz * lightDiffuse * diffuseLighting2 * 0.6)/* +
-		(lightSpecular * specLighting2 * 0.5)*/), 1.f);
-		
+		+ (BaseColor.xyz * lightDiffuse * diffuseLighting2 * 0.6)), 1.f);
+		*/
 
-	return totalColor;
-		
+	float3 totalColor = TotalAmbient +
+		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)
+		+ (BaseColor.xyz * lightDiffuse * diffuseLighting2 * 0.6);
+
+	float ViewpointDistance = length(mCamaraPos - WorldPos.xyz);
+	//선형안개
+	float fogFactor = saturate((fogEnd - ViewpointDistance) / (fogEnd - fogStart));
+
+	float3 fogColor = float3(0.5f, 0.5f, 0.5f)*(1.0f - fogFactor);
+	//마지막에 안개공식을 적용
+	float4 finalColor = float4(saturate(totalColor*fogFactor + fogColor), 1.f);
+
+	return finalColor;
 }
 
 //////////////////////////////////////////////////////
@@ -304,8 +309,8 @@ float4 PShadeMesh(
 	diffuseLighting *= (lightDistance / dot(lightPos - WorldPos, lightPos - WorldPos));
 
 	// Using Blinn half angle modification for perofrmance over correctness
-	float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
-	float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
+	//float3 h = normalize(normalize(mCamaraPos - WorldPos) - lightDir);
+	//float specLighting = pow(saturate(dot(h, Normal)), lightSpecularPower);
 
 	float4 texel = tex2D(samTex01, Tex0);
 
@@ -313,11 +318,20 @@ float4 PShadeMesh(
 
 	//return texel;
 
-	return float4(saturate(
+	float4 totalColor = float4(saturate(
 		TotalAmbient +
-		(texel.xyz * lightDiffuse * diffuseLighting * 0.6)/* +
-		(lightSpecular * specLighting * 0.5)*/
+		(texel.xyz * lightDiffuse * diffuseLighting * 0.6)
 		), texel.w);
+
+	float ViewpointDistance = length(mCamaraPos - WorldPos.xyz);
+	//선형안개
+	float fogFactor = saturate((fogEnd - ViewpointDistance) / (fogEnd - fogStart));
+
+	float3 fogColor = float3(0.5f, 0.5f, 0.5f)*(1.0f - fogFactor);
+	//마지막에 안개공식을 적용
+	float4 finalColor = float4(saturate(totalColor*fogFactor + fogColor), 1.f);
+
+	return finalColor;
 }
 
 //////////////////////////////////////////////////////
@@ -342,6 +356,27 @@ float4 PShadeSkyBox(
 	return tex2D(samSkyBox, Tex0);
 }
 
+//////////////////////////////////////////////////////
+
+VS_OUTPUT_MESH VShadeBillBord(VS_INPUT_MESH Input)
+{
+	VS_OUTPUT_MESH o;
+
+	float4 posWorld = mul(Input.Pos, mWorld);
+		o.Pos = mul(posWorld, mViewProj);
+	o.Normal = mul(Input.Normal, (float3x3)mWorld);
+	o.WorldPos = posWorld;
+
+	o.Tex0 = Input.Tex0;
+
+	return o;
+}
+
+float4 PShadeBillBord(
+	float2 Tex0 : TEXCOORD0) : COLOR0
+{
+	return tex2D(samSkyBox, Tex0);
+}
 
 //////////////////////////////////////
 // Techniques specs follow
@@ -384,5 +419,15 @@ technique t3
 	{
 		VertexShader = compile vs_2_0 VShadeSkyBox();
 		PixelShader = compile ps_2_0 PShadeSkyBox();
+	}
+}
+
+//빌보드용
+technique t4
+{
+	pass p0
+	{
+		VertexShader = compile vs_2_0 VShadeBillBord();
+		PixelShader = compile ps_2_0 PShadeBillBord();
 	}
 }

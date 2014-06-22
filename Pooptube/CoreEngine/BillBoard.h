@@ -26,6 +26,7 @@ namespace pooptube{
 		LPDIRECT3DVERTEXBUFFER9		mMeshVertexBuffer = nullptr;
 		LPDIRECT3DINDEXBUFFER9		mMeshIndexBuffer = nullptr;
 		LPDIRECT3DTEXTURE9			mTexture = nullptr;
+		ID3DXEffect*				mEffect = nullptr;
 		D3DXMATRIXA16				mMatrix, mMatIdentity;
 
 		std::array<MESH_CUSTOM_VERTEX, 4> vertexList;

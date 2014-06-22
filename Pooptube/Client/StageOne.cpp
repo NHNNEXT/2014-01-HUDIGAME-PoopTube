@@ -21,6 +21,7 @@
 #include "ResourceDef.h"
 #include "Tree1.h"
 #include "BillBoard.h"
+#include "ResourceManager.h"
 
 StageOne::StageOne() {
 }
@@ -104,6 +105,14 @@ bool StageOne::Init() {
 void StageOne::Render() {
 	Node::Render();
 	
+	float cameraPos[3];
+	D3DXVECTOR3 cPos = mCamera->GetPosition();
+	cameraPos[0] = cPos.x;
+	cameraPos[1] = cPos.y;
+	cameraPos[2] = cPos.z;
+
+	pooptube::ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("mCamaraPos", cameraPos, 3);
+
 	// sprite test
 	//RECT temp = { 10, 10, 20, 20 };
 

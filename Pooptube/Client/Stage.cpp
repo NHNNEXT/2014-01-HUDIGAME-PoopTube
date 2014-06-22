@@ -59,6 +59,7 @@ bool Stage::Init( std::string filename )
 	mCharacter = MainCharacter::Create( this );
 	AddChild( mCharacter );
 	ThirdPersonCamera* tCamera = ThirdPersonCamera::Create( mCharacter );
+	mCamera = tCamera;
 	AddChild( tCamera );
 
 	/*mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
@@ -131,6 +132,14 @@ bool Stage::Init( std::string filename )
 void Stage::Render()
 {
 	Node::Render();
+
+	float cameraPos[3];
+	D3DXVECTOR3 cPos = mCamera->GetPosition();
+	cameraPos[0] = cPos.x;
+	cameraPos[1] = cPos.y;
+	cameraPos[2] = cPos.z;
+
+	pooptube::ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("mCamaraPos", cameraPos, 3);
 
 	for (int i = 0; i < mOrbCount; ++i) {
 		mClearPoint[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
