@@ -20,6 +20,7 @@ float4x4    mViewProj : VIEWPROJECTION;
 float4x4    mWorld : WORLD;
 float3	   mCamaraPos = { 0.0f, 5.0f, 0.0f };
 
+float3 fogColor = {0.3f, 0.3f, 0.3f};
 float fogStart = 0.f;
 float fogEnd = 200.f;
 
@@ -189,9 +190,9 @@ float4 PShadeGround(
 	//선형안개
 	float fogFactor = saturate((fogEnd - ViewpointDistance) / (fogEnd - fogStart));
 
-	float3 fogColor = float3(0.5f, 0.5f, 0.5f)*(1.0f - fogFactor);
+	float3 fogColorFactor = fogColor*(1.0f - fogFactor);
 	//마지막에 안개공식을 적용
-	float4 finalColor = float4(saturate(totalColor*fogFactor + fogColor), 1.f);
+	float4 finalColor = float4(saturate(totalColor*fogFactor + fogColorFactor), 1.f);
 
 	return finalColor;
 }
@@ -353,9 +354,9 @@ float4 PShadeMesh(
 	//선형안개
 	float fogFactor = saturate((fogEnd - ViewpointDistance) / (fogEnd - fogStart));
 
-	float3 fogColor = float3(0.5f, 0.5f, 0.5f)*(1.0f - fogFactor);
+	float3 fogColorFactor = fogColor*(1.0f - fogFactor);
 	//마지막에 안개공식을 적용
-	float4 finalColor = float4(saturate(totalColor*fogFactor + fogColor), totalColor.w);
+	float4 finalColor = float4(saturate(totalColor*fogFactor + fogColorFactor), totalColor.w);
 
 	return finalColor;
 }
@@ -409,9 +410,9 @@ float4 PShadeBillBord(
 	//선형안개
 	float fogFactor = saturate((fogEnd - ViewpointDistance) / (fogEnd - fogStart));
 
-	float3 fogColor = float3(0.5f, 0.5f, 0.5f)*(1.0f - fogFactor);
+	float3 fogColorFactor = fogColor*(1.0f - fogFactor);
 	//마지막에 안개공식을 적용
-	float4 finalColor = float4(saturate(TotalAmbient*fogFactor + fogColor), TotalAmbient.w);
+	float4 finalColor = float4(saturate(TotalAmbient*fogFactor + fogColorFactor), TotalAmbient.w);
 
 	return finalColor;
 }
