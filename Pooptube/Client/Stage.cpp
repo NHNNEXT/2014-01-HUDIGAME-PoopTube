@@ -59,6 +59,7 @@ bool Stage::Init( std::string filename )
 	mCharacter = MainCharacter::Create( this );
 	AddChild( mCharacter );
 	ThirdPersonCamera* tCamera = ThirdPersonCamera::Create( mCharacter );
+	tCamera->SetFarPlane(200.f);
 	mCamera = tCamera;
 	AddChild( tCamera );
 

@@ -25,11 +25,16 @@ namespace pooptube {
 		void		 SetLookAtPt(D3DXVECTOR3 vec) { mLookAtPt = vec;}
 		D3DXVECTOR3	 GetLookAtPt() { return mLookAtPt; }
 
+		float		 GetFarPlane() const { return mFarPlane; }
+		void		 SetFarPlane(float val) { mFarPlane = val; }
+
 	protected:
 
 
 	private:
 		D3DXVECTOR3		mLookAtPt;
-		
+
+		float			mNearPlane = 1.0f;
+		float			mFarPlane = 300.0f;
 	};
 }
