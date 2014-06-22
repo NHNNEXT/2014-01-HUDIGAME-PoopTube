@@ -329,7 +329,7 @@ float4 PShadeMesh(
 
 	float3 fogColor = float3(0.5f, 0.5f, 0.5f)*(1.0f - fogFactor);
 	//마지막에 안개공식을 적용
-	float4 finalColor = float4(saturate(totalColor*fogFactor + fogColor), 1.f);
+	float4 finalColor = float4(saturate(totalColor*fogFactor + fogColor), totalColor.w);
 
 	return finalColor;
 }

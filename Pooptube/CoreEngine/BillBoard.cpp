@@ -84,6 +84,8 @@ namespace pooptube{
 	{
 		if (mIsVisible == true) {
 
+			mDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+
 			D3DXMATRIXA16	MatView;
 			mDevice->GetTransform(D3DTS_VIEW, &MatView);
 
@@ -143,6 +145,8 @@ namespace pooptube{
 			mEffect->End();
 
 			//mDevice->SetTransform( D3DTS_TEXTURE0, &mMatIdentity );
+
+			mDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 		}
 	}
 
