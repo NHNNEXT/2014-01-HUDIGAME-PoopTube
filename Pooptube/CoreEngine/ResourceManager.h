@@ -28,7 +28,7 @@ namespace pooptube {
 
 		MeshData*			LoadSkinnedMesh(const std::wstring& FilePath);
 		XMeshData*			LoadXMesh(const std::wstring& FilePath);
-		Ground::MapData*	LoadHeightMap(const std::wstring& FilePath);
+		Ground::MapData*	LoadHeightMap(const std::wstring& FilePath, float amp = 0.f);
 		LPDIRECT3DTEXTURE9	LoadTexture(const std::wstring& FilePath);
 		ID3DXEffect*		LoadHLSL(const std::wstring& FilePath);
 

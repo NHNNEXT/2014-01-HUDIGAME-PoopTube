@@ -56,7 +56,7 @@ namespace pooptube {
 		return true;
 	}
 
-	Ground::MapData *ResourceManager::LoadHeightMap(const std::wstring& FilePath) {
+	Ground::MapData *ResourceManager::LoadHeightMap(const std::wstring& FilePath, float amp) {
 		//map을 사용할 때 조심해야 할 부분
 		if (mHeightMapTable.find(FilePath) == mHeightMapTable.end()) {
 
@@ -90,7 +90,14 @@ namespace pooptube {
 
 			HeightMap->UnlockRect(0);
 
-			Ground::MapData *pMapData(new Ground::MapData(bitmapImage, height, width));
+			Ground::MapData *pMapData(nullptr);
+			if( amp > 0 )
+				pMapData = new Ground::MapData( bitmapImage, height, width, amp );
+			else
+				pMapData = new Ground::MapData( bitmapImage, height, width );
+
+			assert( pMapData != nullptr );
+
 			mHeightMapTable[FilePath] = pMapData;
 			delete[] bitmapImage;
 			

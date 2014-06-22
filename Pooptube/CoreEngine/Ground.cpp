@@ -12,17 +12,17 @@ namespace pooptube {
 	Ground::~Ground() {
 	}
 
-	Ground *Ground::Create(const std::wstring& FilePath) {
+	Ground *Ground::Create( const std::wstring& FilePath, float amp ) {
 		Ground *pGround(new Ground);
-		if (pGround->_Init(FilePath))
+		if (pGround->_Init(FilePath, amp))
 			return pGround;
 		else
 			return nullptr;
 	}
 
-	bool Ground::_Init(const std::wstring& FilePath) {
+	bool Ground::_Init(const std::wstring& FilePath, float amp) {
 		Node::Init();
-		mData = ResourceManager::GetInstance()->LoadHeightMap(FilePath);
+		mData = ResourceManager::GetInstance()->LoadHeightMap(FilePath, amp);
 		_SetBuffer();
 
 		mGroundTexture = ResourceManager::GetInstance()->LoadTexture(L"Model\\kguh.jpg");
@@ -224,26 +224,25 @@ namespace pooptube {
 		v[1].x = std::floor(x);
 		v[1].z = std::floor(z);
 		v[1].y = (float)mData->GetHeight(UINT(v[1].x), UINT(v[1].z));
-		v[2].x = std::floor(x) + 1;
-		v[2].z = std::floor(z) + 1;
+		v[2].x = v[1].x + 1;
+		v[2].z = v[1].z + 1;
 		v[2].y = (float)mData->GetHeight(UINT(v[2].x), UINT(v[2].z));
 
 		D3DXVECTOR3 cVec;
 		if (x - std::floor(x) < z - std::floor(z)){
-			v[0].x = std::floor(x);
-			v[0].z = std::floor(z) + 1;
+			v[0].x = v[1].x;
+			v[0].z = v[1].z + 1;
 			v[0].y = (float)mData->GetHeight(UINT(v[0].x), UINT(v[0].z));
 		}
 		else{
-			v[0].x = std::floor(x) + 1;
-			v[0].z = std::floor(z);
+			v[0].x = v[1].x + 1;
+			v[0].z = v[1].z;
 			v[0].y = (float)mData->GetHeight(UINT(v[0].x), UINT(v[0].z));
 		}
 
 		D3DXVec3Cross(&cVec, &(v[1] - v[0]), &(v[2] - v[0]));
 		float y = (((v[0].x - x) * cVec.x + (v[0].z - z) * cVec.z) / cVec.y) + v[0].y;
 
-	//	printf("%d -> %f\n", mData->GetHeight(x,z), y * mAmp + pos.y);
 		return y * mAmp + pos.y;
 
 	}

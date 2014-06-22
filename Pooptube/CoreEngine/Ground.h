@@ -7,7 +7,7 @@
 */
 #pragma once
 #include "Node.h"
-#define GROUND_AMP 0.005f
+#define GROUND_AMP 0.05f
 #define GROUND_POLYGON_SIZE 1.0f;
 
 namespace pooptube {
@@ -34,10 +34,14 @@ namespace pooptube {
 		struct MapData
 		{
 		public:
-			MapData(UCHAR *mapData, UINT _row, UINT _col)
+			MapData( UCHAR *mapData, UINT _row, UINT _col ){
+				MapData( mapData, _row, _col, GROUND_AMP );
+			}
+			MapData(UCHAR *mapData, UINT _row, UINT _col, float _amp)
 			{
 				row = _row;
 				col = _col;
+				amp = _amp;
 				data = new UCHAR[row * col];
 
 				for (UINT i = 0; i < row*col; ++i)
@@ -62,7 +66,7 @@ namespace pooptube {
 		Ground();
 		~Ground();
 
-		static Ground *Create(const std::wstring& FilePath);
+		static Ground *Create( const std::wstring& FilePath, float amp = GROUND_AMP );
 
 		//메시 데이터에 변경이 있을때 아래 함수 호출
 		bool ResetBuffer();
@@ -87,7 +91,7 @@ namespace pooptube {
 		bool _SetBuffer();
 
 	protected:
-		bool _Init(const std::wstring& FilePath);
+		bool _Init(const std::wstring& FilePath, float amp);
 		//bool _SetBuffer();
 
 	private:
