@@ -599,6 +599,9 @@ namespace pooptube {
 
 	void SkinnedMesh::Render() {
 		if( _CheckFrustum() == false ) return; // 절두체 컬링
+
+		mDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+
 		Application::GetInstance()->GetSceneManager()->GetRenderer()->mRenderedMeshNum++;
 
 		// TODO: 행렬 계산
@@ -643,6 +646,8 @@ namespace pooptube {
 		
 		DrawFrame(mMeshData->mFrameRoot);
 		UpdateFrameMatrices(mMeshData->mFrameRoot, &MatWorld);
+
+		mDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 	}
 
 	void SkinnedMesh::Update(float dTime) {

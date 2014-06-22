@@ -84,7 +84,7 @@ namespace pooptube {
 		mD3DDevice->SetRenderState( D3DRS_ALPHAFUNC, D3DCMP_GREATER );
 
 		// 알파 블랜딩 사용
-		mD3DDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
+		//mD3DDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
 		mD3DDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA );
 		mD3DDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA );
 
