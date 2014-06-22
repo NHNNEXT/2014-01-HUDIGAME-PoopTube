@@ -585,7 +585,7 @@ namespace pooptube {
 	}
 
 	SkinnedMesh::~SkinnedMesh() {
-		//SAFE_RELEASE(mAnimController);
+		SAFE_RELEASE(mAnimController);
 		//SAFE_RELEASE(mAnimController2);
 	}
 
@@ -666,8 +666,8 @@ namespace pooptube {
 
 		mMeshData = ResourceManager::GetInstance()->LoadSkinnedMesh(XMeshPath);
 
-		mAnimController = mMeshData->GetAnimController();
-		//mAnimController = mMeshData->CloneAnimationController();
+		//mAnimController = mMeshData->GetAnimController();
+		mAnimController = mMeshData->CloneAnimationController();
 		//mAnimController2 = mMeshData->CloneAnimationController();
 
 		//맵툴용 함수 클라에서는 꺼야함

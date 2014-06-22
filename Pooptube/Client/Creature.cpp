@@ -75,7 +75,7 @@ void Creature::Render()
 {
 	switch (mState) {
 	case IDLE:
-		mMesh->SetAnimationTrack(2);
+		mMesh->SetAnimationTrack(3);
 		break;
 	case ANGRY:
 		mMesh->SetAnimationTrack(3);

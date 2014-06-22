@@ -266,6 +266,8 @@ float4 PShadeAni(float4  Pos     : POSITION,
 
 	float4 TotalAmbient = float4(lightAmbient * texel, 1.f);
 
+	//return texel;
+	
 	return float4(saturate(
 		TotalAmbient +
 		(texel.xyz * lightDiffuse * diffuseLighting * 0.6)

@@ -107,9 +107,14 @@ bool IntroScene::Init() {
 	for( int i = 0; i < 9; ++i ) {
 		for( int j = 0; j < 9; ++j ) {
 			if( i != j ) {
+
 				mTree[i][j] = nullptr;
 				mTree[i][j] = Tree3::Create();
-				mTree[i][j]->SetPosition( static_cast<float>(i * 8), 0, static_cast<float>(j * 8) );
+
+				D3DXVECTOR3 TreePos = mTree[i][j]->GetPosition();
+				float		MapHeight = mGround->GetHeight(static_cast<float>(i * 8), static_cast<float>(j * 8));
+
+				mTree[i][j]->SetPosition(static_cast<float>(i * 8), MapHeight, static_cast<float>(j * 8));
 				AddChild( mTree[i][j] );
 			}
 		}
@@ -137,7 +142,7 @@ bool IntroScene::Init() {
 
 	mLightOrb[0]->SetPosition(static_cast<float>(20.f), 1.f, static_cast<float>(20.f));
 	mLightOrb[1]->SetPosition(static_cast<float>(60.f), 13.f, static_cast<float>(60.f));
-	mLightOrb[2]->SetPosition(static_cast<float>(120.f), 30.f, static_cast<float>(120.f));
+	mLightOrb[2]->SetPosition(static_cast<float>(120.f), 29.f, static_cast<float>(120.f));
 	mLightOrb[3]->SetPosition(static_cast<float>(200.f), 47.f, static_cast<float>(200.f));
 
 	for (int i = 0; i < 4; ++i) {
