@@ -39,6 +39,8 @@ void MainCharacter::Render() {
 void MainCharacter::Update(float dTime) {
 	Node::Update(dTime);
 
+	mState = NONE;
+
 	float lightPos[3];
 	D3DXVECTOR3 charPos = GetPosition();
 	D3DXVECTOR3 charFront = GetFrontVector();
@@ -51,25 +53,19 @@ void MainCharacter::Update(float dTime) {
 	pooptube::ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("lightPos", lightPos, 3);
 
 	UpdateInput(dTime);
-	//_JumpUpdate( dTime );
-// 
-// 	switch (mState) {
-// 	case NONE:
-// 		mSkinnedMesh->SetAnimationTrack(3);
-// 		break;
-// 	case MOVE:
-// 		mSkinnedMesh->SetAnimationTrack(2);
-// 		break;
-// 	case RUN:
-// 		mSkinnedMesh->SetAnimationTrack(1);
-// 		break;
-// 	case SHAKEHAND:
-// 		mSkinnedMesh->SetAnimationTrack(0);
-// 		break;
-// 	default:
-// 		break;
-// 	}
-// 
+
+	switch (mState) {
+	case NONE:
+		mMesh->SetAnimationTrack(3);
+		break;
+	case MOVE:
+		mMesh->SetAnimationTrack(8);
+		//mMesh->SetAnimationBlend(8, 5);
+		break;
+	default:
+		break;
+	}
+ 
 // 	mSkinnedMesh->SetPosition(GetPosition());
 // 	mSkinnedMesh->Update(dTime);
 	SetPosition( mPosition.x, mScene->GetGroundModule()->GetHeight( mPosition.x, mPosition.z ), mPosition.z );
@@ -77,10 +73,6 @@ void MainCharacter::Update(float dTime) {
 
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
 	pooptube::SoundManager::GetInstance()->SetListener( &mListener );
-
-	if (mState == MOVE) {
-		mState = NONE;
-	}
 }
 bool MainCharacter::Init( pooptube::Scene* scene ) {
 	Node::Init();
@@ -92,9 +84,7 @@ bool MainCharacter::Init( pooptube::Scene* scene ) {
 	mScene->AddRenderZone(this, D3DXVECTOR3(0.f, 0.f, 0.f), 30.f); // Range+여유분 거리
 
 	mMesh = pooptube::SkinnedMesh::Create(PATH_MAINCHAR);
-	//mMesh->RotateFrontVectorX(-0.3f);
 	mMesh->RotateFrontVectorY(3.14f);
-	mMesh->SetAnimationTrack(8);
 	mMesh->SetScale(D3DXVECTOR3(3.f, 3.f, 3.f));
 	AddChild(mMesh);
 	
@@ -103,7 +93,6 @@ bool MainCharacter::Init( pooptube::Scene* scene ) {
 	collisionBox->Translation(D3DXVECTOR3(0.f, 1.2f, 0.f));
 	collisionBox->SetAxisLenY(1.2f);
 	AddChild( collisionBox );
-	//AddChild( mSkinnedMesh );
 	
 
 	return true;
@@ -127,57 +116,25 @@ void MainCharacter::_CollsionHandle( float dTime, pooptube::CollisionBox* collis
 }
 
 void MainCharacter::UpdateInput(float dTime) {
-// 	if (pooptube::GetInputManager().KeyState('W') == pooptube::KeyState::KEY_PRESSED) {
-// 		Translation(Node::GetFrontVector()*mSpeed*dTime);
-// 		if (mState != JUMP)
-// 			mState = MOVE;
-// 	}
-// 		
-// 	if (pooptube::GetInputManager().KeyState('S') == pooptube::KeyState::KEY_PRESSED) {
-// 		Translation(Node::GetFrontVector()*mSpeed*-1.f*dTime);
-// 		if (mState != JUMP)
-// 			mState = MOVE;
-// 	}
-// 		
-// 	if (pooptube::GetInputManager().KeyState('A') == pooptube::KeyState::KEY_PRESSED) {
-// 		Translation(Node::GetLeftVector()*mSpeed*dTime);
-// 		if (mState != JUMP)
-// 			mState = MOVE;
-// 	}
-// 		
-// 	if (pooptube::GetInputManager().KeyState('D') == pooptube::KeyState::KEY_PRESSED) {
-// 		Translation(Node::GetRightVector()*mSpeed*dTime);
-// 		if (mState != JUMP)
-// 			mState = MOVE;
-// 	}
-// 
-// 	if (pooptube::GetInputManager().KeyState('Q') == pooptube::KeyState::KEY_PRESSED) {
-// 		if (mState != JUMP)
-// 			mState = SHAKEHAND;
-// 	}
-
 	if (pooptube::GetInputManager().KeyState(VK_UP) == pooptube::KeyState::KEY_PRESSED) {
 		Translation(Node::GetFrontVector()*mSpeed*dTime);
-		if (mState != JUMP)
-			mState = MOVE;
+		mState = MOVE;
 	}
 
 	if (pooptube::GetInputManager().KeyState(VK_DOWN) == pooptube::KeyState::KEY_PRESSED) {
 		Translation(Node::GetFrontVector()*mSpeed*-1.f*dTime);
-		if (mState != JUMP)
-			mState = MOVE;
+		mState = MOVE;
 	}
 
 	if (pooptube::GetInputManager().KeyState(VK_LEFT) == pooptube::KeyState::KEY_PRESSED) {
 		RotationY(-mRotateSpeed*dTime);
+		mState = MOVE;
 	}
 		
 	if (pooptube::GetInputManager().KeyState(VK_RIGHT) == pooptube::KeyState::KEY_PRESSED) {
 		RotationY(mRotateSpeed*dTime);
+		mState = MOVE;
 	}
-		
-	if (pooptube::GetInputManager().KeyState(VK_SPACE) == pooptube::KeyState::KEY_DOWN)
-		mState = JUMP;
 }
 
 void MainCharacter::_JumpUpdate( float dTime ) {

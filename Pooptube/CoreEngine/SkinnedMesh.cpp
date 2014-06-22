@@ -585,8 +585,8 @@ namespace pooptube {
 	}
 
 	SkinnedMesh::~SkinnedMesh() {
-		SAFE_RELEASE(mAnimController);
-/*		delete[] mBoneMatrices;*/
+		//SAFE_RELEASE(mAnimController);
+		//SAFE_RELEASE(mAnimController2);
 	}
 
 	SkinnedMesh * SkinnedMesh::Create(const std::wstring& XMeshPath) {
@@ -654,6 +654,10 @@ namespace pooptube {
 
 		if (mAnimController)
 			mAnimController->AdvanceTime(dTime, NULL);
+		/*
+		if (mAnimController2)
+			mAnimController2->AdvanceTime(dTime, NULL);
+			*/
 	}
 
 	bool SkinnedMesh::_Init(const std::wstring& XMeshPath) {
@@ -662,7 +666,9 @@ namespace pooptube {
 
 		mMeshData = ResourceManager::GetInstance()->LoadSkinnedMesh(XMeshPath);
 
-		mAnimController = mMeshData->CloneAnimationController();
+		mAnimController = mMeshData->GetAnimController();
+		//mAnimController = mMeshData->CloneAnimationController();
+		//mAnimController2 = mMeshData->CloneAnimationController();
 
 		//맵툴용 함수 클라에서는 꺼야함
 		//InitFrame(mMeshData->mFrameRoot);
@@ -871,6 +877,19 @@ namespace pooptube {
 		mAnimController->SetTrackAnimationSet(0, Wave);
 		mAnimController->SetTrackEnable(0, TRUE);
 		mAnimController->ResetTime();
+	}
+
+	void SkinnedMesh::SetAnimationBlend(DWORD num1, DWORD num2) {
+		ID3DXAnimationSet*  Wave = NULL;
+
+		mAnimController->GetAnimationSet(num1, &Wave);
+		mAnimController->SetTrackAnimationSet(0, Wave);
+
+		//mAnimController2->GetAnimationSet(num2, &Wave);
+		//mAnimController2->SetTrackAnimationSet(0, Wave);
+
+		mAnimController->SetTrackEnable(0, TRUE);
+		//mAnimController->ResetTime();
 	}
 
 	void SkinnedMesh::InitFrame(LPD3DXFRAME pFrame) {

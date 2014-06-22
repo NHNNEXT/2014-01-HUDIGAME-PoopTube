@@ -78,6 +78,7 @@ namespace pooptube {
 		void ReleaseAttributeTable(LPD3DXFRAME pFrameBase);
 
 		ID3DXEffect* GetEffect() const { return mEffect; }
+		ID3DXAnimationController* GetAnimController() const { return mAnimController; }
 
 	private:
 		LPDIRECT3DDEVICE9			mDevice;
@@ -107,6 +108,7 @@ namespace pooptube {
 
 		virtual void Render();
 		void SetAnimationTrack(DWORD num);
+		void SetAnimationBlend(DWORD num1, DWORD num2);
 		void DrawFrame(LPD3DXFRAME pFrame);
 		void DrawMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase, LPD3DXFRAME pFrameBase);
 
@@ -135,6 +137,7 @@ namespace pooptube {
 
 		MeshData*					mMeshData = nullptr;
 		ID3DXAnimationController*   mAnimController = nullptr;
+		ID3DXAnimationController*   mAnimController2 = nullptr;
 
 		D3DXVECTOR3						mBoundingSphereCenter; // 절두체 컬링용 Bounding Sphere
 		float							mBoundingSphereRadius; // 절두체 컬링용 Bounding Sphere

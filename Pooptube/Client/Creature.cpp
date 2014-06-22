@@ -39,7 +39,6 @@ bool Creature::Init()
 	mMesh = pooptube::SkinnedMesh::Create(PATH_WOLF);
 	mMesh->RotateFrontVectorY(3.14f);
 	mMesh->SetScale(2.f, 2.f, 2.f);
-	mMesh->SetAnimationTrack(3);
 	AddChild(mMesh);
 
 	// 	mMesh = pooptube::SkinnedMesh::Create(PATH_TINY);
@@ -72,6 +71,20 @@ bool Creature::Init()
 
 void Creature::Render()
 {
+	switch (mState) {
+	case IDLE:
+		mMesh->SetAnimationTrack(2);
+		break;
+	case ANGRY:
+		mMesh->SetAnimationTrack(3);
+		break;
+	case RAGE:
+		mMesh->SetAnimationTrack(3);
+		break;
+	default:
+		break;
+	}
+
 	mMesh->GetMeshData()->GetEffect()->SetTechnique("t0");
 	Node::Render();	
 }
