@@ -19,6 +19,8 @@ namespace pooptube{
 		void SetTextureUVSize( float u, float v );
 		void SetTextureMatrix( D3DXMATRIXA16& matMatrix ){ mMatrix = matMatrix; }
 
+		void SetEffectTech(std::string& TechName) { mEffectTech = TechName; }
+
 	private:
 		bool _SetVertexBuffer();
 		bool _SetIndexBuffer();
@@ -29,6 +31,7 @@ namespace pooptube{
 		ID3DXEffect*				mEffect = nullptr;
 		D3DXMATRIXA16				mMatrix, mMatIdentity;
 
+		std::string					mEffectTech = "t4";
 		std::array<MESH_CUSTOM_VERTEX, 4> vertexList;
 	};
 }

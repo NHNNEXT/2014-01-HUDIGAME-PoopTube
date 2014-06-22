@@ -114,7 +114,7 @@ namespace pooptube{
 
 			mDevice->SetTransform(D3DTS_WORLD, &MatWorld);
 
-			mEffect->SetTechnique("t4");
+			mEffect->SetTechnique(mEffectTech.c_str());
 			mEffect->SetMatrix("mWorld", &MatWorld);
 
 			mDevice->SetFVF(D3DFVF_CUSTOMVERTEX);

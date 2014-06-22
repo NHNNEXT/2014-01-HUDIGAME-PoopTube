@@ -408,6 +408,40 @@ float4 PShadeBillBord(
 	return finalColor;
 }
 
+//////////////////////////////////////////////////////
+
+VS_OUTPUT_MESH VShadeLogo(VS_INPUT_MESH Input)
+{
+	VS_OUTPUT_MESH o;
+
+	float4 posWorld = mul(Input.Pos, mWorld);
+		o.Pos = mul(posWorld, mViewProj);
+	o.Normal = mul(Input.Normal, (float3x3)mWorld);
+	o.WorldPos = posWorld;
+
+	o.Tex0 = Input.Tex0;
+
+	return o;
+}
+
+float4 PShadeLogo(
+	float2 Tex0 : TEXCOORD0,
+	float3 WorldPos : TEXCOORD2) : COLOR0
+{
+	float4 texel = tex2D(samSkyBox, Tex0);
+	float4 TotalAmbient = float4(lightAmbient * texel, texel.w);
+
+	float ViewpointDistance = length(mCamaraPos - WorldPos.xyz);
+	//선형안개
+	float fogFactor = saturate((fogEnd - ViewpointDistance) / (fogEnd - fogStart));
+
+	float3 fogColorFactor = fogColor*(1.0f - fogFactor);
+	//마지막에 안개공식을 적용
+	float4 finalColor = float4(saturate(TotalAmbient*fogFactor + fogColorFactor), TotalAmbient.w);
+
+	return texel;
+}
+
 //////////////////////////////////////
 // Techniques specs follow
 //////////////////////////////////////
@@ -470,5 +504,15 @@ technique t5
 	{
 		VertexShader = (vsArray[CurNumBones]);
 		PixelShader = compile ps_2_0 PShadeLightObj();
+	}
+}
+
+//로고용
+technique t6
+{
+	pass p0
+	{
+		VertexShader = compile vs_2_0 VShadeLogo();
+		PixelShader = compile ps_2_0 PShadeLogo();
 	}
 }

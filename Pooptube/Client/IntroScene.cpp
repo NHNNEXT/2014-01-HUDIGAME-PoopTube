@@ -28,6 +28,7 @@ IntroScene::IntroScene() {
 }
 
 IntroScene::~IntroScene() {
+	delete mBoard;
 }
 
 IntroScene* IntroScene::Create() {
@@ -151,9 +152,9 @@ bool IntroScene::Init() {
 	mBoard = pooptube::BillBoard::Create();
 	mBoard->SetTexture(L"Model\\BringToLight.png");
 	mBoard->SetPosition(240.f, 55.f, 240.f);
-	mBoard->SetScale(12.0f, 7.0f, 2.f);
+	mBoard->SetScale(24.0f, 14.0f, 4.f);
 	mBoard->SetVisible(true);
-	AddChild(mBoard);
+	//AddChild(mBoard);
 
 	return true;
 }
@@ -176,7 +177,10 @@ void IntroScene::Render() {
 		//mPink[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 		//mBoard[i]->Render();
 	}
+
+	mBoard->SetEffectTech(std::string("t6"));
 	mBoard->Render();
+	mBoard->SetEffectTech(std::string("t4"));
 }
 
 void IntroScene::Update(float dTime) {
