@@ -53,7 +53,7 @@ bool IntroScene::Init() {
 
 	// 스테이지에서 총 획득해야 하는 오브의 수는 노란 frame circle(mClearPoint)
 	// 현재 획득한 오브의 수는 노란 circle(mYellow)
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		mClearPoint[i] = nullptr;
 		mClearPoint[i] = pooptube::Sprite::Create(PATH_RING);
@@ -95,10 +95,10 @@ bool IntroScene::Init() {
 
 	mSkyBox->SetTarget(mCharacter);
 
-	mCreature = Creature::Create();
+	/*mCreature = Creature::Create();
 	mCreature->SetPosition(8.f, 0.f, 8.f);
 	mCreature->pss = mCharacter;
-	AddChild(mCreature);
+	AddChild(mCreature);*/
 
 	for( int i = 0; i < 9; ++i ) {
 		for( int j = 0; j < 9; ++j ) {
@@ -126,28 +126,28 @@ bool IntroScene::Init() {
 	AddChild(mGround);
 	AddChild(mSkyBox);
 
-	for (int i = 0; i < 3; ++i) {
+	for (int i = 0; i < 4; ++i) {
 		mLightOrb[i] = nullptr;
 		mLightOrb[i] = LightOrb::Create();
-		mLightOrb[i]->SetPosition(static_cast<float>(20 * (i + 1)), 0, static_cast<float>(20 * (i + 1)));
+	}
+
+	mLightOrb[0]->SetPosition(static_cast<float>(20.f), 1.f, static_cast<float>(20.f));
+	mLightOrb[1]->SetPosition(static_cast<float>(60.f), 13.f, static_cast<float>(60.f));
+	mLightOrb[2]->SetPosition(static_cast<float>(120.f), 30.f, static_cast<float>(120.f));
+	mLightOrb[3]->SetPosition(static_cast<float>(200.f), 47.f, static_cast<float>(200.f));
+
+	for (int i = 0; i < 4; ++i) {
 		AddChild(mLightOrb[i]);
 	}
 
-	for (int i = 0; i < 3; ++i)
-	{
-		mBoard[i] = pooptube::BillBoard::Create();
-		mBoard[i]->SetTexture(L"Model\\BringToLight.png");
-		mBoard[i]->SetPosition(mLightOrb[i]->GetPosition().x, mLightOrb[i]->GetPosition().y, mLightOrb[i]->GetPosition().z);
-		mBoard[i]->SetScale(6.4f, 3.6f, 1.f);
-		mBoard[i]->SetVisible(false);
-		AddChild(mBoard[i]);
-	}
+	mBoard = pooptube::BillBoard::Create();
+	mBoard->SetTexture(L"Model\\BringToLight.png");
+	mBoard->SetPosition(240.f, 55.f, 240.f);
+	mBoard->SetScale(12.0f, 7.0f, 2.f);
+	mBoard->SetVisible(true);
+	AddChild(mBoard);
 
-
-	mBoard1 = pooptube::BillBoard::Create();
-	mBoard1->SetTexture(L"Model\\BringToLight.png");
-	mBoard1->SetPosition(10.f, 10.f, 10.f);
-	AddChild(mBoard1);
+	
 // 	AddChild(mPink);
 // 	AddChild(mYellow);
 
@@ -165,13 +165,14 @@ void IntroScene::Render() {
 
 	ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("mCamaraPos", cameraPos, 3);
 
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		mClearPoint[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 		mYellow[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
-		mPink[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
+		//mPink[i]->Draw(NULL, &D3DXVECTOR3(0, 0, 0), D3DCOLOR_ARGB(255, 255, 255, 255));
 		//mBoard[i]->Render();
 	}
+	mBoard->Render();
 }
 
 void IntroScene::Update(float dTime) {
@@ -199,7 +200,7 @@ void IntroScene::Update(float dTime) {
 
 	int lightOrbCount = 0;
 
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		/*D3DXVECTOR3 temp = mLightOrb[i]->GetPosition();
 		float tempTheta = mTime * 3.14f / 180.f;
@@ -209,7 +210,7 @@ void IntroScene::Update(float dTime) {
 		// mLightOrb를 순회하면서 lightOrbCount를 증가시킨다.
 		// LightOrb와 lightOrbCount가 같아지면 스테이지를 종료한다.
 		if (!mLightOrb[i]->IsRender()) {
-			mBoard[i]->SetVisible(true);
+			//mBoard[i]->SetVisible(true);
 			++lightOrbCount;
 			if (lightOrbCount >= 1) {
 				mYellow[lightOrbCount - 1]->SetVisible(true);
@@ -232,28 +233,28 @@ void IntroScene::Update(float dTime) {
 // 		mCharacter->GetLight()->SetRange(mLightEnhanceTime * 2.f);
 // 	}
 
-	for (int i = 0; i < mCharacter->GetHP(); ++i) {
+	/*for (int i = 0; i < mCharacter->GetHP(); ++i) {
 		if (mCharacter->GetHP() >= 1)
 			mPink[mCharacter->GetHP() - 1]->SetVisible(true);
-	}
+	}*/
 
 	// 크리쳐가 메인케릭터를 공격해서 hp를 소모시킨다.
 	// 간단하게 DoRage이면 그냥 다음 스테이지로...? 종료?
-	if (mCreature->GetState() == RAGE) {
-		if (mCreatureAttackTime > 2.f && mCharacter->GetHP() >= 0) {
-			++mTotalDamage;
+	//if (mCreature->GetState() == RAGE) {
+	//	if (mCreatureAttackTime > 2.f && mCharacter->GetHP() >= 0) {
+	//		++mTotalDamage;
 
-			//mCharacter->DecreaseHP(1);
-			mCreatureAttackTime = 0;
-			mPink[mCharacter->GetHP() - 1]->SetVisible(false);
-		}
-		mCreatureAttackTime += dTime;
-	}
+	//		//mCharacter->DecreaseHP(1);
+	//		mCreatureAttackTime = 0;
+	//		mPink[mCharacter->GetHP() - 1]->SetVisible(false);
+	//	}
+	//	mCreatureAttackTime += dTime;
+	//}
 	
 	//printf("%d ", lightOrbCount);
 		
 	// 스테이지 변경
-	if (lightOrbCount == 3)
+	if (lightOrbCount == 4)
 	{
 		/*StageOne* pStageOne = StageOne::Create();
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStageOne);*/

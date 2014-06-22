@@ -42,19 +42,17 @@ protected:
 private:
 	MainCharacter					*mCharacter = nullptr;
 	Tree3							*mTree[50][50];
-	LightOrb						*mLightOrb[3];
+	LightOrb						*mLightOrb[4];
 	pooptube::ThirdPersonCamera		*mCamera = nullptr;
 	pooptube::SkyBox				*mSkyBox = nullptr;
 	//pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
-	pooptube::BillBoard				*mBoard[3];
-	Creature						*mCreature = nullptr;
- 	pooptube::Sprite				*mClearPoint[3];
-	pooptube::Sprite				*mYellow[3];
- 	pooptube::Sprite				*mPink[3];
+	pooptube::BillBoard				*mBoard;
+	//Creature						*mCreature = nullptr;
+ 	pooptube::Sprite				*mClearPoint[4];
+	pooptube::Sprite				*mYellow[4];
+ 	pooptube::Sprite				*mPink[4];
 
-	pooptube::BillBoard				*mBoard1;
-	
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;
 	float				mBeforeJumpYPos = 0.f;
