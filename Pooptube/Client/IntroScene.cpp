@@ -98,6 +98,7 @@ bool IntroScene::Init() {
 		PATH_SKYBOX_RIGHT);
 
 	mSkyBox->SetTarget(mCharacter);
+	mSkyBox->RotationY(-1.0f);
 
 	/*mCreature = Creature::Create();
 	mCreature->SetPosition(8.f, 0.f, 8.f);
@@ -150,9 +151,9 @@ bool IntroScene::Init() {
 	}
 
 	mBoard = pooptube::BillBoard::Create();
-	mBoard->SetTexture(L"Model\\BringToLight.png");
-	mBoard->SetPosition(240.f, 55.f, 240.f);
-	mBoard->SetScale(24.0f, 14.0f, 4.f);
+	mBoard->SetTexture(L"Model\\moon.png");
+	mBoard->SetPosition(230.f, 65.f, 240.f);
+	mBoard->SetScale(10.0f, 10.0f, 10.f);
 	mBoard->SetVisible(true);
 	//AddChild(mBoard);
 

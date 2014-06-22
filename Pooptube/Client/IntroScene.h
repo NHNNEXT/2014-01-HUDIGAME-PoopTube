@@ -48,6 +48,7 @@ private:
 	//pooptube::SunLight				*mSunLight = nullptr;
 	pooptube::XMesh					*mXMesh = nullptr;
 	pooptube::BillBoard				*mBoard;
+	pooptube::BillBoard				*mBoard2;
 	//Creature						*mCreature = nullptr;
  	pooptube::Sprite				*mClearPoint[4];
 	pooptube::Sprite				*mYellow[4];

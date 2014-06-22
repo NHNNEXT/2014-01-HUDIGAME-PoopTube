@@ -56,7 +56,7 @@ namespace pooptube {
 		float				mDepth = 100.f;
 
 		bool				mSwitchVibe = true;
-		float				mVibeSpeed = 0.01f;
+		float				mVibeSpeed = 0.02f;
 		float				mVibeCurrentTime = 0.f;
 
 		Node*				mTarget = nullptr;

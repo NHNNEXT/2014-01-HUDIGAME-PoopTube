@@ -208,20 +208,6 @@ void Stage::Update( float dTime )
 
 void Stage::UpdateInput()
 {
-	if( GetInputManager().KeyState( 'R' ) == KeyState::KEY_PRESSED )
-		mGround->_SetBuffer();
-	if( GetInputManager().KeyState( 'T' ) == KeyState::KEY_PRESSED )
-		mCharacter->Move( 0.1f, 0.f );
-	if( GetInputManager().KeyState( 'G' ) == KeyState::KEY_PRESSED )
-		mCharacter->Move( -0.1f, 0.f );
-	if( GetInputManager().KeyState( 'F' ) == KeyState::KEY_PRESSED )
-		mCharacter->Move( 0.f, 0.1f );
-	if( GetInputManager().KeyState( 'H' ) == KeyState::KEY_PRESSED )
-		mCharacter->Move( 0.f, -0.1f );
-	if( GetInputManager().KeyState( 'Q' ) == KeyState::KEY_UP ){ // 파일 리로드, 테스트용
-		mChildList.clear();
-		Init( mFileName );
-	}
 	if (GetInputManager().KeyState('K') == KeyState::KEY_PRESSED) {// stage skip용
 		pooptube::CollisionManager::GetInstance()->ClearCollsionBoxList();
 		EndScene *pEndScene = EndScene::Create();
