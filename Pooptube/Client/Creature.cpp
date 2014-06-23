@@ -101,12 +101,15 @@ void Creature::Render()
 		mMesh2->SetVisible(false);
 		mMesh->SetVisible(true);
 		break;
+	case GOBACK:
+		mMesh3->SetVisible(false);
+		mMesh2->SetVisible(false);
+		mMesh->SetVisible(true);
+		break;
 	case RAGE:
 		mMesh3->SetVisible(true);
 		mMesh2->SetVisible(false);
 		mMesh->SetVisible(false);
-		break;
-	case GOBACK:
 		break;
 	default:
 		break;

@@ -58,7 +58,7 @@ bool Tree2::Init() {
 }
 
 void Tree2::Render() {
-	if( pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()->CheckRenderZone( GetPosition(), 2.f ) ){
+	if (pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene()->CheckRenderZone(GetPosition(), 75.f)){
 		mXMesh->SetVisible( true );
 		mBillBoard->SetVisible( false );
 		Node::Render();
