@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Scene.h"
+#include "SoundBox.h"
 
 namespace pooptube {
 	class ThirdPersonCamera;
@@ -53,6 +54,7 @@ private:
  	pooptube::Sprite				*mClearPoint[4];
 	pooptube::Sprite				*mYellow[4];
  	//pooptube::Sprite				*mPink[4];
+	FMOD::Studio::EventInstance		*mBgm = nullptr;
 
 	float				mTimeForFPS = 0.f;
 	float				mTimeForJump = 0.f;

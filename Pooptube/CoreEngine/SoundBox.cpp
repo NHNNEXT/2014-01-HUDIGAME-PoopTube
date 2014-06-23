@@ -10,6 +10,7 @@ namespace pooptube {
 
 	SoundBox::~SoundBox()
 	{
+		mSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
 		mSound->release();
 	}
 

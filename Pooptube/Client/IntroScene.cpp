@@ -16,7 +16,6 @@
 #include "XMesh.h"
 #include "ResourceManager.h"
 #include "Sprite.h"
-#include "SoundBox.h"
 #include "InputManager.h"
 #include "ResourceDef.h"
 #include "Tree3.h"
@@ -29,6 +28,8 @@ IntroScene::IntroScene() {
 
 IntroScene::~IntroScene() {
 	delete mBoard;
+	mBgm->stop( FMOD_STUDIO_STOP_IMMEDIATE );
+	mBgm->release();
 }
 
 IntroScene* IntroScene::Create() {
@@ -121,16 +122,8 @@ bool IntroScene::Init() {
 		}
 	}
 
-	FMOD::Studio::EventInstance* eventInstance = pooptube::SoundManager::GetInstance()->GetSound("event:/Ambience/Predawn");
-	pooptube::SoundBox* soundBox = pooptube::SoundBox::Create(eventInstance);
-	pooptube::CollisionBox* soundCBox = pooptube::CollisionBox::Create(soundBox);
-	soundBox->AddChild(soundCBox);
-	soundCBox->SetAxisLenX(mGround->GetRowSize() * mGround->GetPolygonSize() * 0.5f);
-	soundCBox->SetAxisLenY(2.f);
-	soundCBox->SetAxisLenZ(mGround->GetColSize() * mGround->GetPolygonSize() * 0.5f);
-	soundBox->Translation(soundCBox->GetAxisLenX(), soundCBox->GetAxisLenY(), soundCBox->GetAxisLenZ());
-	AddChild(soundBox);
-
+	mBgm = pooptube::SoundManager::GetInstance()->GetSound("event:/Bgm_Intro");
+	
 	AddChild(mCharacter);
 	AddChild(mCamera);
 	AddChild(mGround);
@@ -187,7 +180,11 @@ void IntroScene::Render() {
 void IntroScene::Update(float dTime) {
 	Node::Update(dTime);
 
-	IntroScene::UpdateInput();
+	pooptube::SoundManager::GetInstance()->PlayOnce( *mBgm );
+
+	UpdateInput();
+	if( this != pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene() )
+		return;
 
 	//2초마다 한번씩
 	if (mTimeForFPS > 2.f) {

@@ -51,7 +51,7 @@ bool LightOrb::Init(LightOrb *pCreature)
 
 	//LightOrb::SetPosition(mInitialPosition);
 
-	mEffectSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Okay" );
+// 	mEffectSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Okay" );
 
 	return true;
 }
@@ -104,7 +104,7 @@ void LightOrb::_CollsionHandle( pooptube::CollisionBox* collisionResult )
 	if( collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::PLAYER ) {
 		mIsRender = false;
 		//mIsHealable = false;
-		if( mEffectSound != nullptr )
-			pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
+// 		if( mEffectSound != nullptr )
+// 			pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
 	}
 }

@@ -30,6 +30,8 @@ EndScene::EndScene() {
 
 EndScene::~EndScene() {
 	delete mBoard;
+	mBgm->stop( FMOD_STUDIO_STOP_IMMEDIATE );
+	mBgm->release();
 }
 
 EndScene* EndScene::Create() {
@@ -91,7 +93,7 @@ bool EndScene::Init() {
 	mTree->SetPosition(40.f, 0, 40.f);
 	AddChild(mTree);
 
-	FMOD::Studio::EventInstance* eventInstance = pooptube::SoundManager::GetInstance()->GetSound("event:/Ambience/Predawn");
+	FMOD::Studio::EventInstance* eventInstance = pooptube::SoundManager::GetInstance()->GetSound("event:/Bgm_End");
 	pooptube::SoundBox* soundBox = pooptube::SoundBox::Create(eventInstance);
 	pooptube::CollisionBox* soundCBox = pooptube::CollisionBox::Create(soundBox);
 	soundBox->AddChild(soundCBox);
@@ -126,6 +128,8 @@ bool EndScene::Init() {
 	mBoard->SetVisible(false);
 	//AddChild(mBoard);
 
+	mBgm = pooptube::SoundManager::GetInstance()->GetSound( "event:/Bgm_End" );
+
 	return true;
 }
 
@@ -148,7 +152,7 @@ void EndScene::Render() {
 void EndScene::Update(float dTime) {
 	Node::Update(dTime);
 
-	
+	pooptube::SoundManager::GetInstance()->PlayOnce( *mBgm );
 
 	//printf("%f %f %f\n", mCharacter->GetPosition().x, mCharacter->GetPosition().y, mCharacter->GetPosition().z);
 	//printf("%f %f %f\n\n", mCharacter->GetFrontVector().x, mCharacter->GetFrontVector().y, mCharacter->GetFrontVector().z);

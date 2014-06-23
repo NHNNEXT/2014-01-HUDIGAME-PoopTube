@@ -92,8 +92,10 @@ private:
 	//pooptube::XMesh			*mXMesh = nullptr;
 
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
-	FMOD::Studio::EventInstance *mEffectSound = nullptr;
-	FMOD::Studio::EventInstance *mStepSound = nullptr;
+	FMOD::Studio::EventInstance *mAttackSound = nullptr;
+	FMOD::Studio::EventInstance *mWalkSound = nullptr;
+	FMOD::Studio::EventInstance *mAngrySound = nullptr;
+
 	FMOD_3D_ATTRIBUTES		mSoundPos;
 };
 

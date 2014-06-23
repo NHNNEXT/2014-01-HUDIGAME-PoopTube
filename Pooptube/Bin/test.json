@@ -1,6 +1,10 @@
 {
 	"Map": [
 		{
+			"Class": "Bgm",
+			"Sound": "event:/Bgm_Unknown"
+		},
+		{
 			"Class": "Ground",
 			"Name": "Ground2",
 			"Position": [
@@ -28,6 +32,52 @@
 				507,
 				100,
 				507
+			]
+		},
+		{
+			"Class": "SoundBox",
+			"Name": "SoundBox_1",
+			"Sound": "event:/NightForest",
+			"Position": [
+				256,
+				0,
+				256
+			],
+			"Scale": [
+				1,
+				1,
+				1
+			],
+			"FrontVector": [
+				0,
+				0,
+				1
+			],
+			"Child": [
+				{
+					"Class": "CollisionBox",
+					"Name": "CollisionBox_Sound",
+					"Position": [
+						256,
+						0,
+						256
+					],
+					"Scale": [
+						1,
+						1,
+						1
+					],
+					"FrontVector": [
+						0,
+						0,
+						1
+					],
+					"AxisLen": [
+						250,
+						50,
+						250
+					]
+				}
 			]
 		},
 		{

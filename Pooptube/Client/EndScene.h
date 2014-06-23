@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Scene.h"
+#include "SoundManager.h"
 
 namespace pooptube {
 	class ThirdPersonCamera;
@@ -49,6 +50,7 @@ private:
 	pooptube::XMesh					*mXMesh = nullptr;
 	pooptube::BillBoard				*mBoard;
 	pooptube::Sprite				*mSprite = nullptr;
+	FMOD::Studio::EventInstance		*mBgm = nullptr;
 
 	float				lightEnhanceTime = 0.f;
 	float				mTimeForCircle = 0.f;

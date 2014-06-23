@@ -32,6 +32,8 @@ Stage::Stage()
 }
 Stage::~Stage()
 {
+	mBgm->stop( FMOD_STUDIO_STOP_IMMEDIATE );
+	mBgm->release();
 }
 
 Stage* Stage::Create( std::string filename ) {
@@ -79,17 +81,17 @@ bool Stage::Init( std::string filename )
 	_LoadFile( filename );
 	
 	// UI 부분(class로 따로 빼야겠음)
-	float x = pooptube::Application::GetInstance()->GetScreenSize().x;
-	float y = pooptube::Application::GetInstance()->GetScreenSize().y;
+	float x = Application::GetInstance()->GetScreenSize().x;
+	float y = Application::GetInstance()->GetScreenSize().y;
 
 	for (int i = 0; i < mOrbCount; ++i)
 	{
 		mClearPoint[i] = nullptr;
-		mClearPoint[i] = pooptube::Sprite::Create(PATH_RING);
+		mClearPoint[i] = Sprite::Create(PATH_RING);
 		AddChild(mClearPoint[i]);
 
 		mYellow[i] = nullptr;
-		mYellow[i] = pooptube::Sprite::Create(PATH_YELLOW);
+		mYellow[i] = Sprite::Create(PATH_YELLOW);
 		AddChild(mYellow[i]);
 
 		/*mPink[i] = nullptr;
@@ -108,7 +110,6 @@ bool Stage::Init( std::string filename )
 		mPink[i]->ApplyTransform();
 		mPink[i]->SetVisible(false);*/
 	}
-	
 	
 
 	return true;
@@ -137,6 +138,9 @@ void Stage::Update( float dTime )
 {
 	Node::Update( dTime );
 	UpdateInput();
+	if( this != pooptube::Application::GetInstance()->GetSceneManager()->GetCurrentScene() )
+		return;
+
 	//2초마다 한번씩
 	if( mTimeForFPS > 2.f ) {
 		printf_s( "FPS : %f\n", Application::GetInstance()->GetFps() );
@@ -221,7 +225,8 @@ void Stage::Update( float dTime )
 	printf("HP : %d\n", mCharacter->GetHP());
 	printf("DMG : %d\n", mTotalDamage);*/
 
-
+	if( mBgm != nullptr )
+		SoundManager::GetInstance()->PlayOnce( *mBgm );
 }
 
 void Stage::UpdateInput()
@@ -233,35 +238,46 @@ void Stage::UpdateInput()
 	}
 }
 
-void Stage::_LoadFile( std::string filename )
+void Stage::_LoadFile( std::string& filename )
 {
 	Json::Value stageData = JsonParser::FileToJson( filename )["Map"];
-	for( auto& data : stageData ){
+	_LoadToTarget( this, stageData );
+}
+
+void Stage::_LoadToTarget( Node* target, Json::Value& jsonData )
+{
+	for( auto& data : jsonData ){
 		if( data["Class"] == "Tree1" )
-			_LoadTree1( data );
+			_LoadTree1( target, data );
 		else if( data["Class"] == "Tree2" )
-			_LoadTree2( data );
+			_LoadTree2( target, data );
 		else if( data["Class"] == "Tree3" )
-			_LoadTree3( data );
+			_LoadTree3( target, data );
 		else if( data["Class"] == "BillBoard" )
-			_LoadBillBoard( data );
+			_LoadBillBoard( target, data );
 		else if( data["Class"] == "Creature" )
-			_LoadCreature( data );
+			_LoadCreature( target, data );
 		else if( data["Class"] == "Ground" )
-			_LoadGround( data );
+			_LoadGround( target, data );
 		else if( data["Class"] == "Camera" )
-			_LoadCamera( data );
+			_LoadCamera( target, data );
 		else if( data["Class"] == "SunLight" )
-			_LoadSunLight( data );
+			_LoadSunLight( target, data );
 		else if( data["Class"] == "Node" )
-			_LoadNode( data );
-		else if (data["Class"] == "LightOrb")
-			_LoadLightOrb(data);
+			_LoadNode( target, data );
+		else if( data["Class"] == "LightOrb" )
+			_LoadLightOrb( target, data );
+		else if( data["Class"] == "CollisionBox" )
+			_LoadCollisionBox( target, data );
+		else if( data["Class"] == "SoundBox" )
+			_LoadSoundBox( target, data );
+		else if( data["Class"] == "Bgm" )
+			_LoadBgm( target, data );
 		printf_s( "Load %s\n", data["Class"] );
 	}
 }
 
-void Stage::_LoadGround( Json::Value& jsonData )
+void Stage::_LoadGround( Node* target, Json::Value& jsonData )
 {
 	std::string str( jsonData.get( "HeightMapFile", "MODEL\\test.jpg" ).asString() );
 	std::wstring wStr;
@@ -281,36 +297,49 @@ void Stage::_LoadGround( Json::Value& jsonData )
 	mGround->SetValidArea( minArea, maxArea );
 
 	_SetCommonData( mGround, jsonData );
-	AddChild( mGround );
+	target->AddChild( mGround );
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( mGround, jsonData["Child"] );
+	}
 }
 
-void Stage::_LoadCamera( Json::Value& jsonData )
+void Stage::_LoadCamera( Node* target, Json::Value& jsonData )
 {
 	Camera *tCamera = Camera::Create();
 	_SetCommonData( tCamera, jsonData );
-	AddChild( tCamera );
+	target->AddChild( tCamera );
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( tCamera, jsonData["Child"] );
+	}
 }
 
-void Stage::_LoadSunLight( Json::Value& jsonData )
+void Stage::_LoadSunLight( Node* target, Json::Value& jsonData )
 {
 	SunLight *tSunLight = SunLight::Create();
 	_SetCommonData( tSunLight, jsonData );
-	AddChild( tSunLight );
+	target->AddChild( tSunLight );
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( tSunLight, jsonData["Child"] );
+	}
 }
 
-void Stage::_LoadCreature( Json::Value& jsonData )
+void Stage::_LoadCreature( Node* target, Json::Value& jsonData )
 {
 	Creature *tCreature = Creature::Create();
 	_SetCommonData( tCreature, jsonData );
 	tCreature->pss = mCharacter;
-	AddChild( tCreature );
+	target->AddChild( tCreature );
 
 	tCreature->SetInitialPosition(tCreature->GetPosition());
 
 	mCreatureList.push_back(tCreature);
+
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( tCreature, jsonData["Child"] );
+	}
 }
 
-void Stage::_LoadLightOrb( Json::Value& jsonData )
+void Stage::_LoadLightOrb( Node* target, Json::Value& jsonData )
 {
 	LightOrb *tLightOrb = LightOrb::Create();
 	_SetCommonData( tLightOrb, jsonData );
@@ -320,13 +349,17 @@ void Stage::_LoadLightOrb( Json::Value& jsonData )
 	LightOrbPos.y = MapHeight + 1.5f;
 	tLightOrb->SetPosition(LightOrbPos);
 
-	AddChild(tLightOrb);
+	target->AddChild( tLightOrb );
 
 	//auto iter = mLightOrbList.begin();
 	mLightOrbList.push_back(tLightOrb);
+
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( tLightOrb, jsonData["Child"] );
+	}
 }
 
-void Stage::_LoadBillBoard( Json::Value& jsonData )
+void Stage::_LoadBillBoard( Node* target, Json::Value& jsonData )
 {
 	BillBoard *tBillBoard = BillBoard::Create();
 	_SetCommonData( tBillBoard, jsonData );
@@ -334,11 +367,15 @@ void Stage::_LoadBillBoard( Json::Value& jsonData )
 	std::wstring wStr;
 	wStr.assign( texture.begin(), texture.end() );
 	tBillBoard->SetTexture( wStr );
-	AddChild( tBillBoard );
+	target->AddChild( tBillBoard );
+
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( tBillBoard, jsonData["Child"] );
+	}
 }
 
 // 나중에 구조를 좀 바꿔야...
-void Stage::_LoadTree1( Json::Value& jsonData )
+void Stage::_LoadTree1( Node* target, Json::Value& jsonData )
 {
 	Tree1 *tTree = Tree1::Create();
 	_SetCommonData( tTree, jsonData ); 
@@ -348,9 +385,13 @@ void Stage::_LoadTree1( Json::Value& jsonData )
 	TreePos.y = MapHeight;
 	tTree->SetPosition(TreePos);
 
-	AddChild( tTree );
+	target->AddChild( tTree );
+
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( tTree, jsonData["Child"] );
+	}
 }
-void Stage::_LoadTree2( Json::Value& jsonData )
+void Stage::_LoadTree2( Node* target, Json::Value& jsonData )
 {
 	Tree2 *tTree = Tree2::Create();
 	_SetCommonData( tTree, jsonData );
@@ -360,9 +401,13 @@ void Stage::_LoadTree2( Json::Value& jsonData )
 	TreePos.y = MapHeight;
 	tTree->SetPosition(TreePos);
 
-	AddChild( tTree );
+	target->AddChild( tTree );
+
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( tTree, jsonData["Child"] );
+	}
 }
-void Stage::_LoadTree3( Json::Value& jsonData )
+void Stage::_LoadTree3( Node* target, Json::Value& jsonData )
 {
 	Tree3 *tTree = Tree3::Create();
 	_SetCommonData( tTree, jsonData );
@@ -372,13 +417,49 @@ void Stage::_LoadTree3( Json::Value& jsonData )
 	TreePos.y = MapHeight;
 	tTree->SetPosition(TreePos);
 
-	AddChild( tTree );
+	target->AddChild( tTree );
+
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( tTree, jsonData["Child"] );
+	}
 }
 
-void Stage::_LoadNode( Json::Value& jsonData )
+void Stage::_LoadSoundBox( Node* target, Json::Value& jsonData )
+{
+	std::string soundID( jsonData.get( "Sound", "" ).asString() );
+	FMOD::Studio::EventInstance* eventInstance = pooptube::SoundManager::GetInstance()->GetSound( soundID );
+	pooptube::SoundBox* soundBox = pooptube::SoundBox::Create( eventInstance );
+	_SetCommonData( soundBox, jsonData );
+
+	target->AddChild( soundBox );
+
+	if( jsonData.isMember( "Child" ) ){
+		_LoadToTarget( soundBox, jsonData["Child"] );
+	}
+}
+
+void Stage::_LoadBgm( Node* target, Json::Value& jsonData )
+{
+	std::string soundID( jsonData.get( "Sound", "" ).asString() );
+	mBgm = pooptube::SoundManager::GetInstance()->GetSound( soundID );
+}
+
+void Stage::_LoadCollisionBox( Node* target, Json::Value& jsonData )
+{
+	pooptube::CollisionBox* cBox = pooptube::CollisionBox::Create( target );
+	_SetCommonData( cBox, jsonData );
+
+	cBox->SetAxisLenX( static_cast<float>(jsonData["AxisLen"].get( 0u, 0.5f ).asDouble()) );
+	cBox->SetAxisLenY( static_cast<float>(jsonData["AxisLen"].get( 1u, 0.5f ).asDouble()) );
+	cBox->SetAxisLenZ( static_cast<float>(jsonData["AxisLen"].get( 2u, 0.5f ).asDouble()) );
+
+	target->AddChild( cBox );
+}
+
+void Stage::_LoadNode( Node* target, Json::Value& jsonData )
 {
 	// 임시
-	_LoadTree1( jsonData );
+	_LoadTree1( target, jsonData );
 }
 
 void Stage::_SetCommonData( Node* target, Json::Value& jsonData )

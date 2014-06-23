@@ -16,6 +16,7 @@ MainCharacter::MainCharacter() {
 
 
 MainCharacter::~MainCharacter() {
+	mWalkSound->release();
 }
 
 MainCharacter *MainCharacter::Create( pooptube::Scene* scene ) {
@@ -58,9 +59,11 @@ void MainCharacter::Update(float dTime) {
 	switch (mState) {
 	case NONE:
 		mMesh->SetAnimationTrack(3);
+		mWalkSound->stop( FMOD_STUDIO_STOP_ALLOWFADEOUT );
 		break;
 	case MOVE:
 		mMesh->SetAnimationTrack(8);
+		pooptube::SoundManager::GetInstance()->PlayOnce( *mWalkSound );
 		//mMesh->SetAnimationBlend(8, 5);
 		break;
 	default:
@@ -75,6 +78,7 @@ void MainCharacter::Update(float dTime) {
 	
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mListener );
 	pooptube::SoundManager::GetInstance()->SetListener( &mListener );
+	mWalkSound->set3DAttributes( &mListener );
 }
 bool MainCharacter::Init( pooptube::Scene* scene ) {
 	Node::Init();
@@ -96,7 +100,7 @@ bool MainCharacter::Init( pooptube::Scene* scene ) {
 	AddChild( collisionBox );
 	mCollisionBox = collisionBox;
 	
-
+	mWalkSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Walk" );
 	return true;
 }
 

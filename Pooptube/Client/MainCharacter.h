@@ -78,6 +78,7 @@ private:
 	pooptube::Scene			*mScene = nullptr;
 	pooptube::CollisionBox	*mCollisionBox = nullptr;
 
+	FMOD::Studio::EventInstance *mWalkSound = nullptr;
 	FMOD_3D_ATTRIBUTES		mListener;
 };
 

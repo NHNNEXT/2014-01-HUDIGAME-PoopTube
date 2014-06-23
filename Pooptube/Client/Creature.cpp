@@ -17,6 +17,9 @@ Creature::Creature()
 
 Creature::~Creature()	
 {
+	mWalkSound->release();
+	mAngrySound->release();
+	mAttackSound->release();
 }
 
 Creature *Creature::Create()
@@ -71,9 +74,9 @@ bool Creature::Init()
 	AddChild( collisionBox );
 	Creature::SetPosition( mInitialPosition );
 
-	mStepSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Footsteps" );
-	mStepSound->setParameterValue( "Surface", 1.f );
-	mEffectSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Character/Okay" );
+	mWalkSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Walk" );
+	mAttackSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Bite" );
+	mAngrySound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Growling" );
 
 	return true;
 }
@@ -128,7 +131,9 @@ void Creature::Update(float dTime)
 	}
 
 	pooptube::SoundManager::GetInstance()->NodeToFmod3DAttribute( *this, mSoundPos );
-	mStepSound->set3DAttributes( &mSoundPos );
+	mWalkSound->set3DAttributes( &mSoundPos );
+	mAngrySound->set3DAttributes( &mSoundPos );
+	mAttackSound->set3DAttributes( &mSoundPos );
 }
 
 CREATURE_STATE Creature::FSM()
@@ -162,7 +167,10 @@ void Creature::DoIdle(float dTime)
 	D3DXVECTOR3 CreaturePosition = GetPosition();
 	D3DXVECTOR3 distance = mInitialPosition - GetPosition();
 	D3DXVECTOR3 CreatureFrontVector = GetFrontVector();
-	mStepSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
+	mAttackSound->stop( FMOD_STUDIO_STOP_ALLOWFADEOUT );
+	mAngrySound->stop( FMOD_STUDIO_STOP_ALLOWFADEOUT );
+	if( mWalkSound != nullptr )
+		pooptube::SoundManager::GetInstance()->PlayOnce( *mWalkSound );
 	if (IDLE == GetState() && D3DXVec3LengthSq(&distance) < 0.25f) {
 		//RotationY(0.1f);
 		SetPosition(mInitialPosition);
@@ -181,17 +189,22 @@ void Creature::DoAngry()
 {
 	D3DXVECTOR3 CharacterPosition = pss->GetPosition();
 	D3DXVECTOR3 CreaturePosition = GetPosition();
-	if( mStepSound != nullptr )
-		pooptube::SoundManager::GetInstance()->PlayOnce( *mStepSound );
+	mAttackSound->stop( FMOD_STUDIO_STOP_ALLOWFADEOUT );
+	if( mWalkSound != nullptr )
+		pooptube::SoundManager::GetInstance()->PlayOnce( *mWalkSound );
+	if( mAngrySound != nullptr )
+		pooptube::SoundManager::GetInstance()->PlayOnce( *mAngrySound );
 	Turn(GetPosition(), CharacterPosition, mSpeed);
 	SetPosition(CreaturePosition + (CharacterPosition - CreaturePosition) / 100);
 }
 
 bool Creature::DoRage(float dTime)
 {
-	mStepSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
-	if( mEffectSound != nullptr )
-		pooptube::SoundManager::GetInstance()->PlayOnce( *mEffectSound );
+	mWalkSound->stop( FMOD_STUDIO_STOP_ALLOWFADEOUT );
+	if( mAngrySound != nullptr )
+		pooptube::SoundManager::GetInstance()->PlayOnce( *mAngrySound );
+	if( mAttackSound != nullptr )
+		pooptube::SoundManager::GetInstance()->PlayOnce( *mAttackSound );
 	RotationY(0.4f);
 
 	mAttackTime += dTime;

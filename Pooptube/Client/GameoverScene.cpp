@@ -15,6 +15,8 @@ GameoverScene::GameoverScene() {
 
 
 GameoverScene::~GameoverScene() {
+	mBgm->stop( FMOD_STUDIO_STOP_IMMEDIATE );
+	mBgm->release();
 }
 
 GameoverScene* GameoverScene::Create() {
@@ -41,6 +43,8 @@ bool GameoverScene::Init() {
 	mGameover->ApplyTransform();
 	AddChild(mGameover);
 
+	mBgm = pooptube::SoundManager::GetInstance()->GetSound( "event:/Dead" );
+	pooptube::SoundManager::GetInstance()->PlayOnce( *mBgm );
 	return true;
 }
 

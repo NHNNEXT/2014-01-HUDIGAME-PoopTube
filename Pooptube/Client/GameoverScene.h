@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Scene.h"
+#include "SoundManager.h"
 
 namespace pooptube {
 	class Sprite;
@@ -27,4 +28,6 @@ protected:
 private:
 	pooptube::Sprite	*mGameover = nullptr;
 	float				mTime = 0.f;
+
+	FMOD::Studio::EventInstance	*mBgm = nullptr;
 };
