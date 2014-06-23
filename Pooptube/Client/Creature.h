@@ -29,6 +29,7 @@ enum CREATURE_STATE : int {
 	IDLE,
 	ANGRY,
 	RAGE,
+	GOBACK,
 };
 
 class Creature : public pooptube::Node
@@ -51,6 +52,7 @@ public:
 	void DoIdle(float dTime);
 	void DoAngry();
 	bool DoRage(float dTime);
+	void DoGoBack();
 
 	CREATURE_STATE GetState() const { return mState; }
 	void SetState(CREATURE_STATE state) { mState = state; }
@@ -59,9 +61,12 @@ public:
 	float GetAttackRate() { return mAttackRate; }
 
 	int GetTotalDamage() { return mTotalDamage; }
-	float GetSpeed() { return mSpeed; }
+	float GetSpeed() { return mRunSpeed; }
 
 	void SetInitialPosition(D3DXVECTOR3 position) { mInitialPosition = position; }
+
+	void IncreaseIdleDistance(int orbCount) { mIdleDistance = static_cast<float>(orbCount) * 1.5f + 16.f; }
+	float GetIdleDistance() { return mIdleDistance; }
 
 	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mMesh->GetVertices(); }
 	virtual std::vector<D3DXVECTOR3> *GetIndices() { return mMesh->GetIndices(); }
@@ -75,7 +80,8 @@ private:
 
 	float mIdleDistance = 16.0f;
 	float mRageDistance = 3.0f;
-	float mSpeed = 0.2f;
+	float mTurnSpeed = 0.2f;
+	float mRunSpeed = 0.026f;
 	float mDistanceFromMainCharater = 0;
 	float mAttackRate = 1.0f;
 	float mAttackTime = 0.f;

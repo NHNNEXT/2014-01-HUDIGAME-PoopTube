@@ -202,6 +202,8 @@ void Stage::Update( float dTime )
 
 	std::list<Creature*>::iterator creatureListItor = mCreatureList.begin();
 	for (; creatureListItor != mCreatureList.end(); ++creatureListItor) {
+		(*creatureListItor)->IncreaseIdleDistance(orbCount);
+		//printf("%f\n", (*creatureListItor)->GetIdleDistance());
 		if ((*creatureListItor)->GetState() == RAGE && (*creatureListItor)->DoRage(dTime)) {
 			//mTotalDamage += (*creatureListItor)->GetTotalDamage();
 			mCharacter->DecreaseHP(1);

@@ -72,7 +72,7 @@ bool Creature::Init()
 	collisionBox->SetScale(1.f, 1.f, 2.f);
 	
 	AddChild( collisionBox );
-	Creature::SetPosition( mInitialPosition );
+	//Creature::SetPosition( mInitialPosition );
 
 	mWalkSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Walk" );
 	mAttackSound = pooptube::SoundManager::GetInstance()->GetSound( "event:/Bite" );
@@ -93,6 +93,8 @@ void Creature::Render()
 		mMesh->SetVisible(true);
 		break;
 	case RAGE:
+		break;
+	case GOBACK:
 		break;
 	default:
 		break;
@@ -119,6 +121,8 @@ void Creature::Update(float dTime)
 	case RAGE:
 		DoRage(dTime);
 		break;
+	case GOBACK:
+		DoGoBack();
 	}
 
 	D3DXVECTOR3 pos = GetPosition();
@@ -144,11 +148,18 @@ CREATURE_STATE Creature::FSM()
 
 	if (mIdleDistance * mIdleDistance < D3DXVec3LengthSq(&distance)) {
 
-		if (mState != IDLE)
+		if (mState != IDLE) {
+			SetState(CREATURE_STATE::GOBACK);
+			printf("GoBACK!\n");
 
-		SetState(CREATURE_STATE::IDLE);
+			D3DXVECTOR3 distanceFromInitToCreature = mInitialPosition - CreaturePosition;
 
-		//printf("idle\n");
+			if (D3DXVec3LengthSq(&distanceFromInitToCreature) < 0.25f)
+			{
+				SetPosition(mInitialPosition);
+				SetState(CREATURE_STATE::IDLE);
+			}
+		}
 	}
 	else if( mIdleDistance * mIdleDistance >= D3DXVec3LengthSq( &distance ) && D3DXVec3LengthSq( &distance ) >= mRageDistance * mRageDistance ) {
 		SetState(ANGRY);
@@ -171,7 +182,7 @@ void Creature::DoIdle(float dTime)
 	mAngrySound->stop( FMOD_STUDIO_STOP_ALLOWFADEOUT );
 	if( mWalkSound != nullptr )
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mWalkSound );
-	if (IDLE == GetState() && D3DXVec3LengthSq(&distance) < 0.25f) {
+	if (IDLE == GetState() && D3DXVec3LengthSq(&distance) < 4.f) {
 		//RotationY(0.1f);
 		SetPosition(mInitialPosition);
 	}
@@ -180,7 +191,7 @@ void Creature::DoIdle(float dTime)
 		D3DXVECTOR3 dir = mInitialPosition - CreaturePosition;
 		D3DXVec3Normalize(&dir, &dir);
 
-		if (Turn(GetPosition(), mInitialPosition, mSpeed) == false)
+		if (Turn(GetPosition(), mInitialPosition, mTurnSpeed) == false)
 			SetPosition(CreaturePosition + dir / 10);
 	}
 }
@@ -194,8 +205,8 @@ void Creature::DoAngry()
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mWalkSound );
 	if( mAngrySound != nullptr )
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mAngrySound );
-	Turn(GetPosition(), CharacterPosition, mSpeed);
-	SetPosition(CreaturePosition + (CharacterPosition - CreaturePosition) / 100);
+	Turn(GetPosition(), CharacterPosition, mTurnSpeed);
+	SetPosition( CreaturePosition + (CharacterPosition - CreaturePosition) * mRunSpeed);
 }
 
 bool Creature::DoRage(float dTime)
@@ -205,7 +216,7 @@ bool Creature::DoRage(float dTime)
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mAngrySound );
 	if( mAttackSound != nullptr )
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mAttackSound );
-	RotationY(0.4f);
+	//RotationY(0.4f);
 
 	mAttackTime += dTime;
 
@@ -222,6 +233,15 @@ bool Creature::DoRage(float dTime)
 	}
 }
 
+void Creature::DoGoBack()
+{
+	D3DXVECTOR3 CreaturePosition = GetPosition();
+	if (mStepSound != nullptr)
+		pooptube::SoundManager::GetInstance()->PlayOnce(*mStepSound);
+	Turn(GetPosition(), mInitialPosition, mTurnSpeed);
+	SetPosition(CreaturePosition + (mInitialPosition - CreaturePosition) * mRunSpeed);
+}
+
 void Creature::_CollsionHandle(pooptube::CollisionBox* collisionResult)
 {
 	if (collisionResult == nullptr)
@@ -229,7 +249,7 @@ void Creature::_CollsionHandle(pooptube::CollisionBox* collisionResult)
 	if (collisionResult->GetCollisionType() & pooptube::CollisionBox::COLLISION_TYPE::BLOCK) {
 		D3DXVECTOR3 dPos = GetPosition() - collisionResult->GetParent()->GetPosition();
 		D3DXVec3Normalize(&dPos, &dPos);
-		dPos *= mSpeed;
+		dPos *= mRunSpeed;
 		Translation(dPos);
 	}
 }
