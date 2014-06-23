@@ -32,7 +32,9 @@ Stage::Stage()
 }
 Stage::~Stage()
 {
+	mAmbientSound->stop( FMOD_STUDIO_STOP_IMMEDIATE );
 	mBgm->stop( FMOD_STUDIO_STOP_IMMEDIATE );
+	mAmbientSound->release();
 	mBgm->release();
 }
 
@@ -108,6 +110,7 @@ bool Stage::Init( std::string filename )
 		PATH_SKYBOX_LEFT,
 		PATH_SKYBOX_RIGHT);
 
+	mAmbientSound = SoundManager::GetInstance()->GetSound( "event:/NightForest" );
 	mSkyBox->SetTarget(mCharacter);
 	AddChild(mSkyBox);
 
@@ -228,6 +231,7 @@ void Stage::Update( float dTime )
 
 	if( mBgm != nullptr )
 		SoundManager::GetInstance()->PlayOnce( *mBgm );
+	SoundManager::GetInstance()->PlayOnce( *mAmbientSound );
 }
 
 void Stage::UpdateInput()
@@ -270,10 +274,12 @@ void Stage::_LoadToTarget( Node* target, Json::Value& jsonData )
 			_LoadLightOrb( target, data );
 		else if( data["Class"] == "CollisionBox" )
 			_LoadCollisionBox( target, data );
-		else if( data["Class"] == "SoundBox" )
-			_LoadSoundBox( target, data );
+// 		else if( data["Class"] == "SoundBox" )
+// 			_LoadSoundBox( target, data );
 		else if( data["Class"] == "Bgm" )
 			_LoadBgm( target, data );
+		else
+			continue;
 		printf_s( "Load %s\n", data["Class"] );
 	}
 }

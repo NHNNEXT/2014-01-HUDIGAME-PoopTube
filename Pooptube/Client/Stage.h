@@ -64,6 +64,7 @@ private:
 	pooptube::SkyBox*	mSkyBox = nullptr;
 
 	FMOD::Studio::EventInstance		*mBgm = nullptr;
+	FMOD::Studio::EventInstance		*mAmbientSound = nullptr;
 
 	std::list<LightOrb*> mLightOrbList;
 	std::list<Creature*> mCreatureList;
