@@ -79,7 +79,7 @@ private:
 	CREATURE_STATE	mState = IDLE;
 
 	float mIdleDistance = 16.0f;
-	float mRageDistance = 3.0f;
+	float mRageDistance = 3.5f;
 	float mTurnSpeed = 0.2f;
 	float mRunSpeed = 0.02f;
 	float mDistanceFromMainCharater = 0;
