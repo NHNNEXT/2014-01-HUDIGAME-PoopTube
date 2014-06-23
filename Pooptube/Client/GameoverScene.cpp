@@ -55,7 +55,7 @@ void GameoverScene::Render() {
 
 void GameoverScene::Update(float dTime) {
 	mTime += dTime;
-	if (mTime > 2.f)
+	if (mTime > 3.f)
 	{
 		Stage* pStage = Stage::Create("test.json");
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pStage);
