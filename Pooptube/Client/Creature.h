@@ -81,7 +81,7 @@ private:
 	float mIdleDistance = 16.0f;
 	float mRageDistance = 3.0f;
 	float mTurnSpeed = 0.2f;
-	float mRunSpeed = 0.026f;
+	float mRunSpeed = 0.02f;
 	float mDistanceFromMainCharater = 0;
 	float mAttackRate = 1.0f;
 	float mAttackTime = 0.f;

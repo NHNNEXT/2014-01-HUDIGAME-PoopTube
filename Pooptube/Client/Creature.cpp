@@ -206,7 +206,7 @@ void Creature::DoAngry()
 	if( mAngrySound != nullptr )
 		pooptube::SoundManager::GetInstance()->PlayOnce( *mAngrySound );
 	Turn(GetPosition(), CharacterPosition, mTurnSpeed);
-	SetPosition( CreaturePosition + (CharacterPosition - CreaturePosition) * mRunSpeed);
+	SetPosition( CreaturePosition + (CharacterPosition - CreaturePosition) / 100);
 }
 
 bool Creature::DoRage(float dTime)
@@ -236,10 +236,10 @@ bool Creature::DoRage(float dTime)
 void Creature::DoGoBack()
 {
 	D3DXVECTOR3 CreaturePosition = GetPosition();
-	if (mStepSound != nullptr)
-		pooptube::SoundManager::GetInstance()->PlayOnce(*mStepSound);
+	//if (mStepSound != nullptr)
+	//	pooptube::SoundManager::GetInstance()->PlayOnce(*mStepSound);
 	Turn(GetPosition(), mInitialPosition, mTurnSpeed);
-	SetPosition(CreaturePosition + (mInitialPosition - CreaturePosition) * mRunSpeed);
+	SetPosition(CreaturePosition + (mInitialPosition - CreaturePosition) / 100);
 }
 
 void Creature::_CollsionHandle(pooptube::CollisionBox* collisionResult)
