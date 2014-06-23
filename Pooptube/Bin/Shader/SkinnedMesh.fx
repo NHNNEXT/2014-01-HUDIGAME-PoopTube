@@ -175,7 +175,7 @@ float4 PShadeGround(
 	float3 totalColor = TotalAmbient +
 	(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6);
 
-
+	/*
 	for (int index = 0; index < 10; index++) {
 
 		//float3 lightObjPos = lightObjPosArray[index];
@@ -192,6 +192,7 @@ float4 PShadeGround(
 
 		totalColor += (BaseColor.xyz * lightDiffuse * diffuseLighting2 * 0.6);
 	}
+	*/
 
 	float ViewpointDistance = length(mCamaraPos - WorldPos.xyz);
 	//선형안개
