@@ -23,7 +23,7 @@ int ClientRun()
 	//_CrtSetBreakAlloc(323);
 	//#endif
 
-	pooptube::Application::GetInstance()->Init(L"Test", 1024, 768, true);
+	pooptube::Application::GetInstance()->Init(L"Test", 1024, 768, false);
 
 	// test
 	/*pooptube::NetworkManager a;

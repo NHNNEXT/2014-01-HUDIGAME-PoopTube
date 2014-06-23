@@ -151,6 +151,7 @@ namespace pooptube {
 			wr.right-wr.left, wr.bottom-wr.top, NULL, NULL, mHInstance, NULL);
 
 		ShowWindow( mHwnd, SW_SHOWNORMAL );
+		ShowCursor(false);
 
 		return true;
 	}
