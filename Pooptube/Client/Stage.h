@@ -60,9 +60,8 @@ private:
 	Sprite				*mYellow[mOrbCount];
 	Sprite				*mGameover;
 	//Sprite				*mPink[mOrbCount];
-	pooptube::Camera*	mCamera;
-	
-	SkyBox	*mSkyBox = nullptr;
+	pooptube::Camera*	mCamera = nullptr;
+	pooptube::SkyBox*	mSkyBox = nullptr;
 
 	FMOD::Studio::EventInstance		*mBgm = nullptr;
 

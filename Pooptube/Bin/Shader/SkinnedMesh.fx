@@ -5,7 +5,17 @@
 
 float3 lightPos = { 10.0f, 10.0f, 10.0f };
 //배열로 만들어야함
-float3 lightObjPos = { 10.0f, 2.0f, 10.0f };
+//float3 lightObjPos = { 10.0f, 2.0f, 10.0f };
+float3 lightObjPosArray[10] = {	-10.f, -10.f, -10.f,
+								-10.f, -10.f, -10.f, 
+								-10.f, -10.f, -10.f, 
+								-10.f, -10.f, -10.f, 
+								-10.f, -10.f, -10.f, 
+								-10.f, -10.f, -10.f, 
+								-10.f, -10.f, -10.f, 
+								-10.f, -10.f, -10.f, 
+								-10.f, -10.f, -10.f, 
+								-10.f, -10.f, -10.f};
 
 float3 lightDiffuse = { 0.2f, 0.2f, 0.2f }; // Light Diffuse
 float3 lightAmbient = { 0.05f, 0.05f, 0.05f };
@@ -162,29 +172,26 @@ float4 PShadeGround(
 
 	float4 TotalAmbient = float4(lightAmbient * BaseColor, 1.f);
 
-	
-	//lightobj
-	float3 lightDir2 = normalize(WorldPos - lightObjPos); // per pixel diffuse lighting
-
-	// Note: Non-uniform scaling not supported
-	float diffuseLighting2 = saturate(dot(Normal, -lightDir2));
-
-	// Introduce fall-off of light intensity
-	diffuseLighting2 *= (lightDistance / dot(lightObjPos - WorldPos, lightObjPos - WorldPos));
-
-	// Using Blinn half angle modification for perofrmance over correctness
-	//float3 h2 = normalize(normalize(mCamaraPos - WorldPos) - lightDir2);
-	//float specLighting2 = pow(saturate(dot(h2, Normal)), lightSpecularPower);
-	
-	/*
-	float4 totalColor = float4(saturate(TotalAmbient +
-		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)
-		+ (BaseColor.xyz * lightDiffuse * diffuseLighting2 * 0.6)), 1.f);
-		*/
-
 	float3 totalColor = TotalAmbient +
-		(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6)
-		+ (BaseColor.xyz * lightDiffuse * diffuseLighting2 * 0.6);
+	(BaseColor.xyz * lightDiffuse * diffuseLighting * 0.6);
+
+
+	for (int index = 0; index < 10; index++) {
+
+		//float3 lightObjPos = lightObjPosArray[index];
+		float3 lightObjPos = { 10.0f, 2.0f, 10.0f };
+
+		//lightobj
+		float3 lightDir2 = normalize(WorldPos - lightObjPos); // per pixel diffuse lighting
+
+		// Note: Non-uniform scaling not supported
+		float diffuseLighting2 = saturate(dot(Normal, -lightDir2));
+
+		// Introduce fall-off of light intensity
+		diffuseLighting2 *= (lightDistance / dot(lightObjPos - WorldPos, lightObjPos - WorldPos));
+
+		totalColor += (BaseColor.xyz * lightDiffuse * diffuseLighting2 * 0.6);
+	}
 
 	float ViewpointDistance = length(mCamaraPos - WorldPos.xyz);
 	//선형안개

@@ -62,19 +62,9 @@ bool Stage::Init( std::string filename )
 	mCharacter = MainCharacter::Create( this );
 	AddChild( mCharacter );
 	ThirdPersonCamera* tCamera = ThirdPersonCamera::Create( mCharacter );
-	tCamera->SetFarPlane(200.f);
+	//tCamera->SetFarPlane(200.f);
 	mCamera = tCamera;
 	AddChild( tCamera );
-
-	/*mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
-		PATH_SKYBOX_DOWN,
-		PATH_SKYBOX_FRONT,
-		PATH_SKYBOX_BACK,
-		PATH_SKYBOX_LEFT,
-		PATH_SKYBOX_RIGHT);
-
-	mSkyBox->SetTarget(mCharacter);
-	AddChild(mSkyBox);*/
 
 	//파일 로드
 	mFileName = filename; // 테스트용
@@ -111,6 +101,15 @@ bool Stage::Init( std::string filename )
 		mPink[i]->SetVisible(false);*/
 	}
 	
+	mSkyBox = pooptube::SkyBox::Create(PATH_SKYBOX_UP,
+		PATH_SKYBOX_DOWN,
+		PATH_SKYBOX_FRONT,
+		PATH_SKYBOX_BACK,
+		PATH_SKYBOX_LEFT,
+		PATH_SKYBOX_RIGHT);
+
+	mSkyBox->SetTarget(mCharacter);
+	AddChild(mSkyBox);
 
 	return true;
 }

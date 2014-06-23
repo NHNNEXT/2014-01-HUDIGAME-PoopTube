@@ -95,6 +95,7 @@ private:
 
 	pooptube::SkinnedMesh	*mMesh = nullptr;
 	pooptube::SkinnedMesh	*mMesh2 = nullptr;
+	pooptube::SkinnedMesh	*mMesh3 = nullptr;
 	//pooptube::XMesh			*mXMesh = nullptr;
 
 //	pooptube::CollisionBox *mCollisionBox = nullptr;
