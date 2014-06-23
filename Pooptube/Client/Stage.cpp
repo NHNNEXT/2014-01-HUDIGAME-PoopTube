@@ -200,12 +200,12 @@ void Stage::Update( float dTime )
 	for (; creatureListItor != mCreatureList.end(); ++creatureListItor) {
 		if ((*creatureListItor)->GetState() == RAGE && (*creatureListItor)->DoRage(dTime)) {
 			//mTotalDamage += (*creatureListItor)->GetTotalDamage();
-			printf("AAAAAAAAAAAAAAAAAA");
 			mCharacter->DecreaseHP(1);
 		}
 	}
 
 	if (mCharacter->GetHP() < 0) {
+		pooptube::CollisionManager::GetInstance()->ClearCollsionBoxList();
 		GameoverScene* pGameoverScene = GameoverScene::Create();
 		pooptube::Application::GetInstance()->GetSceneManager()->ChangeScene(pGameoverScene);
 	}
@@ -263,7 +263,7 @@ void Stage::_LoadFile( std::string filename )
 
 void Stage::_LoadGround( Json::Value& jsonData )
 {
-	std::string str( jsonData.get( "HeightMapFile", "MODEL\\splattingmap1.bmp" ).asString() );
+	std::string str( jsonData.get( "HeightMapFile", "MODEL\\test.jpg" ).asString() );
 	std::wstring wStr;
 	wStr.assign( str.begin(), str.end() );
 	float amp = static_cast<float>(jsonData.get( "HeightAmp", 0.1f ).asDouble());
