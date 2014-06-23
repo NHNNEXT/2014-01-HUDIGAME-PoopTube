@@ -140,7 +140,7 @@ namespace pooptube {
 		ID3DXAnimationController*   mAnimController2 = nullptr;
 
 		D3DXVECTOR3						mBoundingSphereCenter; // 절두체 컬링용 Bounding Sphere
-		float							mBoundingSphereRadius; // 절두체 컬링용 Bounding Sphere
+		float							mBoundingSphereRadius = 3.f; // 절두체 컬링용 Bounding Sphere
 	};
 
 }

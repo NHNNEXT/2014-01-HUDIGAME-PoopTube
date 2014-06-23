@@ -29,6 +29,7 @@ EndScene::EndScene() {
 
 
 EndScene::~EndScene() {
+	delete mBoard;
 }
 
 EndScene* EndScene::Create() {
@@ -112,10 +113,10 @@ bool EndScene::Init() {
 		AddChild(mLightOrb[i]);
 	}
 
-	mLightOrb[0]->SetPosition(40.f, 0, 40.f);
-	mLightOrb[1]->SetPosition(40.f, 0, 40.f);
-	mLightOrb[2]->SetPosition(40.f, 0, 40.f);
-	mLightOrb[3]->SetPosition(5.f, 0, 5.f);
+	mLightOrb[0]->SetPosition(40.f, 0.f, 40.f);
+	mLightOrb[1]->SetPosition(40.f, 0.f, 40.f);
+	mLightOrb[2]->SetPosition(40.f, 0.f, 40.f);
+	mLightOrb[3]->SetPosition(10.f, 2.f, 10.f);
 
 	
 	mBoard = pooptube::BillBoard::Create();
@@ -123,12 +124,24 @@ bool EndScene::Init() {
 	mBoard->SetPosition(35.f, -20.f, 35.f);
 	mBoard->SetScale(6.4f, 3.6f, 1.f);
 	mBoard->SetVisible(false);
-	AddChild(mBoard);
+	//AddChild(mBoard);
 
 	return true;
 }
 
 void EndScene::Render() {
+
+	float cameraPos[3];
+	D3DXVECTOR3 cPos = mCamera->GetPosition();
+	cameraPos[0] = cPos.x;
+	cameraPos[1] = cPos.y;
+	cameraPos[2] = cPos.z;
+
+	pooptube::ResourceManager::GetInstance()->LoadHLSL(L"Shader\\SkinnedMesh.fx")->SetFloatArray("mCamaraPos", cameraPos, 3);
+
+	mBoard->SetEffectTech(std::string("t6"));
+	mBoard->Render();
+	mBoard->SetEffectTech(std::string("t4"));
 	Node::Render();
 }
 

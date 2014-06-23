@@ -30,7 +30,7 @@ MainCharacter *MainCharacter::Create( pooptube::Scene* scene ) {
 
 void MainCharacter::Render() {
 
-	mMesh->GetMeshData()->GetEffect()->SetTechnique("t0");
+	mMesh->GetMeshData()->GetEffect()->SetTechnique("t5");
 	Node::Render();
 	//mSkinnedMesh->Render();
 
