@@ -65,7 +65,7 @@ public:
 
 	void SetInitialPosition(D3DXVECTOR3 position) { mInitialPosition = position; }
 
-	void IncreaseIdleDistance(int orbCount) { mIdleDistance = static_cast<float>(orbCount) * 1.5f + 16.f; }
+	void IncreaseIdleDistance(int orbCount) { mIdleDistance = static_cast<float>(orbCount) * 3.0f + 16.f; }
 	float GetIdleDistance() { return mIdleDistance; }
 
 	virtual std::vector<D3DXVECTOR3> *GetVertices() { return mMesh->GetVertices(); }
